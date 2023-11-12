@@ -12,7 +12,17 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": false,
+      "globalShortcut": {
+        "all": true
+      },
+      "window": {
+        "startDragging": true,
+        "setSize": true,
+        "hide": true,
+        "show": true,
+        "setFocus": true
+      }
     },
     "bundle": {
       "active": true,
@@ -59,7 +69,8 @@
         "height": 600,
         "resizable": true,
         "title": "metadachi",
-        "width": 800
+        "width": 800,
+        "alwaysOnTop": true
       }
     ]
   }
