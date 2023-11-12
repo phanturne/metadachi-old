@@ -1,6 +1,6 @@
-"use client"
-import {Button, useColorScheme} from "@mui/joy";
-import {useEffect, useState} from "react";
+'use client';
+import { Button, useColorScheme } from '@mui/joy';
+import { useEffect, useState } from 'react';
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -11,20 +11,19 @@ function ModeToggle() {
   }, []);
 
   if (!mounted) {
-    return <Button variant="outlined" color="neutral" sx={{ width: 120 }} />;
+    return <Button variant='outlined' color='neutral' sx={{ width: 120 }} />;
   }
 
   return (
     <Button
-      variant="outlined"
-      color="neutral"
+      variant='outlined'
+      color='neutral'
       onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
     >
       {mode === 'dark' ? 'Turn light' : 'Turn dark'}
     </Button>
   );
-};
-
+}
 
 export default function Home() {
   return (
@@ -32,5 +31,5 @@ export default function Home() {
       <p>Home</p>
       <ModeToggle />
     </main>
-  )
+  );
 }
