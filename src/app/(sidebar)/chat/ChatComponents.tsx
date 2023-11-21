@@ -48,9 +48,6 @@ export function ChatMessages({ messages }: { messages: Message[] }) {
       }}
     >
       <Stack gap={1.5} sx={{ py: 2 }}>
-        {[...Array(100)].map((item, index) => (
-          <Typography key={index}>Content</Typography>
-        ))}
         {messages.map((m) => (
           <ChatBubble key={m.id} m={m} />
         ))}
@@ -59,7 +56,7 @@ export function ChatMessages({ messages }: { messages: Message[] }) {
   );
 }
 
-export default function ChatInput({
+export function ChatInput({
   input,
   handleInputChange,
   handleSubmit,

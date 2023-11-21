@@ -1,7 +1,11 @@
 import { ChatError, ChatInfo } from '@/app/(sidebar)/chat/chat-utils';
 import { supabase } from '@/utils/supabaseClient';
+import { Message as VercelChatMessage } from 'ai';
 
-export async function fetchChatInfoWithChatId(chatInfo: ChatInfo) {
+export async function fetchChatInfoWithChatId(
+  chatInfo: ChatInfo,
+  setChatInfo: React.Dispatch<React.SetStateAction<ChatInfo>>
+) {
   const { data, error } = await supabase
     .from('personas')
     .select(
@@ -20,10 +24,14 @@ export async function fetchChatInfoWithChatId(chatInfo: ChatInfo) {
     chatInfo.aiAvatar = data.avatar;
     chatInfo.systemPrompt = data.system_prompt;
     chatInfo.initialMessage = data.initial_message;
+    setChatInfo(chatInfo);
   }
 }
 
-export async function fetchChatHistoryWithChatId(chatInfo: ChatInfo) {
+export async function fetchChatHistoryWithChatId(
+  chatInfo: ChatInfo,
+  setChatHistory: React.Dispatch<React.SetStateAction<VercelChatMessage[]>>
+) {
   const { data, error } = await supabase
     .from('messages')
     .select('*')
@@ -32,11 +40,15 @@ export async function fetchChatHistoryWithChatId(chatInfo: ChatInfo) {
   if (error) {
     return ChatError.INVALID_CHAT_HISTORY;
   } else {
-    chatInfo.chatHistory = data;
+    setChatHistory(data);
   }
 }
 
-export async function fetchChatInfoWithPersonaId(chatInfo: ChatInfo) {
+export async function fetchChatInfoWithPersonaId(
+  chatInfo: ChatInfo,
+  setChatInfo: React.Dispatch<React.SetStateAction<ChatInfo>>,
+  setChatHistory: React.Dispatch<React.SetStateAction<VercelChatMessage[]>>
+) {
   const { data, error } = await supabase
     .from('personas')
     .select(
@@ -53,12 +65,19 @@ export async function fetchChatInfoWithPersonaId(chatInfo: ChatInfo) {
     chatInfo.modelConfig = data.model_config;
     chatInfo.aiAvatar = data.avatar;
     chatInfo.systemPrompt = data.system_prompt;
-    chatInfo.initialMessage = data.initial_message;
+    setChatInfo(chatInfo);
+    setChatHistory([
+      {
+        content: data.initial_message,
+        role: 'assistant',
+        id: 'initial-message-id',
+      },
+    ]);
   }
 }
 
 export async function insertNewChat(chatName: string, personaId: string) {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('chats')
     .insert({ chat_name: chatName, persona_id: personaId })
     .select('id');

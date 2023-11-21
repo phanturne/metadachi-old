@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
   // Model Config: https://js.langchain.com/docs/api/llms_fireworks/classes/Fireworks
   const model = new ChatFireworks({
     ...customChatConfig,
-    maxTokens: 1,
+    maxTokens: 5,
     streaming: true,
   });
 
