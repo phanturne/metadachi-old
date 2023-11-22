@@ -43,7 +43,7 @@ export function ChatMessages({ messages }: { messages: Message[] }) {
       sx={{
         flexGrow: 1,
         overflowY: 'scroll',
-        px: 5,
+        px: 3,
         flexDirection: 'column-reverse',
       }}
     >
@@ -73,7 +73,7 @@ export function ChatInput({
   };
 
   return (
-    <Box sx={{ px: 5, py: 2 }}>
+    <Box sx={{ px: 3, py: 2 }}>
       <form onSubmit={handleSubmit}>
         <Textarea
           placeholder='Send a message'

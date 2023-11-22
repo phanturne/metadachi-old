@@ -31,6 +31,7 @@ AI:
  * https://js.langchain.com/docs/guides/expression_language/cookbook#prompttemplate--llm--outputparser
  */
 export async function POST(req: NextRequest) {
+  // TODO: Secure API endpoint with a secret key
   const body = await req.json();
   const messages = body.messages ?? [];
   const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);

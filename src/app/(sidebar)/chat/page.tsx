@@ -15,8 +15,11 @@ import {
 } from '@/app/(sidebar)/chat/chat-data-access';
 import { Message as VercelChatMessage } from 'ai';
 import { useRouter } from 'next/navigation';
-import { Snackbar } from '@mui/joy';
+import { Box, Button, Snackbar } from '@mui/joy';
 import { ChatInput, ChatMessages } from '@/app/(sidebar)/chat/ChatComponents';
+import { useChatStore } from '@/lib/stores/chat';
+import { ExpandMoreRounded, MapsUgcRounded } from '@mui/icons-material';
+import IconButton from '@mui/joy/IconButton';
 
 export default function ChatPage({
   searchParams,
@@ -24,18 +27,30 @@ export default function ChatPage({
   searchParams: { [_: string]: string | string[] | undefined };
 }) {
   // TODO: Validate user session
-  console.log('Search Params', searchParams);
 
   const [errorMsg, setErrorMsg] = useState<ChatError | undefined>(undefined);
   const [chatHistory, setChatHistory] = useState<VercelChatMessage[]>([]);
   const router = useRouter();
+  const chatState = useChatStore();
 
-  // Get the chat_id and persona_id from the url, if they exist
-  const [chatInfo, setChatInfo] = useState<ChatInfo>({
-    personaId: Array.isArray(searchParams?.p)
+  // [Web] Get the chat_id and persona_id from the url, if they exist
+  let chatIdFromUrl = undefined;
+  let personaIdFromUrl = undefined;
+  if (process.env.BUILD_MODE != 'export') {
+    chatIdFromUrl = Array.isArray(searchParams?.c)
+      ? searchParams.c[0]
+      : searchParams.c;
+    personaIdFromUrl = Array.isArray(searchParams?.p)
       ? searchParams.p[0]
-      : searchParams.p,
-    chatId: Array.isArray(searchParams?.c) ? searchParams.c[0] : searchParams.c,
+      : searchParams.p;
+    if (chatState.chatId != chatIdFromUrl) chatState.setChatId(chatIdFromUrl);
+    if (chatState.personaId != personaIdFromUrl)
+      chatState.setPersonaId(personaIdFromUrl);
+  }
+
+  const [chatInfo, setChatInfo] = useState<ChatInfo>({
+    chatId: chatIdFromUrl ?? chatState.chatId,
+    personaId: personaIdFromUrl ?? chatState.personaId,
     chatName: 'New Chat',
   });
 
@@ -60,8 +75,14 @@ export default function ChatPage({
         chatInfo.personaId = '1'; // TODO: Remove hardcoded value
         await fetchChatInfoWithPersonaId(chatInfo, setChatInfo, setChatHistory);
       }
+
+      // Update the chat state
+      if (chatInfo.chatId != chatState.chatId)
+        chatState.setChatId(chatInfo.chatId);
+      if (chatInfo.personaId != chatState.personaId)
+        chatState.setPersonaId(chatInfo.personaId);
     })();
-  }, [chatInfo]);
+  }, []);
 
   const createNewChatWithMessages = async (aiResponse: VercelChatMessage) => {
     // Make sure the personaId exists
@@ -92,6 +113,7 @@ export default function ChatPage({
     const error = await insertInitialMessages(messagesToInsert);
 
     // Redirect to chat/[chatId]
+    chatState.setChatId(newChatId);
     router.push(`/chat/?c=${newChatId}`);
   };
 
@@ -110,7 +132,7 @@ export default function ChatPage({
 
   const [currAiModel, setCurrAiModel] = useState(chatInfo.aiModel);
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: process.env.CHAT_ENDPOINT ?? '/api/chat',
+    api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT ?? '/api/chat',
     initialMessages: chatHistory,
     id: chatInfo.chatId,
     body: {
@@ -147,12 +169,40 @@ export default function ChatPage({
       </Snackbar>
       <Header
         middleContent={
-          <Typography level='title-lg'>{chatInfo.chatName}</Typography>
+          <Box
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography level='title-lg'>{chatInfo.chatName}</Typography>
+            <IconButton color='neutral' size='sm'>
+              <ExpandMoreRounded />
+            </IconButton>
+          </Box>
         }
-        endContent={<Typography level='title-lg'>End</Typography>}
+        endContent={
+          <>
+            <Button
+              variant='outlined'
+              size='sm'
+              color='neutral'
+              startDecorator={<MapsUgcRounded />}
+              sx={{ mr: 1, display: { xs: 'none', md: 'inline-flex' } }}
+            >
+              New Chat
+            </Button>
+            <IconButton
+              color='neutral'
+              size='sm'
+              sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+            >
+              <MapsUgcRounded />
+            </IconButton>
+          </>
+        }
       />
-      <p>ChatID={chatInfo.chatId}</p>
-      <p>PersonaID={chatInfo.personaId}</p>
       <ChatMessages messages={messages} />
       <ChatInput
         input={input}

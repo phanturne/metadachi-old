@@ -25,7 +25,8 @@
     "next": "14.0.2",
     "openai": "^4.19.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.6",

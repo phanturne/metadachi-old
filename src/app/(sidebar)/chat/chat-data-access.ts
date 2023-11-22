@@ -1,5 +1,5 @@
 import { ChatError, ChatInfo } from '@/app/(sidebar)/chat/chat-utils';
-import { supabase } from '@/utils/supabaseClient';
+import { supabase } from '@/lib/utils/supabaseClient';
 import { Message as VercelChatMessage } from 'ai';
 
 export async function fetchChatInfoWithChatId(
@@ -65,6 +65,7 @@ export async function fetchChatInfoWithPersonaId(
     chatInfo.modelConfig = data.model_config;
     chatInfo.aiAvatar = data.avatar;
     chatInfo.systemPrompt = data.system_prompt;
+    chatInfo.initialMessage = data.initial_message;
     setChatInfo(chatInfo);
     setChatHistory([
       {

@@ -14,7 +14,7 @@ import {
 } from '@mui/joy';
 import { useRouter } from 'next/navigation';
 import Box from '@mui/joy/Box';
-import { supabase } from '@/utils/supabaseClient';
+import { supabase } from '@/lib/utils/supabaseClient';
 import { InfoOutlined } from '@mui/icons-material';
 
 export enum AuthFormType {

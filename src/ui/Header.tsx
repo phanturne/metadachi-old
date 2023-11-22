@@ -24,6 +24,8 @@ export default function Header({
         flexShrink: 0,
         alignItems: 'center',
         justifyContent: 'space-between',
+        alignContent: 'center',
+        textAlign: 'center',
         height: 'var(--Header-height)',
         zIndex: 100,
         p: 2,
@@ -39,27 +41,25 @@ export default function Header({
           },
         })}
       />
-      {startContent || <div></div>}
+      <Box sx={{ flex: 1 }}>{startContent || <div></div>}</Box>
 
-      {middleContent}
+      <Box sx={{ flex: 1 }}>{middleContent}</Box>
 
       <Box
         sx={{
+          flex: 1,
           display: 'flex',
           justifyContent: 'flex-end',
           alignItems: 'center',
-          padding: '10px',
-          gap: 1,
+          gap: 0.5,
         }}
       >
         {endContent}
-        {/*{endContent && (*/}
-        {/*  <Divider orientation='vertical' sx={{ m: 0.5, ml: 1.5 }} />*/}
-        {/*)}*/}
         <IconButton color='neutral' size='sm'>
           <NotificationsNoneRounded />
         </IconButton>
         <Avatar
+          sx={{ ml: 1 }}
           variant='solid'
           size='sm'
           src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286'

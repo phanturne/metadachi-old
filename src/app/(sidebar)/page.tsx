@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Login from '@/app/(sidebar)/test/Login';
 import { AuthSession } from '@supabase/supabase-js';
-import { supabase } from '@/utils/supabaseClient';
+import { supabase } from '@/lib/utils/supabaseClient';
 import ThemeToggle from '@/ui/ThemeToggle';
 
 export default function Home() {

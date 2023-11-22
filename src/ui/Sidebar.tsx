@@ -69,9 +69,7 @@ export default function Sidebar() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const router = useRouter();
   const routes = [
-    '/auth',
-    '/chat',
-    config.routes.chats,
+    config.routes.chat,
     config.routes.images,
     config.routes.toolbox,
     config.routes.discover,
