@@ -160,7 +160,11 @@ export default function AuthModal({ isAuthPage }: { isAuthPage: boolean }) {
   }
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
+    <Modal
+      open={open}
+      disableEscapeKeyDown={isAuthPage}
+      onClose={() => setOpen(false)}
+    >
       <ModalDialog layout={isAuthPage ? 'fullscreen' : 'center'} sx={{ p: 0 }}>
         <DialogContent>
           <Box sx={{ display: 'flex', flexDirection: 'row', height: '100dvh' }}>
