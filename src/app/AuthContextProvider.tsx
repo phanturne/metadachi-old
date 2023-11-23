@@ -1,7 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import AuthModal from '@/ui/AuthModal';
+import { useSupabaseSession } from '@/lib/hooks/useSupabaseSession';
 
 // Create a context with initial values
 const AuthContext = createContext({
@@ -16,7 +17,14 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  // If user is not authenticated for the desktop app, show the auth page
+  const isApp = process.env.NEXT_PUBLIC_BUILD_MODE == 'export';
+  const session = useSupabaseSession();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  useEffect(() => {
+    setIsAuthModalOpen(isApp && session === null);
+  }, [session]);
 
   const openAuthModal = () => {
     setIsAuthModalOpen(true);
@@ -35,7 +43,9 @@ export const AuthContextProvider = ({
 
   return (
     <AuthContext.Provider value={contextValue}>
-      {isAuthModalOpen && <AuthModal onClose={closeAuthModal} />}
+      {isAuthModalOpen && (
+        <AuthModal isAuthPage={true} onClose={closeAuthModal} />
+      )}
       {children}
     </AuthContext.Provider>
   );

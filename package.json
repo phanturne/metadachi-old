@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "app:dev": "cross-env BUILD_MODE=export tauri dev",
-    "app:build": "cross-env BUILD_MODE=export tauri build"
+    "app:dev": "cross-env NEXT_PUBLIC_BUILD_MODE=export tauri dev",
+    "app:build": "cross-env NEXT_PUBLIC_BUILD_MODE=export tauri build"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

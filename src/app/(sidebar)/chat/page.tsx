@@ -36,7 +36,7 @@ export default function ChatPage({
   // [Web] Get the chat_id and persona_id from the url, if they exist
   let chatIdFromUrl = undefined;
   let personaIdFromUrl = undefined;
-  if (process.env.BUILD_MODE != 'export') {
+  if (process.env.NEXT_PUBLIC_BUILD_MODE != 'export') {
     chatIdFromUrl = Array.isArray(searchParams?.c)
       ? searchParams.c[0]
       : searchParams.c;
