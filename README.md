@@ -26,6 +26,7 @@ Unlock boundless productivity with our cutting-edge cross-platform AI assistant!
 
 ## Roadmap
 - [ ] ⚜️ UI Redesign
+- [ ] 🪄App Layout Customization
 - [ ] 🤖 Custom AI agents and prompts
 - [ ] 📤 Retrieval Augmented Generation (RAG)
 - [ ] 📖 Documentation
@@ -46,13 +47,14 @@ Unlock boundless productivity with our cutting-edge cross-platform AI assistant!
 * **Prompts**: [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)
 
 ## Technology Stack
-- **Next.js v14:** A React framework for building fast and dynamic web applications
-- **Tauri:** A framework for building lightweight, cross-platform desktop applications
-- **Vercel:** A hosting platform that simplifies deployment and scaling of web applications
-- **Vercel AI SDK:** An open-source library designed to help developers build conversational streaming user interfaces
-- **LangChain:** A language-agnostic framework for building conversational AI agents
-- **Supabase:** An open-source alternative to Firebase, offering real-time databases and authentication services
-- **JoyUI:** A UI component library for React projects, designed for efficient development
+- **Next.js v14:** React framework for fast, dynamic web apps
+- **Tauri:** Framework for lightweight, cross-platform desktop applications
+- **Vercel:** Hosting platform for simplified deployment and scaling
+- **Vercel AI SDK:** Library for building conversational streaming UIs
+- **LangChain:** Framework for developing conversational AI agents
+- **Supabase:** Real-time databases and authentication
+- **Zustand:** Lightweight state management for React
+- **JoyUI:** UI component library for efficient React development
 
 ## Acknowledgments
 Kudos to the creators of the following repositories for their valuable contributions:
