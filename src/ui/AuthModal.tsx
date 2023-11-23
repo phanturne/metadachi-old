@@ -23,11 +23,17 @@ export enum AuthFormType {
   ResetPassword,
 }
 
-export default function AuthModal({ isAuthPage }: { isAuthPage: boolean }) {
+export default function AuthModal({
+  isAuthPage,
+  onClose,
+}: {
+  isAuthPage?: boolean;
+  onClose: () => void;
+}) {
   const [authFormType, setAuthFormType] = useState<AuthFormType>(
     AuthFormType.Login
   );
-  const [open, setOpen] = useState<boolean>(isAuthPage);
+  const [open, setOpen] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const router = useRouter();
 
@@ -163,7 +169,10 @@ export default function AuthModal({ isAuthPage }: { isAuthPage: boolean }) {
     <Modal
       open={open}
       disableEscapeKeyDown={isAuthPage}
-      onClose={() => setOpen(false)}
+      onClose={() => {
+        setOpen(false);
+        onClose?.();
+      }}
     >
       <ModalDialog layout={isAuthPage ? 'fullscreen' : 'center'} sx={{ p: 0 }}>
         <DialogContent>

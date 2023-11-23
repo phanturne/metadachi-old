@@ -2,6 +2,8 @@ import { Avatar, Box, Stack, Textarea, Typography } from '@mui/joy';
 import Sheet from '@mui/joy/Sheet';
 import IconButton from '@mui/joy/IconButton';
 import { Send } from '@mui/icons-material';
+import { useAuthModal } from '@/app/AuthContextProvider';
+import { useSupabaseSession } from '@/lib/hooks/useSupabaseSession';
 
 function ChatBubble({ m }: { m: Message }) {
   const fromUser = m.role === 'user';
@@ -65,10 +67,18 @@ export function ChatInput({
   handleInputChange: (event: any) => void;
   handleSubmit: (event: any) => void;
 }) {
+  const { openAuthModal } = useAuthModal();
+  const session = useSupabaseSession();
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      handleSubmit(event);
+
+      if (!session) {
+        openAuthModal();
+      } else {
+        handleSubmit(event);
+      }
     }
   };
 

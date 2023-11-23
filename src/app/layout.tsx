@@ -1,6 +1,7 @@
-import type {Metadata} from 'next'
-import TauriConfig from "@/app/TauriConfig";
-import ThemeRegistry from "@/app/ThemeRegistry";
+import type { Metadata } from 'next';
+import TauriConfig from '@/app/TauriConfig';
+import ThemeProvider from '@/app/ThemeProvider';
+import { AuthContextProvider } from '@/app/AuthContextProvider';
 
 export const metadata: Metadata = {
   title: 'Metadachi',
@@ -10,15 +11,17 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <TauriConfig/>
+    <html lang='en'>
+      <TauriConfig />
 
       <body>
-        <ThemeRegistry options={{ key: 'joy' }}>{children}</ThemeRegistry>
+        <ThemeProvider options={{ key: 'joy' }}>
+          <AuthContextProvider>{children}</AuthContextProvider>
+        </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
