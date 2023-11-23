@@ -28,7 +28,7 @@ export default function AuthModal({
   onClose,
 }: {
   isAuthPage?: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }) {
   const [authFormType, setAuthFormType] = useState<AuthFormType>(
     AuthFormType.Login
