@@ -23,14 +23,14 @@ import {
   HomeRepairServiceRounded,
   ImageRounded,
   Instagram,
+  MapsUgcRounded,
   Reddit,
-  SearchRounded,
   SettingsRounded,
   SupportRounded,
   Twitter,
 } from '@mui/icons-material';
 import config from '@/lib/config';
-import { Input } from '@mui/joy';
+import { Button } from '@mui/joy';
 
 // Controller for nested menu items
 function Toggler({
@@ -98,7 +98,9 @@ export default function Sidebar() {
           }}
         >
           <ListItemDecorator>{icon}</ListItemDecorator>
-          <ListItemContent>{label}</ListItemContent>
+          <ListItemContent sx={{ display: { xs: 'none', lg: 'flex' } }}>
+            {label}
+          </ListItemContent>
           {trailingContent}
         </ListItemButton>
       </ListItem>
@@ -108,7 +110,12 @@ export default function Sidebar() {
   function SidebarHeader() {
     return (
       <Box
-        sx={{ display: 'flex', alignItems: 'center', my: { xs: 0, lg: -1 } }}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          my: { xs: 0, lg: -1 },
+          pb: 2,
+        }}
       >
         <IconButton variant='plain' color='primary'>
           <AutoAwesome />
@@ -155,12 +162,31 @@ export default function Sidebar() {
         })}
       />
       <SidebarHeader />
-      <Input
-        sx={{ display: { xs: 'none', lg: 'flex' } }}
+      <Button
+        variant='outlined'
+        color='neutral'
         size='sm'
-        startDecorator={<SearchRounded />}
-        placeholder='Search'
-      />
+        startDecorator={<MapsUgcRounded />}
+        sx={{
+          mr: 1,
+          display: { xs: 'none', lg: 'inline-flex' },
+        }}
+      >
+        New Chat
+      </Button>
+      <IconButton
+        color='neutral'
+        size='sm'
+        sx={{ display: { xs: 'inline-flex', lg: 'none' } }}
+      >
+        <MapsUgcRounded />
+      </IconButton>
+      {/*<Input*/}
+      {/*  sx={{ display: { xs: 'none', lg: 'flex' } }}*/}
+      {/*  size='sm'*/}
+      {/*  startDecorator={<SearchRounded />}*/}
+      {/*  placeholder='Search'*/}
+      {/*/>*/}
       <Box
         sx={{
           minHeight: 0,
@@ -177,16 +203,17 @@ export default function Sidebar() {
           size='sm'
           sx={{
             gap: 1,
+            overflow: 'hidden',
             '--List-nestedInsetStart': '30px',
             '--ListItem-radius': (theme) => theme.vars.radius.sm,
           }}
         >
-          <IconButton
-            sx={{ display: { xs: 'flex', lg: 'none' } }}
-            variant='plain'
-          >
-            <SearchRounded />
-          </IconButton>
+          {/*<IconButton*/}
+          {/*  sx={{ display: { xs: 'flex', lg: 'none' } }}*/}
+          {/*  variant='plain'*/}
+          {/*>*/}
+          {/*  <SearchRounded />*/}
+          {/*</IconButton>*/}
           <MenuItem index={0} icon={<ChatRounded />} label='Chats' />
           <MenuItem index={1} icon={<ImageRounded />} label='Images' />
           <MenuItem
@@ -241,6 +268,7 @@ export default function Sidebar() {
         <List
           size='sm'
           sx={{
+            overflow: 'hidden',
             mt: 1,
             flexGrow: 0,
             '--ListItem-radius': (theme) => theme.vars.radius.sm,

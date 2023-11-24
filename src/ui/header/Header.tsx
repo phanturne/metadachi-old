@@ -6,7 +6,7 @@ import Sheet from '@mui/joy/Sheet';
 import IconButton from '@mui/joy/IconButton';
 import Box from '@mui/joy/Box';
 import { NotificationsNoneRounded } from '@mui/icons-material';
-import Avatar from '@mui/joy/Avatar';
+import UserAvatarMenu from '@/ui/header/UserAvatarMenu';
 
 export default function Header({
   startContent,
@@ -58,12 +58,13 @@ export default function Header({
         <IconButton color='neutral' size='sm'>
           <NotificationsNoneRounded />
         </IconButton>
-        <Avatar
-          sx={{ ml: 1 }}
-          variant='solid'
-          size='sm'
-          src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286'
-        />
+        {/*<Avatar*/}
+        {/*  sx={{ ml: 1 }}*/}
+        {/*  variant='solid'*/}
+        {/*  size='sm'*/}
+        {/*  src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286'*/}
+        {/*/>*/}
+        <UserAvatarMenu />
       </Box>
     </Sheet>
   );

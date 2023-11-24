@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import Header from '@/ui/Header';
+import Header from '@/ui/header/Header';
 import Typography from '@mui/joy/Typography';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -15,10 +15,10 @@ import {
 } from '@/app/(sidebar)/chat/chat-data-access';
 import { Message as VercelChatMessage } from 'ai';
 import { useRouter } from 'next/navigation';
-import { Box, Button, Snackbar } from '@mui/joy';
+import { Box, Snackbar } from '@mui/joy';
 import { ChatInput, ChatMessages } from '@/app/(sidebar)/chat/ChatComponents';
 import { useChatStore } from '@/lib/stores/chat';
-import { ExpandMoreRounded, MapsUgcRounded } from '@mui/icons-material';
+import { ExpandMoreRounded } from '@mui/icons-material';
 import IconButton from '@mui/joy/IconButton';
 
 export default function ChatPage({
@@ -181,26 +181,6 @@ export default function ChatPage({
               <ExpandMoreRounded />
             </IconButton>
           </Box>
-        }
-        endContent={
-          <>
-            <Button
-              variant='outlined'
-              size='sm'
-              color='neutral'
-              startDecorator={<MapsUgcRounded />}
-              sx={{ mr: 1, display: { xs: 'none', md: 'inline-flex' } }}
-            >
-              New Chat
-            </Button>
-            <IconButton
-              color='neutral'
-              size='sm'
-              sx={{ display: { xs: 'inline-flex', md: 'none' } }}
-            >
-              <MapsUgcRounded />
-            </IconButton>
-          </>
         }
       />
       <ChatMessages messages={messages} />
