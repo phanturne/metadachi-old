@@ -31,9 +31,10 @@ export default function ThemeToggleButton() {
       onClick={() => {
         setMode(mode === 'light' ? 'dark' : 'light');
       }}
-      sx={{ width: '100px' }}
+      sx={{ flexGrow: 1 }}
     >
-      {mode === 'dark' ? 'Dark' : 'Light'}
+      {mode === 'dark' ? 'Dark' : 'Light'}{' '}
+      {process.env.BUILD_MODE !== 'export' && 'Mode'}
     </Button>
   );
 }

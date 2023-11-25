@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { AuthSession } from '@supabase/supabase-js';
 import { supabase } from '@/lib/utils/supabaseClient';
 import ThemeToggle from '@/ui/ThemeToggle';
+import Header from '@/ui/header/Header';
 
 export default function Home() {
   const [session, setSession] = useState<AuthSession | null>(null);
@@ -18,6 +19,7 @@ export default function Home() {
 
   return (
     <main>
+      <Header />
       <h1>Hello, {session?.user.email}</h1>
       <ThemeToggle />
     </main>

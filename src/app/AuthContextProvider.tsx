@@ -18,11 +18,12 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   // If user is not authenticated for the desktop app, show the auth page
-  const isApp = process.env.NEXT_PUBLIC_BUILD_MODE == 'export';
+  const isApp = process.env.NEXT_PUBLIC_BUILD_MODE === 'export';
   const session = useSupabaseSession();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
+    console.log('Auth state changed');
     setIsAuthModalOpen(isApp && session === null);
   }, [session]);
 
@@ -44,7 +45,7 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider value={contextValue}>
       {isAuthModalOpen && (
-        <AuthModal isAuthPage={true} onClose={closeAuthModal} />
+        <AuthModal isAuthPage={isApp} onClose={closeAuthModal} />
       )}
       {children}
     </AuthContext.Provider>

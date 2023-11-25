@@ -7,18 +7,28 @@ import MenuButton from '@mui/joy/MenuButton';
 import Dropdown from '@mui/joy/Dropdown';
 import Avatar from '@mui/joy/Avatar';
 import ThemeToggleButton from '@/ui/ThemeToggle';
-import { Box, Button } from '@mui/joy';
+import { Box, Button, Typography } from '@mui/joy';
 import {
+  AnchorRounded,
   HouseboatRounded,
-  LightModeRounded,
+  LoginRounded,
+  LogoutRounded,
   SettingsRounded,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import config from '@/lib/config';
+import Divider from '@mui/joy/Divider';
+import { useSupabaseSession } from '@/lib/hooks/useSupabaseSession';
+import { supabase } from '@/lib/utils/supabaseClient';
+import { useAuthModal } from '@/app/AuthContextProvider';
 
 export default function UserAvatarMenu() {
   const router = useRouter();
+  const session = useSupabaseSession();
+  const { openAuthModal } = useAuthModal();
 
+  // Get the user's name or email
+  const nameOrEmail = session?.user.email ?? 'Guest';
   return (
     <Dropdown>
       <MenuButton
@@ -33,10 +43,35 @@ export default function UserAvatarMenu() {
           src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286'
         />
       </MenuButton>
-      <Menu placement='bottom-end'>
-        <Box sx={{ display: 'flex', m: 1, gap: 1, alignItems: 'center' }}>
+      <Menu placement='bottom-end' sx={{ width: '250px' }}>
+        <Box sx={{ display: 'flex', m: 1, mx: 1.5 }}>
+          <Avatar
+            variant='solid'
+            src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286'
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              pl: 1.5,
+              overflow: 'hidden',
+            }}
+          >
+            <Typography
+              level='title-sm'
+              sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+            >
+              {nameOrEmail}
+            </Typography>
+            <Typography level='body-sm'>Subtitle</Typography>
+          </Box>
+        </Box>
+        <Divider sx={{ m: 0.5 }} />
+        <Box
+          sx={{ display: 'flex', my: 1, mx: 1.5, gap: 1, alignItems: 'center' }}
+        >
           <ThemeToggleButton />
-          <FloatingWindowToggle />
+          {process.env.BUILD_MODE === 'export' && <FloatingWindowToggle />}
         </Box>
         <MenuItem
           onClick={() => {
@@ -48,6 +83,27 @@ export default function UserAvatarMenu() {
           </ListItemDecorator>
           Settings
         </MenuItem>
+        <Divider sx={{ m: 0.5 }} />
+        {session !== null && (
+          <MenuItem
+            onClick={async () => {
+              await supabase.auth.signOut();
+            }}
+          >
+            <ListItemDecorator>
+              <LogoutRounded />
+            </ListItemDecorator>
+            Logout
+          </MenuItem>
+        )}
+        {session === null && (
+          <MenuItem onClick={() => openAuthModal()}>
+            <ListItemDecorator>
+              <LoginRounded />
+            </ListItemDecorator>
+            Login / Sign Up
+          </MenuItem>
+        )}
       </Menu>
     </Dropdown>
   );
@@ -72,11 +128,11 @@ function FloatingWindowToggle() {
       size='sm'
       variant='outlined'
       color='neutral'
-      startDecorator={floating ? <LightModeRounded /> : <HouseboatRounded />}
+      startDecorator={floating ? <HouseboatRounded /> : <AnchorRounded />}
       onClick={() => {
         setFloating(!floating);
       }}
-      sx={{ width: '100px' }}
+      sx={{ flexGrow: 1 }}
     >
       {floating ? 'Floating' : 'Docked'}
     </Button>

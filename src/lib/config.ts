@@ -1,6 +1,7 @@
 const config = {
   routes: {
     home: '/',
+    auth: '/auth',
     login: '/login',
     signUp: '/signup',
     chat: '/chat',

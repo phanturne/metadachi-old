@@ -36,6 +36,7 @@ export default function AuthModal({
   const [open, setOpen] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const router = useRouter();
+  const isApp = process.env.NEXT_PUBLIC_BUILD_MODE === 'export';
 
   function afterSubmit() {
     setOpen(false);
@@ -176,7 +177,13 @@ export default function AuthModal({
     >
       <ModalDialog layout={isAuthPage ? 'fullscreen' : 'center'} sx={{ p: 0 }}>
         <DialogContent>
-          <Box sx={{ display: 'flex', flexDirection: 'row', height: '100dvh' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              height: isApp ? '100dvh' : 'auto',
+            }}
+          >
             {/*<Image*/}
             {/*  src=''*/}
             {/*  width={0}*/}

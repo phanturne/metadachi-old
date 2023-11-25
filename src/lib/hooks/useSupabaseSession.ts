@@ -18,6 +18,7 @@ export const useSupabaseSession = () => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log(event, session);
+      setSession(session);
     });
 
     // Unsubscribe on cleanup
