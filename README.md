@@ -53,9 +53,29 @@ Unlock boundless productivity with our cutting-edge cross-platform AI assistant!
 | JoyUI              | UI component library for efficient React development    |
 
 
-## AI Resources
+### AI Resources
 * **Models**: OpenAI, Hugging Face, Fireworks AI
 * **Prompts**: [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)
+
+## Getting Started
+To start using Metadachi today, you can either access our [Web App](https://app.metadachi.com) or download the latest desktop app from [Releases](https://github.com/phanturne/metadachi/releases).
+
+## Deploy Your Own
+### Web App
+1. Deploy to Vercel:
+   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fphanturne%2Fmetadachi&project-name=metadachi&repository-name=metadachi&demo-title=Metadachi&demo-url=https%3A%2F%2Fapp.metadachi.com)
+2. Create a new Supabase project and navigate to the SQL Editor. Run [init.sql](supabase/init.sql) to initialize the database. Optionally, run [seed.sql](supabase/seed.sql) to add default chat personas. (Detailed instructions will be added in the future.)
+3. Fill out the required environment variables
+
+### Desktop App
+1. Follow the steps for deploying a Web App
+2. Set the environment variable: `NEXT_PUBLIC_CHAT_ENDPOINT: your-vercel-deployment-url/api/chat`
+3. From the terminal, run the following commands:
+```shell
+pnpm install
+pnpm app:build
+```
+4. Install the generated build package.
 
 ## Contributing
 We're on the lookout for contributors to join us in bringing this project to life. Dive in, share your brilliant ideas, and let's build something amazing together!
