@@ -38,14 +38,15 @@ export async function POST(req: NextRequest) {
   const currentMessageContent = messages[messages.length - 1].content;
   const customChatConfig = body.customChatConfig ?? {};
   const systemPrompt = body.systemPrompt ?? '';
+  const apiKey = body.apiKey;
 
   const prompt = PromptTemplate.fromTemplate(TEMPLATE);
 
   // Model Config: https://js.langchain.com/docs/api/llms_fireworks/classes/Fireworks
   const model = new ChatFireworks({
     ...customChatConfig,
-    maxTokens: 5,
     streaming: true,
+    fireworksApiKey: apiKey,
   });
 
   /**

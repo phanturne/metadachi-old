@@ -11,7 +11,7 @@ VALUES
   '<METADACHI_SYSTEM_PROMPT>',
   'Hi, I''m Metadachi.',
   '<DESCRIPTION PLACEHOLDER>',
-  ARRAY['<TAGS_PLACEHOLDER>'],
+  ARRAY['Default'],
   'accounts/fireworks/models/llama-v2-7b-chat',
   '{
       "temperature": 0.3,

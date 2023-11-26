@@ -20,22 +20,22 @@ import { ChatInput, ChatMessages } from '@/app/(sidebar)/chat/ChatComponents';
 import { useChatStore } from '@/lib/stores/chat';
 import { ExpandMoreRounded } from '@mui/icons-material';
 import IconButton from '@mui/joy/IconButton';
+import Sheet from '@mui/joy/Sheet';
 
 export default function ChatPage({
   searchParams,
 }: {
   searchParams: { [_: string]: string | string[] | undefined };
 }) {
-  // TODO: Validate user session
-
   const [errorMsg, setErrorMsg] = useState<ChatError | undefined>(undefined);
   const [chatHistory, setChatHistory] = useState<VercelChatMessage[]>([]);
   const router = useRouter();
   const chatState = useChatStore();
 
-  // [Web] Get the chat_id and persona_id from the url, if they exist
   let chatIdFromUrl = undefined;
   let personaIdFromUrl = undefined;
+
+  // [WEB ONLY] Get the chat_id and persona_id from the url
   if (process.env.NEXT_PUBLIC_BUILD_MODE != 'export') {
     chatIdFromUrl = Array.isArray(searchParams?.c)
       ? searchParams.c[0]
@@ -43,9 +43,6 @@ export default function ChatPage({
     personaIdFromUrl = Array.isArray(searchParams?.p)
       ? searchParams.p[0]
       : searchParams.p;
-    if (chatState.chatId != chatIdFromUrl) chatState.setChatId(chatIdFromUrl);
-    if (chatState.personaId != personaIdFromUrl)
-      chatState.setPersonaId(personaIdFromUrl);
   }
 
   const [chatInfo, setChatInfo] = useState<ChatInfo>({
@@ -77,9 +74,10 @@ export default function ChatPage({
       }
 
       // Update the chat state
-      if (chatInfo.chatId != chatState.chatId)
+      if (chatInfo.chatId && chatInfo.chatId != chatState.chatId) {
         chatState.setChatId(chatInfo.chatId);
-      if (chatInfo.personaId != chatState.personaId)
+      }
+      if (chatInfo.personaId && chatInfo.personaId != chatState.personaId)
         chatState.setPersonaId(chatInfo.personaId);
     })();
   }, []);
@@ -131,6 +129,9 @@ export default function ChatPage({
   };
 
   const [currAiModel, setCurrAiModel] = useState(chatInfo.aiModel);
+  // TODO: Get the user's API key. If it's undefined, the default one will be used
+  const apiKey = undefined;
+
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT ?? '/api/chat',
     initialMessages: chatHistory,
@@ -139,6 +140,7 @@ export default function ChatPage({
       customChatConfig: chatInfo.modelConfig,
       systemPrompt: chatInfo.systemPrompt,
       chatModel: currAiModel,
+      apiKey: apiKey,
       isNewChat: chatInfo.chatId === null,
     },
     onFinish: chatInfo.chatId ? insertMessages : createNewChatWithMessages,
