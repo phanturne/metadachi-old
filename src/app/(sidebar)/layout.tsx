@@ -1,5 +1,5 @@
 import { Box } from '@mui/joy';
-import Sidebar from '@/ui/Sidebar';
+import Sidebar from '@/ui/sidebar/Sidebar';
 
 export default function SidebarLayout({
   children,

@@ -1,41 +1,44 @@
-import { ChatError, ChatInfo } from '@/app/(sidebar)/chat/chat-utils';
+import { ChatError } from '@/app/(sidebar)/chat/chat-utils';
 import { supabase } from '@/lib/utils/supabaseClient';
 import { Message as VercelChatMessage } from 'ai';
+import { Chat, Persona } from './chat-utils';
 
-export async function fetchChatInfoWithChatId(
-  chatInfo: ChatInfo,
-  setChatInfo: React.Dispatch<React.SetStateAction<ChatInfo>>
+export async function configChatWithChatId(
+  chat: Chat,
+  setChat: (id: Chat | undefined) => void,
+  setPersona: (id: Persona | undefined) => void
 ) {
   const { data, error } = await supabase
     .from('personas')
     .select(
       'avatar, system_prompt, initial_message, ai_model, model_config, chats!inner(chat_name)'
     )
-    .eq('chats.id', chatInfo.chatId)
+    .eq('chats.id', chat.id)
     .single();
 
   if (error) {
-    chatInfo.chatId = undefined;
+    setChat(undefined);
     return ChatError.INVALID_CHAT;
   } else {
-    chatInfo.chatName = data.chats[0].chat_name;
-    chatInfo.aiModel = data.ai_model;
-    chatInfo.modelConfig = data.model_config;
-    chatInfo.aiAvatar = data.avatar;
-    chatInfo.systemPrompt = data.system_prompt;
-    chatInfo.initialMessage = data.initial_message;
-    setChatInfo(chatInfo);
+    setChat({ ...chat, chatName: data.chats[0].chat_name });
+    setPersona({
+      aiModel: data.ai_model,
+      modelConfig: data.model_config,
+      avatar: data.avatar,
+      systemPrompt: data.system_prompt,
+      initialMessage: data.initial_message,
+    });
   }
 }
 
-export async function fetchChatHistoryWithChatId(
-  chatInfo: ChatInfo,
-  setChatHistory: React.Dispatch<React.SetStateAction<VercelChatMessage[]>>
+export async function setChatHistoryWithChatId(
+  chat: Chat,
+  setChatHistory: (history: VercelChatMessage[]) => void
 ) {
   const { data, error } = await supabase
     .from('messages')
     .select('*')
-    .eq('chat_id', chatInfo.chatId);
+    .eq('chat_id', chat.id);
 
   if (error) {
     return ChatError.INVALID_CHAT_HISTORY;
@@ -44,29 +47,33 @@ export async function fetchChatHistoryWithChatId(
   }
 }
 
-export async function fetchChatInfoWithPersonaId(
-  chatInfo: ChatInfo,
-  setChatInfo: React.Dispatch<React.SetStateAction<ChatInfo>>,
-  setChatHistory: React.Dispatch<React.SetStateAction<VercelChatMessage[]>>
+export async function configChatWithPersonaId(
+  persona: Persona,
+  setChat: (id: Chat | undefined) => void,
+  setPersona: (id: Persona | undefined) => void,
+  setChatHistory: (history: VercelChatMessage[]) => void
 ) {
   const { data, error } = await supabase
     .from('personas')
     .select(
       'name, avatar, system_prompt, initial_message, ai_model, model_config'
     )
-    .eq('id', chatInfo.personaId)
+    .eq('id', persona.id)
     .single();
 
   if (error) {
+    setPersona(undefined);
     return ChatError.INVALID_PERSONA;
   } else {
-    chatInfo.chatName = data.name;
-    chatInfo.aiModel = data.ai_model;
-    chatInfo.modelConfig = data.model_config;
-    chatInfo.aiAvatar = data.avatar;
-    chatInfo.systemPrompt = data.system_prompt;
-    chatInfo.initialMessage = data.initial_message;
-    setChatInfo(chatInfo);
+    setChat({ chatName: data.name });
+    setPersona({
+      ...persona,
+      aiModel: data.ai_model,
+      modelConfig: data.model_config,
+      avatar: data.avatar,
+      systemPrompt: data.system_prompt,
+      initialMessage: data.initial_message,
+    });
     setChatHistory([
       {
         content: data.initial_message,
@@ -86,7 +93,7 @@ export async function insertNewChat(chatName: string, personaId: string) {
   return data?.[0].id;
 }
 
-export async function insertInitialMessages(messages: Message[]) {
+export async function saveMessageToDb(messages: Message[]) {
   const { error } = await supabase.from('messages').insert(messages);
-  return error;
+  if (error) return ChatError.ERROR_SAVING_MESSAGES;
 }

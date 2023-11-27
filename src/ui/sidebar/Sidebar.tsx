@@ -30,7 +30,7 @@ import SidebarFooter from '@/ui/sidebar/SidebarFooter';
 export default function Sidebar() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const router = useRouter();
-  const chatState = useChatStore();
+  const { reset } = useChatStore();
   const routes = [
     config.routes.chat,
     config.routes.images,
@@ -70,6 +70,12 @@ export default function Sidebar() {
     );
   }
 
+  const handleNewChat = () => {
+    setSelectedIndex(0);
+    reset();
+    router.push(config.routes.newChat);
+  };
+
   function NewChatButton() {
     return (
       <>
@@ -82,11 +88,7 @@ export default function Sidebar() {
             mr: 1,
             display: { xs: 'none', lg: 'inline-flex' },
           }}
-          onClick={() => {
-            chatState.reset();
-            router.push(config.routes.chat);
-            setSelectedIndex(0);
-          }}
+          onClick={handleNewChat}
         >
           New Chat
         </Button>
@@ -94,11 +96,7 @@ export default function Sidebar() {
           color='neutral'
           size='sm'
           sx={{ display: { xs: 'inline-flex', lg: 'none' } }}
-          onClick={() => {
-            chatState.reset();
-            router.push(config.routes.chat);
-            setSelectedIndex(0);
-          }}
+          onClick={handleNewChat}
         >
           <MapsUgcRounded />
         </IconButton>

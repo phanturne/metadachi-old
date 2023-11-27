@@ -4,6 +4,7 @@ const config = {
     auth: '/auth',
     login: '/login',
     signUp: '/signup',
+    newChat: '/chat?new',
     chat: '/chat',
     images: '/images',
     toolbox: '/toolbox',

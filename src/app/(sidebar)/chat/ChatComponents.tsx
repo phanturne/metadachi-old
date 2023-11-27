@@ -105,3 +105,18 @@ export function ChatInput({
     </Box>
   );
 }
+
+export function NewChatConfig() {
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        overflowY: 'scroll',
+        px: 3,
+        flexDirection: 'column-reverse',
+      }}
+    >
+      <p>New Chat Config</p>
+    </Box>
+  );
+}
