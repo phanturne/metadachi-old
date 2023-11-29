@@ -2,11 +2,13 @@ import { ChatError } from '@/app/(sidebar)/chat/chat-utils';
 import { supabase } from '@/lib/utils/supabaseClient';
 import { Message as VercelChatMessage } from 'ai';
 import { Chat, Persona } from './chat-utils';
+import React from 'react';
 
 export async function configChatWithChatId(
   chat: Chat,
   setChat: (id: Chat | undefined) => void,
-  setPersona: (id: Persona | undefined) => void
+  setPersona: (id: Persona | undefined) => void,
+  setErrorMsg: React.Dispatch<React.SetStateAction<ChatError | undefined>>
 ) {
   const { data, error } = await supabase
     .from('personas')
@@ -18,7 +20,7 @@ export async function configChatWithChatId(
 
   if (error) {
     setChat(undefined);
-    return ChatError.INVALID_CHAT;
+    setErrorMsg(ChatError.INVALID_CHAT);
   } else {
     setChat({ ...chat, chatName: data.chats[0].chat_name });
     setPersona({
@@ -33,7 +35,8 @@ export async function configChatWithChatId(
 
 export async function setChatHistoryWithChatId(
   chat: Chat,
-  setChatHistory: (history: VercelChatMessage[]) => void
+  setChatHistory: (history: VercelChatMessage[]) => void,
+  setErrorMsg: React.Dispatch<React.SetStateAction<ChatError | undefined>>
 ) {
   const { data, error } = await supabase
     .from('messages')
@@ -41,7 +44,7 @@ export async function setChatHistoryWithChatId(
     .eq('chat_id', chat.id);
 
   if (error) {
-    return ChatError.INVALID_CHAT_HISTORY;
+    setErrorMsg(ChatError.INVALID_CHAT_HISTORY);
   } else {
     setChatHistory(data);
   }
@@ -51,7 +54,8 @@ export async function configChatWithPersonaId(
   persona: Persona,
   setChat: (id: Chat | undefined) => void,
   setPersona: (id: Persona | undefined) => void,
-  setChatHistory: (history: VercelChatMessage[]) => void
+  setChatHistory: (history: VercelChatMessage[]) => void,
+  setErrorMsg: React.Dispatch<React.SetStateAction<ChatError | undefined>>
 ) {
   const { data, error } = await supabase
     .from('personas')
@@ -63,7 +67,7 @@ export async function configChatWithPersonaId(
 
   if (error) {
     setPersona(undefined);
-    return ChatError.INVALID_PERSONA;
+    setErrorMsg(ChatError.INVALID_PERSONA);
   } else {
     setChat({ chatName: data.name });
     setPersona({
@@ -84,16 +88,26 @@ export async function configChatWithPersonaId(
   }
 }
 
-export async function insertNewChat(chatName: string, personaId: string) {
+export async function insertNewChat(
+  chatName: string,
+  personaId: string,
+  setErrorMsg: React.Dispatch<React.SetStateAction<ChatError | undefined>>
+) {
   const { data, error } = await supabase
     .from('chats')
     .insert({ chat_name: chatName, persona_id: personaId })
     .select('id');
 
+  if (error) {
+    setErrorMsg(ChatError.ERROR_CREATING_NEW_CHAT);
+  }
   return data?.[0].id;
 }
 
-export async function saveMessageToDb(messages: Message[]) {
+export async function saveMessageToDb(
+  messages: Message[],
+  setErrorMsg: React.Dispatch<React.SetStateAction<ChatError | undefined>>
+) {
   const { error } = await supabase.from('messages').insert(messages);
-  if (error) return ChatError.ERROR_SAVING_MESSAGES;
+  if (error) setErrorMsg(ChatError.ERROR_SAVING_MESSAGES);
 }

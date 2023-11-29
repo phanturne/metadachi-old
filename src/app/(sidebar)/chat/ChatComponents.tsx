@@ -106,7 +106,7 @@ export function ChatInput({
   );
 }
 
-export function NewChatConfig() {
+export function EmptyChatConfig() {
   return (
     <Box
       sx={{

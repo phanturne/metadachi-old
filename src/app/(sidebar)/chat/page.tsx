@@ -19,10 +19,11 @@ import Header from '@/ui/header/Header';
 import {
   ChatInput,
   ChatMessages,
-  NewChatConfig,
+  EmptyChatConfig,
 } from '@/app/(sidebar)/chat/ChatComponents';
 import { ExpandMoreRounded } from '@mui/icons-material';
 
+// An "Empty Chat" is one where no valid Chat/Persona ID is provided
 export default function ChatPage({
   searchParams,
 }: {
@@ -30,12 +31,16 @@ export default function ChatPage({
 }) {
   const [errorMsg, setErrorMsg] = useState<ChatError | undefined>(undefined);
   const router = useRouter();
-  const { chat, persona, chatHistory, setChat, setPersona, setChatHistory } =
-    useChatStore();
-
-  // Render `NewChatConfig` if the user clicked a "New Chat" button
-  // TODO: Use a `isNewChatPage` attribute in [ChatStore] instead of a searchParam since it doesn't work w/ TAURI
-  const isNewChatPage = 'new' in searchParams;
+  const {
+    chat,
+    persona,
+    chatHistory,
+    setChat,
+    setPersona,
+    setChatHistory,
+    isEmptyChat,
+    setIsEmptyChat,
+  } = useChatStore();
 
   // [WEB ONLY] Get the chat_id and persona_id from the url
   useEffect(() => {
@@ -53,6 +58,8 @@ export default function ChatPage({
       if (personaIdFromUrl && personaIdFromUrl !== persona?.id) {
         setPersona({ id: personaIdFromUrl });
       }
+
+      if (chatIdFromUrl || personaIdFromUrl) setIsEmptyChat(false);
     }
   }, []);
 
@@ -61,11 +68,11 @@ export default function ChatPage({
     (async () => {
       // If a chatId is provided, fetch the chat info with the chatId
       if (chat?.id) {
-        setErrorMsg(await configChatWithChatId(chat, setChat, setPersona));
+        await configChatWithChatId(chat, setChat, setPersona, setErrorMsg);
 
         // If the chat is valid, fetch the chat history
         if (!errorMsg) {
-          await setChatHistoryWithChatId(chat, setChatHistory);
+          await setChatHistoryWithChatId(chat, setChatHistory, setErrorMsg);
         }
       } else if (persona?.id) {
         // Else if a personaId is provided, fetch the chat info with the personaId
@@ -73,7 +80,8 @@ export default function ChatPage({
           persona,
           setChat,
           setPersona,
-          setChatHistory
+          setChatHistory,
+          setErrorMsg
         );
       }
 
@@ -81,18 +89,24 @@ export default function ChatPage({
       if (!(chat?.id || persona?.id) || errorMsg) {
         const defaultPersonaId = '1'; // TODO: Remove hardcoded value
         setPersona({ id: defaultPersonaId });
+
+        // Trigger [EmptyChatConfig] Component
+        if (!isEmptyChat) setIsEmptyChat(true);
       }
     })();
   }, [chat?.id, persona?.id]);
 
   const createNewChatWithMessages = async (aiResponse: VercelChatMessage) => {
     // Make sure the personaId exists
-    if (!persona?.id) return;
+    if (!persona?.id) {
+      throw new Error('No persona ID was provided when creating a new chat.');
+    }
 
-    // Create a new chat
+    // Insert a new chat entry into the database
     const newChatId = await insertNewChat(
       chat?.chatName ?? 'New Chat',
-      persona.id
+      persona.id,
+      setErrorMsg
     );
 
     // Insert the messages (initialMessage, input, aiResponse)
@@ -106,7 +120,7 @@ export default function ChatPage({
       { content: aiResponse.content, role: 'assistant', chat_id: newChatId },
     ];
 
-    setErrorMsg(await saveMessageToDb(messagesToInsert));
+    await saveMessageToDb(messagesToInsert, setErrorMsg);
 
     // Redirect to chat/[chatId]
     setChat({ ...chat, id: newChatId });
@@ -123,7 +137,7 @@ export default function ChatPage({
       },
     ];
 
-    setErrorMsg(await saveMessageToDb(messagesToInsert));
+    await saveMessageToDb(messagesToInsert, setErrorMsg);
   };
 
   // TODO: Add functionality to swap the AI model
@@ -134,7 +148,7 @@ export default function ChatPage({
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT ?? '/api/chat',
     initialMessages: chatHistory,
-    id: !isNewChatPage && chat?.id ? chat?.id : undefined,
+    id: !isEmptyChat && chat?.id ? chat?.id : (Date.now() as unknown as string),
     body: {
       customChatConfig: persona?.modelConfig,
       systemPrompt: persona?.systemPrompt,
@@ -142,7 +156,7 @@ export default function ChatPage({
       apiKey: apiKey,
     },
     onFinish:
-      !isNewChatPage && chat?.id ? insertMessages : createNewChatWithMessages,
+      !isEmptyChat && chat?.id ? insertMessages : createNewChatWithMessages,
   });
 
   // Initialize new chats with an initial message
@@ -152,6 +166,11 @@ export default function ChatPage({
       content: persona?.initialMessage,
       role: 'assistant',
     });
+  }
+
+  function customHandleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (isEmptyChat) setIsEmptyChat(false);
+    handleSubmit(e);
   }
 
   return (
@@ -184,12 +203,12 @@ export default function ChatPage({
           </Box>
         }
       />
-      {isNewChatPage && <NewChatConfig />}
-      {!isNewChatPage && <ChatMessages messages={messages} />}
+      {isEmptyChat && <EmptyChatConfig />}
+      {!isEmptyChat && <ChatMessages messages={messages} />}
       <ChatInput
         input={input}
         handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
+        handleSubmit={customHandleSubmit}
       />
     </>
   );
