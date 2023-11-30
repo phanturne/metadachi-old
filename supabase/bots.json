@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "avatar": "default-bot-avatar.jpg",
+    "name": "Metadachi",
+    "alias": "metadachi",
+    "system_prompt": "<METADACHI_SYSTEM_PROMPT>",
+    "initial_message": "Hi, I'm Metadachi.",
+    "description": "<DESCRIPTION PLACEHOLDER>",
+    "tags": ["Default"],
+    "ai_model": "accounts/fireworks/models/llama-v2-7b-chat",
+    "model_config": {
+      "temperature": 0.3,
+      "max_tokens": 2000,
+      "presence_penalty": 0,
+      "frequency_penalty": 0,
+      "sendMemory": true,
+      "historyMessageCount": 4,
+      "compressMessageLengthThreshold": 1000
+    },
+    "public": true
+  },
+  {
+    "id": 2,
+    "avatar": "default-bot-avatar.jpg",
+    "name": "Metadachi 2",
+    "alias": "metadachi2",
+    "system_prompt": "<METADACHI_SYSTEM_PROMPT>",
+    "initial_message": "Hi, I'm Metadachi.",
+    "description": "<DESCRIPTION PLACEHOLDER>",
+    "tags": ["Default"],
+    "ai_model": "accounts/fireworks/models/llama-v2-7b-chat",
+    "model_config": {
+      "temperature": 0.3,
+      "max_tokens": 2000,
+      "presence_penalty": 0,
+      "frequency_penalty": 0,
+      "sendMemory": true,
+      "historyMessageCount": 4,
+      "compressMessageLengthThreshold": 1000
+    },
+    "public": true
+  }
+]

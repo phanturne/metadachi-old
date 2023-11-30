@@ -23,7 +23,6 @@ export const AuthContextProvider = ({
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log('Auth state changed');
     setIsAuthModalOpen(isApp && session === null);
   }, [session]);
 
