@@ -1,25 +1,25 @@
 import { create } from 'zustand';
 import { Message as VercelChatMessage } from 'ai';
-import { Chat, Persona } from '@/app/(sidebar)/chat/chat-utils';
+import { Chat, Bot } from '@/app/(sidebar)/chat/chat-utils';
 
 type ChatState = {
   chat?: Chat;
-  persona?: Persona;
+  bot?: Bot;
   chatHistory: VercelChatMessage[];
   isEmptyChat: boolean;
 };
 
 const emptyChatState: ChatState = {
   chat: undefined,
-  persona: undefined,
+  bot: undefined,
   chatHistory: [],
   isEmptyChat: true,
 };
 
 type ChatActions = {
-  setNewChat: (chatId?: string, personaId?: string) => void;
+  setNewChat: (chatId?: string, botId?: string) => void;
   setChat: (id: ChatState['chat']) => void;
-  setPersona: (id: ChatState['persona']) => void;
+  setBot: (id: ChatState['bot']) => void;
   setChatHistory: (history: ChatState['chatHistory']) => void;
   insertMessage: (m: VercelChatMessage) => void;
   setIsEmptyChat: (b: boolean) => void;
@@ -27,15 +27,15 @@ type ChatActions = {
 
 export const useChatStore = create<ChatState & ChatActions>((set) => ({
   ...emptyChatState,
-  setNewChat: (chatId, personaId) =>
+  setNewChat: (chatId, botId) =>
     set(() => ({
       chat: chatId ? { id: chatId } : undefined,
-      persona: personaId ? { id: personaId } : undefined,
+      bot: botId ? { id: botId } : undefined,
       chatHistory: [],
-      isEmptyChat: !(chatId || personaId),
+      isEmptyChat: !(chatId || botId),
     })),
   setChat: (chat) => set(() => ({ chat: chat })),
-  setPersona: (persona) => set(() => ({ persona: persona })),
+  setBot: (bot) => set(() => ({ bot: bot })),
   setChatHistory: (messages) => set(() => ({ chatHistory: messages })),
   insertMessage: (m) =>
     set((state) => ({ chatHistory: [...state.chatHistory, m] })),

@@ -1,7 +1,6 @@
 [
   {
     "id": 1,
-    "avatar": "default-bot-avatar.jpg",
     "name": "Metadachi",
     "alias": "metadachi",
     "system_prompt": "<METADACHI_SYSTEM_PROMPT>",
@@ -22,7 +21,6 @@
   },
   {
     "id": 2,
-    "avatar": "default-bot-avatar.jpg",
     "name": "Metadachi 2",
     "alias": "metadachi2",
     "system_prompt": "<METADACHI_SYSTEM_PROMPT>",

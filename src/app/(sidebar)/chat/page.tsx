@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { ChatError } from '@/app/(sidebar)/chat/chat-utils';
 import {
   configChatWithChatId,
-  configChatWithPersonaId,
+  configChatWithBotId,
   insertNewChat,
   saveMessageToDb,
   setChatHistoryWithChatId,
@@ -23,7 +23,7 @@ import {
 } from '@/app/(sidebar)/chat/ChatComponents';
 import { ExpandMoreRounded } from '@mui/icons-material';
 
-// An "Empty Chat" is one where no valid Chat/Persona ID is provided
+// An "Empty Chat" is one where no valid Chat/Bot ID is provided
 export default function ChatPage({
   searchParams,
 }: {
@@ -33,86 +33,86 @@ export default function ChatPage({
   const router = useRouter();
   const {
     chat,
-    persona,
+    bot,
     chatHistory,
     setChat,
-    setPersona,
+    setBot,
     setChatHistory,
     isEmptyChat,
     setIsEmptyChat,
   } = useChatStore();
 
-  // [WEB ONLY] Get the chat_id and persona_id from the url
+  // [WEB ONLY] Get the chat_id and bot_id from the url
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BUILD_MODE !== 'export') {
       let chatIdFromUrl = Array.isArray(searchParams?.c)
         ? searchParams.c[0]
         : searchParams.c;
-      let personaIdFromUrl = Array.isArray(searchParams?.p)
+      let botIdFromUrl = Array.isArray(searchParams?.p)
         ? searchParams.p[0]
         : searchParams.p;
 
       if (chatIdFromUrl && chatIdFromUrl !== chat?.id) {
         setChat({ id: chatIdFromUrl });
       }
-      if (personaIdFromUrl && personaIdFromUrl !== persona?.id) {
-        setPersona({ id: personaIdFromUrl });
+      if (botIdFromUrl && botIdFromUrl !== bot?.id) {
+        setBot({ id: botIdFromUrl });
       }
 
-      if (chatIdFromUrl || personaIdFromUrl) setIsEmptyChat(false);
+      if (chatIdFromUrl || botIdFromUrl) setIsEmptyChat(false);
     }
   }, []);
 
-  // Fetch the chat or persona details
+  // Fetch the chat or bot details
   useEffect(() => {
     (async () => {
       // If a chatId is provided, fetch the chat info with the chatId
       if (chat?.id) {
-        await configChatWithChatId(chat, setChat, setPersona, setErrorMsg);
+        await configChatWithChatId(chat, setChat, setBot, setErrorMsg);
 
         // If the chat is valid, fetch the chat history
         if (!errorMsg) {
           await setChatHistoryWithChatId(chat, setChatHistory, setErrorMsg);
         }
-      } else if (persona?.id) {
-        // Else if a personaId is provided, fetch the chat info with the personaId
-        await configChatWithPersonaId(
-          persona,
+      } else if (bot?.id) {
+        // Else if a botId is provided, fetch the chat info with the botId
+        await configChatWithBotId(
+          bot,
           setChat,
-          setPersona,
+          setBot,
           setChatHistory,
           setErrorMsg
         );
       }
 
-      // Use the user's default chat persona for new chats, missing IDs, or failed fetches
-      if (!(chat?.id || persona?.id) || errorMsg) {
-        const defaultPersonaId = '1'; // TODO: Remove hardcoded value
-        setPersona({ id: defaultPersonaId });
+      // Use the user's default bot config for new chats, missing IDs, or failed fetches
+      if (!(chat?.id || bot?.id) || errorMsg) {
+        const defaultBotId = '1'; // TODO: Remove hardcoded value
+        setBot({ id: defaultBotId });
 
         // Trigger [EmptyChatConfig] Component
         if (!isEmptyChat) setIsEmptyChat(true);
       }
     })();
-  }, [chat?.id, persona?.id]);
+  }, [chat?.id, bot?.id]);
 
   const createNewChatWithMessages = async (aiResponse: VercelChatMessage) => {
-    // Make sure the personaId exists
-    if (!persona?.id) {
-      throw new Error('No persona ID was provided when creating a new chat.');
+    // Make sure the botId exists
+    if (!bot?.id) {
+      throw new Error('No bot ID was provided when creating a new chat.');
     }
 
     // Insert a new chat entry into the database
     const newChatId = await insertNewChat(
       chat?.chatName ?? 'New Chat',
-      persona.id,
+      bot.id,
       setErrorMsg
     );
 
     // Insert the messages (initialMessage, input, aiResponse)
     const messagesToInsert: Message[] = [
-      persona.initialMessage && {
-        content: persona.initialMessage,
+      bot.initialMessage && {
+        content: bot.initialMessage,
         role: 'assistant',
         chat_id: newChatId,
       },
@@ -141,7 +141,7 @@ export default function ChatPage({
   };
 
   // TODO: Add functionality to swap the AI model
-  const [currAiModel, setCurrAiModel] = useState(persona?.aiModel);
+  const [currAiModel, setCurrAiModel] = useState(bot?.aiModel);
   // TODO: Get the user's API key. If it's undefined, the default one will be used
   const apiKey = undefined;
 
@@ -150,8 +150,8 @@ export default function ChatPage({
     initialMessages: chatHistory,
     id: !isEmptyChat && chat?.id ? chat?.id : (Date.now() as unknown as string),
     body: {
-      customChatConfig: persona?.modelConfig,
-      systemPrompt: persona?.systemPrompt,
+      customChatConfig: bot?.modelConfig,
+      systemPrompt: bot?.systemPrompt,
       chatModel: currAiModel,
       apiKey: apiKey,
     },
@@ -160,10 +160,10 @@ export default function ChatPage({
   });
 
   // Initialize new chats with an initial message
-  if (messages.length === 0 && persona?.initialMessage) {
+  if (messages.length === 0 && bot?.initialMessage) {
     messages.push({
       id: 'id',
-      content: persona?.initialMessage,
+      content: bot?.initialMessage,
       role: 'assistant',
     });
   }

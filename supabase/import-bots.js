@@ -2,7 +2,8 @@ const { resolve } = require('path');
 require('dotenv').config({ path: resolve(__dirname, '../.env.local') });
 
 const { createClient } = require('@supabase/supabase-js');
-const fs = require('fs/promises');
+const fsp = require('fs/promises');
+const fs = require('fs');
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -22,7 +23,7 @@ async function dropAllBots() {
 // Function to read the JSON file
 async function readBotsFromJson() {
   try {
-    const content = await fs.readFile('supabase/bots.json', 'utf-8');
+    const content = await fsp.readFile('supabase/bots.json', 'utf-8');
     return JSON.parse(content);
   } catch (error) {
     console.error('Error reading bots list from JSON:', error.message);
@@ -37,7 +38,7 @@ async function insertBots(bots) {
 
   for (const bot of bots) {
     const { error } = await supabase.from('bots').upsert([bot]);
-    await uploadFileToSupabase(bot.avatar);
+    await uploadBotAvatar(bot.id);
 
     if (error) {
       console.error('Error inserting bot:', error.message);
@@ -51,15 +52,23 @@ async function insertBots(bots) {
 }
 
 // Upload the bot avatar to a Supabase Bucket
-async function uploadFileToSupabase(filePath) {
+async function uploadBotAvatar(botId) {
   try {
+    // Get the file name (supports different file extensions)
+    const fileName = fs
+      .readdirSync('supabase/bot-avatars')
+      .find((fn) => fn.startsWith(`${botId}.`));
+
+    // Return early if the file does not exist
+    if (!fileName) return;
+
     // Read the file data
-    const data = await fs.readFile(`supabase/bot-avatars/${filePath}`);
+    const data = await fsp.readFile(`supabase/bot-avatars/${fileName}`);
 
     // Upload the file to Supabase storage
     const { error: uploadError } = await supabase.storage
       .from('bot-avatars')
-      .upload(filePath, data, {
+      .upload(fileName, data, {
         upsert: true,
       });
 

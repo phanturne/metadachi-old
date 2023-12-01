@@ -12,33 +12,33 @@
 [MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
 [Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
 
-Unlock boundless productivity with our cutting-edge cross-platform AI assistant! Seamlessly accessible on both desktop and web, Metadachi offers seamless conversation, image, text, and audio generation at your fingertips, with lightning-fast global hotkeys and system tray integration. Experience unparalleled efficiency as you navigate tasks effortlessly and elevate your workflow with the ultimate AI companion.
+Unlock boundless productivity with our powerful cross-platform AI assistant! Seamlessly accessible on both desktop and web, Metadachi offers seamless conversation, image, text, and audio generation at your fingertips, with lightning-fast global hotkeys and system tray integration. Experience unparalleled efficiency as you navigate tasks effortlessly and elevate your workflow with the ultimate AI companion.
 
 </div>
 
 ## Features
-- 🚀 **Supercharged AI Assistant**: Access powerful AI agents augmented with LangChain
+- 🚀 **Supercharged AI Assistant**: Powerful AI agents augmented with LangChain
 - 🔒 **Privacy Guaranteed**: Take control of your data in your own private database
 - 🌐 **Cross Platform**: Back up and sync data across Windows, macOS, and the web
 - 💻 **Desktop App**: Lightweight desktop assistant (~5MB) with system tray integration and global hotkeys
 - 🛠️ **Easy Self-Hosting**: Deploy effortlessly to Vercel & Supabase
 
 ## Roadmap
-- [ ] ⚜️ UI Redesign
-- [ ] 🪄App Layout Customization
-- [ ] 🤖 Custom AI agents and prompts
+### High Priority
+- [ ] Various LLMs (Hugging Face, OpenAI, Fireworks AI)
+- [ ] Custom AI bots and prompts
+- [ ] Access multiple AI bots from a single chat
+- [ ] ✨ Slash and @ Commands
 - [ ] 📤 Retrieval Augmented Generation (RAG)
-- [ ] 📖 Documentation
-- [ ] ⚙️ Backend Alternatives
-- [ ] 🤖 Various LLMs (Hugging Face, OpenAI, Fireworks AI)
-- [ ] 🐶 Desktop Companion
-- [ ] 📱 Mobile App (Android, iOS)
-- [ ] 🎨 Visual Alchemy
-- [ ] ✨ Slash Commands
+
+### Nice to Haves
+- [ ] ⚜️ UI Redesign
+  - [ ] Layout Customization Options
+- [ ] 🐶 Interactive Desktop Companion
+- [ ] 🎨 Visual Alchemy (Image Generation)
 - [ ] 🧰 AI Toolbox
-- [ ] 🤝 Team Collaboration
-- [ ] 🌍 Community Hub
-- [ ] 📁 Prisma Scripts
+- [ ] ⚙️ Backend Alternatives
+- [ ] 📱 Mobile App (Android, iOS)
 
 ## Technology Stack
 | Technology         | Description                                             |
@@ -66,7 +66,7 @@ To start using Metadachi today, you can either access our [Web App](https://app.
    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fphanturne%2Fmetadachi&project-name=metadachi&repository-name=metadachi&demo-title=Metadachi&demo-url=https%3A%2F%2Fapp.metadachi.com)
 2. Create a new Supabase project and navigate to the SQL Editor. Run [init.sql](supabase/init.sql) to initialize the database.
 3. Fill out the required environment variables.
-4. [Optional] Add the default bots from [bots.json](supabase/bots.json).
+4. Add the default bots from [bots.json](supabase/bots.json). (This step is necessary as the default fallback bot configuration is sourced from this file. It will become optional in the future.)
 ```shell
 pnpm import-bots
 ```
