@@ -27,8 +27,8 @@ export const useChatStore = createPersistStore(
         chatHistory: [],
         isEmptyChat: !(chatId || botId),
       })),
-    setChat: (chat: Chat) => set(() => ({ chat: chat })),
-    setBot: (bot: Bot) => set(() => ({ bot: bot })),
+    setChat: (chat?: Chat) => set(() => ({ chat: chat })),
+    setBot: (bot?: Bot) => set(() => ({ bot: bot })),
     setChatHistory: (messages: VercelChatMessage[]) =>
       set(() => ({ chatHistory: messages })),
     insertMessage: (m: VercelChatMessage) =>
