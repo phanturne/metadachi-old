@@ -21,9 +21,9 @@ import {
   SettingsRounded,
   SupportRounded,
 } from '@mui/icons-material';
-import config from '@/lib/config';
 import { Button } from '@mui/joy';
 import { useChatStore } from '@/lib/stores/chat';
+import { routes } from '@/lib/config';
 import SidebarHeader from '@/ui/sidebar/SidebarHeader';
 import SidebarFooter from '@/ui/sidebar/SidebarFooter';
 
@@ -31,13 +31,13 @@ export default function Sidebar() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const router = useRouter();
   const { setNewChat } = useChatStore();
-  const routes = [
-    config.routes.chat,
-    config.routes.images,
-    config.routes.toolbox,
-    config.routes.discover,
-    config.routes.support,
-    config.routes.settings,
+  const routeList = [
+    routes.chat,
+    routes.images,
+    routes.toolbox,
+    routes.discover,
+    routes.support,
+    routes.settings,
   ];
 
   function MenuItem({
@@ -57,7 +57,7 @@ export default function Sidebar() {
           selected={index === selectedIndex}
           onClick={() => {
             setSelectedIndex(index);
-            router.push(routes[index] ?? config.routes.notFound);
+            router.push(routeList[index] ?? routes.notFound);
           }}
         >
           <ListItemDecorator>{icon}</ListItemDecorator>
@@ -73,7 +73,7 @@ export default function Sidebar() {
   const handleNewChat = () => {
     setSelectedIndex(0);
     setNewChat();
-    router.push(config.routes.chat);
+    router.push(routes.chat);
   };
 
   function NewChatButton() {

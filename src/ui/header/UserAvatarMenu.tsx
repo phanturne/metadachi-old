@@ -16,7 +16,7 @@ import {
   SettingsRounded,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
-import config from '@/lib/config';
+import { routes } from '@/lib/config';
 import Divider from '@mui/joy/Divider';
 import { useSupabaseSession } from '@/lib/hooks/useSupabaseSession';
 import { supabase } from '@/lib/utils/supabaseClient';
@@ -75,7 +75,7 @@ export default function UserAvatarMenu() {
         </Box>
         <MenuItem
           onClick={() => {
-            router.push(config.routes.settings);
+            router.push(routes.settings);
           }}
         >
           <ListItemDecorator>
