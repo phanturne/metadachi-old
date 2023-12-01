@@ -19,6 +19,7 @@ export interface Chat {
 export interface Bot {
   id?: string;
   name?: string;
+  alias?: string;
   systemPrompt?: string;
   initialMessage?: string;
   description?: string;
