@@ -14,6 +14,8 @@
 
 Unlock boundless productivity with our powerful cross-platform AI assistant! Seamlessly accessible on both desktop and web, Metadachi offers seamless conversation, image, text, and audio generation at your fingertips, with lightning-fast global hotkeys and system tray integration. Experience unparalleled efficiency as you navigate tasks effortlessly and elevate your workflow with the ultimate AI companion.
 
+![cover](./docs/images/screenshot-1.jpeg)
+
 </div>
 
 ## Features
