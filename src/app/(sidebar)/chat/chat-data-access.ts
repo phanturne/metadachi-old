@@ -107,3 +107,24 @@ export async function saveMessageToDb(
   const { error } = await supabase.from('messages').insert(messages);
   if (error) setErrorMsg(ChatError.ERROR_SAVING_MESSAGES);
 }
+
+export async function getAllChats(
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>
+) {
+  const { data, error } = await supabase.from('chats').select('*');
+
+  if (error) {
+    console.error('Error fetching list of chats');
+  } else {
+    setChats(
+      data.map((row) => ({
+        id: row.id,
+        createdAt: row.createdAt,
+        chatName: row.chat_name,
+        botId: row.bot_id,
+        public: row.public,
+        userId: row.userId,
+      }))
+    );
+  }
+}

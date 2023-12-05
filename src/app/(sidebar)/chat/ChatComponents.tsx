@@ -1,9 +1,20 @@
-import { Avatar, Box, Stack, Textarea, Typography } from '@mui/joy';
+import { Avatar, Box, MenuList, Stack, Textarea, Typography } from '@mui/joy';
 import Sheet from '@mui/joy/Sheet';
 import IconButton from '@mui/joy/IconButton';
-import { Send } from '@mui/icons-material';
+import { HistoryRounded, Send } from '@mui/icons-material';
 import { useAuthModal } from '@/app/AuthContextProvider';
 import { useSupabaseSession } from '@/lib/hooks/useSupabaseSession';
+import { useRouter } from 'next/navigation';
+import Dropdown from '@mui/joy/Dropdown';
+import MenuButton from '@mui/joy/MenuButton';
+import Menu from '@mui/joy/Menu';
+import MenuItem from '@mui/joy/MenuItem';
+import * as React from 'react';
+import { useState } from 'react';
+import { getAllChats } from '@/app/(sidebar)/chat/chat-data-access';
+import { Chat } from '@/app/(sidebar)/chat/chat-utils';
+import { routes } from '@/lib/config';
+import { useChatStore } from '@/lib/stores/chat';
 
 function ChatBubble({ m }: { m: Message }) {
   const fromUser = m.role === 'user';
@@ -118,5 +129,58 @@ export function EmptyChatConfig() {
     >
       <p>New Chat Config</p>
     </Box>
+  );
+}
+
+export function ChatHistoryDropdown() {
+  const router = useRouter();
+  const [chats, setChats] = useState<Chat[]>([]);
+  const { setChat } = useChatStore();
+
+  async function onClick() {
+    await getAllChats(setChats);
+  }
+
+  // TODO: Add loading indicator when fetching chat list
+  // TODO: Fix: [MenuList] is causing the dropdown to not be hidden when click away
+  return (
+    <Dropdown>
+      <MenuButton
+        slots={{ root: IconButton }}
+        slotProps={{ root: { variant: 'plain', color: 'neutral' } }}
+        sx={{ borderRadius: 40 }}
+      >
+        <IconButton color='neutral' size='sm' onClick={onClick}>
+          <HistoryRounded />
+        </IconButton>
+      </MenuButton>
+      <Menu placement='bottom-start' sx={{ m: 0, p: 0 }}>
+        <MenuList
+          component='div'
+          variant='plain'
+          size='sm'
+          sx={{
+            boxShadow: 'sm',
+            flexGrow: 0,
+            width: 250,
+            maxHeight: 'calc(100dvh - var(--Header-height))',
+            overflow: 'auto',
+          }}
+        >
+          {chats.length === 0 && <Typography>Chat List is Empty</Typography>}
+          {chats.map((c) => (
+            <MenuItem
+              key={`ChatListItem_${c.id}`}
+              onClick={() => {
+                setChat(c);
+                router.push(`${routes.chat}?c=${c.id}`);
+              }}
+            >
+              {c.chatName}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+    </Dropdown>
   );
 }

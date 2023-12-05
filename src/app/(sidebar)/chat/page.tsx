@@ -17,6 +17,7 @@ import { Box, IconButton, Snackbar, Typography } from '@mui/joy';
 import { useChatStore } from '@/lib/stores/chat';
 import Header from '@/ui/header/Header';
 import {
+  ChatHistoryDropdown,
   ChatInput,
   ChatMessages,
   EmptyChatConfig,
@@ -188,6 +189,7 @@ export default function ChatPage({
         {errorMsg as string}
       </Snackbar>
       <Header
+        startContent={<ChatHistoryDropdown />}
         middleContent={
           <Box
             sx={{

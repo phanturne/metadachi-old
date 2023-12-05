@@ -41,7 +41,9 @@ export default function Header({
           },
         })}
       />
-      <Box sx={{ flex: 1 }}>{startContent || <div></div>}</Box>
+      <Box sx={{ flex: 1, textAlign: 'left' }}>
+        {startContent || <div></div>}
+      </Box>
 
       <Box sx={{ flex: 1 }}>{middleContent}</Box>
 

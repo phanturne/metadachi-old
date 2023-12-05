@@ -10,7 +10,7 @@ type ChatState = {
   isEmptyChat: boolean;
 };
 
-const emptyChatState: ChatState = {
+const EMPTY_CHAT_STATE: ChatState = {
   chat: undefined,
   bot: undefined,
   chatHistory: [],
@@ -18,7 +18,7 @@ const emptyChatState: ChatState = {
 };
 
 export const useChatStore = createPersistStore(
-  emptyChatState,
+  EMPTY_CHAT_STATE,
   (set) => ({
     setNewChat: (chatId?: string, botId?: string) =>
       set(() => ({
