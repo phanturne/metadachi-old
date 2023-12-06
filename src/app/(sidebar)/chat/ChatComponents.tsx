@@ -1,7 +1,20 @@
-import { Avatar, Box, MenuList, Stack, Textarea, Typography } from '@mui/joy';
+'use client';
+
+import {
+  Avatar,
+  Box,
+  FormControl,
+  MenuList,
+  Option,
+  Select,
+  selectClasses,
+  Stack,
+  Textarea,
+  Typography,
+} from '@mui/joy';
 import Sheet from '@mui/joy/Sheet';
 import IconButton from '@mui/joy/IconButton';
-import { HistoryRounded, Send } from '@mui/icons-material';
+import { HistoryRounded, KeyboardArrowDown, Send } from '@mui/icons-material';
 import { useAuthModal } from '@/app/AuthContextProvider';
 import { useSupabaseSession } from '@/lib/hooks/useSupabaseSession';
 import { useRouter } from 'next/navigation';
@@ -12,7 +25,7 @@ import MenuItem from '@mui/joy/MenuItem';
 import * as React from 'react';
 import { useState } from 'react';
 import { getAllChats } from '@/app/(sidebar)/chat/chat-data-access';
-import { Chat } from '@/app/(sidebar)/chat/chat-utils';
+import { Bot, Chat } from '@/app/(sidebar)/chat/chat-utils';
 import { routes } from '@/lib/config';
 import { useChatStore } from '@/lib/stores/chat';
 
@@ -117,7 +130,8 @@ export function ChatInput({
   );
 }
 
-export function EmptyChatConfig() {
+export function EmptyChatConfig({ bots }: { bots: Bot[] }) {
+  const { setBot } = useChatStore();
   return (
     <Box
       sx={{
@@ -125,9 +139,50 @@ export function EmptyChatConfig() {
         overflowY: 'scroll',
         px: 3,
         flexDirection: 'column-reverse',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
       }}
     >
-      <p>New Chat Config</p>
+      <Sheet
+        variant='plain'
+        sx={{
+          height: '300px',
+          width: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <FormControl sx={{ width: '240px', gap: 1 }}>
+          <Typography>Bot</Typography>
+          <Select
+            // TODO: Value for bots?.[0] gets set in useEffect(), so it's not available yet. Show loading indicator instead?
+            defaultValue={bots?.[0]?.name}
+            placeholder='Select a Bot'
+            indicator={<KeyboardArrowDown />}
+            onChange={(_, newValue) => {
+              const selectedBot = bots.find((b) => b.id === newValue);
+              setBot(selectedBot);
+            }}
+            sx={{
+              [`& .${selectClasses.indicator}`]: {
+                transition: '0.2s',
+                [`&.${selectClasses.expanded}`]: {
+                  transform: 'rotate(-180deg)',
+                },
+              },
+            }}
+          >
+            {bots.map((b) => (
+              <Option key={`bot-option-${b.id}`} value={b.id}>
+                {b.name}
+              </Option>
+            ))}
+          </Select>
+        </FormControl>
+      </Sheet>
     </Box>
   );
 }

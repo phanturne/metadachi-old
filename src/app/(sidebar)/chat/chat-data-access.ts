@@ -123,7 +123,7 @@ export async function getAllChats(
     setChats(
       data.map((row) => ({
         id: row.id,
-        createdAt: row.createdAt,
+        createdAt: row.created_at,
         chatName: row.chat_name,
         botId: row.bot_id,
         public: row.public,
@@ -131,4 +131,23 @@ export async function getAllChats(
       }))
     );
   }
+}
+
+export async function getAllBots(): Promise<Bot[]> {
+  const { data, error } = await supabase.from('bots').select('*');
+
+  if (error) {
+    console.error('Error fetching list of bots');
+    return [];
+  }
+
+  return data.map((row) => ({
+    ...row,
+    systemPrompt: row.system_prompt,
+    initialMessage: row.initial_message,
+    aiModel: row.ai_model,
+    modelConfig: row.model_config,
+    userId: row.user_id,
+    createdAt: row.created_at,
+  }));
 }

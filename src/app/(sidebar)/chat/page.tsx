@@ -3,13 +3,14 @@
 import { useChat } from 'ai/react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ChatError } from '@/app/(sidebar)/chat/chat-utils';
+import { Bot, ChatError } from '@/app/(sidebar)/chat/chat-utils';
 import {
   configChatWithChatId,
   configChatWithBotId,
   insertNewChat,
   saveMessageToDb,
   setChatHistoryWithChatId,
+  getAllBots,
 } from '@/app/(sidebar)/chat/chat-data-access';
 import { Message as VercelChatMessage } from 'ai';
 import { useRouter } from 'next/navigation';
@@ -42,6 +43,14 @@ export default function ChatPage({
     isEmptyChat,
     setIsEmptyChat,
   } = useChatStore();
+
+  const [bots, setBots] = useState<Bot[]>([]);
+  useEffect(() => {
+    (async () => {
+      const botsData = await getAllBots();
+      setBots(botsData);
+    })();
+  }, []);
 
   // [WEB ONLY] Get the chat_id and bot_id from the url
   useEffect(() => {
@@ -188,6 +197,7 @@ export default function ChatPage({
       >
         {errorMsg as string}
       </Snackbar>
+      {/*Fix Hydration Fail Error*/}
       <Header
         startContent={<ChatHistoryDropdown />}
         middleContent={
@@ -205,7 +215,7 @@ export default function ChatPage({
           </Box>
         }
       />
-      {isEmptyChat && <EmptyChatConfig />}
+      {isEmptyChat && <EmptyChatConfig bots={bots} />}
       {!isEmptyChat && <ChatMessages messages={messages} />}
       <ChatInput
         input={input}
