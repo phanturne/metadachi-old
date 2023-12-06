@@ -1,7 +1,7 @@
 import { ChatError } from '@/app/(sidebar)/chat/chat-utils';
 import { supabase } from '@/lib/utils/supabaseClient';
 import { Message as VercelChatMessage } from 'ai';
-import { Chat, Bot } from './chat-utils';
+import { Bot, Chat } from './chat-utils';
 import React from 'react';
 
 export async function configChatWithChatId(
@@ -109,9 +109,13 @@ export async function saveMessageToDb(
 }
 
 export async function getAllChats(
+  userId: string,
   setChats: React.Dispatch<React.SetStateAction<Chat[]>>
 ) {
-  const { data, error } = await supabase.from('chats').select('*');
+  const { data, error } = await supabase
+    .from('chats')
+    .select('*')
+    .eq('user_id', userId);
 
   if (error) {
     console.error('Error fetching list of chats');

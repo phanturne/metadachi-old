@@ -136,9 +136,13 @@ export function ChatHistoryDropdown() {
   const router = useRouter();
   const [chats, setChats] = useState<Chat[]>([]);
   const { setChat } = useChatStore();
+  const session = useSupabaseSession();
 
   async function onClick() {
-    await getAllChats(setChats);
+    if (!session?.user?.id) {
+      return;
+    }
+    await getAllChats(session.user.id, setChats);
   }
 
   // TODO: Add loading indicator when fetching chat list
