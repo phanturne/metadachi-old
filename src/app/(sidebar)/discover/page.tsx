@@ -1,43 +1,54 @@
 'use client';
 
 import Header from '@/ui/header/Header';
-import { Box, Grid, Sheet, styled } from '@mui/joy';
-
-const Item = styled(Sheet)(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === 'dark' ? theme.palette.background.level1 : '#fff',
-  ...theme.typography['body-sm'],
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  borderRadius: 4,
-  color: theme.vars.palette.text.secondary,
-}));
+import { Tab, tabClasses, TabList, TabPanel, Tabs } from '@mui/joy';
+import BotsTab from '@/app/(sidebar)/discover/BotsTab';
 
 export default function DiscoverPage() {
   return (
     <>
       <Header />
-      <Box
-        sx={{
-          flexGrow: 1,
-          overflowY: 'scroll',
-          px: 3,
-          flexDirection: 'column-reverse',
-        }}
+      <Tabs
+        aria-label='tabs'
+        defaultValue='bots'
+        sx={{ bgColor: 'transparent', overflowY: 'scroll' }}
       >
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 2, sm: 3, md: 4 }}
-          sx={{ flexGrow: 1 }}
+        <TabList
+          disableUnderline
+          sx={{
+            p: 0.5,
+            gap: 0.5,
+            borderRadius: 'xl',
+            bgColor: 'background.level1',
+            width: 425,
+            [`& .${tabClasses.root}[aria-selected="true"]`]: {
+              boxShadow: 'sm',
+              bgColor: 'background.surface',
+            },
+          }}
         >
-          {Array.from(Array(120)).map((_, index) => (
-            <Grid xs={1} key={index}>
-              <Item>xs=2</Item>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+          <Tab disableIndicator value='bots'>
+            Bots
+          </Tab>
+          <Tab disableIndicator value='prompts'>
+            Prompts
+          </Tab>
+          <Tab disableIndicator value='chats'>
+            Chats
+          </Tab>
+          <Tab disableIndicator value='images'>
+            Images
+          </Tab>
+          <Tab disableIndicator value='pets'>
+            Pets
+          </Tab>
+        </TabList>
+        <BotsTab />
+        <TabPanel value='prompts'>Content for Prompts Tab</TabPanel>
+        <TabPanel value='chats'>Content for Chats Tab</TabPanel>
+        <TabPanel value='images'>Content for Images Tab</TabPanel>
+        <TabPanel value='pets'>Content for Pets Tab</TabPanel>
+      </Tabs>
     </>
   );
 }
