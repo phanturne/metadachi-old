@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import TauriConfig from '@/app/TauriConfig';
 import ThemeProvider from '@/app/ThemeProvider';
 import { AuthContextProvider } from '@/app/AuthContextProvider';
+import { SnackbarContextProvider } from '@/app/SnackbarContextProvider';
 
 export const metadata: Metadata = {
   title: 'Metadachi',
@@ -19,7 +20,9 @@ export default function RootLayout({
 
       <body>
         <ThemeProvider options={{ key: 'joy' }}>
-          <AuthContextProvider>{children}</AuthContextProvider>
+          <SnackbarContextProvider>
+            <AuthContextProvider>{children}</AuthContextProvider>
+          </SnackbarContextProvider>
         </ThemeProvider>
       </body>
     </html>

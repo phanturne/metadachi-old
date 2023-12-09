@@ -3,18 +3,18 @@
 import { useChat } from 'ai/react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Bot, ChatError } from '@/app/(sidebar)/chat/chat-utils';
+import { Bot } from '@/app/(sidebar)/chat/chat-utils';
 import {
-  configChatWithChatId,
   configChatWithBotId,
+  configChatWithChatId,
+  getAllBots,
   insertNewChat,
   saveMessageToDb,
   setChatHistoryWithChatId,
-  getAllBots,
 } from '@/app/(sidebar)/chat/chat-data-access';
 import { Message as VercelChatMessage } from 'ai';
 import { useRouter } from 'next/navigation';
-import { Box, IconButton, Snackbar, Typography } from '@mui/joy';
+import { Box, IconButton, Typography } from '@mui/joy';
 import { useChatStore } from '@/lib/stores/chat';
 import Header from '@/ui/header/Header';
 import {
@@ -24,6 +24,7 @@ import {
   EmptyChatConfig,
 } from '@/app/(sidebar)/chat/ChatComponents';
 import { ExpandMoreRounded } from '@mui/icons-material';
+import { useSnackbar } from '@/app/SnackbarContextProvider';
 
 // An "Empty Chat" is one where no valid Chat/Bot ID is provided
 export default function ChatPage({
@@ -31,7 +32,7 @@ export default function ChatPage({
 }: {
   searchParams: { [_: string]: string | string[] | undefined };
 }) {
-  const [errorMsg, setErrorMsg] = useState<ChatError | undefined>(undefined);
+  const { errorMsg, setErrorMsg } = useSnackbar();
   const router = useRouter();
   const {
     chat,
@@ -169,7 +170,7 @@ export default function ChatPage({
       !isEmptyChat && chat?.id ? insertMessages : createNewChatWithMessages,
   });
 
-  // Initialize new chats with an initial message
+  // Initialize new chats with the initial message
   if (messages.length === 0 && bot?.initialMessage) {
     messages.push({
       id: 'id',
@@ -185,18 +186,6 @@ export default function ChatPage({
 
   return (
     <>
-      <Snackbar
-        variant='soft'
-        color='danger'
-        autoHideDuration={5000}
-        open={errorMsg !== undefined}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => {
-          setErrorMsg(undefined);
-        }}
-      >
-        {errorMsg as string}
-      </Snackbar>
       {/*Fix Hydration Fail Error*/}
       <Header
         startContent={<ChatHistoryDropdown />}
