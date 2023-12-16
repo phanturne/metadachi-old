@@ -156,7 +156,7 @@ export default function ChatPage({
   // TODO: Get the user's API key. If it's undefined, the default one will be used
   const apiKey = undefined;
 
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const { messages, handleSubmit } = useChat({
     api: process.env.NEXT_PUBLIC_CHAT_ENDPOINT ?? '/api/chat',
     initialMessages: chatHistory,
     id: !isEmptyChat && chat?.id ? chat?.id : (Date.now() as unknown as string),
@@ -184,6 +184,36 @@ export default function ChatPage({
     handleSubmit(e);
   }
 
+  const [input, setInput] = useState('');
+  const [promptHints, setPromptHints] = useState<string[]>(['1', '2', '3']);
+  const [filteredPrompts, setFilteredPrompts] = useState<string[]>([]);
+  const PROMPT_PREFIX = '/';
+
+  function extract(userInput: string) {
+    return userInput.startsWith(PROMPT_PREFIX) ? userInput.slice(1) : userInput;
+  }
+
+  function search(userInput: string) {
+    const input = extract(userInput);
+    return promptHints.filter((c) => c.startsWith(input));
+    // .map((c) => ({
+    //   title: desc[c as keyof ChatCommands],
+    //   content: ChatCommandPrefix + c,
+    // }));
+  }
+
+  const handleInputChange = (text: string) => {
+    setInput(text);
+    const n = text.trim().length;
+
+    // clear search results
+    if (n === 0) {
+      setFilteredPrompts([]);
+    } else if (text.startsWith(PROMPT_PREFIX)) {
+      setFilteredPrompts(search(text));
+    }
+  };
+
   return (
     <>
       {/*Fix Hydration Fail Error*/}
@@ -204,11 +234,13 @@ export default function ChatPage({
           </Box>
         }
       />
+      <p>Filtered Prompts Length: {filteredPrompts.length}</p>
+      {filteredPrompts.length > 0 && filteredPrompts[0]}
       {isEmptyChat && <EmptyChatConfig bots={bots} />}
       {!isEmptyChat && <ChatMessages messages={messages} />}
       <ChatInput
         input={input}
-        handleInputChange={handleInputChange}
+        handleInputChange={(e) => handleInputChange(e.currentTarget.value)}
         handleSubmit={customHandleSubmit}
       />
     </>
