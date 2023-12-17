@@ -1,23 +1,12 @@
 import type { Metadata } from 'next';
 import TauriConfig from '@/config/tauri';
 import ThemeProvider from '@/providers/ThemeProvider';
+// import { AuthContextProvider } from '@/app/AuthContextProvider';
 import { SnackbarProvider } from '@/providers/SnackbarProvider';
-import { getClientConfig } from '@/config/client';
 
 export const metadata: Metadata = {
   title: 'Metadachi',
   description: 'Your Supercharged AI Assistant',
-  appleWebApp: {
-    title: 'Metadachi',
-    statusBarStyle: 'default',
-  },
-};
-
-// Separate export for viewport configuration
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -27,16 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <head>
-        <meta name='config' content={JSON.stringify(getClientConfig())} />
-        <link rel='manifest' href='/site.webmanifest'></link>
-        <script src='/serviceWorkerRegister.js' defer></script>
-      </head>
       <TauriConfig />
 
       <body>
         <ThemeProvider options={{ key: 'joy' }}>
-          <SnackbarProvider>{children}</SnackbarProvider>
+          <SnackbarProvider>
+            {/*<AuthContextProvider>{children}</AuthContextProvider>*/}
+            {children}
+          </SnackbarProvider>
         </ThemeProvider>
       </body>
     </html>

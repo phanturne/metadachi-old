@@ -12,26 +12,29 @@
 [MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
 [Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
 
-Unlock boundless productivity with our powerful cross-platform AI assistant! Seamlessly accessible on both desktop and web, Metadachi offers seamless conversation, image, text, and audio generation at your fingertips, with lightning-fast global hotkeys and system tray integration. Experience unparalleled efficiency as you navigate tasks effortlessly and elevate your workflow with the ultimate AI companion.
+Unlock boundless productivity with Metadachi, our cross-platform AI assistant. Available on desktop and web, it seamlessly handles text, image, and audio generation with lightning-fast global hotkeys. Experience unparalleled efficiency, effortlessly navigating tasks and elevating your workflow with the ultimate AI companion!
 
-![cover](./docs/images/screenshot-1.jpeg)
+> This project builds on the outstanding work by the author and contributors of [ChatGPT Next Web](https://github.com/ChatGPTNextWeb/).
+
+[//]: # (![cover]&#40;./docs/images/screenshot-1.jpeg&#41;)
 
 </div>
 
 ## Features
-- 🚀 **Supercharged AI Assistant**: Powerful AI agents augmented with LangChain
-- 🔒 **Privacy Guaranteed**: Take control of your data in your own private database
-- 🌐 **Cross Platform**: Back up and sync data across Windows, macOS, and the web
-- 💻 **Desktop App**: Lightweight desktop assistant (~5MB) with system tray integration and global hotkeys
-- 🛠️ **Easy Self-Hosting**: Deploy effortlessly to Vercel & Supabase
+- 🚀 **Supercharged AI Assistant**: Access powerful AI agents with advanced customization options
+- 🔒 **Privacy Guaranteed**: Take control of your data with the option to store it locally or in your own private database
+- 🌐 **Cross Platform Sync**: Back up and sync data across Windows, macOS, and the web
+- 💻 **Desktop App**: Lightweight desktop assistant (~5MB) with global hotkeys system tray integration
+- 🛠️ **Easy Self-Hosting**: Deploy effortlessly to Vercel
 
 ## Roadmap
 ### High Priority
-- [ ] Various LLMs (Hugging Face, OpenAI, Fireworks AI)
+- [ ] More LLM Options (Hugging Face, OpenAI, Fireworks AI)
 - [ ] Custom AI bots and prompts
 - [ ] Access multiple AI bots from a single chat
 - [ ] ✨ Slash and @ Commands
 - [ ] 📤 Retrieval Augmented Generation (RAG)
+- [ ] Optional Supabase Auth & Database
 
 ### Nice to Haves
 - [ ] ⚜️ UI Redesign
@@ -97,7 +100,7 @@ If you have new features or improvements in mind, feel free to open an issue or 
 
 ## Acknowledgments
 Kudos to the creators of the following repositories for their valuable contributions to the open-source community:
-- [ChatGPT Next Web](https://github.com/Yidadaa/ChatGPT-Next-Web): Key code implementations and concepts were drawn from this project.
+- [ChatGPT Next Web](https://github.com/Yidadaa/ChatGPT-Next-Web): Metadachi builds on the outstanding work by the author and contributors of ChatGPT Next Web.
 - [Tauri + Next.js Template](https://github.com/kvnxiao/tauri-nextjs-template): Integration of the Tauri API with Next.js relies on the code snippets from this template.
 
 ## License
