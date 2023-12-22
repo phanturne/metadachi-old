@@ -12,6 +12,24 @@ export const DEFAULT_CORS_HOST = 'https://a.nextweb.fun';
 export const DEFAULT_API_HOST = `${DEFAULT_CORS_HOST}/api/proxy`;
 export const OPENAI_BASE_URL = 'https://api.openai.com';
 
+export const Routes = {
+  Home: '/',
+  Auth: '/auth',
+  Login: '/login',
+  SignUp: '/signup',
+  NewChat: '/chat?new',
+  QuickChat: '/quick-chat',
+  Chat: '/chat',
+  Chats: '/chats',
+  Images: '/images',
+  Toolbox: '/toolbox',
+  Discover: '/discover',
+  Settings: '/settings',
+  Profile: '/profile',
+  Support: '/support',
+  NotFound: '/404',
+};
+
 export enum Path {
   Home = '/',
   Chat = '/chat',
@@ -61,6 +79,12 @@ export const STORAGE_KEY = 'chatgpt-next-web';
 export const REQUEST_TIMEOUT_MS = 60000;
 
 export const EXPORT_MESSAGE_CLASS_NAME = 'export-markdown';
+
+// Input Prefixes
+export const PROMPT_PREFIX = '/';
+export const BOT_PREFIX = '@';
+export const CHAT_PREFIX = '!';
+export const INPUT_PREFIXES = [PROMPT_PREFIX, BOT_PREFIX, CHAT_PREFIX];
 
 export enum ServiceProvider {
   OpenAI = 'OpenAI',

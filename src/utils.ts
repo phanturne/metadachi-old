@@ -1,6 +1,31 @@
 import { useEffect, useState } from 'react';
 // import { showToast } from "./components/ui-lib";
-import Locale from './locales';
+import { INPUT_PREFIXES } from '@/constants';
+
+/**
+ * Extracts user input, removing command or bot prefixes if present.
+ *
+ * @param {string} input - The user input string.
+ * @returns {{ prefix: string | null, input: string }} - An object containing the prefix and the extracted user input.
+ */
+export function extractPrefix(input: string) {
+  const hasPrefix = INPUT_PREFIXES.some((p) => input.startsWith(p));
+  const extractedInput = !hasPrefix ? input : input.slice(1);
+
+  return {
+    prefix: hasPrefix ? input[0] : null,
+    message: extractedInput,
+  };
+}
+
+export function extractCommand(input: string) {
+  const spaceIndex = input.indexOf(' ');
+  return {
+    command:
+      spaceIndex === -1 ? input.substring(1) : input.substring(1, spaceIndex),
+    message: spaceIndex === -1 ? '' : input.substring(spaceIndex + 1),
+  };
+}
 
 export function trimTopic(topic: string) {
   // Fix an issue where double quotes still show in the Indonesian language

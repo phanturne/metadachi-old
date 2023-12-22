@@ -1,7 +1,6 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/store/prompt.ts
 
 import Fuse from 'fuse.js';
-import { getLang } from '@/locales';
 import { StoreKey } from '@/constants';
 import { nanoid } from 'nanoid';
 import { createPersistStore } from '@/utils/store';
@@ -126,7 +125,7 @@ export const usePromptStore = createPersistStore(
 
     search(text: string) {
       if (text.length === 0) {
-        // return all rompts
+        // return all prompts
         return this.getUserPrompts().concat(SearchService.builtinPrompts);
       }
       return SearchService.search(text) as Prompt[];
@@ -157,9 +156,6 @@ export const usePromptStore = createPersistStore(
         .then((res) => res.json())
         .then((res) => {
           let fetchPrompts = [res.en, res.cn];
-          // if (getLang() === 'cn') {
-          //   fetchPrompts = fetchPrompts.reverse();
-          // }
           const builtinPrompts = fetchPrompts.map((promptList: PromptList) => {
             return promptList.map(
               ([title, content]) =>
@@ -177,7 +173,7 @@ export const usePromptStore = createPersistStore(
           const allPromptsForSearch = builtinPrompts
             .reduce((pre, cur) => pre.concat(cur), [])
             .filter((v) => !!v.title && !!v.content);
-          SearchService.count.builtin = res.en.length + res.cn.length;
+          SearchService.count.builtin = res.en.length;
           SearchService.init(allPromptsForSearch, userPrompts);
         });
     },

@@ -29,3 +29,4 @@ declare interface Window {
     };
   };
 }
+

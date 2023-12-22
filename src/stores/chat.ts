@@ -1,9 +1,7 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/store/chat.ts
 
 import { trimTopic } from '@/utils';
-
 import Locale, { getLang } from '../locales';
-// import { showToast } from '../components/ui-lib';
 import { ModelConfig, ModelType, useAppConfig } from './config';
 import { createEmptyMask, Mask } from './mask';
 import {
@@ -19,6 +17,7 @@ import { prettyObject } from '@/utils/format';
 import { estimateTokenLength } from '@/utils/token';
 import { nanoid } from 'nanoid';
 import { createPersistStore } from '@/utils/store';
+// import { showToast } from '../components/ui-lib';
 
 export type ChatMessage = RequestMessage & {
   date: string;
@@ -480,7 +479,7 @@ export const useChatStore = createPersistStore(
         // remove error messages if any
         const messages = session.messages;
 
-        // should summarize topic after chating more than 50 words
+        // should summarize topic after chatting more than 50 words
         const SUMMARIZE_MIN_LEN = 50;
         if (
           config.enableAutoGenerateTitle &&

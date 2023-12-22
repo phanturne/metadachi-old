@@ -4,7 +4,6 @@ import { FETCH_COMMIT_URL, FETCH_TAG_URL, StoreKey } from '@/constants';
 import { api } from '@/client/api';
 import { getClientConfig } from '@/config/client';
 import { createPersistStore } from '@/utils/store';
-import ChatGptIcon from '../icons/chatgpt.png';
 import Locale from '../locales';
 
 const ONE_MINUTE = 60 * 1000;
@@ -101,9 +100,9 @@ export const useUpdateStore = createPersistStore(
                       if (version === remoteId) {
                         // Show a notification using Tauri
                         window.__TAURI__?.notification.sendNotification({
-                          title: 'ChatGPT Next Web',
+                          title: 'Metadachi',
                           body: `${Locale.Settings.Update.IsLatest}`,
-                          icon: `${ChatGptIcon.src}`,
+                          // icon: `${ChatGptIcon.src}`,
                           sound: 'Default',
                         });
                       } else {
@@ -111,9 +110,9 @@ export const useUpdateStore = createPersistStore(
                           Locale.Settings.Update.FoundUpdate(`${remoteId}`);
                         // Show a notification for the new version using Tauri
                         window.__TAURI__?.notification.sendNotification({
-                          title: 'ChatGPT Next Web',
+                          title: 'Metadachi',
                           body: updateMessage,
-                          icon: `${ChatGptIcon.src}`,
+                          // icon: `${ChatGptIcon.src}`,
                           sound: 'Default',
                         });
                       }
