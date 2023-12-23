@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Grid, Sheet, TabPanel } from '@mui/joy';
-import { usePromptStore } from '@/stores/prompt';
+import { usePromptStore } from '@/stores';
 import Typography from '@mui/joy/Typography';
 
 export default function PromptsTab() {

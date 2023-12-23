@@ -8,17 +8,15 @@ import {
 import Sheet from '@mui/joy/Sheet';
 import * as React from 'react';
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { usePromptStore } from '@/stores/prompt';
 import { useDebouncedCallback } from 'use-debounce';
 import { extractCommand, extractPrefix } from '@/utils';
 import { BOT_PREFIX, CHAT_PREFIX, PROMPT_PREFIX } from '@/constants';
-import { useChatStore } from '@/stores';
+import { useChatStore, useMaskStore, usePromptStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
-import { useMaskStore } from '@/stores/mask';
 import {
-  ChatCommands,
   AiCommandInfo,
+  ChatCommands,
   CommandInfo,
 } from '@/components/ChatCommands';
 

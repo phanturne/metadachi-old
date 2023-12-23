@@ -1,5 +1,6 @@
 'use client';
 
+import { useChatStore } from '@/stores';
 import * as React from 'react';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import Box from '@mui/joy/Box';
@@ -13,104 +14,123 @@ import Sheet from '@mui/joy/Sheet';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import { useRouter } from 'next/navigation';
 import {
-  AccountCircleRounded,
+  AddCircleOutlineRounded,
   AutoAwesome,
   ChatRounded,
   ExploreRounded,
   Facebook,
   GitHub,
   HomeRepairServiceRounded,
+  HomeRounded,
   ImageRounded,
   Instagram,
-  MapsUgcRounded,
   PersonRounded,
   Reddit,
   SettingsRounded,
-  SupportRounded,
   Twitter,
 } from '@mui/icons-material';
 import { Button } from '@mui/joy';
-import { useChatStore } from '@/stores/chat';
 import { Routes } from '@/constants';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Typography from '@mui/joy/Typography';
+import ProfileMenu from '@/components/ProfileMenu';
 
+const routeDictionary: Record<
+  string,
+  { icon: React.ReactNode; label: string }
+> = {
+  [Routes.Home]: { icon: <HomeRounded />, label: 'Home' },
+  [Routes.Chats]: { icon: <ChatRounded />, label: 'Chats' },
+  [Routes.Images]: { icon: <ImageRounded />, label: 'Images' },
+  [Routes.Toolbox]: { icon: <HomeRepairServiceRounded />, label: 'Toolbox' },
+  [Routes.Discover]: { icon: <ExploreRounded />, label: 'Discover' },
+  [Routes.Settings]: { icon: <SettingsRounded />, label: 'Settings' },
+  [Routes.Profile]: { icon: <PersonRounded />, label: 'Profile' },
+};
+
+// TODO: Fix margins/padding of sidebar menu items
 export default function Sidebar() {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedRoute, setSelectedRoute] = React.useState(Routes.Home);
   const router = useRouter();
-  // const { setNewChat } = useChatStore();
-  const routeList = [
-    Routes.Chats,
-    Routes.Images,
-    Routes.Toolbox,
-    Routes.Discover,
-    Routes.Settings,
-    Routes.Profile,
-  ];
+  const chatStore = useChatStore();
+
+  const handleNewChat = () => {
+    setSelectedRoute(Routes.Chat);
+    chatStore.newSession();
+    router.push(Routes.Chat);
+  };
+
+  function NewChatButton() {
+    return (
+      <>
+        {/*Displayed on Expanded Sidebars*/}
+        <Button
+          variant='outlined'
+          color='neutral'
+          size='sm'
+          startDecorator={<AddCircleOutlineRounded />}
+          sx={{
+            mr: 1,
+            display: { xs: 'none', lg: 'inline-flex' },
+          }}
+          onClick={handleNewChat}
+        >
+          <Typography level='body-sm'>New Chat</Typography>
+        </Button>
+
+        {/*Displayed on Minimized Sidebars*/}
+        <IconButton
+          color='neutral'
+          size='sm'
+          sx={{ display: { xs: 'inline-flex', lg: 'none' } }}
+          onClick={handleNewChat}
+        >
+          <AddCircleOutlineRounded />
+        </IconButton>
+      </>
+    );
+  }
 
   function MenuItem({
-    index,
-    icon,
-    label,
+    route,
     trailingContent,
+    onClick,
+    onMouseOver,
   }: {
-    index: number;
-    icon: React.ReactNode;
-    label: string;
+    route: string;
     trailingContent?: React.ReactNode;
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+    onMouseOver?: React.MouseEventHandler<HTMLAnchorElement>;
   }) {
+    if (!routeDictionary[route]) {
+      return;
+    }
+
     return (
-      <ListItem>
+      <ListItem sx={{ m: 0 }}>
         <ListItemButton
-          selected={index === selectedIndex}
-          onClick={() => {
-            setSelectedIndex(index);
-            router.push(routeList[index] ?? Routes.NotFound);
-          }}
+          selected={route === selectedRoute}
+          onMouseOver={onMouseOver}
+          onClick={
+            onClick !== undefined
+              ? onClick
+              : () => {
+                  setSelectedRoute(route);
+                  router.push(route);
+                }
+          }
         >
-          <ListItemDecorator>{icon}</ListItemDecorator>
+          <ListItemDecorator>{routeDictionary[route].icon}</ListItemDecorator>
           <ListItemContent sx={{ display: { xs: 'none', lg: 'flex' } }}>
-            {label}
+            <Typography level='body-sm'>
+              {routeDictionary[route].label}
+            </Typography>
           </ListItemContent>
           {trailingContent}
         </ListItemButton>
       </ListItem>
     );
   }
-
-  // const handleNewChat = () => {
-  //   setSelectedIndex(0);
-  //   setNewChat();
-  //   router.push(routes.chat);
-  // };
-
-  // function NewChatButton() {
-  //   return (
-  //     <>
-  //       <Button
-  //         variant='outlined'
-  //         color='neutral'
-  //         size='sm'
-  //         startDecorator={<MapsUgcRounded />}
-  //         sx={{
-  //           mr: 1,
-  //           display: { xs: 'none', lg: 'inline-flex' },
-  //         }}
-  //         onClick={handleNewChat}
-  //       >
-  //         New Chat
-  //       </Button>
-  //       <IconButton
-  //         color='neutral'
-  //         size='sm'
-  //         sx={{ display: { xs: 'inline-flex', lg: 'none' } }}
-  //         onClick={handleNewChat}
-  //       >
-  //         <MapsUgcRounded />
-  //       </IconButton>
-  //     </>
-  //   );
-  // }
 
   function SidebarMenu() {
     return (
@@ -135,14 +155,10 @@ export default function Sidebar() {
             '--ListItem-radius': (theme) => theme.vars.radius.sm,
           }}
         >
-          <MenuItem index={0} icon={<ChatRounded />} label='Chats' />
-          <MenuItem index={1} icon={<ImageRounded />} label='Images' />
-          <MenuItem
-            index={2}
-            icon={<HomeRepairServiceRounded />}
-            label='Toolbox'
-          />
-          <MenuItem index={3} icon={<ExploreRounded />} label='Discover' />
+          <MenuItem route={Routes.Chats} />
+          <MenuItem route={Routes.Images} />
+          <MenuItem route={Routes.Toolbox} />
+          <MenuItem route={Routes.Discover} />
         </List>
 
         <List
@@ -155,12 +171,17 @@ export default function Sidebar() {
             '--List-gap': '8px',
           }}
         >
-          <MenuItem index={4} icon={<SettingsRounded />} label='Settings' />
-          <MenuItem index={5} icon={<PersonRounded />} label='Profile' />
+          <MenuItem route={Routes.Settings} />
+
+          {/*TODO: Implementation could be changed*/}
+          <ProfileMenu>
+            <MenuItem route={Routes.Profile} onClick={() => {}} />
+          </ProfileMenu>
         </List>
       </Box>
     );
   }
+
   return (
     <Sheet
       className='Sidebar'
@@ -193,7 +214,7 @@ export default function Sidebar() {
         })}
       />
       <SidebarHeader />
-      {/*<NewChatButton />*/}
+      <NewChatButton />
       <SidebarMenu />
       <Divider sx={{ display: { xs: 'none', lg: 'flex' } }} />
       <SidebarFooter />

@@ -5,7 +5,7 @@ import Typography from '@mui/joy/Typography';
 import List from '@mui/joy/List';
 import { ListSubheader } from '@mui/joy';
 import * as React from 'react';
-import { usePromptStore } from '@/stores/prompt';
+import { usePromptStore } from '@/stores';
 import Sheet from '@mui/joy/Sheet';
 import { useChatInput } from '@/components/Chat';
 import { extractCommand, extractPrefix } from '@/utils';
@@ -43,6 +43,7 @@ export const ChatCommands = () => {
         boxShadow: 'md',
         borderRadius: '6px',
         overflow: 'scroll',
+        overflowX: 'hidden',
         maxHeight: {
           xs: `calc(100dvh - 60px - ${containerMargin}px)`,
           sm: '400px',

@@ -30,15 +30,6 @@ export const Routes = {
   NotFound: '/404',
 };
 
-export enum Path {
-  Home = '/',
-  Chat = '/chat',
-  Settings = '/settings',
-  NewChat = '/new-chat',
-  Masks = '/masks',
-  Auth = '/auth',
-}
-
 export enum ApiPath {
   Cors = '/api/cors',
   OpenAI = '/api/openai',
