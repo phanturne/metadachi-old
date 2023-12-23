@@ -223,6 +223,8 @@ export default function Sidebar() {
 }
 
 function SidebarHeader() {
+  const router = useRouter();
+
   return (
     <Box
       sx={{
@@ -232,12 +234,40 @@ function SidebarHeader() {
         pb: 2,
       }}
     >
-      <IconButton variant='plain' color='primary'>
+      {/*Displayed on Expanded Sidebars*/}
+      <Button
+        variant='plain'
+        startDecorator={<AutoAwesome />}
+        onClick={() => router.push(Routes.Home)}
+        sx={{
+          display: {
+            xs: 'none',
+            lg: 'flex',
+            width: '100%',
+            justifyContent: 'start',
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+          },
+        }}
+      >
+        <Typography level='title-lg'>Metadachi</Typography>
+      </Button>
+
+      {/*Displayed on Minimized Sidebars*/}
+      <IconButton
+        variant='plain'
+        color='primary'
+        onClick={() => router.push(Routes.Home)}
+        sx={{
+          display: { xs: 'flex', lg: 'none' },
+          '&:hover': {
+            backgroundColor: 'transparent',
+          },
+        }}
+      >
         <AutoAwesome />
       </IconButton>
-      <Typography level='title-lg' sx={{ display: { xs: 'none', lg: 'flex' } }}>
-        Metadachi
-      </Typography>
     </Box>
   );
 }
