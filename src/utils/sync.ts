@@ -1,15 +1,11 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/utils/sync.ts
 
-import {
-  ChatSession,
-  useAccessStore,
-  useAppConfig,
-  useChatStore,
-} from '@/stores';
+import { useAccessStore, useAppConfig, useChatStore } from '@/stores';
 import { useMaskStore } from '@/stores/mask';
 import { usePromptStore } from '@/stores/prompt';
 import { StoreKey } from '@/constants';
 import { merge } from './merge';
+import { ChatSession } from '@/types';
 
 type NonFunctionKeys<T> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
@@ -121,13 +117,11 @@ const MergeStates: StateMerger = {
 };
 
 export function getLocalAppState() {
-  const appState = Object.fromEntries(
+  return Object.fromEntries(
     Object.entries(LocalStateGetters).map(([key, getter]) => {
       return [key, getter()];
     })
   ) as AppState;
-
-  return appState;
 }
 
 export function setLocalAppState(appState: AppState) {

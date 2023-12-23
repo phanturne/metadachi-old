@@ -2,8 +2,9 @@
 
 import { getClientConfig } from '@/config/client';
 import { ACCESS_CODE_PREFIX, Azure, ServiceProvider } from '@/constants';
-import { ChatMessage, ModelType, useAccessStore } from '@/stores';
+import { ModelType, useAccessStore } from '@/stores';
 import { ChatGPTApi } from '@/client/platforms/openai';
+import { ChatMessage } from '@/types';
 
 export const ROLES = ['system', 'user', 'assistant'] as const;
 export type MessageRole = (typeof ROLES)[number];

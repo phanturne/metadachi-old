@@ -1,9 +1,9 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/masks/index.ts
 
-import { Mask } from '@/stores/mask';
 import { EN_MASKS } from './en';
 
 import { type BuiltinMask } from './typing';
+import { Mask } from '@/types';
 export { type BuiltinMask } from './typing';
 
 export const BUILTIN_MASK_ID = 100000;

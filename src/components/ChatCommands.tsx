@@ -5,11 +5,12 @@ import Typography from '@mui/joy/Typography';
 import List from '@mui/joy/List';
 import { ListSubheader } from '@mui/joy';
 import * as React from 'react';
-import { Prompt, usePromptStore } from '@/stores/prompt';
+import { usePromptStore } from '@/stores/prompt';
 import Sheet from '@mui/joy/Sheet';
 import { useChatInput } from '@/components/Chat';
 import { extractCommand, extractPrefix } from '@/utils';
 import { PROMPT_PREFIX } from '@/constants';
+import { Prompt } from '@/types';
 
 export type PromptCommandInfo = Pick<Prompt, 'title' | 'content'>;
 export type AiCommandInfo = any;
