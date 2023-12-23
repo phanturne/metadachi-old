@@ -11,13 +11,11 @@ export const metadata: Metadata = {
     title: 'Metadachi',
     statusBarStyle: 'default',
   },
-};
-
-// Separate export for viewport configuration
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
 };
 
 export default function RootLayout({
@@ -31,6 +29,7 @@ export default function RootLayout({
         <meta name='config' content={JSON.stringify(getClientConfig())} />
         <link rel='manifest' href='/site.webmanifest'></link>
         <script src='/serviceWorkerRegister.js' defer></script>
+        <title>Metadachi</title>
       </head>
       <TauriConfig />
 

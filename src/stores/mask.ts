@@ -1,25 +1,12 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/store/mask.ts
 
 import { BUILTIN_MASKS } from '@/masks';
-import { getLang, Lang } from '@/locales';
-import { DEFAULT_TOPIC, ChatMessage } from './chat';
-import { ModelConfig, useAppConfig } from './config';
+import Locale, { getLang } from '@/locales';
+import { useAppConfig } from './config';
 import { StoreKey } from '@/constants';
 import { nanoid } from 'nanoid';
 import { createPersistStore } from '@/utils/store';
-
-export type Mask = {
-  id: string;
-  createdAt: number;
-  avatar: string;
-  name: string;
-  hideContext?: boolean;
-  context: ChatMessage[];
-  syncGlobalConfig?: boolean;
-  modelConfig: ModelConfig;
-  lang: Lang;
-  builtin: boolean;
-};
+import { Mask } from '@/types';
 
 export const DEFAULT_MASK_STATE = {
   masks: {} as Record<string, Mask>,
@@ -32,7 +19,7 @@ export const createEmptyMask = () =>
   ({
     id: nanoid(),
     avatar: DEFAULT_MASK_AVATAR,
-    name: DEFAULT_TOPIC,
+    name: Locale.Store.DefaultTopic,
     context: [],
     syncGlobalConfig: true, // use global config as default
     modelConfig: { ...useAppConfig.getState().modelConfig },

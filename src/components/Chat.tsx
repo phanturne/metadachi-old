@@ -17,15 +17,15 @@ import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
 import { useMaskStore } from '@/stores/mask';
 import {
-  ChatSuggestions,
-  CommandItem,
-  SuggestionItems,
-} from '@/components/ChatSuggestions';
+  ChatCommands,
+  AiCommandInfo,
+  CommandInfo,
+} from '@/components/ChatCommands';
 
 const ChatInputContext = createContext({
   input: '',
   setInput: (_: string) => {},
-  suggestions: [] as SuggestionItems,
+  suggestions: [] as CommandInfo,
 });
 
 export const useChatInput = () => {
@@ -48,20 +48,17 @@ export function ChatInput({
   // TODO: Chat Store
 
   const [input, setInput] = useState('');
-  const [suggestions, setSuggestions] = useState<SuggestionItems>({});
+  const [suggestions, setSuggestions] = useState<CommandInfo>({});
   const [isFocused, setIsFocused] = useState(true);
 
   // Update input suggestions based on the user input
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const currInput = e.target.value;
     setInput(currInput);
-
-    // Must fetch the suggestions and set them here. Otherwise, the previous suggestions will be displayed??
-    const currSuggestions = getSuggestions(currInput) ?? {};
-    setSuggestions(currSuggestions);
+    updateSuggestions(currInput);
   };
 
-  const getSuggestions = useDebouncedCallback(
+  const updateSuggestions = useDebouncedCallback(
     (text: string) => {
       const { prefix, message } = extractPrefix(text);
 
@@ -69,16 +66,18 @@ export function ChatInput({
         case PROMPT_PREFIX:
           // Set Prompt & Command Suggestions
           const prompts = promptStore.search(message);
-          const commands: CommandItem[] = [];
-          return { command: commands, prompt: prompts };
+          const commands: AiCommandInfo[] = [];
+          setSuggestions({ command: commands, prompt: prompts });
+          break;
 
         case BOT_PREFIX:
         case CHAT_PREFIX:
           // TODO: Get prompts or chats
-          return {};
+          setSuggestions({});
+          break;
 
         default:
-          return {};
+          setSuggestions({});
       }
     },
     100,
@@ -114,7 +113,7 @@ export function ChatInput({
       }
     }
 
-    // chatStore.onUserInput(input);
+    chatStore.onUserInput(input);
     setInput('');
   };
 
@@ -126,15 +125,15 @@ export function ChatInput({
   return (
     <Box
       sx={{
-        px: 3,
-        pb: 2,
         display: 'flex',
         flexDirection: 'column',
+        px: 3,
+        pb: 2,
       }}
     >
       {hasSuggestions() && isFocused && (
         <ChatInputContext.Provider value={{ input, setInput, suggestions }}>
-          <ChatSuggestions />
+          <ChatCommands />
         </ChatInputContext.Provider>
       )}
       <Textarea

@@ -1,24 +1,24 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/e69d20a2092686fbfa2f67b2398019207969e892/next.config.mjs
 
-import webpack from 'webpack';
+import webpack from "webpack";
 
-const mode = process.env.BUILD_MODE ?? 'standalone';
-console.log('[Next] build mode', mode);
+const mode = process.env.BUILD_MODE ?? "standalone";
+console.log("[Next] build mode", mode);
 
-const disableChunk = !!process.env.DISABLE_CHUNK || mode === 'export';
-console.log('[Next] build with chunk: ', !disableChunk);
+const disableChunk = !!process.env.DISABLE_CHUNK || mode === "export";
+console.log("[Next] build with chunk: ", !disableChunk);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      use: ["@svgr/webpack"],
     });
 
     if (disableChunk) {
       config.plugins.push(
-        new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })
+        new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
       );
     }
 
@@ -30,7 +30,7 @@ const nextConfig = {
   },
   output: mode,
   images: {
-    unoptimized: mode === 'export',
+    unoptimized: mode === "export",
   },
   experimental: {
     forceSwcTransforms: true,
@@ -38,27 +38,27 @@ const nextConfig = {
 };
 
 const CorsHeaders = [
-  { key: 'Access-Control-Allow-Credentials', value: 'true' },
-  { key: 'Access-Control-Allow-Origin', value: '*' },
+  { key: "Access-Control-Allow-Credentials", value: "true" },
+  { key: "Access-Control-Allow-Origin", value: "*" },
   {
-    key: 'Access-Control-Allow-Methods',
-    value: '*',
+    key: "Access-Control-Allow-Methods",
+    value: "*",
   },
   {
-    key: 'Access-Control-Allow-Headers',
-    value: '*',
+    key: "Access-Control-Allow-Headers",
+    value: "*",
   },
   {
-    key: 'Access-Control-Max-Age',
-    value: '86400',
+    key: "Access-Control-Max-Age",
+    value: "86400",
   },
 ];
 
-if (mode !== 'export') {
+if (mode !== "export") {
   nextConfig.headers = async () => {
     return [
       {
-        source: '/api/:path*',
+        source: "/api/:path*",
         headers: CorsHeaders,
       },
     ];
@@ -67,16 +67,16 @@ if (mode !== 'export') {
   nextConfig.rewrites = async () => {
     const ret = [
       {
-        source: '/api/proxy/:path*',
-        destination: 'https://api.openai.com/:path*',
+        source: "/api/proxy/:path*",
+        destination: "https://api.openai.com/:path*",
       },
       {
-        source: '/google-fonts/:path*',
-        destination: 'https://fonts.googleapis.com/:path*',
+        source: "/google-fonts/:path*",
+        destination: "https://fonts.googleapis.com/:path*",
       },
       {
-        source: '/sharegpt',
-        destination: 'https://sharegpt.com/api/conversations',
+        source: "/sharegpt",
+        destination: "https://sharegpt.com/api/conversations",
       },
     ];
 

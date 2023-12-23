@@ -11,18 +11,18 @@ import { useChatInput } from '@/components/Chat';
 import { extractCommand, extractPrefix } from '@/utils';
 import { PROMPT_PREFIX } from '@/constants';
 
-export type PromptItem = Pick<Prompt, 'title' | 'content'>;
-export type CommandItem = any;
-export type BotItem = any;
-export type ChatItem = any;
-export type SuggestionItems = {
-  command?: CommandItem[];
-  prompt?: PromptItem[];
-  bot?: BotItem[];
-  chat?: ChatItem[];
+export type PromptCommandInfo = Pick<Prompt, 'title' | 'content'>;
+export type AiCommandInfo = any;
+export type BotCommandInfo = any;
+export type ChatCommandInfo = any;
+export type CommandInfo = {
+  command?: AiCommandInfo[];
+  prompt?: PromptCommandInfo[];
+  bot?: BotCommandInfo[];
+  chat?: ChatCommandInfo[];
 };
 
-export const ChatSuggestions = () => {
+export const ChatCommands = () => {
   const containerMargin = 25; // Where is it coming from?
 
   return (
@@ -50,13 +50,13 @@ export const ChatSuggestions = () => {
       }}
     >
       <List>
-        <PromptSuggestionList />
+        <PromptCommandsList />
       </List>
     </Sheet>
   );
 };
 
-export const PromptSuggestionList = () => {
+export const PromptCommandsList = () => {
   const { suggestions } = useChatInput();
   if (!(suggestions.prompt && suggestions.prompt.length > 0)) {
     return;
@@ -64,17 +64,15 @@ export const PromptSuggestionList = () => {
 
   return (
     <ListItem nested>
-      <List>
-        <ListSubheader sticky>Prompts</ListSubheader>
-        {suggestions.prompt.map((p, index) => (
-          <PromptSuggestion key={`Prompt-${index}`} prompt={p} />
-        ))}
-      </List>
+      <ListSubheader sticky>Prompts</ListSubheader>
+      {suggestions.prompt.map((p, index) => (
+        <PromptCommand key={`Prompt-${index}`} prompt={p} />
+      ))}
     </ListItem>
   );
 };
 
-const PromptSuggestion = ({ prompt }: { prompt: PromptItem }) => {
+const PromptCommand = ({ prompt }: { prompt: PromptCommandInfo }) => {
   const { input, setInput } = useChatInput();
   const promptStore = usePromptStore();
 

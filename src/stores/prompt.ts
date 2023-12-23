@@ -4,14 +4,7 @@ import Fuse from 'fuse.js';
 import { StoreKey } from '@/constants';
 import { nanoid } from 'nanoid';
 import { createPersistStore } from '@/utils/store';
-
-export interface Prompt {
-  id: string;
-  isUser?: boolean;
-  title: string;
-  content: string;
-  createdAt: number;
-}
+import { Prompt } from '@/types';
 
 export const SearchService = {
   ready: false,

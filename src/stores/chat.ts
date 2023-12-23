@@ -2,8 +2,8 @@
 
 import { trimTopic } from '@/utils';
 import Locale, { getLang } from '../locales';
-import { ModelConfig, ModelType, useAppConfig } from './config';
-import { createEmptyMask, Mask } from './mask';
+import { ModelConfig, useAppConfig } from './config';
+import { createEmptyMask } from './mask';
 import {
   DEFAULT_INPUT_TEMPLATE,
   DEFAULT_SYSTEM_TEMPLATE,
@@ -11,21 +11,15 @@ import {
   StoreKey,
   SUMMARIZE_MODEL,
 } from '@/constants';
-import { api, RequestMessage } from '@/client/api';
+import { api } from '@/client/api';
 import { ChatControllerPool } from '@/client/controller';
 import { prettyObject } from '@/utils/format';
 import { estimateTokenLength } from '@/utils/token';
 import { nanoid } from 'nanoid';
 import { createPersistStore } from '@/utils/store';
-// import { showToast } from '../components/ui-lib';
+import { ChatMessage, ChatSession, Mask } from '@/types';
 
-export type ChatMessage = RequestMessage & {
-  date: string;
-  streaming?: boolean;
-  isError?: boolean;
-  id: string;
-  model?: ModelType;
-};
+// import { showToast } from '../components/ui-lib';
 
 export function createMessage(override: Partial<ChatMessage>): ChatMessage {
   return {
@@ -37,27 +31,7 @@ export function createMessage(override: Partial<ChatMessage>): ChatMessage {
   };
 }
 
-export interface ChatStat {
-  tokenCount: number;
-  wordCount: number;
-  charCount: number;
-}
-
-export interface ChatSession {
-  id: string;
-  topic: string;
-
-  memoryPrompt: string;
-  messages: ChatMessage[];
-  stat: ChatStat;
-  lastUpdate: number;
-  lastSummarizeIndex: number;
-  clearContextIndex?: number;
-
-  mask: Mask;
-}
-
-export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
+const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
 export const BOT_HELLO: ChatMessage = createMessage({
   role: 'assistant',
   content: Locale.Store.BotHello,
