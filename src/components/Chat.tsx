@@ -115,7 +115,7 @@ export function ChatInput({
     setInput('');
   };
 
-  const hasSuggestions = () =>
+  const hasCommands = () =>
     Object.values(suggestions).some(
       (array) => Array.isArray(array) && array.length > 0
     );
@@ -129,7 +129,7 @@ export function ChatInput({
         pb: 2,
       }}
     >
-      {hasSuggestions() && isFocused && (
+      {hasCommands() && isFocused && (
         <ChatInputContext.Provider value={{ input, setInput, suggestions }}>
           <ChatCommands />
         </ChatInputContext.Provider>

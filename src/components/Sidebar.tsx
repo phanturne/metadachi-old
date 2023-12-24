@@ -48,7 +48,6 @@ const routeDictionary: Record<
   [Routes.Profile]: { icon: <PersonRounded />, label: 'Profile' },
 };
 
-// TODO: Fix margins/padding of sidebar menu items
 export default function Sidebar() {
   const [selectedRoute, setSelectedRoute] = React.useState(Routes.Home);
   const router = useRouter();
@@ -70,12 +69,11 @@ export default function Sidebar() {
           size='sm'
           startDecorator={<AddCircleOutlineRounded />}
           sx={{
-            mr: 1,
             display: { xs: 'none', lg: 'inline-flex' },
           }}
           onClick={handleNewChat}
         >
-          <Typography level='body-sm'>New Chat</Typography>
+          <Typography level='title-sm'>New Chat</Typography>
         </Button>
 
         {/*Displayed on Minimized Sidebars*/}
@@ -122,7 +120,7 @@ export default function Sidebar() {
         >
           <ListItemDecorator>{routeDictionary[route].icon}</ListItemDecorator>
           <ListItemContent sx={{ display: { xs: 'none', lg: 'flex' } }}>
-            <Typography level='body-sm'>
+            <Typography level='title-sm'>
               {routeDictionary[route].label}
             </Typography>
           </ListItemContent>
@@ -173,7 +171,7 @@ export default function Sidebar() {
         >
           <MenuItem route={Routes.Settings} />
 
-          {/*TODO: Implementation could be changed*/}
+          {/*TODO: Spacing is incorrect. Replace w/ Base UI Popup*/}
           <ProfileMenu>
             <MenuItem route={Routes.Profile} onClick={() => {}} />
           </ProfileMenu>
@@ -209,7 +207,7 @@ export default function Sidebar() {
       <GlobalStyles
         styles={() => ({
           ':root': {
-            '--Sidebar-width': '50px',
+            '--Sidebar-width': '53px',
           },
         })}
       />
