@@ -15,6 +15,7 @@ export default function SidebarLayout({
           flexDirection: 'column',
           height: '100dvh',
           width: 'calc(100vw - var(--Sidebar-width))',
+          overflow: 'auto',
         }}
       >
         {children}
