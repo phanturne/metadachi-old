@@ -7,7 +7,7 @@ import { ListSubheader } from '@mui/joy';
 import * as React from 'react';
 import { usePromptStore } from '@/stores';
 import Sheet from '@mui/joy/Sheet';
-import { useChatInput } from '@/components/Chat';
+import { dashboardPxMultiplier, useChatInput } from '@/components/Chat';
 import { extractCommand, extractPrefix } from '@/utils';
 import { PROMPT_PREFIX } from '@/constants';
 import { Prompt } from '@/types';
@@ -24,7 +24,8 @@ export type CommandInfo = {
 };
 
 export const ChatCommands = () => {
-  const containerMargin = 25; // Where is it coming from?
+  // Each JoyUI padding unit is 8px. The padding used in the sheet below is using a standard px value for some reason (maybe b/c position: 'absolute')?
+  const pxVal = 8;
 
   return (
     <Sheet
@@ -32,11 +33,16 @@ export const ChatCommands = () => {
       sx={{
         position: 'absolute',
         bottom: 60,
-        right: 25,
+        right: {
+          xs: pxVal * dashboardPxMultiplier.xs,
+          lg: pxVal * dashboardPxMultiplier.lg,
+        },
         width: {
-          xs: `calc(100vw - var(--Sidebar-width) - ${containerMargin * 2}px)`,
+          xs: `calc(100vw - var(--Sidebar-width) - ${
+            pxVal * dashboardPxMultiplier.xs * 2
+          }px)`,
           lg: `calc(100vw - calc(var(--Sidebar-width) + 190px + ${
-            containerMargin * 2
+            pxVal * dashboardPxMultiplier.lg * 2
           }px))`,
         },
 
@@ -45,7 +51,7 @@ export const ChatCommands = () => {
         overflow: 'scroll',
         overflowX: 'hidden',
         maxHeight: {
-          xs: `calc(100dvh - 60px - ${containerMargin}px)`,
+          xs: `calc(100dvh - 60px - ${pxVal * dashboardPxMultiplier.xs}px)`,
           sm: '400px',
         },
         mb: 1,

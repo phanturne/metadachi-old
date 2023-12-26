@@ -27,6 +27,7 @@
     "@svgr/webpack": "^8.1.0",
     "@tauri-apps/api": "^1.5.2",
     "ai": "^2.2.29",
+    "emoji-picker-react": "^4.6.0",
     "fuse.js": "^7.0.0",
     "langchain": "^0.0.189",
     "nanoid": "^5.0.4",
