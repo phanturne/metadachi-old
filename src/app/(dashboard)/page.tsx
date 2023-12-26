@@ -11,6 +11,7 @@ export default function HomePage() {
       <EmptyChatConfig />
 
       <ChatInput
+        needToCreateChat={true}
         end={
           <IconButton sx={{ mt: -1 }}>
             <Send />

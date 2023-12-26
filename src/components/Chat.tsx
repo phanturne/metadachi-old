@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Autocomplete,
   Box,
@@ -10,7 +12,7 @@ import * as React from 'react';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { extractCommand, extractPrefix } from '@/utils';
-import { BOT_PREFIX, CHAT_PREFIX, PROMPT_PREFIX } from '@/constants';
+import { BOT_PREFIX, CHAT_PREFIX, PROMPT_PREFIX, Routes } from '@/constants';
 import { useChatStore, useMaskStore, usePromptStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
@@ -19,12 +21,18 @@ import {
   ChatCommands,
   CommandInfo,
 } from '@/components/ChatCommands';
+import { SxProps } from '@mui/joy/styles/types';
+import Stack from '@mui/joy/Stack';
+import Avatar from '@mui/joy/Avatar';
+import { ChatMessage } from '@/types';
 
 const ChatInputContext = createContext({
   input: '',
   setInput: (_: string) => {},
   suggestions: [] as CommandInfo,
 });
+
+export const dashboardPxMultiplier = { xs: 3, lg: 6 };
 
 export const useChatInput = () => {
   return useContext(ChatInputContext);
@@ -33,9 +41,13 @@ export const useChatInput = () => {
 export function ChatInput({
   start,
   end,
+  needToCreateChat,
+  sxProps,
 }: {
   start?: ReactNode;
   end?: ReactNode;
+  needToCreateChat?: boolean;
+  sxProps?: SxProps;
 }) {
   const router = useRouter();
 
@@ -111,8 +123,16 @@ export function ChatInput({
       }
     }
 
-    chatStore.onUserInput(input);
-    setInput('');
+    if (needToCreateChat) {
+      setTimeout(() => {
+        chatStore.newSession();
+        chatStore.onUserInput(input);
+        router.push(Routes.Chat);
+      }, 10);
+    } else {
+      chatStore.onUserInput(input);
+      setInput('');
+    }
   };
 
   const hasCommands = () =>
@@ -125,7 +145,10 @@ export function ChatInput({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        px: 3,
+        px: {
+          xs: dashboardPxMultiplier.xs,
+          lg: dashboardPxMultiplier.lg,
+        },
         pb: 2,
       }}
     >
@@ -147,6 +170,7 @@ export function ChatInput({
           display: 'flex',
           flexDirection: 'row',
           '--Textarea-focusedThickness': '0rem',
+          ...sxProps,
         }}
         startDecorator={start}
         endDecorator={end}
@@ -206,6 +230,49 @@ export function EmptyChatConfig() {
           />
         </FormControl>
       </Sheet>
+    </Box>
+  );
+}
+
+function ChatBubble({ m }: { m: ChatMessage }) {
+  const fromUser = m.role === 'user';
+  return (
+    <Stack direction={'row'}>
+      {/*TODO: Add custom avatars*/}
+      <Avatar size='sm' variant='outlined'>
+        {fromUser ? '😎' : '✨'}
+      </Avatar>
+      <Box sx={{ minWidth: 'auto', mb: 1.5, ml: 2 }}>
+        <Typography
+          sx={{
+            color: 'var(--joy-palette-text-primary)',
+          }}
+        >
+          {m.content}
+        </Typography>
+      </Box>
+    </Stack>
+  );
+}
+
+export function ChatMessages({ messages }: { messages: ChatMessage[] }) {
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        overflowY: 'scroll',
+        px: {
+          xs: dashboardPxMultiplier.xs,
+          lg: dashboardPxMultiplier.lg,
+        },
+        flexDirection: 'column-reverse',
+      }}
+    >
+      <Stack gap={1.5} sx={{ py: 2 }}>
+        {messages.map((m) => (
+          <ChatBubble key={m.id} m={m} />
+        ))}
+      </Stack>
     </Box>
   );
 }
