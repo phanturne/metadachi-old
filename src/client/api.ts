@@ -1,9 +1,15 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/e69d20a2092686fbfa2f67b2398019207969e892/app/client/api.ts
 
 import { getClientConfig } from '@/config/client';
-import { ACCESS_CODE_PREFIX, Azure, ServiceProvider } from '@/constants';
-import { ModelType, useAccessStore } from '@/stores';
+import {
+  ACCESS_CODE_PREFIX,
+  Azure,
+  ModelProvider,
+  ServiceProvider,
+} from '@/constants';
+import { ModelType, useAccessStore, useChatStore } from '@/stores';
 import { ChatGPTApi } from '@/client/platforms/openai';
+import { GeminiProApi } from '@/client/platforms/google';
 import { ChatMessage } from '@/types';
 
 export const ROLES = ['system', 'user', 'assistant'] as const;
@@ -44,6 +50,13 @@ export interface LLMUsage {
 export interface LLMModel {
   name: string;
   available: boolean;
+  provider: LLMModelProvider;
+}
+
+export interface LLMModelProvider {
+  id: string;
+  providerName: string;
+  providerType: string;
 }
 
 export abstract class LLMApi {
@@ -76,7 +89,11 @@ interface ChatProvider {
 export class ClientApi {
   public llm: LLMApi;
 
-  constructor() {
+  constructor(provider: ModelProvider = ModelProvider.GPT) {
+    if (provider === ModelProvider.GeminiPro) {
+      this.llm = new GeminiProApi();
+      return;
+    }
     this.llm = new ChatGPTApi();
   }
 
@@ -96,7 +113,7 @@ export class ClientApi {
         {
           from: 'human',
           value:
-            'Share from [ChatGPT Next Web]: https://github.com/Yidadaa/ChatGPT-Next-Web',
+            'Share from [NextChat]: https://github.com/Yidadaa/ChatGPT-Next-Web',
         },
       ]);
     // 敬告二开开发者们，为了开源大模型的发展，请不要修改上述消息，此消息用于后续数据清洗使用
@@ -126,18 +143,22 @@ export class ClientApi {
   }
 }
 
-export const api = new ClientApi();
-
 export function getHeaders() {
   const accessStore = useAccessStore.getState();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'x-requested-with': 'XMLHttpRequest',
+    Accept: 'application/json',
   };
-
+  const modelConfig = useChatStore.getState().currentSession().mask.modelConfig;
+  const isGoogle = modelConfig.model === 'gemini-pro';
   const isAzure = accessStore.provider === ServiceProvider.Azure;
   const authHeader = isAzure ? 'api-key' : 'Authorization';
-  const apiKey = isAzure ? accessStore.azureApiKey : accessStore.openaiApiKey;
+  const apiKey = isGoogle
+    ? accessStore.googleApiKey
+    : isAzure
+      ? accessStore.azureApiKey
+      : accessStore.openaiApiKey;
 
   const makeBearer = (s: string) => `${isAzure ? '' : 'Bearer '}${s.trim()}`;
   const validString = (x: string) => x && x.length > 0;

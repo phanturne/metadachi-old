@@ -1,10 +1,15 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/e69d20a2092686fbfa2f67b2398019207969e892/app/store/update.ts
 
-import { FETCH_COMMIT_URL, FETCH_TAG_URL, StoreKey } from '@/constants';
-import { api } from '@/client/api';
+import {
+  FETCH_COMMIT_URL,
+  FETCH_TAG_URL,
+  StoreKey,
+  ModelProvider,
+} from '@/constants';
 import { getClientConfig } from '@/config/client';
 import { createPersistStore } from '@/utils/store';
 import Locale from '../locales';
+import { ClientApi } from '@/client/api';
 
 const ONE_MINUTE = 60 * 1000;
 const isApp = !!getClientConfig()?.isApp;
@@ -100,7 +105,7 @@ export const useUpdateStore = createPersistStore(
                       if (version === remoteId) {
                         // Show a notification using Tauri
                         window.__TAURI__?.notification.sendNotification({
-                          title: 'Metadachi',
+                          title: 'NextChat',
                           body: `${Locale.Settings.Update.IsLatest}`,
                           // icon: `${ChatGptIcon.src}`,
                           sound: 'Default',
@@ -110,7 +115,7 @@ export const useUpdateStore = createPersistStore(
                           Locale.Settings.Update.FoundUpdate(`${remoteId}`);
                         // Show a notification for the new version using Tauri
                         window.__TAURI__?.notification.sendNotification({
-                          title: 'Metadachi',
+                          title: 'NextChat',
                           body: updateMessage,
                           // icon: `${ChatGptIcon.src}`,
                           sound: 'Default',
@@ -136,6 +141,7 @@ export const useUpdateStore = createPersistStore(
       }));
 
       try {
+        const api = new ClientApi(ModelProvider.GPT);
         const usage = await api.llm.usage();
 
         if (usage) {

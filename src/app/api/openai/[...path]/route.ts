@@ -2,7 +2,7 @@
 
 import { type OpenAIListModelResponse } from '@/client/platforms/openai';
 import { getServerSideConfig } from '@/config/server';
-import { OpenaiPath } from '@/constants';
+import { ModelProvider, OpenaiPath } from '@/constants';
 import { prettyObject } from '@/utils/format';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '../../auth';
@@ -47,7 +47,7 @@ async function handle(
     );
   }
 
-  const authResult = auth(req);
+  const authResult = auth(req, ModelProvider.GPT);
   if (authResult.error) {
     return NextResponse.json(authResult, {
       status: 401,
