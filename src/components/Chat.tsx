@@ -25,8 +25,12 @@ import { SxProps } from "@mui/joy/styles/types";
 import Stack from "@mui/joy/Stack";
 import Avatar from "@mui/joy/Avatar";
 import { ChatMessage } from "@/types";
-import { Send } from "@mui/icons-material";
+import { HistoryRounded, Send } from "@mui/icons-material";
 import IconButton from "@mui/joy/IconButton";
+import Dropdown from "@mui/joy/Dropdown";
+import MenuButton from "@mui/joy/MenuButton";
+import Menu from "@mui/joy/Menu";
+import MenuItem from "@mui/joy/MenuItem";
 
 const ChatInputContext = createContext({
   input: "",
@@ -277,5 +281,50 @@ export function ChatMessages({ messages }: { messages: ChatMessage[] }) {
         ))}
       </Stack>
     </Box>
+  );
+}
+
+export function ChatHistoryDropdown() {
+  const chatStore = useChatStore();
+  const chats = chatStore.sessions;
+
+  return (
+    <Dropdown>
+      <MenuButton
+        slots={{ root: IconButton }}
+        slotProps={{ root: { variant: "plain", color: "neutral" } }}
+        sx={{ borderRadius: 40 }}
+      >
+        <IconButton color="neutral" size="sm">
+          <HistoryRounded />
+        </IconButton>
+      </MenuButton>
+      <Menu
+        placement="bottom-start"
+        sx={{
+          m: 0,
+          p: 0,
+          width: 250,
+          overflow: "scroll",
+          maxHeight: "calc(100% - 50px)",
+        }}
+      >
+        {chats.length === 0 && (
+          <MenuItem>
+            <Typography>Chat History is Empty</Typography>
+          </MenuItem>
+        )}
+        {chats.map((c, i) => (
+          <MenuItem
+            key={`ChatListItem_${c.id}`}
+            onClick={() => {
+              chatStore.selectSession(i);
+            }}
+          >
+            {c.topic}
+          </MenuItem>
+        ))}
+      </Menu>
+    </Dropdown>
   );
 }
