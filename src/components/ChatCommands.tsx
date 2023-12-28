@@ -1,18 +1,16 @@
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton from '@mui/joy/ListItemButton';
-import ListItemContent from '@mui/joy/ListItemContent';
-import Typography from '@mui/joy/Typography';
-import List from '@mui/joy/List';
-import { ListSubheader } from '@mui/joy';
-import * as React from 'react';
-import { usePromptStore } from '@/stores';
-import Sheet from '@mui/joy/Sheet';
-import { dashboardPxMultiplier, useChatInput } from '@/components/Chat';
-import { extractCommand, extractPrefix } from '@/utils';
-import { PROMPT_PREFIX } from '@/constants';
-import { Prompt } from '@/types';
+import ListItem from "@mui/joy/ListItem";
+import ListItemButton from "@mui/joy/ListItemButton";
+import ListItemContent from "@mui/joy/ListItemContent";
+import Typography from "@mui/joy/Typography";
+import List from "@mui/joy/List";
+import { ListSubheader } from "@mui/joy";
+import * as React from "react";
+import { usePromptStore } from "@/stores";
+import Sheet from "@mui/joy/Sheet";
+import { dashboardPxMultiplier, useChatInput } from "@/components/Chat";
+import { Prompt } from "@/types";
 
-export type PromptCommandInfo = Pick<Prompt, 'title' | 'content'>;
+export type PromptCommandInfo = Pick<Prompt, "title" | "content">;
 export type AiCommandInfo = any;
 export type BotCommandInfo = any;
 export type ChatCommandInfo = any;
@@ -29,9 +27,9 @@ export const ChatCommands = () => {
 
   return (
     <Sheet
-      variant='outlined'
+      variant="outlined"
       sx={{
-        position: 'absolute',
+        position: "absolute",
         bottom: 60,
         right: {
           xs: pxVal * dashboardPxMultiplier.xs,
@@ -46,13 +44,13 @@ export const ChatCommands = () => {
           }px))`,
         },
 
-        boxShadow: 'md',
-        borderRadius: '6px',
-        overflow: 'scroll',
-        overflowX: 'hidden',
+        boxShadow: "md",
+        borderRadius: "6px",
+        overflow: "scroll",
+        overflowX: "hidden",
         maxHeight: {
           xs: `calc(100dvh - 60px - ${pxVal * dashboardPxMultiplier.xs}px)`,
-          sm: '400px',
+          sm: "400px",
         },
         mb: 1,
       }}
@@ -65,15 +63,15 @@ export const ChatCommands = () => {
 };
 
 export const PromptCommandsList = () => {
-  const { suggestions } = useChatInput();
-  if (!(suggestions.prompt && suggestions.prompt.length > 0)) {
+  const { commands } = useChatInput();
+  if (!(commands.prompt && commands.prompt.length > 0)) {
     return;
   }
 
   return (
     <ListItem nested>
       <ListSubheader sticky>Prompts</ListSubheader>
-      {suggestions.prompt.map((p, index) => (
+      {commands.prompt.map((p, index) => (
         <PromptCommand key={`Prompt-${index}`} prompt={p} />
       ))}
     </ListItem>
@@ -81,30 +79,24 @@ export const PromptCommandsList = () => {
 };
 
 const PromptCommand = ({ prompt }: { prompt: PromptCommandInfo }) => {
-  const { input, setInput } = useChatInput();
+  const { input, setInput, setCommands, inputRef } = useChatInput();
   const promptStore = usePromptStore();
 
-  const promptSelected = () => {
-    const { prefix } = extractPrefix(input);
-    if (!prefix) {
-      return;
-    }
-
-    const { command, message } = extractCommand(input);
-    if (prefix === PROMPT_PREFIX) {
-      const prompt = promptStore.search(command)[0];
-      if (prompt) {
-        setInput(prompt.content + message);
-      }
-    }
+  const onPromptSelected = () => {
+    // Timeout is required for focusing the element
+    setTimeout(() => {
+      setInput(prompt.content);
+      setCommands({});
+      inputRef?.current?.focus();
+    }, 0);
   };
 
   return (
     <ListItem sx={{ pb: 1 }}>
-      <ListItemButton onClick={promptSelected}>
+      <ListItemButton onMouseDown={onPromptSelected}>
         <ListItemContent>
-          <Typography level='title-sm'>{prompt.title}</Typography>
-          <Typography level='body-sm' noWrap>
+          <Typography level="title-sm">{prompt.title}</Typography>
+          <Typography level="body-sm" noWrap>
             {prompt.content}
           </Typography>
         </ListItemContent>
