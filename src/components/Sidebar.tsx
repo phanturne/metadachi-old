@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import {
   AddCircleOutlineRounded,
   AutoAwesome,
-  ChatRounded,
+  CollectionsBookmarkRounded,
   ExploreRounded,
   Facebook,
   GitHub,
@@ -39,7 +39,10 @@ const routeDictionary: Record<
   { icon: React.ReactNode; label: string }
 > = {
   [Routes.Home]: { icon: <HomeRounded />, label: "Home" },
-  [Routes.Chats]: { icon: <ChatRounded />, label: "Chats" },
+  [Routes.Collections]: {
+    icon: <CollectionsBookmarkRounded />,
+    label: "Collections",
+  },
   [Routes.Images]: { icon: <ImageRounded />, label: "Images" },
   [Routes.Toolbox]: { icon: <HomeRepairServiceRounded />, label: "Toolbox" },
   [Routes.Discover]: { icon: <ExploreRounded />, label: "Discover" },
@@ -152,11 +155,13 @@ export default function Sidebar() {
             "--ListItem-radius": (theme) => theme.vars.radius.sm,
           }}
         >
-          <MenuItem route={Routes.Chats} />
           <MenuItem route={Routes.Images} />
           <MenuItem route={Routes.Toolbox} />
+          <MenuItem route={Routes.Collections} />
           <MenuItem route={Routes.Discover} />
         </List>
+
+        {/*TODO: Display a chat list on bigger screens*/}
 
         <List
           size="sm"
