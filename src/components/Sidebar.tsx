@@ -33,6 +33,7 @@ import { Routes } from "@/constants";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import Typography from "@mui/joy/Typography";
 import Profile from "@/components/Profile";
+import { useShortWindow } from "@/utils";
 
 const routeDictionary: Record<
   string,
@@ -54,6 +55,7 @@ export default function Sidebar() {
   const [selectedRoute, setSelectedRoute] = React.useState(Routes.Home);
   const router = useRouter();
   const chatStore = useChatStore();
+  const isShortWindow = useShortWindow();
 
   const handleNewChat = () => {
     setSelectedRoute(Routes.Chat);
@@ -173,7 +175,7 @@ export default function Sidebar() {
             "--List-gap": "8px",
           }}
         >
-          <MenuItem route={Routes.Settings} />
+          {!isShortWindow && <MenuItem route={Routes.Settings} />}
 
           {/*TODO: Spacing is incorrect. Replace w/ Base UI Popup*/}
           <Profile>
