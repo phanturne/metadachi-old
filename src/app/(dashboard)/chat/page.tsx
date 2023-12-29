@@ -1,13 +1,9 @@
 "use client";
-import {
-  ChatHistoryDropdown,
-  ChatInput,
-  ChatMessages,
-  EmptyChatConfig,
-} from "@/components/Chat";
+import { ChatInput, ChatMessages, EmptyChatConfig } from "@/components/Chat";
 import React from "react";
 import { useChatStore } from "@/stores";
 import Header from "@/components/Header";
+import { ChatListDropdown } from "@/components/ChatList";
 
 export default function ChatPage() {
   const chatStore = useChatStore();
@@ -19,7 +15,7 @@ export default function ChatPage() {
   return (
     <>
       <Header
-        startContent={<ChatHistoryDropdown />}
+        startContent={<ChatListDropdown />}
         middleContent={currentChat.topic}
       />
       {messages.length === 0 && <EmptyChatConfig />}

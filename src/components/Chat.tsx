@@ -12,25 +12,23 @@ import * as React from "react";
 import { createContext, RefObject, useContext, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { extractPrefix } from "@/utils";
-import { BOT_PREFIX, CHAT_PREFIX, PROMPT_PREFIX, Routes } from "@/constants";
+import {
+  BOT_PREFIX,
+  CHAT_PREFIX,
+  dashboardPx,
+  PROMPT_PREFIX,
+  Routes,
+} from "@/constants";
 import { useChatStore, useMaskStore, usePromptStore } from "@/stores";
 import { useRouter } from "next/navigation";
 import Typography from "@mui/joy/Typography";
-import {
-  AiCommandInfo,
-  ChatCommands,
-  CommandInfo,
-} from "@/components/ChatCommands";
+import { AiCommandInfo, CommandInfo, Commands } from "@/components/Commands";
 import { SxProps } from "@mui/joy/styles/types";
 import Stack from "@mui/joy/Stack";
 import Avatar from "@mui/joy/Avatar";
 import { ChatMessage } from "@/types";
-import { HistoryRounded, Send } from "@mui/icons-material";
+import { Send } from "@mui/icons-material";
 import IconButton from "@mui/joy/IconButton";
-import Dropdown from "@mui/joy/Dropdown";
-import MenuButton from "@mui/joy/MenuButton";
-import Menu from "@mui/joy/Menu";
-import MenuItem from "@mui/joy/MenuItem";
 
 const ChatInputContext = createContext({
   input: "",
@@ -39,8 +37,6 @@ const ChatInputContext = createContext({
   setCommands: (_: CommandInfo) => {},
   inputRef: null as RefObject<HTMLTextAreaElement | null> | null,
 });
-
-export const dashboardPxMultiplier = { xs: 3, lg: 6 };
 
 export const useChatInput = () => {
   return useContext(ChatInputContext);
@@ -147,8 +143,8 @@ export function ChatInput({
         display: "flex",
         flexDirection: "column",
         px: {
-          xs: dashboardPxMultiplier.xs,
-          lg: dashboardPxMultiplier.lg,
+          xs: dashboardPx.xs,
+          lg: dashboardPx.lg,
         },
         pb: 2,
       }}
@@ -157,7 +153,7 @@ export function ChatInput({
         <ChatInputContext.Provider
           value={{ input, setInput, commands, setCommands, inputRef }}
         >
-          <ChatCommands />
+          <Commands />
         </ChatInputContext.Provider>
       )}
       <Textarea
@@ -269,8 +265,8 @@ export function ChatMessages({ messages }: { messages: ChatMessage[] }) {
         flexGrow: 1,
         overflowY: "scroll",
         px: {
-          xs: dashboardPxMultiplier.xs,
-          lg: dashboardPxMultiplier.lg,
+          xs: dashboardPx.xs,
+          lg: dashboardPx.lg,
         },
         flexDirection: "column-reverse",
       }}
@@ -281,50 +277,5 @@ export function ChatMessages({ messages }: { messages: ChatMessage[] }) {
         ))}
       </Stack>
     </Box>
-  );
-}
-
-export function ChatHistoryDropdown() {
-  const chatStore = useChatStore();
-  const chats = chatStore.sessions;
-
-  return (
-    <Dropdown>
-      <MenuButton
-        slots={{ root: IconButton }}
-        slotProps={{ root: { variant: "plain", color: "neutral" } }}
-        sx={{ borderRadius: 40 }}
-      >
-        <IconButton color="neutral" size="sm">
-          <HistoryRounded />
-        </IconButton>
-      </MenuButton>
-      <Menu
-        placement="bottom-start"
-        sx={{
-          m: 0,
-          p: 0,
-          width: 250,
-          overflow: "scroll",
-          maxHeight: "calc(100% - 50px)",
-        }}
-      >
-        {chats.length === 0 && (
-          <MenuItem>
-            <Typography>Chat History is Empty</Typography>
-          </MenuItem>
-        )}
-        {chats.map((c, i) => (
-          <MenuItem
-            key={`ChatListItem_${c.id}`}
-            onClick={() => {
-              chatStore.selectSession(i);
-            }}
-          >
-            {c.topic}
-          </MenuItem>
-        ))}
-      </Menu>
-    </Dropdown>
   );
 }
