@@ -25,7 +25,7 @@ export const Routes = {
   Images: "/images",
   Collections: "/collections",
   Toolbox: "/toolbox",
-  Discover: "/discover",
+  Explore: "/discover",
   Settings: "/settings",
   Profile: "/profile",
   Support: "/support",

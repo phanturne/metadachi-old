@@ -45,7 +45,7 @@ const routeDictionary: Record<
   },
   [Routes.Images]: { icon: <ImageRounded />, label: "Images" },
   [Routes.Toolbox]: { icon: <HomeRepairServiceRounded />, label: "Toolbox" },
-  [Routes.Discover]: { icon: <ExploreRounded />, label: "Discover" },
+  [Routes.Explore]: { icon: <ExploreRounded />, label: "Explore" },
   [Routes.Settings]: { icon: <SettingsRounded />, label: "Settings" },
   [Routes.Profile]: { icon: <PersonRounded />, label: "Profile" },
 };
@@ -158,7 +158,7 @@ export default function Sidebar() {
           <MenuItem route={Routes.Images} />
           <MenuItem route={Routes.Toolbox} />
           <MenuItem route={Routes.Collections} />
-          <MenuItem route={Routes.Discover} />
+          <MenuItem route={Routes.Explore} />
         </List>
 
         {/*TODO: Display a chat list on bigger screens*/}

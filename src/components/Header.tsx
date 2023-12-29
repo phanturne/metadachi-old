@@ -33,7 +33,14 @@ export default function Header({
         {startContent || <div></div>}
       </Box>
 
-      <Box sx={{ flex: 1 }}>{middleContent}</Box>
+      <Box
+        sx={{
+          flex: 1,
+          flexGrow: 2,
+        }}
+      >
+        {middleContent}
+      </Box>
 
       <Box
         sx={{
