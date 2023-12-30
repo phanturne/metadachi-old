@@ -16,7 +16,8 @@ Unlock boundless productivity with Metadachi, our cross-platform AI assistant. A
 
 > This project builds on the outstanding work by the author and contributors of [ChatGPT Next Web](https://github.com/ChatGPTNextWeb/).
 
-[//]: # (![cover]&#40;./docs/images/screenshot-1.jpeg&#41;)
+![Website](./docs/images/screenshot-website.png)
+![Desktop App](./docs/images/screenshot-app.png)
 
 </div>
 
