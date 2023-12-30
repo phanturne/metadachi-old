@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import {
   AddCircleOutlineRounded,
   AutoAwesome,
+  AutoAwesomeRounded,
   CollectionsBookmarkRounded,
   ExploreRounded,
   Facebook,
@@ -246,7 +247,7 @@ function SidebarHeader() {
       {/*Displayed on Expanded Sidebars*/}
       <Button
         variant="plain"
-        startDecorator={<AutoAwesome />}
+        startDecorator={<AutoAwesomeRounded />}
         onClick={() => router.push(Routes.Home)}
         sx={{
           display: {

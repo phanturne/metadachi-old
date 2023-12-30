@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Autocomplete,
-  Box,
-  FormControl,
-  selectClasses,
-  Textarea,
-} from "@mui/joy";
-import Sheet from "@mui/joy/Sheet";
+import { Box, Textarea } from "@mui/joy";
 import * as React from "react";
 import { createContext, RefObject, useContext, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -19,22 +12,37 @@ import {
   PROMPT_PREFIX,
   Routes,
 } from "@/constants";
-import { useChatStore, useMaskStore, usePromptStore } from "@/stores";
+import { useChatStore, usePromptStore } from "@/stores";
 import { useRouter } from "next/navigation";
 import Typography from "@mui/joy/Typography";
-import { AiCommandInfo, CommandInfo, Commands } from "@/components/Commands";
+import {
+  ChatActionInfo,
+  ChatActions,
+  CommandInfo,
+} from "@/components/ChatActions";
 import { SxProps } from "@mui/joy/styles/types";
 import Stack from "@mui/joy/Stack";
 import Avatar from "@mui/joy/Avatar";
-import { ChatMessage } from "@/types";
+import { ChatMessage, Mask } from "@/types";
 import { Send } from "@mui/icons-material";
 import IconButton from "@mui/joy/IconButton";
+
+export const ChatContext = createContext({
+  model: "",
+  setModel: (_: string) => {},
+  agent: undefined as Mask | undefined,
+  setAgent: (_: Mask | undefined) => {},
+});
+
+export const useChat = () => {
+  return useContext(ChatContext);
+};
 
 const ChatInputContext = createContext({
   input: "",
   setInput: (_: string) => {},
-  commands: [] as CommandInfo,
-  setCommands: (_: CommandInfo) => {},
+  actions: [] as ChatActionInfo,
+  setActions: (_: ChatActionInfo) => {},
   inputRef: null as RefObject<HTMLTextAreaElement | null> | null,
 });
 
@@ -57,9 +65,10 @@ export function ChatInput({
   // TODO: Bot Store
   // TODO: Chat Store
 
+  const { model, agent } = useChat();
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [input, setInput] = useState("");
-  const [commands, setCommands] = useState<CommandInfo>({});
+  const [actions, setActions] = useState<ChatActionInfo>({});
   const [isFocused, setIsFocused] = useState(true);
 
   // Update input suggestions based on the user input
@@ -77,18 +86,18 @@ export function ChatInput({
         case PROMPT_PREFIX:
           // Set Prompt & Command Suggestions
           const prompts = promptStore.search(message);
-          const commands: AiCommandInfo[] = [];
-          setCommands({ command: commands, prompt: prompts });
+          const commands: CommandInfo[] = [];
+          setActions({ command: commands, prompt: prompts });
           break;
 
         case BOT_PREFIX:
         case CHAT_PREFIX:
           // TODO: Get prompts or chats
-          setCommands({});
+          setActions({});
           break;
 
         default:
-          setCommands({});
+          setActions({});
       }
     },
     100,
@@ -109,8 +118,8 @@ export function ChatInput({
     if (input.trim() === "") return;
 
     // Parse the chat prefix
-    const { prefix } = extractPrefix(input);
-    let currInput = input;
+    // const { prefix } = extractPrefix(input);
+    // let currInput = input;
 
     // if (prefix) {
     //   const { command, message } = extractCommand(input);
@@ -122,7 +131,8 @@ export function ChatInput({
 
     if (needToCreateChat) {
       setTimeout(() => {
-        chatStore.newSession();
+        // TODO: Pass in model as a parameter for creating new chat sessions
+        chatStore.newSession(agent);
         chatStore.onUserInput(input);
         router.push(Routes.Chat);
       }, 10);
@@ -133,7 +143,7 @@ export function ChatInput({
   };
 
   const hasCommands = () =>
-    Object.values(commands).some(
+    Object.values(actions).some(
       (array) => Array.isArray(array) && array.length > 0,
     );
 
@@ -151,9 +161,15 @@ export function ChatInput({
     >
       {hasCommands() && isFocused && (
         <ChatInputContext.Provider
-          value={{ input, setInput, commands, setCommands, inputRef }}
+          value={{
+            input,
+            setInput,
+            actions,
+            setActions,
+            inputRef,
+          }}
         >
-          <Commands />
+          <ChatActions />
         </ChatInputContext.Provider>
       )}
       <Textarea
@@ -178,61 +194,6 @@ export function ChatInput({
         }
         slotProps={{ textarea: { ref: inputRef } }}
       />
-    </Box>
-  );
-}
-
-export function EmptyChatConfig() {
-  const botStore = useMaskStore();
-  const bots = botStore.getAll();
-
-  return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        overflowY: "scroll",
-        px: 3,
-        flexDirection: "column-reverse",
-        alignItems: "center",
-        justifyContent: "center",
-        display: "flex",
-      }}
-    >
-      <Sheet
-        variant="plain"
-        sx={{
-          height: "300px",
-          width: "400px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-      >
-        <FormControl sx={{ width: "240px", gap: 1 }}>
-          <Typography>Bot</Typography>
-          <Autocomplete
-            // defaultValue={bots?.[0]?.name}
-            placeholder="Select a Bot"
-            options={bots.map((b) => b.name)}
-            sx={{
-              [`& .${selectClasses.indicator}`]: {
-                transition: "0.2s",
-                [`&.${selectClasses.expanded}`]: {
-                  transform: "rotate(-180deg)",
-                },
-              },
-            }}
-            slotProps={{
-              listbox: {
-                sx: {
-                  maxHeight: "300px",
-                },
-              },
-            }}
-          />
-        </FormControl>
-      </Sheet>
     </Box>
   );
 }

@@ -5,24 +5,23 @@ import Typography from "@mui/joy/Typography";
 import List from "@mui/joy/List";
 import { ListSubheader } from "@mui/joy";
 import * as React from "react";
-import { usePromptStore } from "@/stores";
 import Sheet from "@mui/joy/Sheet";
 import { useChatInput } from "@/components/Chat";
 import { Prompt } from "@/types";
 import { dashboardPx } from "@/constants";
 
 export type PromptCommandInfo = Pick<Prompt, "title" | "content">;
-export type AiCommandInfo = any;
-export type BotCommandInfo = any;
-export type ChatCommandInfo = any;
-export type CommandInfo = {
-  command?: AiCommandInfo[];
+export type CommandInfo = any;
+export type BotInfo = any;
+export type ChatInfo = any;
+export type ChatActionInfo = {
+  command?: CommandInfo[];
   prompt?: PromptCommandInfo[];
-  bot?: BotCommandInfo[];
-  chat?: ChatCommandInfo[];
+  bot?: BotInfo[];
+  chat?: ChatInfo[];
 };
 
-export const Commands = () => {
+export const ChatActions = () => {
   // Each JoyUI padding unit is 8px. The padding used in the sheet below is using a standard px value for some reason (maybe b/c position: 'absolute')?
   const pxVal = 8;
 
@@ -57,37 +56,36 @@ export const Commands = () => {
       }}
     >
       <List>
-        <PromptCommandsList />
+        <PromptActionsList />
       </List>
     </Sheet>
   );
 };
 
-export const PromptCommandsList = () => {
-  const { commands } = useChatInput();
-  if (!(commands.prompt && commands.prompt.length > 0)) {
+export const PromptActionsList = () => {
+  const { actions } = useChatInput();
+  if (!(actions.prompt && actions.prompt.length > 0)) {
     return;
   }
 
   return (
     <ListItem nested>
       <ListSubheader sticky>Prompts</ListSubheader>
-      {commands.prompt.map((p, index) => (
-        <PromptCommand key={`Prompt-${index}`} prompt={p} />
+      {actions.prompt.map((p, index) => (
+        <PromptAction key={`Prompt-${index}`} prompt={p} />
       ))}
     </ListItem>
   );
 };
 
-const PromptCommand = ({ prompt }: { prompt: PromptCommandInfo }) => {
-  const { input, setInput, setCommands, inputRef } = useChatInput();
-  const promptStore = usePromptStore();
+const PromptAction = ({ prompt }: { prompt: PromptCommandInfo }) => {
+  const { input, setInput, setActions, inputRef } = useChatInput();
 
   const onPromptSelected = () => {
     // Timeout is required for focusing the element
     setTimeout(() => {
       setInput(prompt.content);
-      setCommands({});
+      setActions({});
       inputRef?.current?.focus();
     }, 0);
   };
