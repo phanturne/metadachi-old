@@ -1,6 +1,6 @@
-import { Button, useColorScheme } from '@mui/joy';
-import { useEffect, useState } from 'react';
-import { DarkModeRounded, LightModeRounded } from '@mui/icons-material';
+import { Button, useColorScheme } from "@mui/joy";
+import { useEffect, useState } from "react";
+import { DarkModeRounded, LightModeRounded } from "@mui/icons-material";
 
 export default function ThemeToggleButton() {
   const { mode, setMode } = useColorScheme();
@@ -10,31 +10,31 @@ export default function ThemeToggleButton() {
   }, []);
   if (!mounted) {
     return (
-      <Button size='sm' variant='outlined' color='neutral' disabled>
+      <Button size="sm" variant="outlined" color="neutral" disabled>
         Light
       </Button>
     );
   }
   return (
     <Button
-      id='theme-toggle'
-      size='sm'
-      variant='outlined'
-      color='neutral'
+      id="theme-toggle"
+      size="sm"
+      variant="outlined"
+      color="neutral"
       startDecorator={
-        mode === 'light' ? (
-          <LightModeRounded color='warning' />
+        mode === "light" ? (
+          <LightModeRounded color="warning" />
         ) : (
-          <DarkModeRounded color='primary' />
+          <DarkModeRounded color="primary" />
         )
       }
       onClick={() => {
-        setMode(mode === 'light' ? 'dark' : 'light');
+        setMode(mode === "light" ? "dark" : "light");
       }}
       sx={{ flexGrow: 1 }}
     >
-      {mode === 'dark' ? 'Dark' : 'Light'}{' '}
-      {process.env.BUILD_MODE !== 'export' && 'Mode'}
+      {mode === "dark" ? "Light" : "Dark"}{" "}
+      {process.env.BUILD_MODE !== "export" && "Mode"}
     </Button>
   );
 }
