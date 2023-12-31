@@ -322,18 +322,18 @@ const en = {
       },
       Google: {
         ApiKey: {
-          Title: "API Key",
+          Title: "Google AI Studio API Key",
           SubTitle:
             "Bypass password access restrictions using a custom Google AI Studio API Key",
           Placeholder: "Google AI Studio API Key",
         },
 
         Endpoint: {
-          Title: "Endpoint Address",
+          Title: "Google AI Studio Endpoint",
           SubTitle: "Example:",
         },
 
-        ApiVerion: {
+        ApiVersion: {
           Title: "API Version (gemini-pro api version)",
           SubTitle: "Select a specific part version",
         },
