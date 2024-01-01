@@ -5,14 +5,16 @@
 import * as React from "react";
 import Box from "@mui/joy/Box";
 import Typography from "@mui/joy/Typography";
-import { Tab, tabClasses, TabList, Tabs } from "@mui/joy";
+import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
 import AccountSettings from "@/app/(dashboard)/settings/AccountSettings";
 import ApiSettings from "@/app/(dashboard)/settings/ApiSettings";
 import { useSearchParams } from "next/navigation";
+import ModelSettings from "@/app/(dashboard)/settings/ModelSettings";
 
 const tabs = [
   // { value: 'account', label: 'Account' },
   { value: "api", label: "API" },
+  { value: "models", label: "Models" },
 ];
 
 export default function SettingsPage() {
@@ -67,8 +69,17 @@ export default function SettingsPage() {
           ))}
         </TabList>
 
-        <AccountSettings />
-        <ApiSettings />
+        <TabPanel value="account">
+          <AccountSettings />
+        </TabPanel>
+
+        <TabPanel value="api">
+          <ApiSettings />
+        </TabPanel>
+
+        <TabPanel value="models">
+          <ModelSettings />
+        </TabPanel>
       </Tabs>
     </Box>
   );

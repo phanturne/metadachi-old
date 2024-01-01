@@ -34,6 +34,7 @@ export function Autocomplete({
       <>
         <Typography level={textLevel ?? "body-md"}>{name}</Typography>
         <JoyAutocomplete
+          key={`autocomplete-${name}`}
           disabled={disabled}
           placeholder={placeholder}
           defaultValue={defaultValue}
@@ -80,7 +81,37 @@ export function Autocomplete({
             ...sharedContainerStyles,
           }}
         >
-          <AutocompleteContent />
+          {/*TODO: There's a bug where the selected autocomplete value won't be displayed if its inside another function..*/}
+          {/*<AutocompleteContent />*/}
+          <Typography level={textLevel ?? "body-md"}>{name}</Typography>
+          <JoyAutocomplete
+            key={`autocomplete-${name}`}
+            disabled={disabled}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            options={options}
+            getOptionLabel={getOptionLabel}
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            sx={{
+              width: "200px",
+              [`& .${selectClasses.indicator}`]: {
+                transition: "0.2s",
+                [`&.${selectClasses.expanded}`]: {
+                  transform: "rotate(-180deg)",
+                },
+              },
+            }}
+            slotProps={{
+              listbox: {
+                sx: {
+                  maxHeight: "300px",
+                },
+              },
+            }}
+            onChange={onChange}
+          />
         </Sheet>
       )}
 
@@ -90,7 +121,36 @@ export function Autocomplete({
             ...sharedContainerStyles,
           }}
         >
-          <AutocompleteContent />
+          {/*<AutocompleteContent />*/}
+          <Typography level={textLevel ?? "body-md"}>{name}</Typography>
+          <JoyAutocomplete
+            key={`autocomplete-${name}`}
+            disabled={disabled}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            options={options}
+            getOptionLabel={getOptionLabel}
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            sx={{
+              width: "200px",
+              [`& .${selectClasses.indicator}`]: {
+                transition: "0.2s",
+                [`&.${selectClasses.expanded}`]: {
+                  transform: "rotate(-180deg)",
+                },
+              },
+            }}
+            slotProps={{
+              listbox: {
+                sx: {
+                  maxHeight: "300px",
+                },
+              },
+            }}
+            onChange={onChange}
+          />
         </Box>
       )}
     </>
