@@ -18,7 +18,7 @@ import {
 } from "@fortaine/fetch-event-source";
 import { prettyObject } from "@/utils/format";
 import { getClientConfig } from "@/config/client";
-import { makeAzurePath } from "@/azure";
+import { makeAzurePath } from "@/utils/azure";
 
 export interface OpenAIListModelResponse {
   object: string;

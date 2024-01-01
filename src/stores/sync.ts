@@ -1,20 +1,20 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/store/sync.ts
 
-import { getClientConfig } from '@/config/client';
-import { ApiPath, STORAGE_KEY, StoreKey } from '@/constants';
-import { createPersistStore } from '@/utils/store';
+import { getClientConfig } from "@/config/client";
+import { ApiPath, STORAGE_KEY, StoreKey } from "@/constants";
+import { createPersistStore } from "@/utils/store";
 import {
   AppState,
   getLocalAppState,
   GetStoreState,
   mergeAppState,
   setLocalAppState,
-} from '@/utils/sync';
-import { downloadAs, readFromFile } from '@/utils';
+} from "@/utils/sync";
+import { downloadAs, readFromFile } from "@/utils/utils";
 // import { showToast } from '../components/ui-lib';
-import Locale from '../locales';
-import { createSyncClient, ProviderType } from '@/utils/cloud';
-import { corsPath } from '@/utils/cors';
+import Locale from "../locales";
+import { createSyncClient, ProviderType } from "@/utils/cloud";
+import { corsPath } from "@/utils/cors";
 
 export interface WebDavConfig {
   server: string;
@@ -31,19 +31,19 @@ const DEFAULT_SYNC_STATE = {
   proxyUrl: corsPath(ApiPath.Cors),
 
   webdav: {
-    endpoint: '',
-    username: '',
-    password: '',
+    endpoint: "",
+    username: "",
+    password: "",
   },
 
   upstash: {
-    endpoint: '',
+    endpoint: "",
     username: STORAGE_KEY,
-    apiKey: '',
+    apiKey: "",
   },
 
   lastSyncTime: 0,
-  lastProvider: '',
+  lastProvider: "",
 };
 
 export const useSyncStore = createPersistStore(
@@ -61,9 +61,9 @@ export const useSyncStore = createPersistStore(
     export() {
       const state = getLocalAppState();
       const datePart = isApp
-        ? `${new Date().toLocaleDateString().replace(/\//g, '_')} ${new Date()
+        ? `${new Date().toLocaleDateString().replace(/\//g, "_")} ${new Date()
             .toLocaleTimeString()
-            .replace(/:/g, '_')}`
+            .replace(/:/g, "_")}`
         : new Date().toLocaleString();
 
       const fileName = `Backup-${datePart}.json`;
@@ -80,7 +80,7 @@ export const useSyncStore = createPersistStore(
         setLocalAppState(localState);
         location.reload();
       } catch (e) {
-        console.error('[Import]', e);
+        console.error("[Import]", e);
         // TODO: Replace showToast()
         // showToast(Locale.Settings.Sync.ImportFailed);
       }
@@ -100,12 +100,12 @@ export const useSyncStore = createPersistStore(
 
       try {
         const remoteState = JSON.parse(
-          await client.get(config.username)
+          await client.get(config.username),
         ) as AppState;
         mergeAppState(localState, remoteState);
         setLocalAppState(localState);
       } catch (e) {
-        console.log('[Sync] failed to get remote state', e);
+        console.log("[Sync] failed to get remote state", e);
       }
 
       await client.set(config.username, JSON.stringify(localState));
@@ -131,5 +131,5 @@ export const useSyncStore = createPersistStore(
 
       return newState as any;
     },
-  }
+  },
 );

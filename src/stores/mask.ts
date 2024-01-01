@@ -1,12 +1,12 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/store/mask.ts
 
-import { BUILTIN_MASKS } from '@/masks';
-import Locale, { getLang } from '@/locales';
-import { useAppConfig } from './config';
-import { StoreKey } from '@/constants';
-import { nanoid } from 'nanoid';
-import { createPersistStore } from '@/utils/store';
-import { Mask } from '@/types';
+import { BUILTIN_MASKS } from "@/masks";
+import Locale, { getLang } from "@/locales";
+import { useAppConfig } from "./config";
+import { StoreKey } from "@/constants";
+import { nanoid } from "nanoid";
+import { createPersistStore } from "@/utils/store";
+import { Mask } from "@/typing";
 
 export const DEFAULT_MASK_STATE = {
   masks: {} as Record<string, Mask>,
@@ -14,7 +14,7 @@ export const DEFAULT_MASK_STATE = {
 
 export type MaskState = typeof DEFAULT_MASK_STATE;
 
-export const DEFAULT_MASK_AVATAR = 'gpt-bot';
+export const DEFAULT_MASK_AVATAR = "gpt-bot";
 export const createEmptyMask = () =>
   ({
     id: nanoid(),
@@ -69,7 +69,7 @@ export const useMaskStore = createPersistStore(
     },
     getAll() {
       const userMasks = Object.values(get().masks).sort(
-        (a, b) => b.createdAt - a.createdAt
+        (a, b) => b.createdAt - a.createdAt,
       );
       const config = useAppConfig.getState();
       if (config.hideBuiltinMasks) return userMasks;
@@ -81,7 +81,7 @@ export const useMaskStore = createPersistStore(
               ...config.modelConfig,
               ...m.modelConfig,
             },
-          }) as Mask
+          }) as Mask,
       );
       return userMasks.concat(buildinMasks);
     },
@@ -111,5 +111,5 @@ export const useMaskStore = createPersistStore(
 
       return newState as any;
     },
-  }
+  },
 );

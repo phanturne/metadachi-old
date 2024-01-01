@@ -13,7 +13,7 @@ import Typography from "@mui/joy/Typography";
 import { useAllModels } from "@/hooks/useAllModels";
 import { Box, FormControl } from "@mui/joy";
 import { AutoAwesomeRounded } from "@mui/icons-material";
-import { Mask } from "@/types";
+import { Mask } from "@/typing";
 import { Autocomplete } from "@/components/Autocomplete";
 
 export default function ChatPage() {

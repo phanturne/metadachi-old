@@ -4,7 +4,7 @@ import { Box, Textarea } from "@mui/joy";
 import * as React from "react";
 import { createContext, RefObject, useContext, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { extractPrefix } from "@/utils";
+import { extractPrefix } from "@/utils/utils";
 import {
   BOT_PREFIX,
   CHAT_PREFIX,
@@ -23,7 +23,7 @@ import {
 import { SxProps } from "@mui/joy/styles/types";
 import Stack from "@mui/joy/Stack";
 import Avatar from "@mui/joy/Avatar";
-import { ChatMessage, Mask } from "@/types";
+import { ChatMessage, Mask } from "@/typing";
 import { Send } from "@mui/icons-material";
 import IconButton from "@mui/joy/IconButton";
 

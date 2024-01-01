@@ -7,7 +7,7 @@ import { ListSubheader } from "@mui/joy";
 import * as React from "react";
 import Sheet from "@mui/joy/Sheet";
 import { useChatInput } from "@/components/Chat";
-import { Prompt } from "@/types";
+import { Prompt } from "@/typing";
 import { dashboardPx } from "@/constants";
 
 export type PromptCommandInfo = Pick<Prompt, "title" | "content">;

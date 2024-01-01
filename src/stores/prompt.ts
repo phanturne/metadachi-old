@@ -1,15 +1,15 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/store/prompt.ts
 
-import Fuse from 'fuse.js';
-import { StoreKey } from '@/constants';
-import { nanoid } from 'nanoid';
-import { createPersistStore } from '@/utils/store';
-import { Prompt } from '@/types';
+import Fuse from "fuse.js";
+import { StoreKey } from "@/constants";
+import { nanoid } from "nanoid";
+import { createPersistStore } from "@/utils/store";
+import { Prompt } from "@/typing";
 
 export const SearchService = {
   ready: false,
-  builtinEngine: new Fuse<Prompt>([], { keys: ['title'] }),
-  userEngine: new Fuse<Prompt>([], { keys: ['title'] }),
+  builtinEngine: new Fuse<Prompt>([], { keys: ["title"] }),
+  userEngine: new Fuse<Prompt>([], { keys: ["title"] }),
   count: {
     builtin: 0,
   },
@@ -96,15 +96,15 @@ export const usePromptStore = createPersistStore(
     getUserPrompts() {
       const userPrompts = Object.values(get().prompts ?? {});
       userPrompts.sort((a, b) =>
-        b.id && a.id ? b.createdAt - a.createdAt : 0
+        b.id && a.id ? b.createdAt - a.createdAt : 0,
       );
       return userPrompts;
     },
 
     updatePrompt(id: string, updater: (prompt: Prompt) => void) {
       const prompt = get().prompts[id] ?? {
-        title: '',
-        content: '',
+        title: "",
+        content: "",
         id,
       };
 
@@ -141,14 +141,14 @@ export const usePromptStore = createPersistStore(
     },
 
     onRehydrateStorage(state) {
-      const PROMPT_URL = './prompts.json';
+      const PROMPT_URL = "./prompts.json";
 
       type PromptList = Array<[string, string]>;
 
       fetch(PROMPT_URL)
         .then((res) => res.json())
         .then((res) => {
-          let fetchPrompts = [res.en, res.cn];
+          let fetchPrompts = [res.en];
           const builtinPrompts = fetchPrompts.map((promptList: PromptList) => {
             return promptList.map(
               ([title, content]) =>
@@ -157,7 +157,7 @@ export const usePromptStore = createPersistStore(
                   title,
                   content,
                   createdAt: Date.now(),
-                }) as Prompt
+                }) as Prompt,
             );
           });
 
@@ -170,5 +170,5 @@ export const usePromptStore = createPersistStore(
           SearchService.init(allPromptsForSearch, userPrompts);
         });
     },
-  }
+  },
 );

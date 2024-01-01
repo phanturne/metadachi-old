@@ -1,9 +1,9 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/store/chat.ts
 
-import { trimTopic } from '@/utils';
-import Locale, { getLang } from '../locales';
-import { ModelConfig, ModelType, useAppConfig } from './config';
-import { createEmptyMask } from './mask';
+import { trimTopic } from "@/utils/utils";
+import Locale, { getLang } from "../locales";
+import { ModelConfig, ModelType, useAppConfig } from "./config";
+import { createEmptyMask } from "./mask";
 import {
   DEFAULT_INPUT_TEMPLATE,
   DEFAULT_SYSTEM_TEMPLATE,
@@ -11,14 +11,14 @@ import {
   ModelProvider,
   StoreKey,
   SUMMARIZE_MODEL,
-} from '@/constants';
-import { ClientApi, RequestMessage } from '@/client/api';
-import { ChatControllerPool } from '@/client/controller';
-import { prettyObject } from '@/utils/format';
-import { estimateTokenLength } from '@/utils/token';
-import { nanoid } from 'nanoid';
-import { createPersistStore } from '@/utils/store';
-import { ChatMessage, ChatSession, Mask } from '@/types';
+} from "@/constants";
+import { ClientApi, RequestMessage } from "@/client/api";
+import { ChatControllerPool } from "@/client/controller";
+import { prettyObject } from "@/utils/format";
+import { estimateTokenLength } from "@/utils/token";
+import { nanoid } from "nanoid";
+import { createPersistStore } from "@/utils/store";
+import { ChatMessage, ChatSession, Mask } from "@/typing";
 
 // import { showToast } from '../components/ui-lib';
 
@@ -26,15 +26,15 @@ export function createMessage(override: Partial<ChatMessage>): ChatMessage {
   return {
     id: nanoid(),
     date: new Date().toLocaleString(),
-    role: 'user',
-    content: '',
+    role: "user",
+    content: "",
     ...override,
   };
 }
 
 const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
 export const BOT_HELLO: ChatMessage = createMessage({
-  role: 'assistant',
+  role: "assistant",
   content: Locale.Store.BotHello,
 });
 
@@ -42,7 +42,7 @@ function createEmptySession(): ChatSession {
   return {
     id: nanoid(),
     topic: DEFAULT_TOPIC,
-    memoryPrompt: '',
+    memoryPrompt: "",
     messages: [],
     stat: {
       tokenCount: 0,
@@ -58,7 +58,7 @@ function createEmptySession(): ChatSession {
 
 function getSummarizeModel(currentModel: string) {
   // if it is using gpt-* models, force to use 3.5 to summarize
-  return currentModel.startsWith('gpt') ? SUMMARIZE_MODEL : currentModel;
+  return currentModel.startsWith("gpt") ? SUMMARIZE_MODEL : currentModel;
 }
 
 function countMessages(msgs: ChatMessage[]) {
@@ -80,9 +80,9 @@ function fillTemplateWith(input: string, modelConfig: ModelConfig) {
   let output = modelConfig.template ?? DEFAULT_INPUT_TEMPLATE;
 
   // must contains {{input}}
-  const inputVar = '{{input}}';
+  const inputVar = "{{input}}";
   if (!output.includes(inputVar)) {
-    output += '\n' + inputVar;
+    output += "\n" + inputVar;
   }
 
   Object.entries(vars).forEach(([name, value]) => {
@@ -188,7 +188,7 @@ export const useChatStore = createPersistStore(
         const currentIndex = get().currentSessionIndex;
         let nextIndex = Math.min(
           currentIndex - Number(index < currentIndex),
-          sessions.length - 1
+          sessions.length - 1,
         );
 
         if (deletingLastSession) {
@@ -248,15 +248,15 @@ export const useChatStore = createPersistStore(
         const modelConfig = session.mask.modelConfig;
 
         const userContent = fillTemplateWith(content, modelConfig);
-        console.log('[User Input] after template: ', userContent);
+        console.log("[User Input] after template: ", userContent);
 
         const userMessage: ChatMessage = createMessage({
-          role: 'user',
+          role: "user",
           content: userContent,
         });
 
         const botMessage: ChatMessage = createMessage({
-          role: 'assistant',
+          role: "assistant",
           streaming: true,
           model: modelConfig.model,
         });
@@ -279,7 +279,7 @@ export const useChatStore = createPersistStore(
         });
 
         let api: ClientApi;
-        if (modelConfig.model === 'gemini-pro') {
+        if (modelConfig.model === "gemini-pro") {
           api = new ClientApi(ModelProvider.GeminiPro);
         } else {
           api = new ClientApi(ModelProvider.GPT);
@@ -307,9 +307,9 @@ export const useChatStore = createPersistStore(
             ChatControllerPool.remove(session.id, botMessage.id);
           },
           onError(error) {
-            const isAborted = error.message.includes('aborted');
+            const isAborted = error.message.includes("aborted");
             botMessage.content +=
-              '\n\n' +
+              "\n\n" +
               prettyObject({
                 error: true,
                 message: error.message,
@@ -322,17 +322,17 @@ export const useChatStore = createPersistStore(
             });
             ChatControllerPool.remove(
               session.id,
-              botMessage.id ?? messageIndex
+              botMessage.id ?? messageIndex,
             );
 
-            console.error('[Chat] failed ', error);
+            console.error("[Chat] failed ", error);
           },
           onController(controller) {
             // collect controller for stop/retry
             ChatControllerPool.addController(
               session.id,
               botMessage.id ?? messageIndex,
-              controller
+              controller,
             );
           },
         });
@@ -342,12 +342,12 @@ export const useChatStore = createPersistStore(
         const session = get().currentSession();
 
         return {
-          role: 'system',
+          role: "system",
           content:
             session.memoryPrompt.length > 0
               ? Locale.Store.Prompt.History(session.memoryPrompt)
-              : '',
-          date: '',
+              : "",
+          date: "",
         } as ChatMessage;
       },
 
@@ -368,8 +368,8 @@ export const useChatStore = createPersistStore(
         systemPrompts = shouldInjectSystemPrompts
           ? [
               createMessage({
-                role: 'system',
-                content: fillTemplateWith('', {
+                role: "system",
+                content: fillTemplateWith("", {
                   ...modelConfig,
                   template: DEFAULT_SYSTEM_TEMPLATE,
                 }),
@@ -378,8 +378,8 @@ export const useChatStore = createPersistStore(
           : [];
         if (shouldInjectSystemPrompts) {
           console.log(
-            '[Global System Prompt] ',
-            systemPrompts.at(0)?.content ?? 'empty'
+            "[Global System Prompt] ",
+            systemPrompts.at(0)?.content ?? "empty",
           );
         }
 
@@ -397,7 +397,7 @@ export const useChatStore = createPersistStore(
         // short term memory
         const shortTermMemoryStartIndex = Math.max(
           0,
-          totalMessageCount - modelConfig.historyMessageCount
+          totalMessageCount - modelConfig.historyMessageCount,
         );
 
         // lets concat send messages, including 4 parts:
@@ -440,7 +440,7 @@ export const useChatStore = createPersistStore(
       updateMessage(
         sessionIndex: number,
         messageIndex: number,
-        updater: (message?: ChatMessage) => void
+        updater: (message?: ChatMessage) => void,
       ) {
         const sessions = get().sessions;
         const session = sessions.at(sessionIndex);
@@ -452,7 +452,7 @@ export const useChatStore = createPersistStore(
       resetSession() {
         get().updateCurrentSession((session) => {
           session.messages = [];
-          session.memoryPrompt = '';
+          session.memoryPrompt = "";
         });
       },
 
@@ -462,7 +462,7 @@ export const useChatStore = createPersistStore(
         const modelConfig = session.mask.modelConfig;
 
         let api: ClientApi;
-        if (modelConfig.model === 'gemini-pro') {
+        if (modelConfig.model === "gemini-pro") {
           api = new ClientApi(ModelProvider.GeminiPro);
         } else {
           api = new ClientApi(ModelProvider.GPT);
@@ -480,9 +480,9 @@ export const useChatStore = createPersistStore(
         ) {
           const topicMessages = messages.concat(
             createMessage({
-              role: 'user',
+              role: "user",
               content: Locale.Store.Prompt.Topic,
-            })
+            }),
           );
           api.llm.chat({
             messages: topicMessages,
@@ -493,7 +493,7 @@ export const useChatStore = createPersistStore(
               get().updateCurrentSession(
                 (session) =>
                   (session.topic =
-                    message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC)
+                    message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC),
               );
             },
           });
@@ -501,7 +501,7 @@ export const useChatStore = createPersistStore(
 
         const summarizeIndex = Math.max(
           session.lastSummarizeIndex,
-          session.clearContextIndex ?? 0
+          session.clearContextIndex ?? 0,
         );
         let toBeSummarizedMsgs = messages
           .filter((msg) => !msg.isError)
@@ -512,7 +512,7 @@ export const useChatStore = createPersistStore(
         if (historyMsgLength > modelConfig?.max_tokens ?? 4000) {
           const n = toBeSummarizedMsgs.length;
           toBeSummarizedMsgs = toBeSummarizedMsgs.slice(
-            Math.max(0, n - modelConfig.historyMessageCount)
+            Math.max(0, n - modelConfig.historyMessageCount),
           );
         }
 
@@ -522,10 +522,10 @@ export const useChatStore = createPersistStore(
         const lastSummarizeIndex = session.messages.length;
 
         console.log(
-          '[Chat History] ',
+          "[Chat History] ",
           toBeSummarizedMsgs,
           historyMsgLength,
-          modelConfig.compressMessageLengthThreshold
+          modelConfig.compressMessageLengthThreshold,
         );
 
         if (
@@ -535,10 +535,10 @@ export const useChatStore = createPersistStore(
           api.llm.chat({
             messages: toBeSummarizedMsgs.concat(
               createMessage({
-                role: 'system',
+                role: "system",
                 content: Locale.Store.Prompt.Summarize,
-                date: '',
-              })
+                date: "",
+              }),
             ),
             config: {
               ...modelConfig,
@@ -549,14 +549,14 @@ export const useChatStore = createPersistStore(
               session.memoryPrompt = message;
             },
             onFinish(message) {
-              console.log('[Memory] ', message);
+              console.log("[Memory] ", message);
               get().updateCurrentSession((session) => {
                 session.lastSummarizeIndex = lastSummarizeIndex;
                 session.memoryPrompt = message; // Update the memory prompt for stored it in local storage
               });
             },
             onError(err) {
-              console.error('[Summarize] ', err);
+              console.error("[Summarize] ", err);
             },
           });
         }
@@ -590,7 +590,7 @@ export const useChatStore = createPersistStore(
     migrate(persistedState, version) {
       const state = persistedState as any;
       const newState = JSON.parse(
-        JSON.stringify(state)
+        JSON.stringify(state),
       ) as typeof DEFAULT_CHAT_STATE;
 
       if (version < 2) {
@@ -622,7 +622,7 @@ export const useChatStore = createPersistStore(
         newState.sessions.forEach((s) => {
           if (
             // Exclude those already set by user
-            !s.mask.modelConfig.hasOwnProperty('enableInjectSystemPrompts')
+            !s.mask.modelConfig.hasOwnProperty("enableInjectSystemPrompts")
           ) {
             // Because users may have changed this configuration,
             // the user's current configuration is used instead of the default
@@ -635,5 +635,5 @@ export const useChatStore = createPersistStore(
 
       return newState as any;
     },
-  }
+  },
 );

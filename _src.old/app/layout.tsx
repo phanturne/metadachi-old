@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
-import TauriConfig from '@/config/tauri';
-import ThemeProvider from '@/providers/ThemeProvider';
+import type { Metadata } from "next";
+import TauriConfig from "@/config/tauri";
+import ThemeProvider from "@/utils/providers/ThemeProvider";
 // import { AuthContextProvider } from '@/app/AuthContextProvider';
-import { SnackbarProvider } from '@/providers/SnackbarProvider';
+import { SnackbarProvider } from "@/utils/providers/SnackbarProvider";
 
 export const metadata: Metadata = {
-  title: 'Metadachi',
-  description: 'Your Supercharged AI Assistant',
+  title: "Metadachi",
+  description: "Your Supercharged AI Assistant",
 };
 
 export default function RootLayout({
@@ -15,11 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <TauriConfig />
 
       <body>
-        <ThemeProvider options={{ key: 'joy' }}>
+        <ThemeProvider options={{ key: "joy" }}>
           <SnackbarProvider>
             {/*<AuthContextProvider>{children}</AuthContextProvider>*/}
             {children}

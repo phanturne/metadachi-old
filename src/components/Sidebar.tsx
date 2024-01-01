@@ -34,7 +34,7 @@ import { Routes } from "@/constants";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import Typography from "@mui/joy/Typography";
 import Profile from "@/components/Profile";
-import { useShortWindow } from "@/utils";
+import { useShortWindow } from "@/utils/utils";
 
 const routeDictionary: Record<
   string,

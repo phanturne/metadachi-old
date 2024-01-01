@@ -1,35 +1,35 @@
-import { LLMModel } from '@/client/api';
-import { isMacOS } from '@/utils';
-import { getClientConfig } from '@/config/client';
+import { LLMModel } from "@/client/api";
+import { isMacOS } from "@/utils/utils";
+import { getClientConfig } from "@/config/client";
 import {
   DEFAULT_INPUT_TEMPLATE,
   DEFAULT_MODELS,
   DEFAULT_SIDEBAR_WIDTH,
   StoreKey,
-} from '@/constants';
-import { createPersistStore } from '@/utils/store';
+} from "@/constants";
+import { createPersistStore } from "@/utils/store";
 
-export type ModelType = (typeof DEFAULT_MODELS)[number]['name'];
+export type ModelType = (typeof DEFAULT_MODELS)[number]["name"];
 
 export enum SubmitKey {
-  Enter = 'Enter',
-  CtrlEnter = 'Ctrl + Enter',
-  ShiftEnter = 'Shift + Enter',
-  AltEnter = 'Alt + Enter',
-  MetaEnter = 'Meta + Enter',
+  Enter = "Enter",
+  CtrlEnter = "Ctrl + Enter",
+  ShiftEnter = "Shift + Enter",
+  AltEnter = "Alt + Enter",
+  MetaEnter = "Meta + Enter",
 }
 
 export enum Theme {
-  Auto = 'auto',
-  Dark = 'dark',
-  Light = 'light',
+  Auto = "auto",
+  Dark = "dark",
+  Light = "light",
 }
 
 export const DEFAULT_CONFIG = {
   lastUpdate: Date.now(), // timestamp, to merge state
 
   submitKey: isMacOS() ? SubmitKey.MetaEnter : SubmitKey.CtrlEnter,
-  avatar: '1f603',
+  avatar: "1f603",
   fontSize: 14,
   theme: Theme.Auto as Theme,
   tightBorder: !!getClientConfig()?.isApp,
@@ -42,11 +42,11 @@ export const DEFAULT_CONFIG = {
   dontShowMaskSplashScreen: false, // dont show splash screen when create chat
   hideBuiltinMasks: false, // dont add builtin masks
 
-  customModels: '',
+  customModels: "",
   models: DEFAULT_MODELS as any as LLMModel[],
 
   modelConfig: {
-    model: 'gpt-3.5-turbo' as ModelType,
+    model: "gpt-3.5-turbo" as ModelType,
     temperature: 0.5,
     top_p: 1,
     max_tokens: 4000,
@@ -62,13 +62,13 @@ export const DEFAULT_CONFIG = {
 
 export type ChatConfig = typeof DEFAULT_CONFIG;
 
-export type ModelConfig = ChatConfig['modelConfig'];
+export type ModelConfig = ChatConfig["modelConfig"];
 
 export function limitNumber(
   x: number,
   min: number,
   max: number,
-  defaultValue: number
+  defaultValue: number,
 ) {
   if (isNaN(x)) {
     return defaultValue;
@@ -148,7 +148,7 @@ export const useAppConfig = createPersistStore(
       }
 
       if (version < 3.5) {
-        state.customModels = 'claude,claude-100k';
+        state.customModels = "claude,claude-100k";
       }
 
       if (version < 3.6) {
@@ -165,5 +165,5 @@ export const useAppConfig = createPersistStore(
 
       return state as any;
     },
-  }
+  },
 );

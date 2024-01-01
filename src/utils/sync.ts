@@ -1,11 +1,11 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/app/utils/sync.ts
 
-import { useAccessStore, useAppConfig, useChatStore } from '@/stores';
-import { useMaskStore } from '@/stores/mask';
-import { usePromptStore } from '@/stores/prompt';
-import { StoreKey } from '@/constants';
-import { merge } from './merge';
-import { ChatSession } from '@/types';
+import { useAccessStore, useAppConfig, useChatStore } from "@/stores";
+import { useMaskStore } from "@/stores/mask";
+import { usePromptStore } from "@/stores/prompt";
+import { StoreKey } from "@/constants";
+import { merge } from "./merge";
+import { ChatSession } from "@/typing";
 
 type NonFunctionKeys<T> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
@@ -16,7 +16,7 @@ export function getNonFunctionFileds<T extends object>(obj: T) {
   const ret: any = {};
 
   Object.entries(obj).map(([k, v]) => {
-    if (typeof v !== 'function') {
+    if (typeof v !== "function") {
       ret[k] = v;
     }
   });
@@ -52,7 +52,7 @@ export type AppState = {
 
 type Merger<T extends keyof AppState, U = AppState[T]> = (
   localState: U,
-  remoteState: U
+  remoteState: U,
 ) => U;
 
 type StateMerger = {
@@ -85,7 +85,7 @@ const MergeStates: StateMerger = {
 
         // sort local messages with date field in asc order
         localSession.messages.sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
         );
       }
     });
@@ -93,7 +93,7 @@ const MergeStates: StateMerger = {
     // sort local sessions with date field in desc order
     localState.sessions.sort(
       (a, b) =>
-        new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime()
+        new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime(),
     );
 
     return localState;
@@ -120,7 +120,7 @@ export function getLocalAppState() {
   return Object.fromEntries(
     Object.entries(LocalStateGetters).map(([key, getter]) => {
       return [key, getter()];
-    })
+    }),
   ) as AppState;
 }
 
@@ -146,7 +146,7 @@ export function mergeAppState(localState: AppState, remoteState: AppState) {
  */
 export function mergeWithUpdate<T extends { lastUpdateTime?: number }>(
   localState: T,
-  remoteState: T
+  remoteState: T,
 ) {
   const localUpdateTime = localState.lastUpdateTime ?? 0;
   const remoteUpdateTime = localState.lastUpdateTime ?? 1;

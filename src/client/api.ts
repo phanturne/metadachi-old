@@ -1,21 +1,21 @@
 // Source: https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/e69d20a2092686fbfa2f67b2398019207969e892/app/client/api.ts
 
-import { getClientConfig } from '@/config/client';
+import { getClientConfig } from "@/config/client";
 import {
   ACCESS_CODE_PREFIX,
   Azure,
   ModelProvider,
   ServiceProvider,
-} from '@/constants';
-import { ModelType, useAccessStore, useChatStore } from '@/stores';
-import { ChatGPTApi } from '@/client/platforms/openai';
-import { GeminiProApi } from '@/client/platforms/google';
-import { ChatMessage } from '@/types';
+} from "@/constants";
+import { ModelType, useAccessStore, useChatStore } from "@/stores";
+import { ChatGPTApi } from "@/client/platforms/openai";
+import { GeminiProApi } from "@/client/platforms/google";
+import { ChatMessage } from "@/typing";
 
-export const ROLES = ['system', 'user', 'assistant'] as const;
+export const ROLES = ["system", "user", "assistant"] as const;
 export type MessageRole = (typeof ROLES)[number];
 
-export const Models = ['gpt-3.5-turbo', 'gpt-4'] as const;
+export const Models = ["gpt-3.5-turbo", "gpt-4"] as const;
 export type ChatModel = ModelType;
 
 export interface RequestMessage {
@@ -65,7 +65,7 @@ export abstract class LLMApi {
   abstract models(): Promise<LLMModel[]>;
 }
 
-type ProviderName = 'openai' | 'azure' | 'claude' | 'palm';
+type ProviderName = "openai" | "azure" | "claude" | "palm";
 
 interface Model {
   name: string;
@@ -106,23 +106,23 @@ export class ClientApi {
   async share(messages: ChatMessage[], avatarUrl: string | null = null) {
     const msgs = messages
       .map((m) => ({
-        from: m.role === 'user' ? 'human' : 'gpt',
+        from: m.role === "user" ? "human" : "gpt",
         value: m.content,
       }))
       .concat([
         {
-          from: 'human',
+          from: "human",
           value:
-            'Share from [NextChat]: https://github.com/Yidadaa/ChatGPT-Next-Web',
+            "Share from [NextChat]: https://github.com/Yidadaa/ChatGPT-Next-Web",
         },
       ]);
     // 敬告二开开发者们，为了开源大模型的发展，请不要修改上述消息，此消息用于后续数据清洗使用
     // Please do not modify this message
 
-    console.log('[Share]', messages, msgs);
+    console.log("[Share]", messages, msgs);
     const clientConfig = getClientConfig();
-    const proxyUrl = '/sharegpt';
-    const rawUrl = 'https://sharegpt.com/api/conversations';
+    const proxyUrl = "/sharegpt";
+    const rawUrl = "https://sharegpt.com/api/conversations";
     const shareUrl = clientConfig?.isApp ? rawUrl : proxyUrl;
     const res = await fetch(shareUrl, {
       body: JSON.stringify({
@@ -130,13 +130,13 @@ export class ClientApi {
         items: msgs,
       }),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      method: 'POST',
+      method: "POST",
     });
 
     const resJson = await res.json();
-    console.log('[Share]', resJson);
+    console.log("[Share]", resJson);
     if (resJson.id) {
       return `https://shareg.pt/${resJson.id}`;
     }
@@ -146,21 +146,21 @@ export class ClientApi {
 export function getHeaders() {
   const accessStore = useAccessStore.getState();
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    'x-requested-with': 'XMLHttpRequest',
-    Accept: 'application/json',
+    "Content-Type": "application/json",
+    "x-requested-with": "XMLHttpRequest",
+    Accept: "application/json",
   };
   const modelConfig = useChatStore.getState().currentSession().mask.modelConfig;
-  const isGoogle = modelConfig.model === 'gemini-pro';
+  const isGoogle = modelConfig.model === "gemini-pro";
   const isAzure = accessStore.provider === ServiceProvider.Azure;
-  const authHeader = isAzure ? 'api-key' : 'Authorization';
+  const authHeader = isAzure ? "api-key" : "Authorization";
   const apiKey = isGoogle
     ? accessStore.googleApiKey
     : isAzure
       ? accessStore.azureApiKey
       : accessStore.openaiApiKey;
 
-  const makeBearer = (s: string) => `${isAzure ? '' : 'Bearer '}${s.trim()}`;
+  const makeBearer = (s: string) => `${isAzure ? "" : "Bearer "}${s.trim()}`;
   const validString = (x: string) => x && x.length > 0;
 
   // use user's api key first
@@ -171,7 +171,7 @@ export function getHeaders() {
     validString(accessStore.accessCode)
   ) {
     headers[authHeader] = makeBearer(
-      ACCESS_CODE_PREFIX + accessStore.accessCode
+      ACCESS_CODE_PREFIX + accessStore.accessCode,
     );
   }
 
