@@ -1,10 +1,9 @@
 "use client";
 
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
-import BotsList from "@/components/AgentsList";
+import AgentsList from "@/components/AgentsList";
 import PromptsList from "@/components/PromptsList";
 import * as React from "react";
-import AgentsList from "@/components/AgentsList";
 
 export default function ExplorePage() {
   return (

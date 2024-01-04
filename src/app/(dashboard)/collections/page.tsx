@@ -2,9 +2,8 @@
 import * as React from "react";
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
 import PromptsList from "@/components/PromptsList";
-import AgentList from "@/components/AgentsList";
-import { ChatList } from "@/components/ChatList";
 import AgentsList from "@/components/AgentsList";
+import { ChatList } from "@/components/ChatList";
 
 export default function CollectionsPage() {
   return (
