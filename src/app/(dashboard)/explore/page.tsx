@@ -1,15 +1,17 @@
 "use client";
 
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
-import BotsList from "@/components/BotsList";
+import BotsList from "@/components/AgentsList";
 import PromptsList from "@/components/PromptsList";
+import * as React from "react";
+import AgentsList from "@/components/AgentsList";
 
-export default function DiscoverPage() {
+export default function ExplorePage() {
   return (
     <>
       <Tabs
         aria-label="tabs"
-        defaultValue="bots"
+        defaultValue="prompts"
         sx={{
           bgColor: "transparent",
           overflowY: "scroll",
@@ -33,8 +35,8 @@ export default function DiscoverPage() {
           <Tab disableIndicator value="prompts">
             Prompts
           </Tab>
-          <Tab disableIndicator value="bots">
-            Bots
+          <Tab disableIndicator value="agents">
+            Agents
           </Tab>
           <Tab disableIndicator value="chats">
             Chats
@@ -48,11 +50,11 @@ export default function DiscoverPage() {
         </TabList>
 
         <TabPanel value="prompts">
-          <PromptsList />
+          <PromptsList variant="explore" />
         </TabPanel>
 
-        <TabPanel value="bots">
-          <BotsList />
+        <TabPanel value="agents">
+          <AgentsList />
         </TabPanel>
 
         <TabPanel value="chats">Content for Chats Tab</TabPanel>

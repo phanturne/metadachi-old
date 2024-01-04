@@ -2,14 +2,15 @@
 import * as React from "react";
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
 import PromptsList from "@/components/PromptsList";
-import BotsList from "@/components/BotsList";
+import AgentList from "@/components/AgentsList";
 import { ChatList } from "@/components/ChatList";
+import AgentsList from "@/components/AgentsList";
 
 export default function CollectionsPage() {
   return (
     <Tabs
       aria-label="tabs"
-      defaultValue="bots"
+      defaultValue="prompts"
       sx={{
         bgColor: "transparent",
         overflowY: "scroll",
@@ -33,8 +34,8 @@ export default function CollectionsPage() {
         <Tab disableIndicator value="prompts">
           Prompts
         </Tab>
-        <Tab disableIndicator value="bots">
-          Bots
+        <Tab disableIndicator value="agents">
+          Agents
         </Tab>
         <Tab disableIndicator value="chats">
           Chats
@@ -48,11 +49,11 @@ export default function CollectionsPage() {
       </TabList>
 
       <TabPanel value="prompts">
-        <PromptsList />
+        <PromptsList variant="collection" />
       </TabPanel>
 
-      <TabPanel value="bots">
-        <BotsList />
+      <TabPanel value="agents">
+        <AgentsList />
       </TabPanel>
 
       <TabPanel value="chats">

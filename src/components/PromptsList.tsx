@@ -1,9 +1,22 @@
 import * as React from "react";
-import { Box, Grid, Sheet } from "@mui/joy";
+import { Box, Sheet } from "@mui/joy";
 import { usePromptStore } from "@/stores";
 import Typography from "@mui/joy/Typography";
+import List from "@mui/joy/List";
+import IconButton from "@mui/joy/IconButton";
+import {
+  AddRounded,
+  DeleteRounded,
+  EditRounded,
+  ExpandMoreRounded,
+} from "@mui/icons-material";
 
-export default function PromptsList() {
+// TODO: Convert to an accordion list
+export default function PromptsList({
+  variant,
+}: {
+  variant: "collection" | "explore";
+}) {
   const promptStore = usePromptStore();
   const prompts = promptStore.search("");
 
@@ -15,17 +28,31 @@ export default function PromptsList() {
         flexDirection: "column-reverse",
       }}
     >
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 2, sm: 3, md: 4 }}
-        sx={{ flexGrow: 1 }}
-      >
+      <List sx={{ flexGrow: 1 }}>
         {prompts.map((p) => (
-          <Grid xs={1} key={`prompt-option-${p.id}`}>
-            <Sheet
-              variant="soft"
-              sx={{ textAlign: "center", p: 1, borderRadius: 4 }}
+          <Sheet
+            key={`prompt-${p.id}`}
+            variant="soft"
+            sx={{
+              p: 1,
+              borderRadius: 4,
+              mb: 1.5,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <IconButton size="sm" disabled>
+              <ExpandMoreRounded />
+            </IconButton>
+
+            <Box
+              sx={{
+                ml: 2,
+                flex: 1,
+                overflow: "none",
+                textOverflow: "ellipsis",
+                width: "50%",
+              }}
             >
               <Typography
                 level="title-md"
@@ -38,10 +65,44 @@ export default function PromptsList() {
               >
                 {p.title}
               </Typography>
-            </Sheet>
-          </Grid>
+              <Typography
+                level="body-md"
+                noWrap
+                sx={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
+                {p.content}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                ml: 3,
+              }}
+            >
+              {variant === "collection" && (
+                <>
+                  <IconButton size="sm" disabled>
+                    <EditRounded />
+                  </IconButton>
+                  <IconButton size="sm" disabled>
+                    <DeleteRounded />
+                  </IconButton>
+                </>
+              )}
+
+              {/*TODO: On the explore page, render check mark icon if the user has added the prompt already*/}
+              {variant === "explore" && (
+                <IconButton size="sm" disabled>
+                  <AddRounded />
+                </IconButton>
+              )}
+            </Box>
+          </Sheet>
         ))}
-      </Grid>
+      </List>
     </Box>
   );
 }
