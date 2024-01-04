@@ -6,9 +6,11 @@ import List from "@mui/joy/List";
 import IconButton from "@mui/joy/IconButton";
 import {
   AddRounded,
+  ContentCopyRounded,
   DeleteRounded,
   EditRounded,
   ExpandMoreRounded,
+  VisibilityRounded,
 } from "@mui/icons-material";
 
 // TODO: Convert to an accordion list
@@ -41,9 +43,12 @@ export default function PromptsList({
               alignItems: "center",
             }}
           >
-            <IconButton size="sm" disabled>
-              <ExpandMoreRounded />
-            </IconButton>
+            {/*TODO: On the explore page, render check mark icon if the user has added the prompt already*/}
+            {variant === "explore" && (
+              <IconButton size="sm" disabled>
+                <AddRounded />
+              </IconButton>
+            )}
 
             <Box
               sx={{
@@ -93,11 +98,15 @@ export default function PromptsList({
                 </>
               )}
 
-              {/*TODO: On the explore page, render check mark icon if the user has added the prompt already*/}
               {variant === "explore" && (
-                <IconButton size="sm" disabled>
-                  <AddRounded />
-                </IconButton>
+                <>
+                  <IconButton size="sm" disabled>
+                    <VisibilityRounded />
+                  </IconButton>
+                  <IconButton size="sm" disabled>
+                    <ContentCopyRounded />
+                  </IconButton>
+                </>
               )}
             </Box>
           </Sheet>
