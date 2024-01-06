@@ -1,5 +1,5 @@
 <div align="center">
-<h1 align="center">Metadachi</h1>
+<h1 align="center">Metadachi (In Progress)</h1>
 
 [![Web][Web-image]][web-url]
 [![Windows][Windows-image]][download-url]
@@ -12,7 +12,7 @@
 [MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
 [Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
 
-Unlock boundless productivity with Metadachi, our cross-platform AI assistant. Available on desktop and web, it seamlessly handles text, image, and audio generation with lightning-fast global hotkeys. Experience unparalleled efficiency, effortlessly navigating tasks and elevating your workflow with the ultimate AI companion!
+Boost your productivity with Metadachi, our cross-platform AI assistant available on desktop and web. With quick access to many AI tools, effortlessly navigate tasks and elevating your workflow. Our platform also fosters community collaboration by providing a space for developers to share AI prompts, templates, and generations.
 
 > This project builds on the outstanding work by the author and contributors of [ChatGPT Next Web](https://github.com/ChatGPTNextWeb/).
 
@@ -21,26 +21,29 @@ Unlock boundless productivity with Metadachi, our cross-platform AI assistant. A
 
 </div>
 
+## Getting Started
+Join the community through our web app [here](https://metadachi.com) or download the latest desktop application from [releases](). Alternatively, deploy your own version by following the [deployment guide]().
+
 ## Features
-- 🚀 **Supercharged AI Assistant**: Access powerful AI agents with advanced customization options
-- 🔒 **Privacy Guaranteed**: Take control of your data with the option to store it locally or in your own private database
+- 🚀 **Powerful AI Agents**: Access powerful AI agents with advanced customization options
+- 🤖 LLM Options: Choose from OpenAI and Gemini to power your AI agents.
+- 🔒 **Privacy Guaranteed**: Take control of your data by storing it locally or in your private database
 - 🌐 **Cross Platform Sync**: Back up and sync data across Windows, macOS, and the web
 - 💻 **Desktop App**: Lightweight desktop assistant (~5MB) with global hotkeys system tray integration
 - 🛠️ **Easy Self-Hosting**: Deploy effortlessly to Vercel
 
 ## Roadmap
 ### High Priority
-- [ ] More LLM Options (Hugging Face, OpenAI, Fireworks AI)
-- [ ] Custom AI bots and prompts
-- [ ] Access multiple AI bots from a single chat
+- [ ] 🤝 **Community Collaboration**: Share and explore AI prompts, templates, and generations (Supabase required)
+- [ ] Custom AI agents and prompts
 - [ ] ✨ Slash and @ Commands
 - [ ] 📤 Retrieval Augmented Generation (RAG)
-- [ ] Optional Supabase Auth & Database
 
 ### Nice to Haves
 - [ ] ⚜️ UI Redesign
   - [ ] Layout Customization Options
 - [ ] 🐶 Interactive Desktop Companion
+- [ ] Access multiple AI agents from a single chat
 - [ ] 🎨 Visual Alchemy (Image Generation)
 - [ ] 🧰 AI Toolbox
 - [ ] ⚙️ Backend Alternatives
@@ -66,7 +69,7 @@ Unlock boundless productivity with Metadachi, our cross-platform AI assistant. A
 ## Getting Started
 To start using Metadachi today, you can either access our [Web App](https://app.metadachi.com) or download the latest desktop app from [Releases](https://github.com/phanturne/metadachi/releases).
 
-## Deploy Your Own
+## Deploy Your Own (Outdated)
 ### Web App
 1. Deploy to Vercel:
    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fphanturne%2Fmetadachi&project-name=metadachi&repository-name=metadachi&demo-title=Metadachi&demo-url=https%3A%2F%2Fapp.metadachi.com)
