@@ -1,8 +1,8 @@
 "use client";
 
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
-import AgentsList from "@/components/AgentsList";
-import PromptsList from "@/components/PromptsList";
+import AgentList from "@/components/AgentList";
+import PromptList from "@/components/PromptList";
 import * as React from "react";
 
 export default function ExplorePage() {
@@ -49,11 +49,11 @@ export default function ExplorePage() {
         </TabList>
 
         <TabPanel value="prompts">
-          <PromptsList variant="explore" />
+          <PromptList variant="explore" />
         </TabPanel>
 
         <TabPanel value="agents">
-          <AgentsList />
+          <AgentList />
         </TabPanel>
 
         <TabPanel value="chats">Content for Chats Tab</TabPanel>

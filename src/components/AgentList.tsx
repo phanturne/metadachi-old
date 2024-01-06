@@ -3,7 +3,7 @@ import { Box, Grid, Sheet } from "@mui/joy";
 import { useMaskStore } from "@/stores";
 import Typography from "@mui/joy/Typography";
 
-export default function AgentsList() {
+export default function AgentList() {
   const maskStore = useMaskStore();
   const bots = maskStore.getAll();
 

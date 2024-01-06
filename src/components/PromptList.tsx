@@ -22,7 +22,7 @@ import Card from "@mui/joy/Card";
 import Divider from "@mui/joy/Divider";
 
 // TODO: Convert to an accordion list
-export default function PromptsList({
+export default function PromptList({
   variant,
 }: {
   variant: "collection" | "explore";
@@ -168,12 +168,6 @@ export default function PromptsList({
               </IconButton>
             )}
 
-            {variant === "collection" && (
-              <IconButton size="sm" disabled>
-                <EditRounded />
-              </IconButton>
-            )}
-
             <IconButton size="sm" disabled>
               <MoreVertRounded />
             </IconButton>
@@ -190,6 +184,7 @@ export default function PromptsList({
           }}
         >
           <Typography level="body-sm">{p.content}</Typography>
+          {/*TODO: Add prompt tags*/}
         </Box>
 
         {/*Bottom row with prompt stats*/}
@@ -198,6 +193,7 @@ export default function PromptsList({
           sx={{
             bgColor: "background.level1",
             ml: -2,
+            overflow: "hidden",
           }}
         >
           <Divider inset="context" />
@@ -238,8 +234,8 @@ export default function PromptsList({
     return (
       <Grid
         container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 1, sm: 2, md: 3 }}
+        spacing={{ xs: 2 }}
+        columns={{ xs: 1, sm: 2, lg: 3 }}
         sx={{ flexGrow: 1 }}
       >
         {prompts.map((p) => (

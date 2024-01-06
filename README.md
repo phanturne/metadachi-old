@@ -1,5 +1,5 @@
 <div align="center">
-<h1 align="center">Metadachi (In Progress)</h1>
+<h1 align="center">Metadachi (WIP)</h1>
 
 [![Web][Web-image]][web-url]
 [![Windows][Windows-image]][download-url]
@@ -26,7 +26,7 @@ Join the community through our web app [here](https://metadachi.com) or download
 
 ## Features
 - 🚀 **Powerful AI Agents**: Access powerful AI agents with advanced customization options
-- 🤖 LLM Options: Choose from OpenAI and Gemini to power your AI agents.
+- 🤖 **LLM Options**: Choose from OpenAI and Gemini to power your AI agents.
 - 🔒 **Privacy Guaranteed**: Take control of your data by storing it locally or in your private database
 - 🌐 **Cross Platform Sync**: Back up and sync data across Windows, macOS, and the web
 - 💻 **Desktop App**: Lightweight desktop assistant (~5MB) with global hotkeys system tray integration

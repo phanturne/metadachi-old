@@ -1,8 +1,8 @@
 "use client";
 import * as React from "react";
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
-import PromptsList from "@/components/PromptsList";
-import AgentsList from "@/components/AgentsList";
+import PromptList from "@/components/PromptList";
+import AgentList from "@/components/AgentList";
 import { ChatList } from "@/components/ChatList";
 
 export default function CollectionsPage() {
@@ -48,11 +48,11 @@ export default function CollectionsPage() {
       </TabList>
 
       <TabPanel value="prompts">
-        <PromptsList variant="collection" />
+        <PromptList variant="collection" />
       </TabPanel>
 
       <TabPanel value="agents">
-        <AgentsList />
+        <AgentList />
       </TabPanel>
 
       <TabPanel value="chats">
