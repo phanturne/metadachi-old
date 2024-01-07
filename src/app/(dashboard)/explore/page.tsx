@@ -53,7 +53,7 @@ export default function ExplorePage() {
         </TabPanel>
 
         <TabPanel value="agents">
-          <AgentList />
+          <AgentList variant="explore" />
         </TabPanel>
 
         <TabPanel value="chats">Content for Chats Tab</TabPanel>

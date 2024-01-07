@@ -52,7 +52,7 @@ export default function CollectionsPage() {
       </TabPanel>
 
       <TabPanel value="agents">
-        <AgentList />
+        <AgentList variant="collection" />
       </TabPanel>
 
       <TabPanel value="chats">

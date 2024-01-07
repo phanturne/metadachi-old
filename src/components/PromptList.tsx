@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, CardContent, CardOverflow, Grid, Sheet } from "@mui/joy";
+import { Box, CardContent, CardOverflow, Grid, Sheet } from "@mui/joy";
 import { usePromptStore } from "@/stores";
 import Typography from "@mui/joy/Typography";
 import List from "@mui/joy/List";
@@ -12,7 +12,6 @@ import {
   ContentCopyRounded,
   DeleteRounded,
   EditRounded,
-  EmojiEventsRounded,
   FavoriteBorderRounded,
   MoreVertRounded,
   VisibilityRounded,
@@ -129,7 +128,6 @@ export default function PromptList({
   function PromptCard({ p }: { p: Prompt }) {
     return (
       <Card
-        key={`prompt-${p.id}`}
         sx={{
           p: 1,
           pl: 2,
@@ -216,15 +214,15 @@ export default function PromptList({
             </IconButton>
             <Typography level="body-xs">50</Typography>
 
-            <Button
-              variant="plain"
-              color="neutral"
-              size="sm"
-              disabled
-              startDecorator={<EmojiEventsRounded />}
-            >
-              <Typography level="body-xs">Kudos</Typography>
-            </Button>
+            {/*<Button*/}
+            {/*  variant="plain"*/}
+            {/*  color="neutral"*/}
+            {/*  size="sm"*/}
+            {/*  disabled*/}
+            {/*  startDecorator={<EmojiEventsRounded />}*/}
+            {/*>*/}
+            {/*  <Typography level="body-xs">Kudos</Typography>*/}
+            {/*</Button>*/}
           </CardContent>
         </CardOverflow>
       </Card>
@@ -235,7 +233,7 @@ export default function PromptList({
       <Grid
         container
         spacing={{ xs: 2 }}
-        columns={{ xs: 1, sm: 2, lg: 3 }}
+        columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
         sx={{ flexGrow: 1 }}
       >
         {prompts.map((p) => (
