@@ -4,6 +4,8 @@ import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
 import AgentList from "@/components/AgentList";
 import PromptList from "@/components/PromptList";
 import * as React from "react";
+import { ChatList } from "@/components/ChatList";
+import ImageList from "@/components/ImageList";
 
 export default function ExplorePage() {
   return (
@@ -56,8 +58,12 @@ export default function ExplorePage() {
           <AgentList variant="explore" />
         </TabPanel>
 
-        <TabPanel value="chats">Content for Chats Tab</TabPanel>
-        <TabPanel value="images">Content for Images Tab</TabPanel>
+        <TabPanel value="chats">
+          <ChatList />
+        </TabPanel>
+        <TabPanel value="images">
+          <ImageList />
+        </TabPanel>
         {/*<TabPanel value="pets">Content for Pets Tab</TabPanel>*/}
       </Tabs>
     </>

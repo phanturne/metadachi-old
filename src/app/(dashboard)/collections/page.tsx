@@ -4,6 +4,7 @@ import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy";
 import PromptList from "@/components/PromptList";
 import AgentList from "@/components/AgentList";
 import { ChatList } from "@/components/ChatList";
+import ImageList from "@/components/ImageList";
 
 export default function CollectionsPage() {
   return (
@@ -59,7 +60,9 @@ export default function CollectionsPage() {
         <ChatList />
       </TabPanel>
 
-      <TabPanel value="images">Content for Images Tab</TabPanel>
+      <TabPanel value="images">
+        <ImageList />
+      </TabPanel>
       {/*<TabPanel value="pets">Content for Pets Tab</TabPanel>*/}
     </Tabs>
   );
