@@ -23,6 +23,8 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     handleFocusChatInput()
   })
 
+  const [isTyping, setIsTyping] = useState<boolean>(false)
+
   const {
     userInput,
     chatMessages,
@@ -36,8 +38,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     setIsPromptPickerOpen,
     isAtPickerOpen,
     setFocusFile,
-    newMessageImages,
-    setNewMessageImages,
     chatSettings
   } = useContext(ChatbotUIContext)
 
@@ -47,8 +47,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     handleStopMessage,
     handleFocusChatInput
   } = useChatHandler()
-
-  const [isTextareaFocused, setTextareaFocused] = useState(false)
 
   const { handleInputChange } = usePromptAndCommand()
 
@@ -62,19 +60,45 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     }, 200) // FIX: hacky
   }, [selectedPreset, selectedAssistant])
 
+  useEffect(() => {
+    const textarea = chatInputRef.current
+    if (textarea) {
+      const handleCompositionStart = () => setIsTyping(true)
+      const handleCompositionEnd = () => setIsTyping(false)
+
+      textarea.addEventListener("compositionstart", handleCompositionStart)
+      textarea.addEventListener("compositionend", handleCompositionEnd)
+
+      return () => {
+        textarea.removeEventListener("compositionstart", handleCompositionStart)
+        textarea.removeEventListener("compositionend", handleCompositionEnd)
+      }
+    }
+  }, [chatInputRef])
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" && !event.shiftKey) {
+    if (!isTyping && event.key === "Enter" && !event.shiftKey) {
       event.preventDefault()
       setIsPromptPickerOpen(false)
       handleSendMessage(userInput, chatMessages, false)
     }
 
-    if (event.key === "Tab" && isPromptPickerOpen) {
+    if (
+      isPromptPickerOpen &&
+      (event.key === "Tab" ||
+        event.key === "ArrowUp" ||
+        event.key === "ArrowDown")
+    ) {
       event.preventDefault()
       setFocusPrompt(!focusPrompt)
     }
 
-    if (event.key === "Tab" && isAtPickerOpen) {
+    if (
+      isAtPickerOpen &&
+      (event.key === "Tab" ||
+        event.key === "ArrowUp" ||
+        event.key === "ArrowDown")
+    ) {
       event.preventDefault()
       setFocusFile(!focusFile)
     }
@@ -128,7 +152,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         <TextareaAutosize
           textareaRef={chatInputRef}
           className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-14 py-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-          placeholder="Send a message... (Use @ to reference files, / to reference prompts)"
+          placeholder={`Ask anything. Type "@" for files. Type "/" for prompts.`}
           onValueChange={handleInputChange}
           value={userInput}
           minRows={1}

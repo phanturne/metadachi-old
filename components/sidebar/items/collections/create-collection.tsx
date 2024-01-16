@@ -1,9 +1,8 @@
 import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
-import ImagePicker from "@/components/ui/image-picker"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ChatbotUIContext } from "@/context/context"
-import { COLLECTION_DESCRIPTION_MAX, COLLECTION_NAME_MAX } from "@/db/limits"
+import { COLLECTION_NAME_MAX } from "@/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { CollectionFile } from "@/types"
 import { FC, useContext, useState } from "react"
@@ -25,8 +24,6 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
   const [selectedCollectionFiles, setSelectedCollectionFiles] = useState<
     CollectionFile[]
   >([])
-  const [selectedImage, setSelectedImage] = useState<File | null>(null)
-  const [imageLink, setImageLink] = useState("")
 
   const handleFileSelect = (file: CollectionFile) => {
     setSelectedCollectionFiles(prevState => {
@@ -49,14 +46,12 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
       contentType="collections"
       createState={
         {
-          image: selectedImage,
           collectionFiles: selectedCollectionFiles.map(file => ({
             user_id: profile.user_id,
             collection_id: "",
             file_id: file.id
           })),
           user_id: profile.user_id,
-          image_path: "",
           name,
           description
         } as TablesInsert<"collections">
@@ -75,19 +70,6 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
           </div>
 
           <div className="space-y-1">
-            <Label>Image</Label>
-
-            <ImagePicker
-              src={imageLink}
-              image={selectedImage}
-              onSrcChange={setImageLink}
-              onImageChange={setSelectedImage}
-              width={100}
-              height={100}
-            />
-          </div>
-
-          <div className="space-y-1">
             <Label>Name</Label>
 
             <Input
@@ -98,8 +80,8 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
             />
           </div>
 
-          <div className="space-y-1">
-            <Label>Description</Label>
+          {/* <div className="space-y-1">
+            <Label>Description (optional)</Label>
 
             <Input
               placeholder="Collection description..."
@@ -107,7 +89,7 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
               onChange={e => setDescription(e.target.value)}
               maxLength={COLLECTION_DESCRIPTION_MAX}
             />
-          </div>
+          </div> */}
         </>
       )}
     />

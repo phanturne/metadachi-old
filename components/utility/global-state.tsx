@@ -13,6 +13,7 @@ import { getPresetWorkspacesByWorkspaceId } from "@/db/presets"
 import { getProfileByUserId } from "@/db/profile"
 import { getPromptWorkspacesByWorkspaceId } from "@/db/prompts"
 import { getAssistantImageFromStorage } from "@/db/storage/assistant-images"
+import { getToolWorkspacesByWorkspaceId } from "@/db/tools"
 import { getWorkspacesByUserId } from "@/db/workspaces"
 import { convertBlobToBase64 } from "@/lib/blob-to-b64"
 import { supabase } from "@/lib/supabase/browser-client"
@@ -23,11 +24,13 @@ import {
   ChatSettings,
   LLM,
   LLMID,
-  MessageImage
+  MessageImage,
+  OpenRouterLLM
 } from "@/types"
 import { AssistantImage } from "@/types/assistant-image"
 import { useRouter } from "next/navigation"
 import { FC, useEffect, useState } from "react"
+import { toast } from "sonner"
 
 interface GlobalStateProps {
   children: React.ReactNode
@@ -47,10 +50,14 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
   const [folders, setFolders] = useState<Tables<"folders">[]>([])
   const [presets, setPresets] = useState<Tables<"presets">[]>([])
   const [prompts, setPrompts] = useState<Tables<"prompts">[]>([])
+  const [tools, setTools] = useState<Tables<"tools">[]>([])
   const [workspaces, setWorkspaces] = useState<Tables<"workspaces">[]>([])
 
   // MODELS STORE
   const [availableLocalModels, setAvailableLocalModels] = useState<LLM[]>([])
+  const [availableOpenRouterModels, setAvailableOpenRouterModels] = useState<
+    OpenRouterLLM[]
+  >([])
 
   // WORKSPACE STORE
   const [selectedWorkspace, setSelectedWorkspace] =
@@ -110,6 +117,7 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
+    fetchOpenRouterModels()
     if (process.env.NEXT_PUBLIC_OLLAMA_URL) {
       fetchOllamaModels()
     }
@@ -118,7 +126,9 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (!selectedWorkspace) {
+    const isInChat = window?.location?.pathname === "/chat"
+
+    if (!selectedWorkspace && !isInChat) {
       setLoading(false)
       return
     }
@@ -136,7 +146,9 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
     setNewMessageImages([])
     setShowFilesDisplay(false)
 
-    fetchData(selectedWorkspace.id)
+    if (selectedWorkspace?.id) {
+      fetchData(selectedWorkspace.id)
+    }
   }, [selectedWorkspace])
 
   const fetchStartingData = async () => {
@@ -238,16 +250,76 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
     const promptData = await getPromptWorkspacesByWorkspaceId(workspaceId)
     setPrompts(promptData.prompts)
 
+    const toolData = await getToolWorkspacesByWorkspaceId(workspaceId)
+    setTools(toolData.tools)
+
     setLoading(false)
   }
 
   const fetchOllamaModels = async () => {
     setLoading(true)
 
-    const response = await fetch("/api/localhost/ollama")
-    const data = await response.json()
-    const localModels: LLM[] = data.localModels
-    setAvailableLocalModels(localModels)
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_OLLAMA_URL + "/api/tags"
+      )
+
+      if (!response.ok) {
+        throw new Error(`Ollama server is not responding.`)
+      }
+
+      const data = await response.json()
+
+      const localModels = data.models.map((model: any) => ({
+        modelId: model.name as LLMID,
+        modelName: model.name,
+        provider: "ollama",
+        hostedId: model.name,
+        platformLink: "https://ollama.ai/library",
+        imageInput: false
+      }))
+
+      setAvailableLocalModels(localModels)
+    } catch (error) {
+      console.warn("Error fetching Ollama models: " + error)
+    }
+
+    setLoading(false)
+  }
+
+  const fetchOpenRouterModels = async () => {
+    setLoading(true)
+
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/models")
+
+      if (!response.ok) {
+        throw new Error(`OpenRouter server is not responding.`)
+      }
+
+      const { data } = await response.json()
+
+      const openRouterModels = data.map(
+        (model: {
+          id: string
+          name: string
+          context_length: number
+        }): OpenRouterLLM => ({
+          modelId: model.id as LLMID,
+          modelName: model.id,
+          provider: "openrouter",
+          hostedId: model.name,
+          platformLink: "https://openrouter.dev",
+          imageInput: false,
+          maxContext: model.context_length
+        })
+      )
+
+      setAvailableOpenRouterModels(openRouterModels)
+    } catch (error) {
+      console.error("Error fetching Open Router models: " + error)
+      toast.error("Error fetching Open Router models: " + error)
+    }
 
     setLoading(false)
   }
@@ -271,6 +343,7 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
         folders,
         presets,
         prompts,
+        tools,
         workspaces,
         setAssistants,
         setCollections,
@@ -279,11 +352,14 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
         setFolders,
         setPresets,
         setPrompts,
+        setTools,
         setWorkspaces,
 
         // MODELS STORE
         availableLocalModels,
         setAvailableLocalModels,
+        availableOpenRouterModels,
+        setAvailableOpenRouterModels,
 
         // WORKSPACE STORE
         selectedWorkspace,

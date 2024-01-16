@@ -12,7 +12,7 @@ interface SidebarItemProps {
   contentType: ContentType
   icon: React.ReactNode
   updateState: any
-  renderInputs: () => JSX.Element
+  renderInputs: (renderState: any) => JSX.Element
 }
 
 export const SidebarItem: FC<SidebarItemProps> = ({
@@ -59,7 +59,8 @@ export const SidebarItem: FC<SidebarItemProps> = ({
       setSelectedAssistant(assistant)
 
       router.push(`/chat/${createdChat.id}`)
-    }
+    },
+    tools: async (item: any) => {}
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
