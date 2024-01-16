@@ -1,0 +1,18 @@
+Index: src/app/(sidebar)/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'use client';\nimport { useEffect, useState } from 'react';\nimport { AuthSession } from '@supabase/supabase-js';\nimport { supabase } from '@/lib/utils/supabaseClient';\nimport ThemeToggle from '@/ui/ThemeToggle';\nimport { useRouter } from 'next/navigation';\n\nfunction Login() {\n  const router = useRouter();\n  const [data, setData] = useState<any>('null');\n\n  const handleSignUp = async () => {\n    await supabase?.auth.signUp({\n      email: 'demo@metadachi.com',\n      password: 'Metadachi2480!',\n      options: {\n        emailRedirectTo: `${location.origin}/auth/callback`,\n      },\n    });\n    router.refresh();\n  };\n\n  const handleSignIn = async () => {\n    await supabase!.auth.signInWithPassword({\n      email: 'demo@metadachi.com',\n      password: 'Metadachi2480!',\n    });\n    router.refresh();\n\n    const {\n      data: { session },\n    } = await supabase!.auth.getSession();\n    setData(`Session: ${session}, ${session?.user.email}`);\n    console.log('Session', session);\n  };\n\n  const handleSignOut = async () => {\n    await supabase!.auth.signOut();\n    router.refresh();\n  };\n\n  return (\n    <div className='flex gap-2'>\n      <button onClick={handleSignUp}>Sign up</button>\n      <button onClick={handleSignIn}>Sign in</button>\n      <button onClick={handleSignOut}>Sign out</button>\n      <p>{data}</p>\n    </div>\n  );\n}\n\nexport default function Home() {\n  const [session, setSession] = useState<AuthSession | null>(null);\n  useEffect(() => {\n    supabase.auth.getSession().then(({ data: { session } }) => {\n      setSession(session);\n    });\n\n    supabase.auth.onAuthStateChange((event, session) => {\n      setSession(session);\n    });\n  }, []);\n\n  return (\n    <main>\n      <Login />\n      <h1>Hello, {session?.user.email}</h1>\n      <ThemeToggle />\n    </main>\n  );\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/(sidebar)/page.tsx b/src/app/(sidebar)/page.tsx
+--- a/src/app/(sidebar)/page.tsx	
++++ b/src/app/(sidebar)/page.tsx	
+@@ -5,6 +5,7 @@
+ import ThemeToggle from '@/ui/ThemeToggle';
+ import { useRouter } from 'next/navigation';
+ 
++// TODO: FOR TESTING PURPOSES ONLY. DO NOT PUSH TO GITHUB
+ function Login() {
+   const router = useRouter();
+   const [data, setData] = useState<any>('null');

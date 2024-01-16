@@ -1,0 +1,54 @@
+Index: src/components/AgentList.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import * as React from \"react\";\nimport { Box, CardContent, CardOverflow, Grid, Link } from \"@mui/joy\";\nimport { useMaskStore } from \"@/stores\";\nimport Typography from \"@mui/joy/Typography\";\nimport { Mask } from \"@/typing\";\nimport Card from \"@mui/joy/Card\";\nimport IconButton from \"@mui/joy/IconButton\";\nimport {\n  AccountCircleRounded,\n  BookmarkAddRounded,\n  BookmarkBorderRounded,\n  EditRounded,\n  FavoriteBorderRounded,\n  MoreVertRounded,\n} from \"@mui/icons-material\";\nimport Divider from \"@mui/joy/Divider\";\nimport Avatar from \"@mui/joy/Avatar\";\n\nexport default function AgentList({\n  variant,\n}: {\n  variant: \"collection\" | \"explore\";\n}) {\n  const maskStore = useMaskStore();\n  const agents = maskStore.getAll();\n\n  function AgentCard({ a }: { a: Mask }) {\n    return (\n      // TODO: Make hover effect more visible\n      <Card\n        sx={{\n          p: 1,\n          pl: 2,\n          borderRadius: 4,\n          display: \"flex\",\n          height: 150,\n          \"&:hover\": {\n            boxShadow: \"md\",\n            borderColor: \"neutral.outlinedHoverBorder\",\n          },\n        }}\n      >\n        {/*Top row with title and menu buttons*/}\n        <Box\n          sx={{\n            display: \"flex\",\n            alignItems: \"center\",\n            justifyContent: \"space-between\",\n            overflow: \"hidden\",\n          }}\n        >\n          <Box\n            sx={{\n              gap: 1,\n              display: \"flex\",\n              flexDirection: \"row\",\n              alignItems: \"center\",\n              overflow: \"hidden\",\n            }}\n          >\n            <Avatar size=\"sm\" sx={{ borderRadius: 10 }}>\n              ✨\n            </Avatar>\n            <Typography\n              level=\"title-md\"\n              noWrap\n              sx={{ textOverflow: \"ellipsis\" }}\n            >\n              <Link\n                overlay\n                underline=\"none\"\n                component=\"button\"\n                onClick={() => {\n                  // ...process something\n                }}\n                sx={{ color: \"text.tertiary\" }}\n              >\n                {a.name}\n              </Link>\n            </Typography>\n          </Box>\n\n          <Box\n            sx={{\n              flexShrink: 0,\n              ml: 1,\n            }}\n          >\n            {/*TODO: On the explore page, render check mark icon if the user has added the prompt already*/}\n            {variant === \"explore\" && (\n              <IconButton size=\"sm\" disabled>\n                <BookmarkAddRounded />\n              </IconButton>\n            )}\n\n            {variant === \"collection\" && (\n              <IconButton size=\"sm\" disabled>\n                <EditRounded />\n              </IconButton>\n            )}\n\n            <IconButton size=\"sm\" disabled>\n              <MoreVertRounded />\n            </IconButton>\n          </Box>\n        </Box>\n\n        {/*TODO: Customize scrollbar*/}\n        <Box\n          sx={{\n            flex: 1,\n            overflow: \"hidden\",\n            textOverflow: \"ellipsis\",\n          }}\n        >\n          <Typography level=\"body-sm\">Agent Description Placeholder</Typography>\n        </Box>\n\n        {/*Bottom row with prompt stats*/}\n        <CardOverflow\n          variant=\"soft\"\n          sx={{\n            bgColor: \"background.level1\",\n            ml: -2,\n            overflow: \"hidden\",\n          }}\n        >\n          <Divider inset=\"context\" />\n          <CardContent\n            orientation=\"horizontal\"\n            sx={{ alignItems: \"center\", p: 0 }}\n          >\n            <IconButton size=\"md\" disabled sx={{ mr: -1 }}>\n              <AccountCircleRounded />\n            </IconButton>\n            <Typography level=\"body-xs\">Name</Typography>\n            <Divider orientation=\"vertical\" sx={{ my: 1, ml: 1 }} />\n            <IconButton size=\"sm\" disabled sx={{ mr: -1 }}>\n              <FavoriteBorderRounded />\n            </IconButton>\n            <Typography level=\"body-xs\">100</Typography>\n\n            <IconButton size=\"sm\" disabled sx={{ mr: -1 }}>\n              <BookmarkBorderRounded />\n            </IconButton>\n            <Typography level=\"body-xs\">50</Typography>\n          </CardContent>\n        </CardOverflow>\n      </Card>\n    );\n  }\n\n  return (\n    <Box\n      sx={{\n        flexGrow: 1,\n        height: \"100dvh\",\n        flexDirection: \"column-reverse\",\n      }}\n    >\n      <Grid\n        container\n        spacing={{ xs: 2 }}\n        columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}\n        sx={{ flexGrow: 1 }}\n      >\n        {agents.map((a) => (\n          <Grid xs={1} key={`agent-${a.id}`}>\n            <AgentCard a={a} />\n          </Grid>\n        ))}\n      </Grid>\n    </Box>\n  );\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/AgentList.tsx b/src/components/AgentList.tsx
+--- a/src/components/AgentList.tsx	(revision 9c7a6e2b3f9ddeff02e5e18b71a68662393a704f)
++++ b/src/components/AgentList.tsx	(date 1704602338082)
+@@ -1,6 +1,6 @@
+ import * as React from "react";
+ import { Box, CardContent, CardOverflow, Grid, Link } from "@mui/joy";
+-import { useMaskStore } from "@/stores";
++import { useChatStore, useMaskStore } from "@/stores";
+ import Typography from "@mui/joy/Typography";
+ import { Mask } from "@/typing";
+ import Card from "@mui/joy/Card";
+@@ -15,6 +15,8 @@
+ } from "@mui/icons-material";
+ import Divider from "@mui/joy/Divider";
+ import Avatar from "@mui/joy/Avatar";
++import { useRouter } from "next/navigation";
++import { Routes } from "@/constants";
+ 
+ export default function AgentList({
+   variant,
+@@ -23,6 +25,15 @@
+ }) {
+   const maskStore = useMaskStore();
+   const agents = maskStore.getAll();
++  const chatStore = useChatStore();
++  const router = useRouter();
++
++  const startChat = (mask?: Mask) => {
++    setTimeout(() => {
++      chatStore.newSession(mask);
++      router.push(Routes.Chat);
++    }, 10);
++  };
+ 
+   function AgentCard({ a }: { a: Mask }) {
+     return (
+@@ -70,9 +81,7 @@
+                 overlay
+                 underline="none"
+                 component="button"
+-                onClick={() => {
+-                  // ...process something
+-                }}
++                onClick={() => startChat(a)}
+                 sx={{ color: "text.tertiary" }}
+               >
+                 {a.name}

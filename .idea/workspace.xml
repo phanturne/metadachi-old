@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b2301435-c9ac-4f73-b028-8a9729a8ef24" name="Changes" comment="[Tauri Integration] Replacing dynamic routes with search params">
+      <change beforePath="$PROJECT_DIR$/app/share/assistant/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/share/assistant/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/share/chat/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/share/chat/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/assistants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/db/assistants.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <branch-grouping />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="build-issue" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;phanturne&quot;
+  }
+}</component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="Setting up Supabase &amp; adding Tauri integration" />
+        <option name="rewordedMessage" value="Setting up Supabase &amp; adding Tauri integration" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="90a8540a4e3c51daba362ff57b4dc509453757bd" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="cf118de7-1ced-4c18-a007-ff52e981e25f" />
+        <option name="url" value="https://github.com/phanturne/metadachi.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2Y2VwYcJfDkY4qsCQn97hA1Lyjn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;new&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.18.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.18.14&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/krding/WebstormProjects/metadachi&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;npm.app:build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.export.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/krding/WebstormProjects/metadachi/node_modules/prettier&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/krding/WebstormProjects/metadachi/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;GitStage.ChangesTree.GroupingKeys&quot;: [
+      &quot;directory&quot;,
+      &quot;module&quot;,
+      &quot;repository&quot;
+    ],
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;PLAIN_TEXT&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/app/api" />
+      <recent name="$APPLICATION_CONFIG_DIR$/scratches" />
+      <recent name="$PROJECT_DIR$/src/app/(dashboard)" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/share/chat" />
+      <recent name="$PROJECT_DIR$/app/share/assistant" />
+      <recent name="$PROJECT_DIR$/src/utils" />
+      <recent name="$PROJECT_DIR$/docs/images" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/src/components/ModelConfigList.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/autocompleteConfigOption.tsx" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="app:build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="app:build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="export" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="export" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="export:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="export:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.export" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.export:dev" />
+        <item itemvalue="npm.app:build" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b2301435-c9ac-4f73-b028-8a9729a8ef24" name="Changes" comment="" />
+      <created>1699723901062</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699723901062</updated>
+      <workItem from="1699723902503" duration="15502000" />
+      <workItem from="1699768660486" duration="305000" />
+      <workItem from="1699847140933" duration="30591000" />
+      <workItem from="1700239195791" duration="3588000" />
+      <workItem from="1700272868730" duration="2723000" />
+      <workItem from="1700275795546" duration="14000" />
+      <workItem from="1700276690078" duration="5996000" />
+      <workItem from="1700370808072" duration="32080000" />
+      <workItem from="1700591725435" duration="26480000" />
+      <workItem from="1700633047136" duration="434000" />
+      <workItem from="1700702631811" duration="15512000" />
+      <workItem from="1700799590186" duration="72174000" />
+      <workItem from="1701397310116" duration="16394000" />
+      <workItem from="1701754493346" duration="6080000" />
+      <workItem from="1701833159922" duration="9575000" />
+      <workItem from="1702065788874" duration="7480000" />
+      <workItem from="1702354392932" duration="2550000" />
+      <workItem from="1702753645437" duration="49000" />
+      <workItem from="1702765655505" duration="17821000" />
+      <workItem from="1702834229272" duration="3310000" />
+      <workItem from="1702839891367" duration="32221000" />
+      <workItem from="1702921512855" duration="72594000" />
+      <workItem from="1703276444788" duration="2180000" />
+      <workItem from="1703287505379" duration="9126000" />
+      <workItem from="1703297137225" duration="255000" />
+      <workItem from="1703297507785" duration="254000" />
+      <workItem from="1703314870906" duration="34388000" />
+      <workItem from="1703527234366" duration="4935000" />
+      <workItem from="1703532436628" duration="14305000" />
+      <workItem from="1703707735508" duration="6567000" />
+      <workItem from="1703718060761" duration="13330000" />
+      <workItem from="1703789686049" duration="6517000" />
+      <workItem from="1703819658023" duration="5652000" />
+      <workItem from="1703876464500" duration="1072000" />
+      <workItem from="1703964021422" duration="371000" />
+      <workItem from="1703964395108" duration="101000" />
+      <workItem from="1703964610115" duration="3189000" />
+      <workItem from="1703975227995" duration="5284000" />
+      <workItem from="1704061089047" duration="15195000" />
+      <workItem from="1704136883652" duration="1993000" />
+      <workItem from="1704152895107" duration="241000" />
+      <workItem from="1704345823706" duration="4878000" />
+      <workItem from="1704519712398" duration="5329000" />
+      <workItem from="1704525177113" duration="2000" />
+      <workItem from="1704525199269" duration="2113000" />
+      <workItem from="1704564876009" duration="61000" />
+      <workItem from="1704578286633" duration="10286000" />
+      <workItem from="1704598950865" duration="4661000" />
+      <workItem from="1705036709275" duration="1200000" />
+      <workItem from="1705038191257" duration="786000" />
+      <workItem from="1705038981203" duration="809000" />
+      <workItem from="1705039793313" duration="261000" />
+      <workItem from="1705040056719" duration="2333000" />
+      <workItem from="1705088809031" duration="1037000" />
+      <workItem from="1705089849638" duration="165000" />
+      <workItem from="1705125007195" duration="8822000" />
+      <workItem from="1705183301490" duration="658000" />
+      <workItem from="1705186735716" duration="1074000" />
+    </task>
+    <task id="LOCAL-00043" summary="Chat List will only include chats by the user">
+      <option name="closed" value="true" />
+      <created>1701833744969</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1701833744969</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Added basic functionality for users to select a bot in [EmptyChatConfig]">
+      <option name="closed" value="true" />
+      <created>1701839637362</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1701839637362</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Adding skeleton for Explore page">
+      <option name="closed" value="true" />
+      <created>1701931533531</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1701931533531</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Migrating snackbar to root layout">
+      <option name="closed" value="true" />
+      <created>1702147326970</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1702147326970</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Adding basic prompt hints structure">
+      <option name="closed" value="true" />
+      <created>1702766213189</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1702766213189</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Reworking the app to utilize local storage and simplify config. Using code from ChatGPT Next Web.">
+      <option name="closed" value="true" />
+      <created>1702842061974</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1702842061974</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Adding ChatInput w/ Input Suggestions (Prompts)">
+      <option name="closed" value="true" />
+      <created>1703224022853</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1703224022853</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Adding ChatInput w/ Input Suggestions (Prompts)">
+      <option name="closed" value="true" />
+      <created>1703296313636</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1703296313637</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Fix imports">
+      <option name="closed" value="true" />
+      <created>1703296604999</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1703296604999</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Adding nanoid package">
+      <option name="closed" value="true" />
+      <created>1703297243972</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1703297243972</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Refactoring sidebar and adding ProfileMenu. Updating stores">
+      <option name="closed" value="true" />
+      <created>1703363220265</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1703363220266</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Adding placeholder pages">
+      <option name="closed" value="true" />
+      <created>1703374843404</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1703374843404</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Updating SidebarHeader button to redirect to the home page.">
+      <option name="closed" value="true" />
+      <created>1703374885887</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1703374885887</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Adding minor adjustments to sidebar">
+      <option name="closed" value="true" />
+      <created>1703378265050</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1703378265050</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Adding settings page and an input for custom OpenAI API Keys">
+      <option name="closed" value="true" />
+      <created>1703488293988</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1703488293988</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Updating API Endpoint">
+      <option name="closed" value="true" />
+      <created>1703571568075</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1703571568076</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Adding Chat Messages UI">
+      <option name="closed" value="true" />
+      <created>1703571763479</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1703571763479</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Adding changes from Chatgpt-Next-Web for Gemini Pro model support">
+      <option name="closed" value="true" />
+      <created>1703718364105</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1703718364106</updated>
+    </task>
+    <task id="LOCAL-00061" summary="[FIX] onPromptSelected will correctly replace the input with the correct prompt">
+      <option name="closed" value="true" />
+      <created>1703746472251</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1703746472251</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Cleaning up Profile &amp; Sidebar">
+      <option name="closed" value="true" />
+      <created>1703748658784</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1703748658784</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Adding Header &amp; ChatHistoryDropdown">
+      <option name="closed" value="true" />
+      <created>1703750065837</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1703750065838</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Downgrade Tauri Builder Version to 1.5.7 (https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/pull/3656)">
+      <option name="closed" value="true" />
+      <created>1703750762398</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1703750762399</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Renaming dashboardPx, Commands">
+      <option name="closed" value="true" />
+      <created>1703822067115</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1703822067115</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Updating Sidebar. Adding Collections page">
+      <option name="closed" value="true" />
+      <created>1703822084625</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1703822084625</updated>
+    </task>
+    <task id="LOCAL-00067" summary="Updating Header, ChatList, Discover Page, Collection Page">
+      <option name="closed" value="true" />
+      <created>1703826054201</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1703826054201</updated>
+    </task>
+    <task id="LOCAL-00068" summary="Hide sidebar's settings button if the window height is short">
+      <option name="closed" value="true" />
+      <created>1703877523660</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1703877523660</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Updating NewChatConfig with option for users to choose a model and agent before the chat is created">
+      <option name="closed" value="true" />
+      <created>1703980245798</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1703980245799</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Updating Readme">
+      <option name="closed" value="true" />
+      <created>1703980256839</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1703980256839</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Change default light/dark mode based on user's system preferences. Fix mode toggle button text">
+      <option name="closed" value="true" />
+      <created>1704062595257</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1704062595257</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Adding Google Gemini API Config to Settings">
+      <option name="closed" value="true" />
+      <created>1704063494520</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1704063494520</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Creating custom Autocomplete component">
+      <option name="closed" value="true" />
+      <created>1704076274973</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1704076274973</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Adding model config settings tab">
+      <option name="closed" value="true" />
+      <created>1704079413619</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1704079413619</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Organize project">
+      <option name="closed" value="true" />
+      <created>1704137160007</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1704137160007</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Editing default system template">
+      <option name="closed" value="true" />
+      <created>1704153012093</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1704153012094</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Adding structure for commands">
+      <option name="closed" value="true" />
+      <created>1704153091543</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1704153091543</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Styling prompts list">
+      <option name="closed" value="true" />
+      <created>1704349591736</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1704349591736</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Remove unused imports">
+      <option name="closed" value="true" />
+      <created>1704349852363</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1704349852363</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Updating prompt list icons">
+      <option name="closed" value="true" />
+      <created>1704350709019</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1704350709019</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Adding a gallery view for prompts">
+      <option name="closed" value="true" />
+      <created>1704525266206</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1704525266206</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Updating Readme to reflect project changes">
+      <option name="closed" value="true" />
+      <created>1704527305896</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1704527305897</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Minor adjustments to PromptList &amp; Readme">
+      <option name="closed" value="true" />
+      <created>1704585147172</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1704585147172</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Adding agent cards">
+      <option name="closed" value="true" />
+      <created>1704593913137</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1704593913137</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Adding agent cards">
+      <option name="closed" value="true" />
+      <created>1704593932989</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1704593932989</updated>
+    </task>
+    <task id="LOCAL-00086" summary="[Fix] Agent name taking too much space, causing buttons to be hidden">
+      <option name="closed" value="true" />
+      <created>1704599766451</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1704599766451</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Adding placeholder for images tab">
+      <option name="closed" value="true" />
+      <created>1704603025519</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1704603025519</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Setting up environment:&#10;- Switching to pnpm&#10;- Adding supabase info in the setup script">
+      <option name="closed" value="true" />
+      <created>1705089970955</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1705089970956</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Adding Tauri Integration">
+      <option name="closed" value="true" />
+      <created>1705126408888</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1705126408888</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Revert changes">
+      <option name="closed" value="true" />
+      <created>1705129833863</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1705129833863</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Revert changes">
+      <option name="closed" value="true" />
+      <created>1705130158392</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1705130158392</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.sql" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.template" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="5daac513-a2dd-4053-9b10-06d813570713" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="test" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="5daac513-a2dd-4053-9b10-06d813570713">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="new" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Renaming dashboardPx, Commands" />
+    <MESSAGE value="Updating Sidebar. Adding Collections page" />
+    <MESSAGE value="Updating Header, ChatList, Discover Page, Collection Page" />
+    <MESSAGE value="Hide sidebar's settings button if the window height is short" />
+    <MESSAGE value="Updating NewChatConfig with option for users to choose a model and agent before the chat is created" />
+    <MESSAGE value="Updating Readme" />
+    <MESSAGE value="Change default light/dark mode based on user's system preferences. Fix mode toggle button text" />
+    <MESSAGE value="Adding Google Gemini API Config to Settings" />
+    <MESSAGE value="Creating custom Autocomplete component" />
+    <MESSAGE value="Adding model config settings tab" />
+    <MESSAGE value="Organize project" />
+    <MESSAGE value="Editing default system template" />
+    <MESSAGE value="Adding structure for commands" />
+    <MESSAGE value="Styling prompts list" />
+    <MESSAGE value="Remove unused imports" />
+    <MESSAGE value="Updating prompt list icons" />
+    <MESSAGE value="Adding a gallery view for prompts" />
+    <MESSAGE value="Updating Readme to reflect project changes" />
+    <MESSAGE value="Minor adjustments to PromptList &amp; Readme" />
+    <MESSAGE value="Adding agent cards" />
+    <MESSAGE value="[Fix] Agent name taking too much space, causing buttons to be hidden" />
+    <MESSAGE value="Adding placeholder for images tab" />
+    <MESSAGE value="Setting up environment:&#10;- Switching to pnpm&#10;- Adding supabase info in the setup script" />
+    <MESSAGE value="Adding Tauri Integration" />
+    <MESSAGE value="Revert changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert changes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$APPLICATION_CONFIG_DIR$/scratches/old_code.tsx</url>
+          <line>5</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/app/(dashboard)/page.tsx</url>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

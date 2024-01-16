@@ -1,0 +1,328 @@
+Index: src/ui/sidebar.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'use client';\n\nimport * as React from 'react';\nimport GlobalStyles from '@mui/joy/GlobalStyles';\nimport Box from '@mui/joy/Box';\nimport Divider from '@mui/joy/Divider';\nimport IconButton from '@mui/joy/IconButton';\nimport List from '@mui/joy/List';\nimport ListItem from '@mui/joy/ListItem';\nimport ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';\nimport ListItemContent from '@mui/joy/ListItemContent';\nimport Typography from '@mui/joy/Typography';\nimport Sheet from '@mui/joy/Sheet';\nimport LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';\nimport ListItemDecorator from '@mui/joy/ListItemDecorator';\nimport { useRouter } from 'next/navigation';\nimport {\n  AutoAwesome,\n  ChatRounded,\n  ExploreRounded,\n  Facebook,\n  GitHub,\n  HomeRepairServiceRounded,\n  ImageRounded,\n  Instagram,\n  Reddit,\n  SearchRounded,\n  SettingsRounded,\n  SupportRounded,\n  Twitter,\n} from '@mui/icons-material';\nimport config from '@/lib/config';\nimport { Input } from '@mui/joy';\n\n// Controller for nested menu items\nfunction Toggler({\n  defaultExpanded = false,\n  renderToggle,\n  children,\n}: {\n  defaultExpanded?: boolean;\n  children: React.ReactNode;\n  renderToggle: (params: {\n    open: boolean;\n    setOpen: React.Dispatch<React.SetStateAction<boolean>>;\n  }) => React.ReactNode;\n}) {\n  const [open, setOpen] = React.useState(defaultExpanded);\n  return (\n    <React.Fragment>\n      {renderToggle({ open, setOpen })}\n      <Box\n        sx={{\n          display: 'grid',\n          gridTemplateRows: open ? '1fr' : '0fr',\n          transition: '0.2s ease',\n          '& > *': {\n            overflow: 'hidden',\n          },\n        }}\n      >\n        {children}\n      </Box>\n    </React.Fragment>\n  );\n}\n\nexport default function Sidebar() {\n  const [selectedIndex, setSelectedIndex] = React.useState(0);\n  const router = useRouter();\n  const routes = [\n    config.routes.chats,\n    config.routes.images,\n    config.routes.toolbox,\n    config.routes.discover,\n    config.routes.support,\n    config.routes.settings,\n  ];\n\n  function MenuItem({\n    index,\n    icon,\n    label,\n    trailingContent,\n  }: {\n    index: number;\n    icon: React.ReactNode;\n    label: string;\n    trailingContent?: React.ReactNode;\n  }) {\n    return (\n      <ListItem>\n        <ListItemButton\n          selected={index === selectedIndex}\n          onClick={() => {\n            setSelectedIndex(index);\n            router.push(routes[index] ?? config.routes.notFound);\n          }}\n        >\n          <ListItemDecorator>{icon}</ListItemDecorator>\n          <ListItemContent>{label}</ListItemContent>\n          {trailingContent}\n        </ListItemButton>\n      </ListItem>\n    );\n  }\n\n  function SidebarHeader() {\n    return (\n      <Box\n        sx={{ display: 'flex', alignItems: 'center', my: { xs: 0, lg: -1 } }}\n      >\n        <IconButton variant='plain' color='primary'>\n          <AutoAwesome />\n        </IconButton>\n        <Typography\n          level='title-lg'\n          sx={{ display: { xs: 'none', lg: 'flex' } }}\n        >\n          Metadachi\n        </Typography>\n      </Box>\n    );\n  }\n\n  return (\n    <Sheet\n      className='Sidebar'\n      sx={{\n        transform: {\n          xs: 'translateX(calc(100% * (var(1, 0) - 1)))',\n          lg: 'none',\n        },\n        transition: 'transform 0.4s, width 0.4s',\n        height: '100dvh',\n        width: {\n          xs: 'var(--Sidebar-width)',\n          lg: 'calc(var(--Sidebar-width) + 190px)',\n        },\n        top: 0,\n        p: { xs: 1, lg: 2 },\n        flexShrink: 0,\n        display: 'flex',\n        flexDirection: 'column',\n        gap: { xs: 0, lg: 2 },\n        borderRight: '1px solid',\n        borderColor: 'divider',\n      }}\n    >\n      <GlobalStyles\n        styles={() => ({\n          ':root': {\n            '--Sidebar-width': '50px',\n          },\n        })}\n      />\n      <SidebarHeader />\n      <Input\n        sx={{ display: { xs: 'none', lg: 'flex' } }}\n        size='sm'\n        startDecorator={<SearchRounded />}\n        placeholder='Search'\n      />\n      <Box\n        sx={{\n          minHeight: 0,\n          overflow: 'auto',\n          flexGrow: 1,\n          display: 'flex',\n          flexDirection: 'column',\n          [`& .${listItemButtonClasses.root}`]: {\n            gap: 1.5,\n          },\n        }}\n      >\n        <List\n          size='sm'\n          sx={{\n            gap: 1,\n            '--List-nestedInsetStart': '30px',\n            '--ListItem-radius': (theme) => theme.vars.radius.sm,\n          }}\n        >\n          <IconButton\n            sx={{ display: { xs: 'flex', lg: 'none' } }}\n            variant='plain'\n          >\n            <SearchRounded />\n          </IconButton>\n          <MenuItem index={0} icon={<ChatRounded />} label='Chats' />\n          <MenuItem index={1} icon={<ImageRounded />} label='Images' />\n          <MenuItem\n            index={2}\n            icon={<HomeRepairServiceRounded />}\n            label='Toolbox'\n          />\n          <MenuItem index={3} icon={<ExploreRounded />} label='Discover' />\n          {/*<Divider sx={{ my: 1 }} />*/}\n          {/*<ListItem nested>*/}\n          {/*  <Toggler*/}\n          {/*    defaultExpanded={true}*/}\n          {/*    renderToggle={({ open, setOpen }) => (*/}\n          {/*      <ListItemButton onClick={() => setOpen(!open)}>*/}\n          {/*        <QuestionAnswerRounded />*/}\n          {/*        <ListItemContent>*/}\n          {/*          <Typography level='title-sm'>Recent Chats</Typography>*/}\n          {/*        </ListItemContent>*/}\n          {/*        <KeyboardArrowDown*/}\n          {/*          sx={{ transform: open ? 'rotate(180deg)' : 'none' }}*/}\n          {/*        />*/}\n          {/*      </ListItemButton>*/}\n          {/*    )}*/}\n          {/*  >*/}\n          {/*    <List sx={{ gap: 0.5 }}>*/}\n          {/*      <ListItem sx={{ mt: 0.5 }}>*/}\n          {/*        <ListItemButton>Chat 1</ListItemButton>*/}\n          {/*      </ListItem>*/}\n          {/*      <ListItem>*/}\n          {/*        <ListItemButton>Chat 2</ListItemButton>*/}\n          {/*      </ListItem>*/}\n          {/*      <ListItem>*/}\n          {/*        <ListItemButton>Chat 3</ListItemButton>*/}\n          {/*      </ListItem>*/}\n          {/*      <ListItem>*/}\n          {/*        <ListItemButton>Chat 4</ListItemButton>*/}\n          {/*      </ListItem>*/}\n          {/*      <ListItem>*/}\n          {/*        <ListItemButton>Chat 5</ListItemButton>*/}\n          {/*      </ListItem>*/}\n          {/*      <ListItem>*/}\n          {/*        <ListItemButton>Chat 6</ListItemButton>*/}\n          {/*      </ListItem>*/}\n          {/*      <ListItem>*/}\n          {/*        <ListItemButton>Chat 7</ListItemButton>*/}\n          {/*      </ListItem>*/}\n          {/*    </List>*/}\n          {/*  </Toggler>*/}\n          {/*</ListItem>*/}\n        </List>\n\n        <List\n          size='sm'\n          sx={{\n            mt: 1,\n            flexGrow: 0,\n            '--ListItem-radius': (theme) => theme.vars.radius.sm,\n            '--List-gap': '8px',\n          }}\n        >\n          <MenuItem index={4} icon={<SupportRounded />} label='Support' />\n          <MenuItem index={5} icon={<SettingsRounded />} label='Settings' />\n        </List>\n      </Box>\n\n      <Divider sx={{ display: { xs: 'none', lg: 'flex' } }} />\n      <Box\n        sx={{\n          display: { xs: 'none', lg: 'flex' },\n          gap: 1,\n          alignItems: 'center',\n        }}\n      >\n        <Box sx={{ minWidth: 0, flex: 1 }}>\n          <IconButton\n            color='neutral'\n            size='sm'\n            component='a'\n            target='_blank'\n            href='https://github.com/phanturne/metadachi'\n          >\n            <GitHub />\n          </IconButton>\n          <IconButton\n            color='neutral'\n            size='sm'\n            component='a'\n            target='_blank'\n            href='https://twitter.com/metadachi'\n          >\n            <Twitter />\n          </IconButton>\n          <IconButton color='neutral' size='sm' disabled={true}>\n            <Facebook />\n          </IconButton>\n          <IconButton color='neutral' size='sm' disabled={true}>\n            <Reddit />\n          </IconButton>\n          <IconButton color='neutral' size='sm' disabled={true}>\n            <Instagram />\n          </IconButton>\n        </Box>\n        <IconButton size='sm' variant='plain' color='neutral'>\n          <LogoutRoundedIcon />\n        </IconButton>\n      </Box>\n    </Sheet>\n  );\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ui/sidebar.tsx b/src/ui/Sidebar.tsx
+rename from src/ui/sidebar.tsx
+rename to src/ui/Sidebar.tsx
+--- a/src/ui/sidebar.tsx	(revision 6fd7080d06cb47b47b781f06539e02410453258d)
++++ b/src/ui/Sidebar.tsx	(date 1700418751481)
+@@ -69,6 +69,8 @@
+   const [selectedIndex, setSelectedIndex] = React.useState(0);
+   const router = useRouter();
+   const routes = [
++    '/auth',
++    '/chat',
+     config.routes.chats,
+     config.routes.images,
+     config.routes.toolbox,
+Index: src/app/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+deleted file mode 100644
+--- a/src/app/page.tsx	(revision 6fd7080d06cb47b47b781f06539e02410453258d)
++++ /dev/null	(revision 6fd7080d06cb47b47b781f06539e02410453258d)
+@@ -1,35 +0,0 @@
+-'use client';
+-import { Button, useColorScheme } from '@mui/joy';
+-import { useEffect, useState } from 'react';
+-
+-function ModeToggle() {
+-  const { mode, setMode } = useColorScheme();
+-  const [mounted, setMounted] = useState(false);
+-
+-  useEffect(() => {
+-    setMounted(true);
+-  }, []);
+-
+-  if (!mounted) {
+-    return <Button variant='outlined' color='neutral' sx={{ width: 120 }} />;
+-  }
+-
+-  return (
+-    <Button
+-      variant='outlined'
+-      color='neutral'
+-      onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
+-    >
+-      {mode === 'dark' ? 'Turn light' : 'Turn dark'}
+-    </Button>
+-  );
+-}
+-
+-export default function Home() {
+-  return (
+-    <main>
+-      <p>Home</p>
+-      <ModeToggle />
+-    </main>
+-  );
+-}
+Index: src/app/(sidebar)/layout.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { Box } from '@mui/joy';\nimport Sidebar from '@/ui/sidebar';\n\nexport default function SidebarLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <Box sx={{ display: 'flex', height: '100dvh', overflow: 'hidden' }}>\n      <Sidebar />\n      <Box\n        sx={{\n          display: 'flex',\n          flexDirection: 'column',\n          height: '100dvh',\n          width: 'calc(100vw - var(--Sidebar-width))',\n        }}\n      >\n        {children}\n      </Box>\n    </Box>\n  );\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/(sidebar)/layout.tsx b/src/app/(sidebar)/layout.tsx
+--- a/src/app/(sidebar)/layout.tsx	(revision 6fd7080d06cb47b47b781f06539e02410453258d)
++++ b/src/app/(sidebar)/layout.tsx	(date 1700418751480)
+@@ -1,5 +1,5 @@
+ import { Box } from '@mui/joy';
+-import Sidebar from '@/ui/sidebar';
++import Sidebar from '@/ui/Sidebar';
+ 
+ export default function SidebarLayout({
+   children,
+Index: LICENSE
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n\n   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n\n   1. Definitions.\n\n      \"License\" shall mean the terms and conditions for use, reproduction,\n      and distribution as defined by Sections 1 through 9 of this document.\n\n      \"Licensor\" shall mean the copyright owner or entity authorized by\n      the copyright owner that is granting the License.\n\n      \"Legal Entity\" shall mean the union of the acting entity and all\n      other entities that control, are controlled by, or are under common\n      control with that entity. For the purposes of this definition,\n      \"control\" means (i) the power, direct or indirect, to cause the\n      direction or management of such entity, whether by contract or\n      otherwise, or (ii) ownership of fifty percent (50%) or more of the\n      outstanding shares, or (iii) beneficial ownership of such entity.\n\n      \"You\" (or \"Your\") shall mean an individual or Legal Entity\n      exercising permissions granted by this License.\n\n      \"Source\" form shall mean the preferred form for making modifications,\n      including but not limited to software source code, documentation\n      source, and configuration files.\n\n      \"Object\" form shall mean any form resulting from mechanical\n      transformation or translation of a Source form, including but\n      not limited to compiled object code, generated documentation,\n      and conversions to other media types.\n\n      \"Work\" shall mean the work of authorship, whether in Source or\n      Object form, made available under the License, as indicated by a\n      copyright notice that is included in or attached to the work\n      (an example is provided in the Appendix below).\n\n      \"Derivative Works\" shall mean any work, whether in Source or Object\n      form, that is based on (or derived from) the Work and for which the\n      editorial revisions, annotations, elaborations, or other modifications\n      represent, as a whole, an original work of authorship. For the purposes\n      of this License, Derivative Works shall not include works that remain\n      separable from, or merely link (or bind by name) to the interfaces of,\n      the Work and Derivative Works thereof.\n\n      \"Contribution\" shall mean any work of authorship, including\n      the original version of the Work and any modifications or additions\n      to that Work or Derivative Works thereof, that is intentionally\n      submitted to Licensor for inclusion in the Work by the copyright owner\n      or by an individual or Legal Entity authorized to submit on behalf of\n      the copyright owner. For the purposes of this definition, \"submitted\"\n      means any form of electronic, verbal, or written communication sent\n      to the Licensor or its representatives, including but not limited to\n      communication on electronic mailing lists, source code control systems,\n      and issue tracking systems that are managed by, or on behalf of, the\n      Licensor for the purpose of discussing and improving the Work, but\n      excluding communication that is conspicuously marked or otherwise\n      designated in writing by the copyright owner as \"Not a Contribution.\"\n\n      \"Contributor\" shall mean Licensor and any individual or Legal Entity\n      on behalf of whom a Contribution has been received by Licensor and\n      subsequently incorporated within the Work.\n\n   2. Grant of Copyright License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      copyright license to reproduce, prepare Derivative Works of,\n      publicly display, publicly perform, sublicense, and distribute the\n      Work and such Derivative Works in Source or Object form.\n\n   3. Grant of Patent License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      (except as stated in this section) patent license to make, have made,\n      use, offer to sell, sell, import, and otherwise transfer the Work,\n      where such license applies only to those patent claims licensable\n      by such Contributor that are necessarily infringed by their\n      Contribution(s) alone or by combination of their Contribution(s)\n      with the Work to which such Contribution(s) was submitted. If You\n      institute patent litigation against any entity (including a\n      cross-claim or counterclaim in a lawsuit) alleging that the Work\n      or a Contribution incorporated within the Work constitutes direct\n      or contributory patent infringement, then any patent licenses\n      granted to You under this License for that Work shall terminate\n      as of the date such litigation is filed.\n\n   4. Redistribution. You may reproduce and distribute copies of the\n      Work or Derivative Works thereof in any medium, with or without\n      modifications, and in Source or Object form, provided that You\n      meet the following conditions:\n\n      (a) You must give any other recipients of the Work or\n          Derivative Works a copy of this License; and\n\n      (b) You must cause any modified files to carry prominent notices\n          stating that You changed the files; and\n\n      (c) You must retain, in the Source form of any Derivative Works\n          that You distribute, all copyright, patent, trademark, and\n          attribution notices from the Source form of the Work,\n          excluding those notices that do not pertain to any part of\n          the Derivative Works; and\n\n      (d) If the Work includes a \"NOTICE\" text file as part of its\n          distribution, then any Derivative Works that You distribute must\n          include a readable copy of the attribution notices contained\n          within such NOTICE file, excluding those notices that do not\n          pertain to any part of the Derivative Works, in at least one\n          of the following places: within a NOTICE text file distributed\n          as part of the Derivative Works; within the Source form or\n          documentation, if provided along with the Derivative Works; or,\n          within a display generated by the Derivative Works, if and\n          wherever such third-party notices normally appear. The contents\n          of the NOTICE file are for informational purposes only and\n          do not modify the License. You may add Your own attribution\n          notices within Derivative Works that You distribute, alongside\n          or as an addendum to the NOTICE text from the Work, provided\n          that such additional attribution notices cannot be construed\n          as modifying the License.\n\n      You may add Your own copyright statement to Your modifications and\n      may provide additional or different license terms and conditions\n      for use, reproduction, or distribution of Your modifications, or\n      for any such Derivative Works as a whole, provided Your use,\n      reproduction, and distribution of the Work otherwise complies with\n      the conditions stated in this License.\n\n   5. Submission of Contributions. Unless You explicitly state otherwise,\n      any Contribution intentionally submitted for inclusion in the Work\n      by You to the Licensor shall be under the terms and conditions of\n      this License, without any additional terms or conditions.\n      Notwithstanding the above, nothing herein shall supersede or modify\n      the terms of any separate license agreement you may have executed\n      with Licensor regarding such Contributions.\n\n   6. Trademarks. This License does not grant permission to use the trade\n      names, trademarks, service marks, or product names of the Licensor,\n      except as required for reasonable and customary use in describing the\n      origin of the Work and reproducing the content of the NOTICE file.\n\n   7. Disclaimer of Warranty. Unless required by applicable law or\n      agreed to in writing, Licensor provides the Work (and each\n      Contributor provides its Contributions) on an \"AS IS\" BASIS,\n      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or\n      implied, including, without limitation, any warranties or conditions\n      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A\n      PARTICULAR PURPOSE. You are solely responsible for determining the\n      appropriateness of using or redistributing the Work and assume any\n      risks associated with Your exercise of permissions under this License.\n\n   8. Limitation of Liability. In no event and under no legal theory,\n      whether in tort (including negligence), contract, or otherwise,\n      unless required by applicable law (such as deliberate and grossly\n      negligent acts) or agreed to in writing, shall any Contributor be\n      liable to You for damages, including any direct, indirect, special,\n      incidental, or consequential damages of any character arising as a\n      result of this License or out of the use or inability to use the\n      Work (including but not limited to damages for loss of goodwill,\n      work stoppage, computer failure or malfunction, or any and all\n      other commercial damages or losses), even if such Contributor\n      has been advised of the possibility of such damages.\n\n   9. Accepting Warranty or Additional Liability. While redistributing\n      the Work or Derivative Works thereof, You may choose to offer,\n      and charge a fee for, acceptance of support, warranty, indemnity,\n      or other liability obligations and/or rights consistent with this\n      License. However, in accepting such obligations, You may act only\n      on Your own behalf and on Your sole responsibility, not on behalf\n      of any other Contributor, and only if You agree to indemnify,\n      defend, and hold each Contributor harmless for any liability\n      incurred by, or claims asserted against, such Contributor by reason\n      of your accepting any such warranty or additional liability.\n\n   END OF TERMS AND CONDITIONS\n\n   APPENDIX: How to apply the Apache License to your work.\n\n      To apply the Apache License to your work, attach the following\n      boilerplate notice, with the fields enclosed by brackets \"[]\"\n      replaced with your own identifying information. (Don't include\n      the brackets!)  The text should be enclosed in the appropriate\n      comment syntax for the file format. We also recommend that a\n      file or class name and description of purpose be included on the\n      same \"printed page\" as the copyright notice for easier\n      identification within third-party archives.\n\n   Copyright [yyyy] [name of copyright owner]\n\n   Licensed under the Apache License, Version 2.0 (the \"License\");\n   you may not use this file except in compliance with the License.\n   You may obtain a copy of the License at\n\n       http://www.apache.org/licenses/LICENSE-2.0\n\n   Unless required by applicable law or agreed to in writing, software\n   distributed under the License is distributed on an \"AS IS\" BASIS,\n   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n   See the License for the specific language governing permissions and\n   limitations under the License.\n\n--------------------------------------------------------------------------------\nThis project uses elements from the the Tauri + Next.js Template.\n * LICENSE: MIT License\n * HOMEPAGE: https://github.com/kvnxiao/tauri-nextjs-template\n\nMIT License\n\nCopyright (c) 2022 Kevin Xiao\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/LICENSE b/LICENSE
+--- a/LICENSE	(revision 6fd7080d06cb47b47b781f06539e02410453258d)
++++ b/LICENSE	(date 1700418751479)
+@@ -201,7 +201,36 @@
+    limitations under the License.
+ 
+ --------------------------------------------------------------------------------
+-This project uses elements from the the Tauri + Next.js Template.
++
++Key code implementations and concepts were drawn from this project.
++ * LICENSE: MIT License
++ * HOMEPAGE: https://github.com/Yidadaa/ChatGPT-Next-Web
++
++MIT License
++
++Copyright (c) 2023 Zhang Yifei
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.
++
++--------------------------------------------------------------------------------
++
++Integration of the Tauri API with Next.js relies on the code snippets from this template.
+  * LICENSE: MIT License
+  * HOMEPAGE: https://github.com/kvnxiao/tauri-nextjs-template
+ 
+Index: src/ui/AuthModal.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ui/AuthModal.tsx b/src/ui/AuthModal.tsx
+new file mode 100644
+--- /dev/null	
++++ b/src/ui/AuthModal.tsx	
+@@ -0,0 +1,113 @@
++import { FormEvent, useState } from 'react';
++import {
++  Button,
++  DialogContent,
++  DialogTitle,
++  FormControl,
++  FormLabel,
++  Input,
++  Modal,
++  ModalDialog,
++  Stack,
++} from '@mui/joy';
++import { useRouter } from 'next/navigation';
++import Box from '@mui/joy/Box';
++import Image from 'next/image';
++
++export enum AuthFormType {
++  Login,
++  SignUp,
++  ResetPassword,
++}
++
++export default function AuthModal({ isAuthPage }: { isAuthPage: boolean }) {
++  const [authFormType, setAuthFormType] = useState<AuthFormType>(
++    AuthFormType.Login
++  );
++  const [open, setOpen] = useState<boolean>(isAuthPage);
++  const router = useRouter();
++
++  function onClose() {
++    setOpen(false);
++    if (isAuthPage) router.push('/home');
++  }
++  return (
++    <Modal open={open} onClose={() => setOpen(false)}>
++      <ModalDialog layout={isAuthPage ? 'fullscreen' : 'center'} sx={{ p: 0 }}>
++        <DialogContent>
++          <Box sx={{ display: 'flex', flexDirection: 'row', height: '100dvh' }}>
++            {/*<Image*/}
++            {/*  src=''*/}
++            {/*  width={0}*/}
++            {/*  height={0}*/}
++            {/*  alt={'Image'}*/}
++            {/*  style={{ width: '100%', height: 'auto' }}*/}
++            {/*/>*/}
++            <Box sx={{ p: 5 }}>
++              {authFormType === AuthFormType.Login && <LoginForm />}
++              <Button
++                onClick={() => {
++                  setAuthFormType(
++                    authFormType == AuthFormType.Login
++                      ? AuthFormType.SignUp
++                      : AuthFormType.Login
++                  );
++                }}
++              >
++                Switch Type
++              </Button>
++            </Box>
++          </Box>
++        </DialogContent>
++      </ModalDialog>
++    </Modal>
++  );
++}
++
++function LoginForm({ setOpen }: { setOpen?: React.FC }) {
++  return (
++    <form
++      onSubmit={(event: FormEvent<HTMLFormElement>) => {
++        event.preventDefault();
++        if (setOpen) setOpen(false);
++      }}
++    >
++      <Stack spacing={2}>
++        <p>Login</p>
++        <FormControl>
++          <FormLabel>Email</FormLabel>
++          <Input autoFocus required />
++        </FormControl>
++        <FormControl>
++          <FormLabel>Description</FormLabel>
++          <Input required />
++        </FormControl>
++        <Button type='submit'>Submit</Button>
++      </Stack>
++    </form>
++  );
++}
++
++function SignupForm({ setOpen }: { setOpen?: React.FC }) {
++  return (
++    <form
++      onSubmit={(event: FormEvent<HTMLFormElement>) => {
++        event.preventDefault();
++        if (setOpen) setOpen(false);
++      }}
++    >
++      <Stack spacing={2}>
++        <p>Sign Up</p>
++        <FormControl>
++          <FormLabel>Email</FormLabel>
++          <Input autoFocus required />
++        </FormControl>
++        <FormControl>
++          <FormLabel>Description</FormLabel>
++          <Input required />
++        </FormControl>
++        <Button type='submit'>Submit</Button>
++      </Stack>
++    </form>
++  );
++}
+Index: src/app/auth/page.tsx
+===================================================================
+diff --git a/src/app/auth/page.tsx b/src/app/auth/page.tsx
+new file mode 100644
+--- /dev/null	
++++ b/src/app/auth/page.tsx	
+@@ -0,0 +1,7 @@
++'use client';
++
++import AuthModal from '@/ui/AuthModal';
++
++export default function LoginPage() {
++  return <AuthModal isAuthPage={true} />;
++}
+Index: src/app/(sidebar)/chat/page.tsx
+===================================================================
+diff --git a/src/app/(sidebar)/chat/page.tsx b/src/app/(sidebar)/chat/page.tsx
+new file mode 100644
+--- /dev/null	
++++ b/src/app/(sidebar)/chat/page.tsx	
+@@ -0,0 +1,53 @@
++// import { Box } from '@mui/joy';
++// import Header from '@/ui/header';
++// import Typography from '@mui/joy/Typography';
++// import * as React from 'react';
++//
++// export default function ChatPage() {
++//   return (
++//     <>
++//       <Header
++//         startContent={<Typography level='title-lg'>Start</Typography>}
++//         middleContent={<Typography level='title-lg'>Mid</Typography>}
++//         endContent={<Typography level='title-lg'>End</Typography>}
++//       />
++//       <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
++//         {[...Array(100)].map((item, index) => (
++//           <p key={index}>Content</p>
++//         ))}
++//       </Box>
++//     </>
++//   );
++// }
++
++'use client';
++
++import { useChat } from 'ai/react';
++export default function Chat() {
++  const { messages, input, handleInputChange, handleSubmit } = useChat({
++    api: 'https://metadachi-from-scratch.vercel.app/api/chat',
++  });
++
++  return (
++    <div className='mx-auto w-full max-w-md py-24 flex flex-col stretch'>
++      {messages.map((m) => (
++        <div key={m.id}>
++          {m.role === 'user' ? 'User: ' : 'AI: '}
++          {m.content}
++        </div>
++      ))}
++
++      <form onSubmit={handleSubmit}>
++        <label>
++          Say something...
++          <input
++            className='fixed w-full max-w-md bottom-0 border border-gray-300 rounded mb-8 shadow-xl p-2'
++            value={input}
++            onChange={handleInputChange}
++          />
++        </label>
++        <button type='submit'>Send</button>
++      </form>
++    </div>
++  );
++}
