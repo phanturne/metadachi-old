@@ -4,10 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2301435-c9ac-4f73-b028-8a9729a8ef24" name="Changes" comment="[Tauri Integration] Replacing dynamic routes with search params">
-      <change beforePath="$PROJECT_DIR$/app/share/assistant/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/share/assistant/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/share/chat/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/share/chat/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/assistants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/db/assistants.ts" afterDir="false" />
+    <list default="true" id="b2301435-c9ac-4f73-b028-8a9729a8ef24" name="Changes" comment="Configure project">
+      <change afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/login/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/models/model-option.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/models/model-option.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/models/model-select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/models/model-select.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/sidebar/items/all/sidebar-create-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/sidebar/items/all/sidebar-create-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/sidebar/items/all/sidebar-update-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/sidebar/items/all/sidebar-update-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/sheet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/sheet.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/utility/profile-settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/utility/profile-settings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/is-model-locked.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/is-model-locked.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +76,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;new&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging new&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.18.2&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.18.14&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/krding/WebstormProjects/metadachi&quot;,
@@ -247,6 +255,7 @@
       <workItem from="1705125007195" duration="8822000" />
       <workItem from="1705183301490" duration="658000" />
       <workItem from="1705186735716" duration="1074000" />
+      <workItem from="1705554401599" duration="2189000" />
     </task>
     <task id="LOCAL-00043" summary="Chat List will only include chats by the user">
       <option name="closed" value="true" />
@@ -699,7 +708,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Renaming dashboardPx, Commands" />
     <MESSAGE value="Updating Sidebar. Adding Collections page" />
     <MESSAGE value="Updating Header, ChatList, Discover Page, Collection Page" />
     <MESSAGE value="Hide sidebar's settings button if the window height is short" />
@@ -724,7 +732,8 @@
     <MESSAGE value="Setting up environment:&#10;- Switching to pnpm&#10;- Adding supabase info in the setup script" />
     <MESSAGE value="Adding Tauri Integration" />
     <MESSAGE value="Revert changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert changes" />
+    <MESSAGE value="fixup! Redesign model-select" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixup! Redesign model-select" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,15 +1,10 @@
 import { ChatbotUIContext } from "@/context/context"
 import { isModelLocked } from "@/lib/is-model-locked"
 import { LLM, LLMID } from "@/types"
-import React, { FC, useContext, useEffect, useState } from "react"
+import React, { FC, useContext, useEffect, useMemo, useState } from "react"
 import { ModelIcon } from "./model-icon"
-import {
-  Autocomplete,
-  AutocompleteOption,
-  ListItemContent,
-  Option,
-  Select
-} from "@mui/joy"
+import { Autocomplete, Option, Select } from "@mui/joy"
+import { ModelOption } from "@/components/models/model-option"
 
 interface ModelSelectProps {
   hostedModelOptions: LLM[]
@@ -43,31 +38,50 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   const { profile, availableOpenRouterModels } = useContext(ChatbotUIContext)
 
   const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTER_LIST[0])
-  const [isLocked, setIsLocked] = useState<boolean>(true)
+  // const [isLocked, setIsLocked] = useState<boolean>(true)
+  const [lockedModels, setLockedModels] = useState<string[]>([])
+
+  const ALL_MODELS = useMemo(
+    () => [
+      ...hostedModelOptions,
+      ...localModelOptions,
+      ...availableOpenRouterModels
+    ],
+    [hostedModelOptions, localModelOptions, availableOpenRouterModels]
+  )
 
   useEffect(() => {
     const checkModelLock = async () => {
-      if (SELECTED_MODEL && profile) {
-        const locked = await isModelLocked(SELECTED_MODEL.provider, profile)
-        setIsLocked(locked as boolean)
+      const isUsingAzure = profile?.use_azure_openai
+
+      if (!profile) return null
+
+      // Set which autocomplete options are locked
+      const tempLockedModels: string[] = []
+      for (const model of ALL_MODELS) {
+        const locked = await isModelLocked(
+          model.provider === "openai" && isUsingAzure
+            ? "azure"
+            : model.provider,
+          profile
+        )
+        if (locked) tempLockedModels.push(model.modelId)
       }
+      setLockedModels(tempLockedModels)
+
+      // if (SELECTED_MODEL) {
+      //   setIsLocked(tempLockedModels.includes(SELECTED_MODEL.modelId))
+      // }
     }
 
     checkModelLock()
-  }, [profile])
-
-  const ALL_MODELS = [
-    ...hostedModelOptions,
-    ...localModelOptions,
-    ...availableOpenRouterModels
-  ]
+  }, [profile, ALL_MODELS])
 
   const SELECTED_MODEL = ALL_MODELS.find(
     model => model.modelId === selectedModelId
   )
 
-  if (!SELECTED_MODEL) return null
-  if (!profile) return null
+  if (!SELECTED_MODEL || !profile) return null
 
   const filteredModels = ALL_MODELS.filter(model => {
     const filter = modelFilter.toLowerCase()
@@ -93,10 +107,12 @@ export const ModelSelect: FC<ModelSelectProps> = ({
           console.log("v", v)
           setModelFilter(v ?? MODEL_FILTERS.All)
         }}
-        sx={{ ml: "-12px", width: "150px" }}
+        sx={{ ml: "-12px", width: "150px", mr: 1 }}
       >
         {MODEL_FILTER_LIST.map(filter => (
-          <Option value={filter}>{filter}</Option>
+          <Option value={filter} key={`model-filter-${filter}`}>
+            {filter}
+          </Option>
         ))}
       </Select>
     )
@@ -120,19 +136,10 @@ export const ModelSelect: FC<ModelSelectProps> = ({
         </>
       }
       autoHighlight
-      getOptionLabel={option => option.modelName}
-      getOptionDisabled={_ => false} // TODO: Fix
-      renderOption={(props, option) => (
-        <AutocompleteOption {...props}>
-          <ModelIcon
-            modelId={SELECTED_MODEL?.modelId as LLMID}
-            width={26}
-            height={26}
-          />
-          <ListItemContent sx={{ fontSize: "sm" }}>
-            {option.modelName}
-          </ListItemContent>
-        </AutocompleteOption>
+      getOptionLabel={model => model.modelName}
+      getOptionDisabled={model => lockedModels.includes(model.modelId)} // TODO: Fix
+      renderOption={(props, model) => (
+        <ModelOption model={model} props={props} />
       )}
     />
   )
