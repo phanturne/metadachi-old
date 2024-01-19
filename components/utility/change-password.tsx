@@ -2,34 +2,24 @@
 
 import { supabase } from "@/lib/supabase/browser-client"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { FC, useState } from "react"
+import { Button } from "../ui/button"
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+} from "../ui/dialog"
+import { Input } from "../ui/input"
 
-export default function ChangePasswordPage() {
+interface ChangePasswordProps {}
+
+export const ChangePassword: FC<ChangePasswordProps> = () => {
   const router = useRouter()
-  const [loading, setLoading] = useState(true)
+
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-
-  useEffect(() => {
-    ;(async () => {
-      const session = (await supabase.auth.getSession()).data.session
-
-      if (!session) {
-        router.push("/login")
-      } else {
-        setLoading(false)
-      }
-    })()
-  }, [])
 
   const handleResetPassword = async () => {
     if (!newPassword) return alert("Please enter your new password.")
@@ -39,10 +29,6 @@ export default function ChangePasswordPage() {
     alert("Password changed successfully.")
 
     router.push("/login")
-  }
-
-  if (loading) {
-    return null
   }
 
   return (

@@ -50,7 +50,7 @@ export default async function Login({
     })
 
     if (error) {
-      return redirect("/login?message=Could not authenticate user")
+      return redirect(`/login?message=${error.message}`)
     }
 
     return redirect("/chat")
@@ -75,7 +75,7 @@ export default async function Login({
 
     if (error) {
       console.error(error)
-      return redirect("/login?message=Could not authenticate user")
+      return redirect(`/login?message=${error.message}`)
     }
 
     return redirect("/setup")
@@ -97,9 +97,10 @@ export default async function Login({
     })
 
     if (error) {
-      console.error(error)
-      return redirect("/login?message=Could not reset password")
+      return redirect(`/login?message=${error.message}`)
     }
+
+    return redirect("/login?message=Check email to reset password")
   }
 
   return (

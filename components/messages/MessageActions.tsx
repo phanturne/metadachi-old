@@ -8,8 +8,6 @@ import {
   RepeatRounded
 } from "@mui/icons-material"
 
-export const MESSAGE_ICON_SIZE = 18
-
 interface MessageActionsProps {
   isAssistant: boolean
   isLast: boolean

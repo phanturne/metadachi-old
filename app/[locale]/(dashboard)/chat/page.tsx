@@ -12,7 +12,6 @@ import useHotkey from "@/lib/hooks/use-hotkey"
 import { useTheme } from "next-themes"
 import { useContext } from "react"
 
-// TODO: Could be unnecessary to have separate file for empty chat page (see prev implementation)
 export default function ChatPage() {
   useHotkey("o", () => handleNewChat())
 
