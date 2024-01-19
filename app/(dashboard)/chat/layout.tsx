@@ -3,8 +3,9 @@
 import { supabase } from "@/lib/supabase/browser-client"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect, useState } from "react"
-import { Box } from "@mui/joy"
+import { Box, Typography } from "@mui/joy"
 import { useSelectFileHandler } from "@/lib/hooks/use-select-file-handler"
+import Sheet from "@mui/joy/Sheet"
 
 interface ChatLayoutProps {
   children: ReactNode
@@ -64,7 +65,6 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
         flexDirection: "column",
         height: "100%",
         width: "100%",
-        // width: "calc(100vw - var(--Sidebar-width))",
         overflow: "auto"
       }}
       onDrop={onFileDrop}
@@ -73,9 +73,16 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
       onDragLeave={handleDragLeave}
     >
       {isDragging ? (
-        <div className="flex h-full items-center justify-center bg-black/50 text-2xl text-white">
-          drop file here
-        </div>
+        <Sheet
+          sx={{
+            display: "flex",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Typography level="h1">Drop File Here</Typography>
+        </Sheet>
       ) : (
         children
       )}

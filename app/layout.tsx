@@ -8,6 +8,7 @@ import { Inter } from "next/font/google"
 import { cookies } from "next/headers"
 import { ReactNode } from "react"
 import "./globals.css"
+import { Box } from "@mui/joy"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -42,9 +43,16 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <body className={inter.className}>
         <Providers attribute="class" defaultTheme="dark">
           <Toaster richColors position="top-center" duration={2000} />
-          <div className="bg-background text-foreground flex h-screen flex-col items-center">
+          <Box
+            sx={{
+              display: "flex",
+              height: "100vh",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
             {session ? <GlobalState>{children}</GlobalState> : children}
-          </div>
+          </Box>
         </Providers>
       </body>
     </html>
