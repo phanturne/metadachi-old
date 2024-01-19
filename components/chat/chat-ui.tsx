@@ -1,5 +1,5 @@
 import Loading from "@/app/loading"
-import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { ChatbotUIContext } from "@/context/context"
 import { getChatById } from "@/db/chats"
 import { getFileById } from "@/db/files"
@@ -12,11 +12,13 @@ import { LLMID, MessageImage } from "@/types"
 import { useParams } from "next/navigation"
 import { FC, useContext, useEffect, useState } from "react"
 import { ChatHelp } from "./chat-help"
-import { useScroll } from "./chat-hooks/use-scroll"
+import { useScroll } from "@/lib/hooks/use-scroll"
 import { ChatInput } from "./chat-input"
-import { ChatMessages } from "./chat-messages"
+import ChatMessages from "./chat-messages"
 import { ChatScrollButtons } from "./chat-scroll-buttons"
 import { ChatSecondaryButtons } from "./chat-secondary-buttons"
+import { Box, Link, Typography } from "@mui/joy"
+import Header from "@/components/Header"
 
 interface ChatUIProps {}
 
@@ -194,26 +196,40 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
   }
 
   return (
-    <div className="relative flex h-full flex-col items-center">
-      <div className="absolute left-4 top-2.5 flex justify-center">
-        <ChatScrollButtons
-          isAtTop={isAtTop}
-          isAtBottom={isAtBottom}
-          isOverflowing={isOverflowing}
-          scrollToTop={scrollToTop}
-          scrollToBottom={scrollToBottom}
-        />
-      </div>
-
-      <div className="absolute right-4 top-1 flex h-[40px] items-center space-x-2">
-        <ChatSecondaryButtons />
-      </div>
-
-      <div className="bg-secondary flex max-h-[50px] min-h-[50px] w-full items-center justify-center border-b-2 px-20 font-bold">
-        <div className="max-w-[300px] truncate sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
-          {selectedChat?.name || "Chat"}
-        </div>
-      </div>
+    <Box
+      sx={{
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100%"
+      }}
+    >
+      <Header
+        startContent={
+          <ChatScrollButtons
+            isAtTop={isAtTop}
+            isAtBottom={isAtBottom}
+            isOverflowing={isOverflowing}
+            scrollToTop={scrollToTop}
+            scrollToBottom={scrollToBottom}
+          />
+        }
+        middleContent={
+          <Typography
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: 1,
+              WebkitBoxOrient: "vertical"
+            }}
+          >
+            {selectedChat?.name || "Chat"}
+          </Typography>
+        }
+        endContent={<ChatSecondaryButtons />}
+      />
 
       <div
         className="flex h-full w-full flex-col overflow-auto border-b"
@@ -227,12 +243,20 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
       </div>
 
       <div className="relative w-[300px] items-end pb-8 pt-5 sm:w-[400px] md:w-[500px] lg:w-[660px] xl:w-[800px]">
+        <Link
+          component="button"
+          onClick={() => {
+            // ...process something
+          }}
+        >
+          Do something
+        </Link>
         <ChatInput />
       </div>
 
       <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
         <ChatHelp />
       </div>
-    </div>
+    </Box>
   )
 }

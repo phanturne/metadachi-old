@@ -12,9 +12,9 @@ import { Input } from "../ui/input"
 import { TextareaAutosize } from "../ui/textarea-autosize"
 import { ChatCommandInput } from "./chat-command-input"
 import { ChatFilesDisplay } from "./chat-files-display"
-import { useChatHandler } from "./chat-hooks/use-chat-handler"
-import { usePromptAndCommand } from "./chat-hooks/use-prompt-and-command"
-import { useSelectFileHandler } from "./chat-hooks/use-select-file-handler"
+import { useChatHandler } from "../../lib/hooks/use-chat-handler"
+import { usePromptAndCommand } from "../../lib/hooks/use-prompt-and-command"
+import { useSelectFileHandler } from "../../lib/hooks/use-select-file-handler"
 
 interface ChatInputProps {}
 

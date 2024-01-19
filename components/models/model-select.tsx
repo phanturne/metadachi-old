@@ -137,7 +137,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       }
       autoHighlight
       getOptionLabel={model => model.modelName}
-      getOptionDisabled={model => lockedModels.includes(model.modelId)} // TODO: Fix
+      getOptionDisabled={model => lockedModels.includes(model.modelId)}
       renderOption={(props, model) => (
         <ModelOption model={model} props={props} />
       )}

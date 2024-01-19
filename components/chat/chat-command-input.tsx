@@ -1,6 +1,6 @@
 import { ChatbotUIContext } from "@/context/context"
 import { FC, useContext } from "react"
-import { usePromptAndCommand } from "./chat-hooks/use-prompt-and-command"
+import { usePromptAndCommand } from "@/lib/hooks/use-prompt-and-command"
 import { FilePicker } from "./file-picker"
 import { PromptPicker } from "./prompt-picker"
 

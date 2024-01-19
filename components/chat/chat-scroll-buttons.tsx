@@ -3,6 +3,7 @@ import {
   IconCircleArrowUpFilled
 } from "@tabler/icons-react"
 import { FC } from "react"
+import { Box } from "@mui/joy"
 
 interface ChatScrollButtonsProps {
   isAtTop: boolean
@@ -20,7 +21,7 @@ export const ChatScrollButtons: FC<ChatScrollButtonsProps> = ({
   scrollToBottom
 }) => {
   return (
-    <>
+    <Box sx={{ display: "flex" }}>
       {!isAtTop && isOverflowing && (
         <IconCircleArrowUpFilled
           className="cursor-pointer opacity-50 hover:opacity-100"
@@ -36,6 +37,6 @@ export const ChatScrollButtons: FC<ChatScrollButtonsProps> = ({
           onClick={scrollToBottom}
         />
       )}
-    </>
+    </Box>
   )
 }

@@ -1,4 +1,4 @@
-import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { ChatbotUIContext } from "@/context/context"
 import { IconMessagePlus } from "@tabler/icons-react"
 import { FC, useContext } from "react"
@@ -28,7 +28,7 @@ export const ChatSecondaryButtons: FC<ChatSecondaryButtonsProps> = ({}) => {
         />
       )}
 
-      {/* TODO */}
+      {/* TODO: ShareMenu */}
       {/* <ShareMenu item={selectedChat} contentType="chats" /> */}
     </>
   )

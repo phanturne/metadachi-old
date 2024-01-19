@@ -9,17 +9,17 @@ import { cn } from "@/lib/utils"
 import { ContentType } from "@/types"
 import { IconChevronCompactRight } from "@tabler/icons-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { FC, useState } from "react"
-import { useSelectFileHandler } from "../chat/chat-hooks/use-select-file-handler"
-import { CommandK } from "../utility/command-k"
+import { useState } from "react"
+import { CommandK } from "@/components/utility/command-k"
+import { Box } from "@mui/joy"
 
 export const SIDEBAR_WIDTH = 350
 
-interface DashboardProps {
+export default function DashboardLayout({
+  children
+}: {
   children: React.ReactNode
-}
-
-export const Dashboard: FC<DashboardProps> = ({ children }) => {
+}) {
   useHotkey("s", () => setShowSidebar(prevState => !prevState))
 
   const pathname = usePathname()
@@ -27,40 +27,13 @@ export const Dashboard: FC<DashboardProps> = ({ children }) => {
   const searchParams = useSearchParams()
   const tabValue = searchParams.get("tab") || "chats"
 
-  const { handleSelectDeviceFile } = useSelectFileHandler()
-
   const [contentType, setContentType] = useState<ContentType>(
     tabValue as ContentType
   )
+
   const [showSidebar, setShowSidebar] = useState(
     localStorage.getItem("showSidebar") === "true"
   )
-  const [isDragging, setIsDragging] = useState(false)
-
-  const onFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-
-    const files = event.dataTransfer.files
-    const file = files[0]
-
-    handleSelectDeviceFile(file)
-
-    setIsDragging(false)
-  }
-
-  const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragging(true)
-  }
-
-  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragging(false)
-  }
-
-  const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-  }
 
   const handleToggleSidebar = () => {
     setShowSidebar(prevState => !prevState)
@@ -68,9 +41,17 @@ export const Dashboard: FC<DashboardProps> = ({ children }) => {
   }
 
   return (
-    <div className="flex h-full w-full">
+    <Box
+      sx={{
+        display: "flex",
+        height: "100%",
+        width: "100%",
+        overflow: "hidden"
+      }}
+    >
       <CommandK />
 
+      {/* TODO: Change to Menu Button*/}
       <Button
         className={cn(
           "absolute left-[4px] top-[50%] z-10 h-[32px] w-[32px] cursor-pointer"
@@ -86,6 +67,7 @@ export const Dashboard: FC<DashboardProps> = ({ children }) => {
         <IconChevronCompactRight size={24} />
       </Button>
 
+      {/*TODO: Redesign Sidebar*/}
       <div
         className={cn("border-r-2 duration-200 dark:border-none")}
         style={{
@@ -110,22 +92,7 @@ export const Dashboard: FC<DashboardProps> = ({ children }) => {
           </Tabs>
         )}
       </div>
-
-      <div
-        className="bg-muted/50 flex grow flex-col"
-        onDrop={onFileDrop}
-        onDragOver={onDragOver}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-      >
-        {isDragging ? (
-          <div className="flex h-full items-center justify-center bg-black/50 text-2xl text-white">
-            drop file here
-          </div>
-        ) : (
-          children
-        )}
-      </div>
-    </div>
+      {children}
+    </Box>
   )
 }

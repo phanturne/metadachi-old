@@ -1,6 +1,6 @@
 "use client"
 
-import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import {
   Popover,
   PopoverContent,

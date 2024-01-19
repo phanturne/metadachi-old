@@ -1,13 +1,14 @@
-import React, { FC } from "react"
+import React, { FC, memo } from "react"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import { MessageCodeBlock } from "./message-codeblock"
-import { MessageMarkdownMemoized } from "./message-markdown-memoized"
+import ReactMarkdown, { Options } from "react-markdown"
 
 interface MessageMarkdownProps {
   content: string
 }
 
+// TODO: Redesign
 export const MessageMarkdown: FC<MessageMarkdownProps> = ({ content }) => {
   return (
     <MessageMarkdownMemoized
@@ -60,3 +61,10 @@ export const MessageMarkdown: FC<MessageMarkdownProps> = ({ content }) => {
     </MessageMarkdownMemoized>
   )
 }
+
+export const MessageMarkdownMemoized: FC<Options> = memo(
+  ReactMarkdown,
+  (prevProps, nextProps) =>
+    prevProps.children === nextProps.children &&
+    prevProps.className === nextProps.className
+)

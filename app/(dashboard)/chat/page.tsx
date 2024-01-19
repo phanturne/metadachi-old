@@ -1,7 +1,7 @@
 "use client"
 
 import { ChatHelp } from "@/components/chat/chat-help"
-import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { ChatInput } from "@/components/chat/chat-input"
 import { ChatSettings } from "@/components/chat/chat-settings"
 import { ChatUI } from "@/components/chat/chat-ui"
@@ -12,6 +12,7 @@ import useHotkey from "@/lib/hooks/use-hotkey"
 import { useTheme } from "next-themes"
 import { useContext } from "react"
 
+// TODO: Could be unnecessary to have separate file for empty chat page (see prev implementation)
 export default function ChatPage() {
   useHotkey("o", () => handleNewChat())
 

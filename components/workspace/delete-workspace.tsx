@@ -1,4 +1,4 @@
-import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,

@@ -5,7 +5,7 @@ import { Tables } from "@/supabase/types"
 import { ChatMessage, ChatPayload } from "@/types"
 import { useRouter } from "next/navigation"
 import { useContext, useRef } from "react"
-import { LLM_LIST } from "../../../lib/models/llm/llm-list"
+import { LLM_LIST } from "../models/llm/llm-list"
 import {
   createTempMessages,
   handleCreateChat,
@@ -14,7 +14,7 @@ import {
   handleLocalChat,
   handleRetrieval,
   validateChatSettings
-} from "../chat-helpers"
+} from "@/components/chat/chat-helpers"
 
 export const useChatHandler = () => {
   const router = useRouter()
