@@ -4,7 +4,7 @@ import { LLM, LLMID } from "@/types"
 import React, { FC, useContext, useEffect, useMemo, useState } from "react"
 import { ModelIcon } from "./model-icon"
 import { Autocomplete, Option, Select } from "@mui/joy"
-import { ModelOption } from "@/components/models/model-option"
+import { ModelOption } from "@/components/models/ModelOption"
 
 interface ModelSelectProps {
   hostedModelOptions: LLM[]

@@ -7,24 +7,19 @@ import { getMessageFileItemsByMessageId } from "@/db/message-file-items"
 import { getMessagesByChatId } from "@/db/messages"
 import { getMessageImageFromStorage } from "@/db/storage/message-images"
 import { convertBlobToBase64 } from "@/lib/blob-to-b64"
-import useHotkey from "@/lib/hooks/use-hotkey"
 import { LLMID, MessageImage } from "@/types"
 import { useParams } from "next/navigation"
 import { FC, useContext, useEffect, useState } from "react"
-import { ChatHelp } from "./chat-help"
 import { useScroll } from "@/lib/hooks/use-scroll"
-import { ChatInput } from "./chat-input"
-import ChatMessages from "./chat-messages"
+import ChatMessages from "./ChatMessages"
 import { ChatScrollButtons } from "./chat-scroll-buttons"
 import { ChatSecondaryButtons } from "./chat-secondary-buttons"
-import { Box, Link, Typography } from "@mui/joy"
+import { Box, Typography } from "@mui/joy"
 import Header from "@/components/Header"
 
 interface ChatUIProps {}
 
 export const ChatUI: FC<ChatUIProps> = ({}) => {
-  useHotkey("o", () => handleNewChat())
-
   const params = useParams()
 
   const {
@@ -41,7 +36,7 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
     setUseRetrieval
   } = useContext(ChatbotUIContext)
 
-  const { handleNewChat, handleFocusChatInput } = useChatHandler()
+  const { handleFocusChatInput } = useChatHandler()
 
   const {
     messagesStartRef,
@@ -197,11 +192,12 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
   return (
     <Box
       sx={{
-        position: "relative",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        height: "100%"
+        width: "100%",
+        flexGrow: 1,
+        overflow: "scroll"
       }}
     >
       <Header
@@ -235,26 +231,8 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
         onScroll={handleScroll}
       >
         <div ref={messagesStartRef} />
-
         <ChatMessages />
-
         <div ref={messagesEndRef} />
-      </div>
-
-      <div className="relative w-[300px] items-end pb-8 pt-5 sm:w-[400px] md:w-[500px] lg:w-[660px] xl:w-[800px]">
-        <Link
-          component="button"
-          onClick={() => {
-            // ...process something
-          }}
-        >
-          Do something
-        </Link>
-        <ChatInput />
-      </div>
-
-      <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
-        <ChatHelp />
       </div>
     </Box>
   )

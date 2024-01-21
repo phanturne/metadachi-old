@@ -9,9 +9,12 @@ import { cn } from "@/lib/utils"
 import { ContentType } from "@/types"
 import { IconChevronCompactRight } from "@tabler/icons-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CommandK } from "@/components/utility/command-k"
 import { Box } from "@mui/joy"
+import { supabase } from "@/lib/supabase/browser-client"
+import { HelpButton } from "@/components/chat/help-button"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 
 export const SIDEBAR_WIDTH = 350
 
@@ -20,7 +23,10 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Register hotkeys
+  const { handleNewChat } = useChatHandler()
   useHotkey("s", () => setShowSidebar(prevState => !prevState))
+  useHotkey("o", () => handleNewChat())
 
   const pathname = usePathname()
   const router = useRouter()
@@ -35,6 +41,23 @@ export default function DashboardLayout({
     localStorage.getItem("showSidebar") === "true"
   )
 
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    ;(async () => {
+      const session = (await supabase.auth.getSession()).data.session
+
+      if (!session) {
+        router.push("/login")
+      } else {
+        setLoading(false)
+      }
+    })()
+  }, [])
+
+  if (loading) {
+    return null
+  }
+
   const handleToggleSidebar = () => {
     setShowSidebar(prevState => !prevState)
     localStorage.setItem("showSidebar", String(!showSidebar))
@@ -46,7 +69,7 @@ export default function DashboardLayout({
         display: "flex",
         height: "100%",
         width: "100%",
-        overflow: "hidden"
+        overflow: "none"
       }}
     >
       <CommandK />
@@ -92,7 +115,22 @@ export default function DashboardLayout({
           </Tabs>
         )}
       </div>
-      {children}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          // width: `calc(100vh - ${SIDEBAR_WIDTH}px)}`,
+          width: "100%",
+          height: "100dvh",
+          alignItems: "center",
+          overflow: "auto"
+        }}
+      >
+        {children}
+      </Box>
+      <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
+        <HelpButton />
+      </div>
     </Box>
   )
 }

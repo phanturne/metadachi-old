@@ -1,11 +1,10 @@
 import { ChatbotUIContext } from "@/context/context"
 import { isModelLocked } from "@/lib/is-model-locked"
 import { LLM, LLMID } from "@/types"
-import { IconLock } from "@tabler/icons-react"
 import React, { FC, useContext, useEffect, useState } from "react"
-import { WithTooltip } from "../ui/with-tooltip"
 import { ModelIcon } from "./model-icon"
 import { AutocompleteOption, ListItemContent } from "@mui/joy"
+import { LockRounded } from "@mui/icons-material"
 
 interface ModelOptionProps {
   model: LLM
@@ -37,14 +36,7 @@ export const ModelOption: FC<ModelOptionProps> = ({ model, props }) => {
   return (
     <AutocompleteOption {...props}>
       {isLocked ? (
-        <WithTooltip
-          display={
-            <div>
-              Save {model.provider} API key in profile settings to unlock.
-            </div>
-          }
-          trigger={<IconLock className="mr-2" size={26} />}
-        />
+        <LockRounded />
       ) : (
         <ModelIcon modelId={model.modelId as LLMID} width={28} height={28} />
       )}

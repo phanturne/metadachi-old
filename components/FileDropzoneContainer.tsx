@@ -1,8 +1,6 @@
 "use client"
 
-import { supabase } from "@/lib/supabase/browser-client"
-import { useRouter } from "next/navigation"
-import { ReactNode, useEffect, useState } from "react"
+import { ReactNode, useState } from "react"
 import { Box, Typography } from "@mui/joy"
 import { useSelectFileHandler } from "@/lib/hooks/use-select-file-handler"
 import Sheet from "@mui/joy/Sheet"
@@ -11,27 +9,9 @@ interface ChatLayoutProps {
   children: ReactNode
 }
 
-export default function ChatLayout({ children }: ChatLayoutProps) {
-  const [loading, setLoading] = useState(true)
+export default function FileDropzoneContainer({ children }: ChatLayoutProps) {
   const [isDragging, setIsDragging] = useState(false)
-  const router = useRouter()
   const { handleSelectDeviceFile } = useSelectFileHandler()
-
-  useEffect(() => {
-    ;(async () => {
-      const session = (await supabase.auth.getSession()).data.session
-
-      if (!session) {
-        router.push("/login")
-      } else {
-        setLoading(false)
-      }
-    })()
-  }, [])
-
-  if (loading) {
-    return null
-  }
 
   const onFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
@@ -62,10 +42,8 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
         height: "100%",
-        width: "100%",
-        overflow: "auto"
+        width: "100%"
       }}
       onDrop={onFileDrop}
       onDragOver={onDragOver}
@@ -77,6 +55,7 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
           sx={{
             display: "flex",
             height: "100%",
+            width: "100%",
             alignItems: "center",
             justifyContent: "center"
           }}

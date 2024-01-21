@@ -19,7 +19,7 @@ import { Announcements } from "../utility/announcements"
 
 interface ChatHelpProps {}
 
-export const ChatHelp: FC<ChatHelpProps> = ({}) => {
+export const HelpButton: FC<ChatHelpProps> = ({}) => {
   useHotkey("/", () => setIsOpen(prevState => !prevState))
 
   const [isOpen, setIsOpen] = useState(false)
