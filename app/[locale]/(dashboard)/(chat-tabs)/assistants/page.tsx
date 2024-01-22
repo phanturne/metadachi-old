@@ -6,17 +6,19 @@ import { ChatTabContent } from "@/components/sidebar/chat-tab-content"
 import { ChatTabsStandalone } from "@/components/ChatTabs"
 
 export default function ChatPage() {
-  const { folders, prompts } = useContext(ChatbotUIContext)
-  const promptFolders = folders.filter(folder => folder.type === "prompts")
+  const { folders, assistants } = useContext(ChatbotUIContext)
+  const assistantFolders = folders.filter(
+    folder => folder.type === "assistants"
+  )
 
   return (
     <>
       <ChatTabContent
-        contentType="prompts"
-        data={prompts}
-        folders={promptFolders}
+        contentType="assistants"
+        data={assistants}
+        folders={assistantFolders}
       />
-      <ChatTabsStandalone tab="prompts" />
+      <ChatTabsStandalone tab="assistants" />
     </>
   )
 }

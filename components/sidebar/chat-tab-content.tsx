@@ -11,7 +11,7 @@ interface SidebarContentProps {
   folders: Tables<"folders">[]
 }
 
-export const SidebarContent: FC<SidebarContentProps> = ({
+export const ChatTabContent: FC<SidebarContentProps> = ({
   contentType,
   data,
   folders

@@ -5,7 +5,7 @@ import { FC, useContext } from "react"
 import { TabsContent } from "../ui/tabs"
 import { WorkspaceSwitcher } from "../utility/workspace-switcher"
 import { WorkspaceSettings } from "../workspace/workspace-settings"
-import { SidebarContent } from "./sidebar-content"
+import { ChatTabContent } from "./chat-tab-content"
 import { SIDEBAR_WIDTH } from "@/lib/constants"
 
 interface SidebarProps {
@@ -43,7 +43,7 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
     folders: Tables<"folders">[]
   ) => {
     return (
-      <SidebarContent contentType={contentType} data={data} folders={folders} />
+      <ChatTabContent contentType={contentType} data={data} folders={folders} />
     )
   }
 

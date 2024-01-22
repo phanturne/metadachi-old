@@ -1,9 +1,7 @@
 "use client"
 
-import { Sidebar } from "@/components/sidebar/sidebar"
-import { SidebarSwitcher } from "@/components/sidebar/sidebar-switcher"
+import Sidebar from "@/components/Sidebar"
 import { Button } from "@/components/ui/button"
-import { Tabs } from "@/components/ui/tabs"
 import useHotkey from "@/lib/hooks/use-hotkey"
 import { cn } from "@/lib/utils"
 import { ContentType } from "@/types"
@@ -15,8 +13,7 @@ import { Box } from "@mui/joy"
 import { supabase } from "@/lib/supabase/browser-client"
 import { HelpButton } from "@/components/chat/help-button"
 import { useChatHandler } from "@/lib/hooks/use-chat-handler"
-
-export const SIDEBAR_WIDTH = 350
+import { SIDEBAR_WIDTH } from "@/lib/constants"
 
 export default function DashboardLayout({
   children
@@ -91,35 +88,16 @@ export default function DashboardLayout({
       </Button>
 
       {/*TODO: Redesign Sidebar*/}
-      <div
-        className={cn("border-r-2 duration-200 dark:border-none")}
-        style={{
-          // Sidebar
-          minWidth: showSidebar ? `${SIDEBAR_WIDTH}px` : "0px",
-          maxWidth: showSidebar ? `${SIDEBAR_WIDTH}px` : "0px",
-          width: showSidebar ? `${SIDEBAR_WIDTH}px` : "0px"
-        }}
-      >
-        {showSidebar && (
-          <Tabs
-            className="flex h-full"
-            value={contentType}
-            onValueChange={tabValue => {
-              setContentType(tabValue as ContentType)
-              router.replace(`${pathname}?tab=${tabValue}`)
-            }}
-          >
-            <SidebarSwitcher onContentTypeChange={setContentType} />
-
-            <Sidebar contentType={contentType} showSidebar={showSidebar} />
-          </Tabs>
-        )}
-      </div>
+      {showSidebar && <Sidebar />}
+      {/*<div className={cn("border-r-2 duration-200 dark:border-none")}>*/}
+      {/*  {showSidebar && (*/}
+      {/*    <Sidebar />*/}
+      {/*  )}*/}
+      {/*</div>*/}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          // width: `calc(100vh - ${SIDEBAR_WIDTH}px)}`,
           width: "100%",
           height: "100dvh",
           alignItems: "center",

@@ -3,7 +3,7 @@ import * as React from "react"
 import { useContext } from "react"
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy"
 import { ChatbotUIContext } from "@/context/context"
-import { SidebarContent } from "@/components/sidebar/sidebar-content"
+import { ChatTabContent } from "@/components/sidebar/chat-tab-content"
 import { ContentType } from "@/types"
 
 export default function CollectionsPage() {
@@ -54,6 +54,8 @@ export default function CollectionsPage() {
         aria-label="tabs"
         defaultValue="prompts"
         sx={{
+          width: "100%",
+          height: "100%",
           bgColor: "transparent",
           overflowY: "scroll",
           p: 3
@@ -66,7 +68,6 @@ export default function CollectionsPage() {
             gap: 0.5,
             borderRadius: "xl",
             bgColor: "background.level1",
-            width: 425,
             [`& .${tabClasses.root}[aria-selected="true"]`]: {
               boxShadow: "sm",
               bgColor: "background.surface"
@@ -82,7 +83,7 @@ export default function CollectionsPage() {
 
         {Object.entries(CollectionTabs).map(([key, value]) => (
           <TabPanel value={key} key={`${key}-collections-tab-panel`}>
-            <SidebarContent
+            <ChatTabContent
               contentType={key as ContentType}
               data={value.data}
               folders={value.folders}

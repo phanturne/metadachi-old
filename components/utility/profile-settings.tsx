@@ -1,3 +1,5 @@
+"use client"
+
 import { ChatbotUIContext } from "@/context/context"
 import {
   PROFILE_CONTEXT_MAX,
