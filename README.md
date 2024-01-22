@@ -1,258 +1,77 @@
-# Chatbot UI
-
-The open-source AI chat app for everyone.
-
-<img src="./public/readme/screenshot.png" alt="Chatbot UI" width="600">
-
-## Demo
-
-View the latest demo [here](https://x.com/mckaywrigley/status/1738273242283151777?s=20).
-
-## Official Hosted Version
-
-Check back soon for an official hosted version of Chatbot UI.
-
-## Official Desktop App
-
-Check back soon for an official desktop app for Chatbot UI. Just click download & start chatting - no setup required.
-
-## Support
-
-If you find Chatbot UI useful, please consider [sponsoring](https://github.com/sponsors/mckaywrigley) me to support my open-source work :)
-
-## Legacy Code
-
-Chatbot UI was recently updated to its 2.0 version.
-
-The code for 1.0 can be found on the `legacy` branch.
-
-## Updating
-
-In your terminal at the root of your local Chatbot UI repository, run:
-
-```bash
-npm run update
-```
-
-## Local Quickstart
-
-Follow these steps to get your own Chatbot UI instance running locally.
-
-You can watch the full video tutorial [here](https://www.youtube.com/watch?v=9Qq3-7-HNgw).
-
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/mckaywrigley/chatbot-ui.git
-```
-
-### 2. Install dependencies
-
-Open a terminal in the root directory of your local Chatbot UI repository and run:
-
-```bash
-npm install
-```
-
-### 3. Install Supabase & run locally
-
-#### Why Supabase?
-
-Previously, we used local browser storage to store data. However, this was not a good solution for a few reasons:
-
-- Security issues
-- Limited storage
-- Limits multi-modal use cases
-
-We now use Supabase because it's easy to use, it's open-source, it's Postgres, and it has a free tier for hosted instances.
-
-We will support other providers in the future to give you more options.
-
-#### 1. Install Docker
-
-You will need to install Docker to run Supabase locally. You can download it [here](https://docs.docker.com/get-docker) for free.
-
-#### 2. Install Supabase CLI
-
-**MacOS/Linux**
-
-```bash
-brew install supabase/tap/supabase
-```
-
-**Window**
-
-```bash
-scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
-scoop install supabase
-```
-
-#### 3. Start Supabase
-
-In your terminal at the root of your local Chatbot UI repository, run:
-
-```bash
-supabase start
-```
-
-### 4. Fill in secrets
-
-#### 1. Environment variables
-
-In your terminal at the root of your local Chatbot UI repository, run:
-
-```bash
-cp .env.local.example .env.local
-```
-
-Get the required values by running:
-
-```bash
-supabase status
-```
-
-Note: Use `API URL` from `supabase status` for `NEXT_PUBLIC_SUPABASE_URL`
-
-Now go to your `.env.local` file and fill in the values.
-
-If the environment variable is set, it will disable the input in the user settings.
-
-#### 2. SQL setup
-
-In the 1st migration file `supabase/migrations/20240108234540_setup.sql` you will need to replace 2 values with the values you got above:
-
-- `project_url` (line 53): `http://supabase_kong_chatbotui:8000` (default) can remain unchanged if you don't change your `project_id` in the `config.toml` file
-- `service_role_key` (line 54): You got this value from running `supabase status`
-
-This prevents issues with storage files not being deleted properly.
-
-### 5. Install Ollama (optional for local models)
-
-Follow the instructions [here](https://github.com/jmorganca/ollama#macos).
-
-### 6. Run app locally
-
-In your terminal at the root of your local Chatbot UI repository, run:
-
-```bash
-npm run chat
-```
-
-Your local instance of Chatbot UI should now be running at [http://localhost:3000](http://localhost:3000).
-
-You can view your backend GUI at [http://localhost:54323/project/default/editor](http://localhost:54323/project/default/editor).
-
-## Hosted Quickstart
-
-Follow these steps to get your own Chatbot UI instance running in the cloud.
-
-Video tutorial coming soon.
-
-### 1. Follow local quickstart
-
-Repeat steps 1-4 in "Local Quickstart" above.
-
-You will want separate repositories for your local and hosted instances.
-
-Create a new repository for your hosted instance of Chatbot UI on GitHub and push your code to it.
-
-### 2. Set up backend with Supabase
-
-#### 1. Create a new project
-
-Go to [Supabase](https://supabase.com/) and create a new project.
-
-#### 2. Get project values
-
-Once you are in the project dashboard, click on the "Project Settings" icon tab on the far bottom left.
-
-Here you will get the values for the following environment variables:
-
-- `Project Ref`: Found in "General settings" as "Reference ID"
-
-- `Project ID`: Found in the URL of your project dashboard (Ex: https://supabase.com/dashboard/project/<YOUR_PROJECT_ID>/settings/general)
-
-While still in "Settings" click on the "API" text tab on the left.
-
-Here you will get the values for the following environment variables:
-
-- `Project URL`: Found in "API Settings" as "Project URL"
-
-- `Anon key`: Found in "Project API keys" as "anon public"
-
-- `Service role key`: Found in "Project API keys" as "service_role" (Reminder: Treat this like a password!)
-
-#### 3. Configure auth
-
-Next, click on the "Authentication" icon tab on the far left.
-
-In the text tabs, click on "Providers" and make sure "Email" is enabled.
-
-We recommend turning off "Confirm email" for your own personal instance.
-
-#### 4. Connect to hosted db
-
-Open up your repository for your hosted instance of Chatbot UI.
-
-In the 1st migration file `supabase/migrations/20240108234540_setup.sql` you will need to replace 2 values with the values you got above:
-
-- `project_url` (line 53): Use the `Project URL` value from above
-- `service_role_key` (line 54): Use the `Service role key` value from above
-
-Now, open a terminal in the root directory of your local Chatbot UI repository. We will execute a few commands here.
-
-Login to Supabase by running:
-
-```bash
-supabase login
-```
-
-Next, link your project by running the following command with the "Project Ref" and "Project ID" you got above:
-
-```bash
-supabase link --project-ref <project-id>
-```
-
-Your project should now be linked.
-
-Finally, push your database to Supabase by running:
-
-```bash
-supabase db push
-```
-
-Your hosted database should now be set up!
-
-### 3. Set up frontend with Vercel
-
-Go to [Vercel](https://vercel.com/) and create a new project.
-
-In the setup page, import your GitHub repository for your hosted instance of Chatbot UI.
-
-In environment variables, add the following from the values you got above:
-
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `NEXT_PUBLIC_OLLAMA_URL` (only needed when using local Ollama models; default: `http://localhost:11434`)
-
-You can also add API keys as environment variables.
-
-- `OPENAI_API_KEY`
-- `AZURE_OPENAI_API_KEY`
-- `NEXT_PUBLIC_AZURE_OPENAI_ENDPOINT`
-- `NEXT_PUBLIC_AZURE_GPT_45_VISION_ID`
-
-For the full list of environment variables, refer to the '.env.local.example' file. If the environment variables are set for API keys, it will disable the input in the user settings.
-
-Click "Deploy" and wait for your frontend to deploy.
-
-Once deployed, you should be able to use your hosted instance of Chatbot UI via the URL Vercel gives you.
-
-## Contributing
-
-We are working on a guide for contributing.
-
-## Contact
-
-Message Mckay on [Twitter/X](https://twitter.com/mckaywrigley)
+> ⚠️ **This project is currently undergoing reconstruction and will experience changes.** 
+
+<div align="center">
+<h1 align="center">Metadachi (WIP)</h1>
+
+[//]: # ([![Web][Web-image]][web-url])
+[//]: # ([![Windows][Windows-image]][download-url])
+[//]: # ([![MacOS][MacOS-image]][download-url])
+
+[web-url]: https://app.metadachi.com
+[download-url]: https://github.com/Phanturne/metadachi/releases
+[Web-image]: https://img.shields.io/badge/Web-PWA-orange?logo=microsoftedge
+[Windows-image]: https://img.shields.io/badge/-Windows-blue?logo=windows
+[MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
+[Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
+
+
+Supercharge your productivity with our versatile AI assistant, seamlessly accessible on desktop and web. Navigate tasks effortlessly using a range of powerful AI tools that enhance your workflow. Metadachi goes beyond individual productivity, fostering community collaboration by offering a dedicated space for sharing AI prompts, templates, and generations. Elevate your work experience with the next level of AI-driven efficiency.
+
+> This project builds on the outstanding work by McKay Wrigley and the contributors of [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui).
+
+![Website](public/docs/images/screenshot-website.png)
+
+</div>
+
+## Features
+- **Custom Prompts & Personas**: Create custom prompts and chat personas for tailored AI interactions
+- ⚜️ **Chat Commands**: Interact with prompts using `/` commands and files using `@` commands
+- 📁 **Workspaces**: Organize your content into workspaces for different projects
+- **LLM Options**: Anthropic, Google, Mistral, Ollama, OpenAI, Perplexity
+- **Hotkeys**: Quick access to frequently used actions and commands.
+- 🔒 **Privacy Guaranteed**: Maintain complete data privacy by storing data in your own private database
+- **Cross Platform**: Sync sessions across Windows, macOS, and the web
+- **Easy Self-Hosting**: Deploy effortlessly to Vercel or run locally
+
+## Roadmap
+### High Priority
+- 🤝 **Community Collaboration**: Share and explore AI prompts, templates, and generations
+- **Desktop App**: Lightweight desktop assistant (~5MB)
+
+### Nice to Haves
+- Additional UI Customization Options
+- 🐶 Interactive Desktop Companion
+- Access multiple AI agents from a single chat
+- 🎨 Visual Alchemy (Image Generation)
+- AI Toolbox
+- Backend Alternatives
+- Mobile App (Android, iOS)
+
+## Technology Stack
+| Technology         | Description                                             |
+|--------------------|---------------------------------------------------------|
+| Next.js v14        | React framework for fast, dynamic web apps              |
+| Tauri              | Framework for lightweight, cross-platform desktop apps  |
+| Vercel             | Hosting platform for simplified deployment and scaling  |
+| Supabase           | Real-time databases and authentication                  |
+| JoyUI              | UI component library for efficient React development    |
+
+## Getting Started
+Feel free to use our [official hosted version](https://metadachi.com) or follow the guide below to deploy your own.
+
+## Deploy Your Own
+* Deploy Locally: [Local Quickstart](public/docs/local-quickstart.md)
+* Deploy on Cloud: [Hosted Quickstart](public/docs/hosted-quickstart.md)
+
+## Acknowledgments
+Kudos to the creators of the following repositories for their valuable contributions to the open-source community:
+- [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui): The open-source AI chat app for everyone.
+- [ChatGPT Next Web](https://github.com/Yidadaa/ChatGPT-Next-Web): A cross-platform ChatGPT/Gemini UI (Web / PWA / Linux / Win / MacOS).
+- [Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide): 🐙 Guides, papers, lecture, notebooks and resources for prompt engineering
+- [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts): A collection of prompt examples to be used with the ChatGPT model.
+
+## License
+This project is licensed under the [Apache License 2.0](LICENSE) - see the [LICENSE](LICENSE) file for details.
+
+### Third-Party Licenses
+The licenses for third-party repositories used in this project can be found in the [LICENSE](LICENSE) file.
