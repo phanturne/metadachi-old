@@ -6,6 +6,9 @@ import NewChatContent from "@/app/[locale]/(dashboard)/chat/NewChatContent"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
 import ChatTabs from "@/components/ChatTabs"
+import Header from "@/components/Header"
+import { ChatSettings } from "@/components/chat/chat-settings"
+import { QuickSettings } from "@/components/chat/quick-settings"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -20,6 +23,10 @@ export default function ChatPage() {
           alignItems: "center"
         }}
       >
+        <Header
+          startContent={<QuickSettings />}
+          endContent={<ChatSettings />}
+        />
         <NewChatContent />
 
         <Box

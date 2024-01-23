@@ -1,3 +1,10 @@
+import Header from "@/components/Header"
+
 export default function ExplorePage() {
-  return <>Explore Page</>
+  return (
+    <>
+      <Header />
+      Explore Page
+    </>
+  )
 }

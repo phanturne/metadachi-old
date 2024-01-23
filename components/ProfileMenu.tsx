@@ -7,29 +7,55 @@ import MenuButton from "@mui/joy/MenuButton"
 import Dropdown from "@mui/joy/Dropdown"
 import Avatar from "@mui/joy/Avatar"
 import { Box, Typography } from "@mui/joy"
-import { SettingsRounded } from "@mui/icons-material"
+import {
+  CollectionsBookmarkRounded,
+  LoginRounded,
+  LogoutRounded,
+  SettingsRounded
+} from "@mui/icons-material"
 import { useRouter } from "next/navigation"
 import { Routes } from "@/lib/constants"
 import Divider from "@mui/joy/Divider"
 // import { useAuthModal } from '@/providers/AuthProvider';
 import ThemeToggleButton from "@/components/ThemeToggle"
 import { ChatbotUIContext } from "@/context/context"
+import { supabase } from "@/lib/supabase/browser-client"
 
-export default function Profile({ children }: { children: React.ReactNode }) {
+export default function ProfileMenu({
+  children,
+  placement = "bottom"
+}: {
+  children?: React.ReactNode
+  placement?: "left" | "right" | "top" | "bottom"
+}) {
   const router = useRouter()
   const { profile } = useContext(ChatbotUIContext)
   // const { openAuthModal } = useAuthModal();
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.refresh()
+  }
+
   return (
     <Dropdown>
-      <MenuButton
-        component="button"
-        variant="plain"
-        sx={{ justifyContent: "start", fontWeight: "normal", p: 0, m: 0 }}
-      >
-        {children}
-      </MenuButton>
-      <Menu placement="right" sx={{ width: "250px" }}>
+      {children && <>{children}</>}
+      {!children && (
+        <MenuButton
+          slots={{ root: Avatar }}
+          slotProps={{
+            root: { variant: "solid", size: "sm" }
+          }}
+        >
+          <Avatar
+            variant="solid"
+            size="sm"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+          />
+        </MenuButton>
+      )}
+
+      <Menu placement={placement} sx={{ width: "250px" }}>
         <Box sx={{ display: "flex", m: 1, mx: 1.5 }}>
           <Avatar
             variant="solid"
@@ -59,6 +85,18 @@ export default function Profile({ children }: { children: React.ReactNode }) {
           <ThemeToggleButton />
           {/*{process.env.BUILD_MODE === 'export' && <FloatingWindowToggle />}*/}
         </Box>
+
+        <MenuItem
+          onClick={() => {
+            router.push(Routes.Collections)
+          }}
+        >
+          <ListItemDecorator>
+            <CollectionsBookmarkRounded />
+          </ListItemDecorator>
+          Collections
+        </MenuItem>
+
         <MenuItem
           onClick={() => {
             router.push(Routes.Settings)
@@ -69,27 +107,23 @@ export default function Profile({ children }: { children: React.ReactNode }) {
           </ListItemDecorator>
           Settings
         </MenuItem>
-        {/*<Divider sx={{ m: 0.5 }} />*/}
-        {/*{session !== null && (*/}
-        {/*  <MenuItem*/}
-        {/*    onClick={async () => {*/}
-        {/*      await supabase.auth.signOut();*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    <ListItemDecorator>*/}
-        {/*      <LogoutRounded />*/}
-        {/*    </ListItemDecorator>*/}
-        {/*    Logout*/}
-        {/*  </MenuItem>*/}
-        {/*)}*/}
-        {/*{session === null && (*/}
-        {/*  <MenuItem onClick={() => openAuthModal()}>*/}
-        {/*    <ListItemDecorator>*/}
-        {/*      <LoginRounded />*/}
-        {/*    </ListItemDecorator>*/}
-        {/*    Login / Sign Up*/}
-        {/*  </MenuItem>*/}
-        {/*)}*/}
+        <Divider sx={{ m: 0.5 }} />
+        {profile !== null && (
+          <MenuItem onClick={handleSignOut}>
+            <ListItemDecorator>
+              <LogoutRounded />
+            </ListItemDecorator>
+            Logout
+          </MenuItem>
+        )}
+        {profile === null && (
+          <MenuItem onClick={() => router.push(Routes.Login)}>
+            <ListItemDecorator>
+              <LoginRounded />
+            </ListItemDecorator>
+            Login / Sign Up
+          </MenuItem>
+        )}
       </Menu>
     </Dropdown>
   )

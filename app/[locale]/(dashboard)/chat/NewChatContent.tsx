@@ -33,14 +33,6 @@ export default function NewChatContent() {
             <Brand theme={theme === "dark" ? "dark" : "light"} />
           </div>
 
-          <div className="absolute left-2 top-2">
-            <QuickSettings />
-          </div>
-
-          <div className="absolute right-2 top-2">
-            <ChatSettings />
-          </div>
-
           <div className="flex grow flex-col items-center justify-center" />
         </Box>
       ) : (

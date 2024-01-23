@@ -38,22 +38,22 @@ export default function DashboardLayout({
     localStorage.getItem("showSidebar") === "true"
   )
 
-  const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    ;(async () => {
-      const session = (await supabase.auth.getSession()).data.session
-
-      if (!session) {
-        router.push("/login")
-      } else {
-        setLoading(false)
-      }
-    })()
-  }, [])
-
-  if (loading) {
-    return null
-  }
+  // const [loading, setLoading] = useState(true)
+  // useEffect(() => {
+  //   ;(async () => {
+  //     const session = (await supabase.auth.getSession()).data.session
+  //
+  //     if (!session) {
+  //       router.push("/login")
+  //     } else {
+  //       setLoading(false)
+  //     }
+  //   })()
+  // }, [])
+  //
+  // if (loading) {
+  //   return null
+  // }
 
   const handleToggleSidebar = () => {
     setShowSidebar(prevState => !prevState)

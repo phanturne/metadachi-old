@@ -1,3 +1,10 @@
+import Header from "@/components/Header"
+
 export default function ToolboxPage() {
-  return <>Toolbox Page</>
+  return (
+    <>
+      <Header />
+      Toolbox Page
+    </>
+  )
 }

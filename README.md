@@ -34,18 +34,15 @@ Supercharge your productivity with our versatile AI assistant, seamlessly access
 - **Easy Self-Hosting**: Deploy effortlessly to Vercel or run locally
 
 ## Roadmap
-### High Priority
-- 🤝 **Community Collaboration**: Share and explore AI prompts, templates, and generations
-- **Desktop App**: Lightweight desktop assistant (~5MB)
-
-### Nice to Haves
-- Additional UI Customization Options
-- 🐶 Interactive Desktop Companion
-- Access multiple AI agents from a single chat
-- 🎨 Visual Alchemy (Image Generation)
-- AI Toolbox
-- Backend Alternatives
-- Mobile App (Android, iOS)
+| Backlog                          | In Progress           | Completed |
+|----------------------------------|-----------------------|-----------|
+| More UI Customization Options    | Desktop App           | |
+| 🐶 Interactive Desktop Companion | 🤝 Community Features | |
+| Multi-Agent Chats                |                       | |
+| 🎨 Visual Alchemy                |                       | |
+| AI Toolbox                       |                       | |
+| Backend Alternatives             |                       | |
+| Mobile App                       |                       | |
 
 ## Technology Stack
 | Technology         | Description                                             |

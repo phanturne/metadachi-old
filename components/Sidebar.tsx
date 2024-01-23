@@ -14,7 +14,6 @@ import {
   AddCircleOutlineRounded,
   AutoAwesomeRounded,
   ChatRounded,
-  CollectionsBookmarkRounded,
   ExploreRounded,
   HomeRepairServiceRounded,
   HomeRounded,
@@ -25,10 +24,11 @@ import {
 import { Button } from "@mui/joy"
 import { Routes, SIDEBAR_WIDTH } from "@/lib/constants"
 import Typography from "@mui/joy/Typography"
-import Profile from "@/components/Profile"
+import ProfileMenu from "@/components/ProfileMenu"
 import { SidebarDataList } from "@/components/sidebar/sidebar-data-list"
 import { ChatbotUIContext } from "@/context/context"
 import Divider from "@mui/joy/Divider"
+import MenuButton from "@mui/joy/MenuButton"
 
 const routeDictionary: Record<
   string,
@@ -36,10 +36,6 @@ const routeDictionary: Record<
 > = {
   [Routes.Home]: { icon: <HomeRounded />, label: "Home" },
   [Routes.Chat]: { icon: <ChatRounded />, label: "Chats" },
-  [Routes.Collections]: {
-    icon: <CollectionsBookmarkRounded />,
-    label: "Collections"
-  },
   [Routes.Images]: { icon: <ImageRounded />, label: "Images" },
   [Routes.Toolbox]: { icon: <HomeRepairServiceRounded />, label: "Toolbox" },
   [Routes.Explore]: { icon: <ExploreRounded />, label: "Explore" },
@@ -139,15 +135,12 @@ export default function Sidebar() {
           "--ListItem-radius": theme => theme.vars.radius.sm
         }}
       >
-        {/* Chats MenuItem is currently same as NewChatButton*/}
-        {/*<MenuItem route={Routes.Chat} />*/}
-
+        <MenuItem route={Routes.Chat} />
         {/* TODO: Add Image Generation*/}
         {/*<MenuItem route={Routes.Images} />*/}
         <MenuItem route={Routes.Toolbox} />
-        <MenuItem route={Routes.Collections} />
         <MenuItem route={Routes.Explore} />
-        <Divider />
+        <Divider sx={{ m: 1 }} />
         <SidebarDataList
           contentType="chats"
           data={chats}
@@ -169,9 +162,15 @@ export default function Sidebar() {
         <MenuItem route={Routes.Settings} />
 
         {/*TODO: Spacing is incorrect. Replace w/ Base UI Popup*/}
-        <Profile>
-          <MenuItem route={Routes.Profile} onClick={() => {}} />
-        </Profile>
+        <ProfileMenu placement="right">
+          <MenuButton
+            component="button"
+            variant="plain"
+            sx={{ justifyContent: "start", fontWeight: "normal", p: 0, m: 0 }}
+          >
+            <MenuItem route={Routes.Profile} onClick={() => {}} />
+          </MenuButton>
+        </ProfileMenu>
       </List>
     </Sheet>
   )

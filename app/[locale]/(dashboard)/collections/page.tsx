@@ -5,6 +5,7 @@ import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy"
 import { ChatbotUIContext } from "@/context/context"
 import { ChatTabContent } from "@/components/sidebar/chat-tab-content"
 import { ContentType } from "@/types"
+import Header from "@/components/Header"
 
 export default function CollectionsPage() {
   const {
@@ -50,6 +51,7 @@ export default function CollectionsPage() {
 
   return (
     <>
+      <Header />
       <Tabs
         aria-label="tabs"
         defaultValue="prompts"
