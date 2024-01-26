@@ -21,7 +21,14 @@ CREATE TABLE IF NOT EXISTS prompts (
 
     -- REQUIRED
     content TEXT NOT NULL CHECK (char_length(content) <= 100000),
-    name TEXT NOT NULL CHECK (char_length(name) <= 100)
+    name TEXT NOT NULL CHECK (char_length(name) <= 100),
+
+    -- OPTIONAL
+    tags TEXT[],
+
+    -- STATS
+    likes INT NOT NULL DEFAULT 0,
+    saves INT NOT NULL DEFAULT 0
 );
 
 -- INDEXES --

@@ -114,6 +114,8 @@
     "@types/uuid": "^9.0.7",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.0.0",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.4.1",
     "eslint": "^8",
     "eslint-config-next": "^14.0.2",
     "eslint-config-prettier": "^9.1.0",
