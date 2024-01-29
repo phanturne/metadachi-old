@@ -4,17 +4,22 @@ import { IconChevronDown, IconChevronRight } from "@tabler/icons-react"
 import { FC, useRef, useState } from "react"
 import { DeleteFolder } from "./delete-folder"
 import { UpdateFolder } from "./update-folder"
+import { FolderRounded } from "@mui/icons-material"
 
 interface FolderProps {
   folder: Tables<"folders">
   children: React.ReactNode
   onUpdateFolder: (itemId: string, folderId: string | null) => void
+  variant: "basic" | "expandable" // NEW
+  onClick: any // NEW
 }
 
 export const Folder: FC<FolderProps> = ({
   folder,
   children,
-  onUpdateFolder
+  onUpdateFolder,
+  variant,
+  onClick
 }) => {
   const itemRef = useRef<HTMLDivElement>(null)
 
@@ -53,7 +58,23 @@ export const Folder: FC<FolderProps> = ({
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsExpanded(!isExpanded)
+    console.log("e", e)
+    if (onClick) onClick()
+    if (variant === "expandable") {
+      setIsExpanded(!isExpanded)
+    }
+  }
+
+  const ExpandFolderButton = () => {
+    return (
+      <>
+        {isExpanded ? (
+          <IconChevronDown stroke={3} />
+        ) : (
+          <IconChevronRight stroke={3} />
+        )}
+      </>
+    )
   }
 
   return (
@@ -78,10 +99,10 @@ export const Folder: FC<FolderProps> = ({
       >
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center space-x-2">
-            {isExpanded ? (
-              <IconChevronDown stroke={3} />
+            {variant === "expandable" ? (
+              <ExpandFolderButton />
             ) : (
-              <IconChevronRight stroke={3} />
+              <FolderRounded />
             )}
 
             <div>{folder.name}</div>

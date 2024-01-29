@@ -31,7 +31,7 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   const itemRef = useRef<HTMLDivElement>(null)
 
   const handleClick = () => {
-    router.push(`/chat/${chat.id}`)
+    router.push(`/chat?id=${chat.id}`)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {

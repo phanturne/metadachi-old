@@ -2,8 +2,9 @@ import { Tables } from "@/supabase/types"
 import { ContentType, DataListType } from "@/types"
 import { FC, useState } from "react"
 import { SidebarCreateButtons } from "./sidebar-create-buttons"
-import { SidebarDataList } from "./sidebar-data-list"
+import { DataList } from "./data-list"
 import { SidebarSearch } from "./sidebar-search"
+import { Box } from "@mui/joy"
 
 interface SidebarContentProps {
   contentType: ContentType
@@ -23,28 +24,35 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
   )
 
   return (
-    // Subtract 50px for the height of the workspace settings
-    <div className="flex max-h-[calc(100%-50px)] grow flex-col">
-      <div className="mt-2 flex items-center">
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        maxHeight: "calc(100% - 50px)",
+        flexGrow: 1
+      }}
+    >
+      <Box sx={{ mt: 2, display: "flex", alignItems: "center" }}>
         <SidebarCreateButtons
           contentType={contentType}
           hasData={data.length > 0}
         />
-      </div>
+      </Box>
 
-      <div className="mt-2">
+      <Box sx={{ mt: 2 }}>
         <SidebarSearch
           contentType={contentType}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
-      </div>
+      </Box>
 
-      <SidebarDataList
+      <DataList
         contentType={contentType}
         data={filteredData}
         folders={folders}
+        variant="grid"
       />
-    </div>
+    </Box>
   )
 }

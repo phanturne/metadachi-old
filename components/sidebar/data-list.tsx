@@ -19,17 +19,20 @@ import { Folder } from "./items/folders/folder-item"
 import { PresetItem } from "./items/presets/preset-item"
 import { PromptItem } from "./items/prompts/prompt-item"
 import { ToolItem } from "./items/tools/tool-item"
+import { Box, Grid } from "@mui/joy"
 
-interface SidebarDataListProps {
+interface DataList {
   contentType: ContentType
   data: DataListType
   folders: Tables<"folders">[]
+  variant?: "list" | "grid"
 }
 
-export const SidebarDataList: FC<SidebarDataListProps> = ({
+export const DataList: FC<DataList> = ({
   contentType,
   data,
-  folders
+  folders,
+  variant = "list"
 }) => {
   const {
     setChats,
@@ -198,6 +201,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     setIsDragOver(false)
   }
 
+  // TODO: Check purpose
   useEffect(() => {
     if (divRef.current) {
       setIsOverflowing(
@@ -208,12 +212,146 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
 
   const dataWithFolders = data.filter(item => item.folder_id)
   const dataWithoutFolders = data.filter(item => item.folder_id === null)
+  // TODO: Assuming only one level of folders, read search params to save state where user is already in a folder
+  const [currentFolder, setCurrentFolder] = useState<string | null>(null)
+  const [displayedFiles, setDisplayedFiles] = useState(dataWithoutFolders)
+
+  const handleFolderClick = (folderId: string) => {
+    console.log("folderId", folderId)
+    setCurrentFolder(folderId)
+    setDisplayedFiles(data.filter(item => item.folder_id == folderId))
+  }
+
+  function FolderData({ folder }: { folder: Tables<"folders"> }) {
+    return (
+      <Folder
+        key={folder.id}
+        folder={folder}
+        onUpdateFolder={updateFolder}
+        variant={variant === "list" ? "expandable" : "basic"}
+        onClick={() => handleFolderClick(folder.id)}
+      >
+        {dataWithFolders
+          .filter(item => item.folder_id === folder.id)
+          .map(item => (
+            <div
+              key={item.id}
+              draggable
+              onDragStart={e => handleDragStart(e, item.id)}
+            >
+              {getDataListComponent(contentType, item)}
+            </div>
+          ))}
+      </Folder>
+    )
+  }
+
+  const FoldersView = () => {
+    return (
+      <>
+        {/*TODO: If variant === 'grid', include <- Back <FolderName>*/}
+        {currentFolder === null &&
+          (variant === "list" ? (
+            folders.map(folder => (
+              <FolderData folder={folder} key={folder.id} />
+            ))
+          ) : (
+            <Grid container columns={12}>
+              {folders.map(folder => (
+                <Grid
+                  xs={6}
+                  sm={4}
+                  md={3}
+                  lg={2}
+                  key={`grid-folder-${folder.id}`}
+                >
+                  <FolderData folder={folder} key={folder.id} />
+                </Grid>
+              ))}
+            </Grid>
+          ))}
+        {folders.length > 0 && <Separator />}
+      </>
+    )
+  }
+
+  const ChatsView = () => {
+    return (
+      <>
+        {["Today", "Yesterday", "Previous Week", "Older"].map(dateCategory => {
+          const sortedData = getSortedData(
+            displayedFiles,
+            dateCategory as "Today" | "Yesterday" | "Previous Week" | "Older"
+          )
+          return (
+            sortedData.length > 0 && (
+              <div className="pb-2">
+                <div className="text-muted-foreground mb-1 text-sm font-bold">
+                  {dateCategory}
+                </div>
+
+                <div
+                  className={cn(
+                    "flex grow flex-col",
+                    isDragOver && "bg-accent"
+                  )}
+                  onDrop={handleDrop}
+                  onDragEnter={handleDragEnter}
+                  onDragLeave={handleDragLeave}
+                  onDragOver={handleDragOver}
+                >
+                  {sortedData.map((item: any) => (
+                    <div
+                      key={item.id}
+                      draggable
+                      onDragStart={e => handleDragStart(e, item.id)}
+                    >
+                      {getDataListComponent(contentType, item)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          )
+        })}
+      </>
+    )
+  }
+
+  const FilesView = () => {
+    return (
+      <div
+        className={cn("flex grow flex-col", isDragOver && "bg-accent")}
+        onDrop={handleDrop}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+      >
+        {displayedFiles.map(item => {
+          return (
+            <div
+              key={item.id}
+              draggable
+              onDragStart={e => handleDragStart(e, item.id)}
+            >
+              {getDataListComponent(contentType, item)}
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
 
   return (
     <>
-      <div
+      <Box
         ref={divRef}
-        className="mt-2 flex flex-col overflow-auto"
+        sx={{
+          marginTop: 2,
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto"
+        }}
         onDrop={handleDrop}
       >
         {data.length === 0 && (
@@ -230,97 +368,12 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
               isOverflowing ? "w-[calc(100%-8px)]" : "w-full"
             } space-y-2 pt-2 ${isOverflowing ? "mr-2" : ""}`}
           >
-            {folders.map(folder => (
-              <Folder
-                key={folder.id}
-                folder={folder}
-                onUpdateFolder={updateFolder}
-              >
-                {dataWithFolders
-                  .filter(item => item.folder_id === folder.id)
-                  .map(item => (
-                    <div
-                      key={item.id}
-                      draggable
-                      onDragStart={e => handleDragStart(e, item.id)}
-                    >
-                      {getDataListComponent(contentType, item)}
-                    </div>
-                  ))}
-              </Folder>
-            ))}
+            {currentFolder === null && <FoldersView />}
 
-            {folders.length > 0 && <Separator />}
-
-            {contentType === "chats" ? (
-              <>
-                {["Today", "Yesterday", "Previous Week", "Older"].map(
-                  dateCategory => {
-                    const sortedData = getSortedData(
-                      dataWithoutFolders,
-                      dateCategory as
-                        | "Today"
-                        | "Yesterday"
-                        | "Previous Week"
-                        | "Older"
-                    )
-                    return (
-                      sortedData.length > 0 && (
-                        <div className="pb-2">
-                          <div className="text-muted-foreground mb-1 text-sm font-bold">
-                            {dateCategory}
-                          </div>
-
-                          <div
-                            className={cn(
-                              "flex grow flex-col",
-                              isDragOver && "bg-accent"
-                            )}
-                            onDrop={handleDrop}
-                            onDragEnter={handleDragEnter}
-                            onDragLeave={handleDragLeave}
-                            onDragOver={handleDragOver}
-                          >
-                            {sortedData.map((item: any) => (
-                              <div
-                                key={item.id}
-                                draggable
-                                onDragStart={e => handleDragStart(e, item.id)}
-                              >
-                                {getDataListComponent(contentType, item)}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )
-                    )
-                  }
-                )}
-              </>
-            ) : (
-              <div
-                className={cn("flex grow flex-col", isDragOver && "bg-accent")}
-                onDrop={handleDrop}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                onDragOver={handleDragOver}
-              >
-                {dataWithoutFolders.map(item => {
-                  return (
-                    <div
-                      key={item.id}
-                      draggable
-                      onDragStart={e => handleDragStart(e, item.id)}
-                    >
-                      {getDataListComponent(contentType, item)}
-                    </div>
-                  )
-                })}
-              </div>
-            )}
+            {contentType === "chats" ? <ChatsView /> : <FilesView />}
           </div>
         )}
-      </div>
+      </Box>
 
       <div
         className={cn("flex grow", isDragOver && "bg-accent")}

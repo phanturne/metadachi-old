@@ -1,15 +1,30 @@
 "use client"
 
-import { Box, Tab, tabClasses, TabList, Tabs } from "@mui/joy"
-import { useRouter } from "next/navigation"
+import { Tab, tabClasses, TabList, Tabs } from "@mui/joy"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Dispatch, SetStateAction } from "react"
 
-export default function ChatTabs({ tab }: { tab: string }) {
+export default function ChatTabs({
+  tab,
+  setTab
+}: {
+  tab: string
+  setTab: Dispatch<SetStateAction<string>>
+}) {
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const chatId = searchParams.get("id")
+  const chatSearchParam = chatId ? `id=${chatId}&` : ""
+
   return (
     <Tabs
       aria-label="Pipeline"
       value={tab}
-      onChange={(_, value) => router.push(`/${value}`)}
+      onChange={(event, value) => {
+        setTab((value as string) ?? "chat")
+        router.push(`${pathname}?${chatSearchParam}tab=${value}`)
+      }}
     >
       <TabList
         sx={{
@@ -51,27 +66,5 @@ export default function ChatTabs({ tab }: { tab: string }) {
         </Tab>
       </TabList>
     </Tabs>
-  )
-}
-
-export function ChatTabsStandalone({ tab }: { tab: string }) {
-  return (
-    <Box
-      sx={{
-        position: "relative",
-        width: "300px",
-        paddingBottom: "8px",
-        paddingTop: "5px",
-        minWidth: {
-          xs: "300px",
-          sm: "400px",
-          md: "500px",
-          lg: "660px",
-          xl: "800px"
-        }
-      }}
-    >
-      <ChatTabs tab={tab} />
-    </Box>
   )
 }

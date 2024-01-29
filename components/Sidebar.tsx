@@ -24,11 +24,9 @@ import {
 import { Button } from "@mui/joy"
 import { Routes, SIDEBAR_WIDTH } from "@/lib/constants"
 import Typography from "@mui/joy/Typography"
-import ProfileMenu from "@/components/ProfileMenu"
-import { SidebarDataList } from "@/components/sidebar/sidebar-data-list"
+import { DataList } from "@/components/sidebar/data-list"
 import { ChatbotUIContext } from "@/context/context"
 import Divider from "@mui/joy/Divider"
-import MenuButton from "@mui/joy/MenuButton"
 
 const routeDictionary: Record<
   string,
@@ -141,7 +139,7 @@ export default function Sidebar() {
         <MenuItem route={Routes.Toolbox} />
         <MenuItem route={Routes.Explore} />
         <Divider sx={{ m: 1 }} />
-        <SidebarDataList
+        <DataList
           contentType="chats"
           data={chats}
           // folders={chatFolders}
@@ -149,29 +147,28 @@ export default function Sidebar() {
         />
       </List>
 
-      <List
-        size="sm"
-        sx={{
-          overflow: "hidden",
-          mt: 1,
-          flexGrow: 0,
-          "--ListItem-radius": theme => theme.vars.radius.sm,
-          "--List-gap": "8px"
-        }}
-      >
-        <MenuItem route={Routes.Settings} />
+      {/*<List*/}
+      {/*  size="sm"*/}
+      {/*  sx={{*/}
+      {/*    overflow: "hidden",*/}
+      {/*    mt: 1,*/}
+      {/*    flexGrow: 0,*/}
+      {/*    "--ListItem-radius": theme => theme.vars.radius.sm,*/}
+      {/*    "--List-gap": "8px"*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <MenuItem route={Routes.Settings} />*/}
 
-        {/*TODO: Spacing is incorrect. Replace w/ Base UI Popup*/}
-        <ProfileMenu placement="right">
-          <MenuButton
-            component="button"
-            variant="plain"
-            sx={{ justifyContent: "start", fontWeight: "normal", p: 0, m: 0 }}
-          >
-            <MenuItem route={Routes.Profile} onClick={() => {}} />
-          </MenuButton>
-        </ProfileMenu>
-      </List>
+      {/*  <ProfileMenu placement="right">*/}
+      {/*    <MenuButton*/}
+      {/*      component="button"*/}
+      {/*      variant="plain"*/}
+      {/*      sx={{ justifyContent: "start", fontWeight: "normal", p: 0, m: 0 }}*/}
+      {/*    >*/}
+      {/*      <MenuItem route={Routes.Profile} onClick={() => {}} />*/}
+      {/*    </MenuButton>*/}
+      {/*  </ProfileMenu>*/}
+      {/*</List>*/}
     </Sheet>
   )
 }
