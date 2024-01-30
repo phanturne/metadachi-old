@@ -15,11 +15,13 @@ import { AssistantItem } from "./items/assistants/assistant-item"
 import { ChatItem } from "./items/chat/chat-item"
 import { CollectionItem } from "./items/collections/collection-item"
 import { FileItem } from "./items/files/file-item"
-import { Folder } from "./items/folders/folder-item"
+import { Folder } from "@/components/folders/Folder"
 import { PresetItem } from "./items/presets/preset-item"
 import { PromptItem } from "./items/prompts/prompt-item"
 import { ToolItem } from "./items/tools/tool-item"
-import { Box, Grid } from "@mui/joy"
+import { Box, Button, Grid } from "@mui/joy"
+import { ArrowBackRounded } from "@mui/icons-material"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 interface DataList {
   contentType: ContentType
@@ -34,6 +36,12 @@ export const DataList: FC<DataList> = ({
   folders,
   variant = "list"
 }) => {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const router = useRouter()
+  const chatId = searchParams.get("id")
+  const chatSearchParam = chatId ? `id=${chatId}&` : ""
+
   const {
     setChats,
     setPresets,
@@ -45,7 +53,6 @@ export const DataList: FC<DataList> = ({
   } = useContext(ChatbotUIContext)
 
   const divRef = useRef<HTMLDivElement>(null)
-
   const [isOverflowing, setIsOverflowing] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
 
@@ -213,11 +220,25 @@ export const DataList: FC<DataList> = ({
   const dataWithFolders = data.filter(item => item.folder_id)
   const dataWithoutFolders = data.filter(item => item.folder_id === null)
   // TODO: Assuming only one level of folders, read search params to save state where user is already in a folder
-  const [currentFolder, setCurrentFolder] = useState<string | null>(null)
+  const [currentFolder, setCurrentFolder] = useState<string | null>(
+    searchParams.get("f")
+  )
   const [displayedFiles, setDisplayedFiles] = useState(dataWithoutFolders)
 
-  const handleFolderClick = (folderId: string) => {
-    console.log("folderId", folderId)
+  useEffect(() => {
+    const searchParamFolder = searchParams.get("f")
+    if (searchParamFolder != currentFolder) {
+      setCurrentFolder(searchParamFolder)
+      // TODO: [BUG] Calling setDisplayedFiles here causes an issue
+      // setDisplayedFiles(
+      //   data.filter(item => item.folder_id == searchParamFolder)
+      // )
+    }
+  }, [searchParams])
+
+  const handleFolderClick = (folderId: string | null) => {
+    const folderString = folderId ? `&f=${folderId}` : ""
+    router.push(`${pathname}?${chatSearchParam}tab=files${folderString}`)
     setCurrentFolder(folderId)
     setDisplayedFiles(data.filter(item => item.folder_id == folderId))
   }
@@ -249,7 +270,6 @@ export const DataList: FC<DataList> = ({
   const FoldersView = () => {
     return (
       <>
-        {/*TODO: If variant === 'grid', include <- Back <FolderName>*/}
         {currentFolder === null &&
           (variant === "list" ? (
             folders.map(folder => (
@@ -321,13 +341,28 @@ export const DataList: FC<DataList> = ({
 
   const FilesView = () => {
     return (
-      <div
-        className={cn("flex grow flex-col", isDragOver && "bg-accent")}
+      <Box
+        sx={{
+          display: "flex",
+          flexGrow: 1,
+          flexDirection: "column"
+        }}
         onDrop={handleDrop}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
       >
+        {currentFolder && (
+          <Button
+            variant="outlined"
+            color="neutral"
+            startDecorator={<ArrowBackRounded />}
+            onClick={() => handleFolderClick(null)}
+            sx={{ mb: 1, width: 100 }}
+          >
+            Back
+          </Button>
+        )}
         {displayedFiles.map(item => {
           return (
             <div
@@ -339,7 +374,7 @@ export const DataList: FC<DataList> = ({
             </div>
           )
         })}
-      </div>
+      </Box>
     )
   }
 

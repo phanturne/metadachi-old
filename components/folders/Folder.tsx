@@ -5,13 +5,15 @@ import { FC, useRef, useState } from "react"
 import { DeleteFolder } from "./delete-folder"
 import { UpdateFolder } from "./update-folder"
 import { FolderRounded } from "@mui/icons-material"
+import { Box, Typography } from "@mui/joy"
+import * as React from "react"
 
 interface FolderProps {
   folder: Tables<"folders">
   children: React.ReactNode
   onUpdateFolder: (itemId: string, folderId: string | null) => void
-  variant: "basic" | "expandable" // NEW
-  onClick: any // NEW
+  variant: "basic" | "expandable"
+  onClick: any
 }
 
 export const Folder: FC<FolderProps> = ({
@@ -78,7 +80,7 @@ export const Folder: FC<FolderProps> = ({
   }
 
   return (
-    <div
+    <Box
       ref={itemRef}
       id="folder"
       className={cn("rounded focus:outline-none", isDragOver && "bg-accent")}
@@ -90,43 +92,80 @@ export const Folder: FC<FolderProps> = ({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <div
+      <Box
         tabIndex={0}
-        className={cn(
-          "hover:bg-accent focus:bg-accent flex w-full cursor-pointer items-center justify-between rounded p-2 hover:opacity-50 focus:outline-none"
-        )}
         onClick={handleClick}
+        sx={{
+          "&:hover": {
+            backgroundColor: "accent",
+            opacity: 0.5
+          },
+          "&:focus": {
+            backgroundColor: "accent",
+            outline: "none"
+          },
+          display: "flex",
+          width: "full",
+          cursor: "pointer",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderRadius: 2,
+          padding: 2
+        }}
       >
-        <div className="flex w-full items-center justify-between">
-          <div className="flex items-center space-x-2">
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              overflow: "hidden"
+            }}
+          >
             {variant === "expandable" ? (
               <ExpandFolderButton />
             ) : (
               <FolderRounded />
             )}
-
-            <div>{folder.name}</div>
-          </div>
+            <Typography noWrap>{folder.name}</Typography>
+          </Box>
 
           {isHovering && (
-            <div
+            <Box
               onClick={e => {
                 e.stopPropagation()
                 e.preventDefault()
               }}
-              className="ml-2 flex space-x-2"
+              sx={{ marginLeft: 2, display: "flex", gap: 2, flexShrink: 0 }}
             >
               <UpdateFolder folder={folder} />
-
               <DeleteFolder folder={folder} />
-            </div>
+            </Box>
           )}
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {isExpanded && (
-        <div className="ml-5 mt-2 space-y-2 border-l-2 pl-4">{children}</div>
+        <Box
+          sx={{
+            marginLeft: 5,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            borderLeft: "2px solid",
+            paddingLeft: 4
+          }}
+        >
+          {children}
+        </Box>
       )}
-    </div>
+    </Box>
   )
 }

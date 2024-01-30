@@ -31,10 +31,10 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
         flexDirection: "column",
         height: "100%",
         flexGrow: 1,
-        mt: 2
+        mt: 5
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexGrow: 0 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexGrow: 0 }}>
         <ChatTabSearch
           contentType={contentType}
           searchTerm={searchTerm}

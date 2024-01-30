@@ -33,17 +33,7 @@ export default function ChatHeader({ variant }: { variant: "new" | null }) {
             />
           }
           middleContent={
-            <Typography
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: 1,
-                WebkitBoxOrient: "vertical"
-              }}
-            >
-              {selectedChat?.name || "Chat"}
-            </Typography>
+            <Typography noWrap>{selectedChat?.name || "Chat"}</Typography>
           }
           endContent={<ChatSecondaryButtons />}
         />

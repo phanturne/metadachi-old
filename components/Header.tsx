@@ -39,7 +39,8 @@ export default function Header({
       <Box
         sx={{
           flex: 1,
-          flexGrow: 2
+          flexGrow: 2,
+          overflow: "hidden"
         }}
       >
         {middleContent}
