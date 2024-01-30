@@ -2,7 +2,7 @@
 
 import { ChatbotUIContext } from "@/context/context"
 import { useContext } from "react"
-import { ChatTabContent } from "@/components/sidebar/chat-tab-content"
+import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
 
 export default function FilesTabContent() {
   const { folders, files } = useContext(ChatbotUIContext)

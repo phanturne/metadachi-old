@@ -2,22 +2,22 @@ import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { ChatbotUIContext } from "@/context/context"
 import { createFolder } from "@/db/folders"
 import { ContentType } from "@/types"
-import { IconFolderPlus, IconPlus } from "@tabler/icons-react"
 import { FC, useContext, useState } from "react"
-import { Button } from "../ui/button"
-import { CreateAssistant } from "./items/assistants/create-assistant"
-import { CreateCollection } from "./items/collections/create-collection"
-import { CreateFile } from "./items/files/create-file"
-import { CreatePreset } from "./items/presets/create-preset"
-import { CreatePrompt } from "./items/prompts/create-prompt"
-import { CreateTool } from "./items/tools/create-tool"
+import { CreateAssistant } from "../sidebar/items/assistants/create-assistant"
+import { CreateCollection } from "../sidebar/items/collections/create-collection"
+import { CreateFile } from "../sidebar/items/files/create-file"
+import { CreatePreset } from "../sidebar/items/presets/create-preset"
+import { CreatePrompt } from "../sidebar/items/prompts/create-prompt"
+import { CreateTool } from "../sidebar/items/tools/create-tool"
+import { Box, Button, IconButton } from "@mui/joy"
+import { AddRounded, CreateNewFolderRounded } from "@mui/icons-material"
 
 interface SidebarCreateButtonsProps {
   contentType: ContentType
   hasData: boolean
 }
 
-export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
+export const ChatTabCreateButtons: FC<SidebarCreateButtonsProps> = ({
   contentType,
   hasData
 }) => {
@@ -31,6 +31,9 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   const [isCreatingCollection, setIsCreatingCollection] = useState(false)
   const [isCreatingAssistant, setIsCreatingAssistant] = useState(false)
   const [isCreatingTool, setIsCreatingTool] = useState(false)
+  const contentTypeString =
+    contentType.charAt(0).toUpperCase() +
+    contentType.slice(1, contentType.length - 1)
 
   const handleCreateFolder = async () => {
     if (!profile) return
@@ -89,18 +92,24 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   }
 
   return (
-    <div className="flex w-full space-x-2">
-      <Button className="flex h-[36px] grow" onClick={getCreateFunction()}>
-        <IconPlus className="mr-1" size={20} />
-        New{" "}
-        {contentType.charAt(0).toUpperCase() +
-          contentType.slice(1, contentType.length - 1)}
+    <Box sx={{ display: "flex", flexShrink: 0, gap: 1 }}>
+      <Button
+        variant="outlined"
+        color="neutral"
+        onClick={getCreateFunction()}
+        startDecorator={<AddRounded />}
+      >
+        {`New ${contentTypeString}`}
       </Button>
 
       {hasData && (
-        <Button className="h-[36px] w-[36px] p-1" onClick={handleCreateFolder}>
-          <IconFolderPlus size={20} />
-        </Button>
+        <IconButton
+          variant="outlined"
+          color="neutral"
+          onClick={handleCreateFolder}
+        >
+          <CreateNewFolderRounded />
+        </IconButton>
       )}
 
       {isCreatingPrompt && (
@@ -138,6 +147,6 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
       {isCreatingTool && (
         <CreateTool isOpen={isCreatingTool} onOpenChange={setIsCreatingTool} />
       )}
-    </div>
+    </Box>
   )
 }

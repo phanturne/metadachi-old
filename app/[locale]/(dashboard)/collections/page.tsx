@@ -3,7 +3,7 @@ import * as React from "react"
 import { useContext } from "react"
 import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy"
 import { ChatbotUIContext } from "@/context/context"
-import { ChatTabContent } from "@/components/sidebar/chat-tab-content"
+import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
 import { ContentType } from "@/types"
 import Header from "@/components/Header"
 

@@ -20,7 +20,7 @@ import { getMessageFileItemsByMessageId } from "@/db/message-file-items"
 import { getFileById } from "@/db/files"
 import { getChatById } from "@/db/chats"
 import Loading from "@/app/[locale]/loading"
-import ChatHeader from "@/app/[locale]/(dashboard)/chat/ChatHeader"
+import ChatHeader from "@/components/chat/ChatHeader"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -61,7 +61,7 @@ export default function ChatPage() {
       setSelectedChat(null)
       setLoading(false)
     }
-  }, [])
+  }, [searchParams])
 
   const fetchMessages = async () => {
     const fetchedMessages = await getMessagesByChatId(chatId as string)
@@ -195,21 +195,22 @@ export default function ChatPage() {
       >
         <ChatHeader variant={isNewChat ? "new" : null} />
 
-        {/*<Box*/}
-        {/*  sx={{ display: "flex", height: "100%", overflow: "scroll", px: 10 }}*/}
-        {/*>*/}
-        {/*  {tab === "chat" && <ChatTabContent chatId={chatId} />}*/}
-        {/*  {tab === "assistants" && <AssistantsTabContent />}*/}
-        {/*  {tab === "prompts" && <PromptsTabContent />}*/}
-        {/*  {tab === "files" && <FilesTabContent />}*/}
-        {/*  {tab === "tools" && <ToolsTabContent />}*/}
-        {/*</Box>*/}
-
         {tab === "chat" && <ChatTabContent chatId={chatId} />}
-        {tab === "assistants" && <AssistantsTabContent />}
-        {tab === "prompts" && <PromptsTabContent />}
-        {tab === "files" && <FilesTabContent />}
-        {tab === "tools" && <ToolsTabContent />}
+
+        <Box
+          sx={{
+            display: "flex",
+            height: "100%",
+            width: "100%",
+            overflow: "scroll",
+            px: 10
+          }}
+        >
+          {tab === "assistants" && <AssistantsTabContent />}
+          {tab === "prompts" && <PromptsTabContent />}
+          {tab === "files" && <FilesTabContent />}
+          {tab === "tools" && <ToolsTabContent />}
+        </Box>
 
         <Box
           sx={{

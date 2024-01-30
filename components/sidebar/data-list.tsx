@@ -259,10 +259,11 @@ export const DataList: FC<DataList> = ({
             <Grid container columns={12}>
               {folders.map(folder => (
                 <Grid
-                  xs={6}
-                  sm={4}
-                  md={3}
-                  lg={2}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  xl={2}
                   key={`grid-folder-${folder.id}`}
                 >
                   <FolderData folder={folder} key={folder.id} />
@@ -350,7 +351,8 @@ export const DataList: FC<DataList> = ({
           marginTop: 2,
           display: "flex",
           flexDirection: "column",
-          overflowY: "auto"
+          overflowY: "auto",
+          height: "100%"
         }}
         onDrop={handleDrop}
       >

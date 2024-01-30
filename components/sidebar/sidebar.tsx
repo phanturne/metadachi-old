@@ -5,7 +5,7 @@ import { FC, useContext } from "react"
 import { TabsContent } from "../ui/tabs"
 import { WorkspaceSwitcher } from "../utility/workspace-switcher"
 import { WorkspaceSettings } from "../workspace/workspace-settings"
-import { ChatTabContent } from "./chat-tab-content"
+import { ChatTabContent } from "../chat-tab/ChatTabContent"
 import { SIDEBAR_WIDTH } from "@/lib/constants"
 
 interface SidebarProps {

@@ -9,7 +9,7 @@ import ListItemButton from "@mui/joy/ListItemButton"
 import ListItemContent from "@mui/joy/ListItemContent"
 import Sheet from "@mui/joy/Sheet"
 import ListItemDecorator from "@mui/joy/ListItemDecorator"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   AddCircleOutlineRounded,
   AutoAwesomeRounded,
@@ -46,6 +46,7 @@ export default function Sidebar() {
   const router = useRouter()
 
   const { chats, folders } = useContext(ChatbotUIContext)
+  const pathname = usePathname()
   // const chatFolders = folders.filter(folder => folder.type === "chats")
 
   function MenuItem({

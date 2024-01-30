@@ -1,6 +1,6 @@
 import { ContentType } from "@/types"
 import { FC } from "react"
-import { Input } from "../ui/input"
+import { Input } from "@mui/joy"
 
 interface SidebarSearchProps {
   contentType: ContentType
@@ -8,7 +8,7 @@ interface SidebarSearchProps {
   setSearchTerm: Function
 }
 
-export const SidebarSearch: FC<SidebarSearchProps> = ({
+export const ChatTabSearch: FC<SidebarSearchProps> = ({
   contentType,
   searchTerm,
   setSearchTerm
@@ -18,6 +18,7 @@ export const SidebarSearch: FC<SidebarSearchProps> = ({
       placeholder={`Search ${contentType}...`}
       value={searchTerm}
       onChange={e => setSearchTerm(e.target.value)}
+      sx={{ width: "100%" }}
     />
   )
 }
