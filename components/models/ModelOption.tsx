@@ -5,6 +5,7 @@ import React, { FC, useContext, useEffect, useState } from "react"
 import { ModelIcon } from "./model-icon"
 import { AutocompleteOption, ListItemContent } from "@mui/joy"
 import { LockRounded } from "@mui/icons-material"
+import { GUEST_LLM_LIST } from "@/lib/constants"
 
 interface ModelOptionProps {
   model: LLM
@@ -17,7 +18,10 @@ export const ModelOption: FC<ModelOptionProps> = ({ model, props }) => {
 
   useEffect(() => {
     async function setup() {
-      if (!profile) return null
+      if (!profile) {
+        setIsLocked(!GUEST_LLM_LIST.includes(model.modelId))
+        return null
+      }
 
       const isUsingAzure = profile?.use_azure_openai
 
@@ -30,8 +34,6 @@ export const ModelOption: FC<ModelOptionProps> = ({ model, props }) => {
     }
     setup()
   }, [model, profile])
-
-  if (!profile) return null
 
   return (
     <AutocompleteOption {...props}>

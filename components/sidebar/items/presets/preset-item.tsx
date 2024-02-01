@@ -1,5 +1,5 @@
 import { ModelIcon } from "@/components/models/model-icon"
-import { ChatSettingsForm } from "@/components/ui/chat-settings-form"
+import { ChatSettingsForm } from "@/components/ChatSettingsForm"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PRESET_NAME_MAX } from "@/db/limits"
@@ -59,7 +59,6 @@ export const PresetItem: FC<PresetItemProps> = ({ preset }) => {
           <ChatSettingsForm
             chatSettings={presetChatSettings as any}
             onChangeChatSettings={setPresetChatSettings}
-            useAdvancedDropdown={true}
           />
         </>
       )}

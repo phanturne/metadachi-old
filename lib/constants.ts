@@ -1,3 +1,5 @@
+import { LLMID } from "@/types"
+
 export const SIDEBAR_WIDTH = 260
 
 export const Routes = {
@@ -16,3 +18,5 @@ export const Routes = {
   Support: "/support",
   NotFound: "/404"
 }
+
+export const GUEST_LLM_LIST: LLMID[] = ["gpt-3.5-turbo-1106"]

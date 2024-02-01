@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-const useHotkey = (key: string, callback: () => void): void => {
+const useHotkey = (key: string, callback: (e?: any) => void): void => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent): void => {
       if (event.metaKey && event.shiftKey && event.key === key) {

@@ -1,5 +1,5 @@
 import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
-import { ChatSettingsForm } from "@/components/ui/chat-settings-form"
+import { ChatSettingsForm } from "@/components/ChatSettingsForm"
 import ImagePicker from "@/components/ui/image-picker"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -165,7 +165,6 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
           <ChatSettingsForm
             chatSettings={assistantChatSettings as any}
             onChangeChatSettings={setAssistantChatSettings}
-            useAdvancedDropdown={true}
           />
 
           <div className="space-y-1 pt-2">

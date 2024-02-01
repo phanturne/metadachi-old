@@ -3,7 +3,7 @@ import { WORKSPACE_INSTRUCTIONS_MAX } from "@/db/limits"
 import { ChatSettings } from "@/types"
 import { FC } from "react"
 import ReactTextareaAutosize from "react-textarea-autosize"
-import { ChatSettingsForm } from "../ui/chat-settings-form"
+import { ChatSettingsForm } from "../ChatSettingsForm"
 import { LimitDisplay } from "../ui/limit-display"
 
 interface WorkspaceStepProps {

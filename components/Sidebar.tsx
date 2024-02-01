@@ -134,7 +134,6 @@ export default function Sidebar() {
           "--ListItem-radius": theme => theme.vars.radius.sm
         }}
       >
-        <MenuItem route={Routes.Chat} />
         {/* TODO: Add Image Generation*/}
         {/*<MenuItem route={Routes.Images} />*/}
         <MenuItem route={Routes.Toolbox} />

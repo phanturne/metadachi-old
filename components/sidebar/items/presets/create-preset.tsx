@@ -1,5 +1,5 @@
 import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
-import { ChatSettingsForm } from "@/components/ui/chat-settings-form"
+import { ChatSettingsForm } from "@/components/ChatSettingsForm"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ChatbotUIContext } from "@/context/context"
@@ -72,7 +72,6 @@ export const CreatePreset: FC<CreatePresetProps> = ({
           <ChatSettingsForm
             chatSettings={presetChatSettings as any}
             onChangeChatSettings={setPresetChatSettings}
-            useAdvancedDropdown={true}
           />
         </>
       )}

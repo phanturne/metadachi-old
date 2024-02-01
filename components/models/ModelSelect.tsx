@@ -5,6 +5,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from "react"
 import { ModelIcon } from "./model-icon"
 import { Autocomplete, Option, Select } from "@mui/joy"
 import { ModelOption } from "@/components/models/ModelOption"
+import { GUEST_LLM_LIST } from "@/lib/constants"
 
 interface ModelSelectProps {
   hostedModelOptions: LLM[]
@@ -39,7 +40,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
 
   const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTER_LIST[0])
   // const [isLocked, setIsLocked] = useState<boolean>(true)
-  const [lockedModels, setLockedModels] = useState<string[]>([])
+  const [lockedModels, setLockedModels] = useState<LLMID[]>([])
 
   const ALL_MODELS = useMemo(
     () => [
@@ -49,12 +50,19 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     ],
     [hostedModelOptions, localModelOptions, availableOpenRouterModels]
   )
+  const ALL_MODEL_IDS = ALL_MODELS.map(model => model.modelId)
 
   useEffect(() => {
     const checkModelLock = async () => {
       const isUsingAzure = profile?.use_azure_openai
 
-      if (!profile) return null
+      // If the user is not logged in, lock all models except the guest models
+      if (!profile) {
+        setLockedModels(
+          ALL_MODEL_IDS.filter(id => !GUEST_LLM_LIST.includes(id))
+        )
+        return null
+      }
 
       // Set which autocomplete options are locked
       const tempLockedModels: string[] = []
@@ -67,7 +75,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
         )
         if (locked) tempLockedModels.push(model.modelId)
       }
-      setLockedModels(tempLockedModels)
+      setLockedModels(tempLockedModels as LLMID[])
 
       // if (SELECTED_MODEL) {
       //   setIsLocked(tempLockedModels.includes(SELECTED_MODEL.modelId))
@@ -81,7 +89,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     model => model.modelId === selectedModelId
   )
 
-  if (!SELECTED_MODEL || !profile) return null
+  if (!SELECTED_MODEL) return null
 
   const filteredModels = ALL_MODELS.filter(model => {
     const filter = modelFilter.toLowerCase()
@@ -104,7 +112,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
         defaultValue={MODEL_FILTER_LIST[0]}
         value={modelFilter}
         onChange={(_, v) => {
-          console.log("v", v)
           setModelFilter(v ?? MODEL_FILTERS.All)
         }}
         sx={{ ml: "-12px", width: "150px", mr: 1 }}
