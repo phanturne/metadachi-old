@@ -4,13 +4,10 @@ import Sidebar from "@/components/Sidebar"
 import { Button } from "@/components/ui/button"
 import useHotkey from "@/lib/hooks/use-hotkey"
 import { cn } from "@/lib/utils"
-import { ContentType } from "@/types"
 import { IconChevronCompactRight } from "@tabler/icons-react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { CommandK } from "@/components/utility/command-k"
 import { Box } from "@mui/joy"
-import { supabase } from "@/lib/supabase/browser-client"
 import { HelpButton } from "@/components/chat/help-button"
 import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { SIDEBAR_WIDTH } from "@/lib/constants"
@@ -25,17 +22,8 @@ export default function DashboardLayout({
   useHotkey("s", () => setShowSidebar(prevState => !prevState))
   useHotkey("o", () => handleNewChat())
 
-  const pathname = usePathname()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const tabValue = searchParams.get("tab") || "chats"
-
-  const [contentType, setContentType] = useState<ContentType>(
-    tabValue as ContentType
-  )
-
   const [showSidebar, setShowSidebar] = useState(
-    localStorage.getItem("showSidebar") === "true"
+    (localStorage.getItem("showSidebar") ?? "true") === "true"
   )
 
   // const [loading, setLoading] = useState(true)
@@ -87,13 +75,7 @@ export default function DashboardLayout({
         <IconChevronCompactRight size={24} />
       </Button>
 
-      {/*TODO: Redesign Sidebar*/}
       {showSidebar && <Sidebar />}
-      {/*<div className={cn("border-r-2 duration-200 dark:border-none")}>*/}
-      {/*  {showSidebar && (*/}
-      {/*    <Sidebar />*/}
-      {/*  )}*/}
-      {/*</div>*/}
       <Box
         sx={{
           display: "flex",

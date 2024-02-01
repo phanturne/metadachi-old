@@ -19,24 +19,20 @@ export default function ChatTabContent({ chatId }: { chatId: string | null }) {
 
   const NewChatContent = () => {
     return (
-      <>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100%"
-          }}
-        >
-          <AutoAwesomeRounded />
-          <Typography level="title-lg" sx={{ mt: 2, mb: 5 }}>
-            How may I help you?
-          </Typography>
-        </Box>
-
-        <div className="flex grow flex-col items-center justify-center" />
-      </>
+      <Box
+        sx={{
+          display: "flex",
+          flexGrow: 1,
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <AutoAwesomeRounded />
+        <Typography level="title-lg" sx={{ mt: 2, mb: 5 }}>
+          How may I help you today?
+        </Typography>
+      </Box>
     )
   }
 

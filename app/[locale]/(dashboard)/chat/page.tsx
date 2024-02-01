@@ -195,22 +195,24 @@ export default function ChatPage() {
       >
         <ChatHeader variant={isNewChat ? "new" : null} />
 
-        {tab === "chat" && <ChatTabContent chatId={chatId} />}
-
-        <Box
-          sx={{
-            display: "flex",
-            height: "100%",
-            width: "100%",
-            overflow: "scroll",
-            px: 10
-          }}
-        >
-          {tab === "assistants" && <AssistantsTabContent />}
-          {tab === "prompts" && <PromptsTabContent />}
-          {tab === "files" && <FilesTabContent />}
-          {tab === "tools" && <ToolsTabContent />}
-        </Box>
+        {tab === "chat" ? (
+          <ChatTabContent chatId={chatId} />
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              overflow: "scroll",
+              px: 10
+            }}
+          >
+            {tab === "assistants" && <AssistantsTabContent />}
+            {tab === "prompts" && <PromptsTabContent />}
+            {tab === "files" && <FilesTabContent />}
+            {tab === "tools" && <ToolsTabContent />}
+          </Box>
+        )}
 
         <Box
           sx={{
