@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from "react"
 import { Button, ColorPaletteProp, Snackbar, VariantProp } from "@mui/joy"
 
 type SnackbarConfig = {
-  msg?: string
+  message?: string
   variant?: VariantProp
   color?: ColorPaletteProp
   action?: {
@@ -39,7 +39,7 @@ export const SnackbarProvider = ({
         variant={snackbar?.variant ?? "soft"}
         color={snackbar?.color ?? "neutral"}
         size="sm"
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         open={snackbar !== undefined}
         onClose={(_, reason) => {
@@ -50,7 +50,7 @@ export const SnackbarProvider = ({
           setSnackbar(undefined)
         }}
       >
-        {snackbar?.msg}
+        {snackbar?.message}
         {snackbar?.action && (
           <Button
             variant="plain"

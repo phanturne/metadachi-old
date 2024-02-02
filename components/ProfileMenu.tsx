@@ -16,10 +16,11 @@ import {
 import { useRouter } from "next/navigation"
 import { Routes } from "@/lib/constants"
 import Divider from "@mui/joy/Divider"
-// import { useAuthModal } from '@/providers/AuthProvider';
 import ThemeToggleButton from "@/components/ThemeToggle"
 import { ChatbotUIContext } from "@/context/context"
 import { supabase } from "@/lib/supabase/browser-client"
+import { useAuthModal } from "@/lib/providers/AuthContextProvider"
+import { useSnackbar } from "@/lib/providers/SnackbarProvider"
 
 export default function ProfileMenu({
   children,
@@ -30,10 +31,14 @@ export default function ProfileMenu({
 }) {
   const router = useRouter()
   const { profile } = useContext(ChatbotUIContext)
-  // const { openAuthModal } = useAuthModal();
+  const { openAuthModal } = useAuthModal()
+  const { setSnackbar } = useSnackbar()
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut()
+    const message = error?.message ?? "You have been signed out"
+    const color = error ? "danger" : "success"
+    setSnackbar({ message: message, color: color })
     router.refresh()
   }
 
@@ -117,7 +122,7 @@ export default function ProfileMenu({
           </MenuItem>
         )}
         {profile === null && (
-          <MenuItem onClick={() => router.push(Routes.Login)}>
+          <MenuItem onClick={() => openAuthModal()}>
             <ListItemDecorator>
               <LoginRounded />
             </ListItemDecorator>

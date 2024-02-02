@@ -153,7 +153,7 @@ export default function SetupPage() {
           <StepContainer
             stepDescription="Let's create your profile."
             stepNum={currentStep}
-            stepTitle="Welcome to Chatbot UI"
+            stepTitle="Welcome to Metadachi"
             onShouldProceed={handleShouldProceed}
             showNextButton={!!(displayName && username && usernameAvailable)}
             showBackButton={false}

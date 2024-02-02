@@ -7,6 +7,7 @@ export const Routes = {
   Auth: "/auth",
   Login: "/login",
   SignUp: "/signup",
+  Setup: "/setup",
   NewChat: "/chat?new",
   Chat: "/chat",
   Images: "/images",
