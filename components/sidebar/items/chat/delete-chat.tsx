@@ -1,4 +1,3 @@
-import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,6 +14,7 @@ import useHotkey from "@/lib/hooks/use-hotkey"
 import { Tables } from "@/supabase/types"
 import { IconTrash } from "@tabler/icons-react"
 import { FC, useContext, useRef, useState } from "react"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 
 interface DeleteChatProps {
   chat: Tables<"chats">

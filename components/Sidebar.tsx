@@ -27,6 +27,8 @@ import Typography from "@mui/joy/Typography"
 import { DataList } from "@/components/sidebar/data-list"
 import { ChatbotUIContext } from "@/context/context"
 import Divider from "@mui/joy/Divider"
+import { supabase } from "@/lib/supabase/browser-client"
+import { useSnackbar } from "@/lib/providers/SnackbarProvider"
 
 const routeDictionary: Record<
   string,
@@ -41,13 +43,16 @@ const routeDictionary: Record<
   [Routes.Profile]: { icon: <PersonRounded />, label: "Profile" }
 }
 
-export default function Sidebar() {
+export default async function Sidebar() {
   const [selectedRoute, setSelectedRoute] = React.useState(Routes.Home)
   const router = useRouter()
 
-  const { chats, folders } = useContext(ChatbotUIContext)
+  const { chats, selectedWorkspace, setSelectedWorkspace, workspaces } =
+    useContext(ChatbotUIContext)
   const pathname = usePathname()
-  // const chatFolders = folders.filter(folder => folder.type === "chats")
+  const { setSnackbar } = useSnackbar()
+  const session = (await supabase.auth.getSession()).data.session
+  const homeWorkspace = workspaces.find(w => w.is_home)
 
   function MenuItem({
     route,
@@ -91,9 +96,31 @@ export default function Sidebar() {
   }
 
   function NewChatButton() {
-    const handleNewChat = () => {
+    const handleNewChat = async () => {
+      // User must be logged in to create a new chat
+      if (!session) {
+        setSnackbar({
+          message: "You must be logged in to create a new chat",
+          color: "danger"
+        })
+      }
+
+      let workspaceId = selectedWorkspace?.id
+      if (!workspaceId && homeWorkspace) {
+        setSelectedWorkspace(homeWorkspace)
+        workspaceId = homeWorkspace.id
+      }
+
+      if (!workspaceId) {
+        setSnackbar({
+          message: "No workspace found",
+          color: "danger"
+        })
+        return
+      }
+
       setSelectedRoute(Routes.Chat)
-      router.push(Routes.Chat)
+      return router.push(`/${workspaceId}/${Routes.Chat}`)
     }
 
     return (

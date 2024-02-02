@@ -22,7 +22,6 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
   const filteredData: any = data.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
-  console.log("filteredData", filteredData)
 
   return (
     <Box

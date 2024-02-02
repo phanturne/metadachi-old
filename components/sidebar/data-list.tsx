@@ -16,12 +16,14 @@ import { ChatItem } from "./items/chat/chat-item"
 import { CollectionItem } from "./items/collections/collection-item"
 import { FileItem } from "./items/files/file-item"
 import { Folder } from "@/components/folders/Folder"
+import { ModelItem } from "./items/models/model-item"
 import { PresetItem } from "./items/presets/preset-item"
 import { PromptItem } from "./items/prompts/prompt-item"
 import { ToolItem } from "./items/tools/tool-item"
 import { Box, Button, Grid } from "@mui/joy"
 import { ArrowBackRounded } from "@mui/icons-material"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { updateModel } from "@/db/models"
 
 interface DataList {
   contentType: ContentType
@@ -49,10 +51,12 @@ export const DataList: FC<DataList> = ({
     setFiles,
     setCollections,
     setAssistants,
-    setTools
+    setTools,
+    setModels
   } = useContext(ChatbotUIContext)
 
   const divRef = useRef<HTMLDivElement>(null)
+
   const [isOverflowing, setIsOverflowing] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
 
@@ -91,6 +95,9 @@ export const DataList: FC<DataList> = ({
 
       case "tools":
         return <ToolItem key={item.id} tool={item as Tables<"tools">} />
+
+      case "models":
+        return <ModelItem key={item.id} model={item as Tables<"models">} />
 
       default:
         return null
@@ -143,7 +150,8 @@ export const DataList: FC<DataList> = ({
     files: updateFile,
     collections: updateCollection,
     assistants: updateAssistant,
-    tools: updateTool
+    tools: updateTool,
+    models: updateModel
   }
 
   const stateUpdateFunctions = {
@@ -153,7 +161,8 @@ export const DataList: FC<DataList> = ({
     files: setFiles,
     collections: setCollections,
     assistants: setAssistants,
-    tools: setTools
+    tools: setTools,
+    models: setModels
   }
 
   const updateFolder = async (itemId: string, folderId: string | null) => {
@@ -248,6 +257,7 @@ export const DataList: FC<DataList> = ({
       <Folder
         key={folder.id}
         folder={folder}
+        contentType={contentType}
         onUpdateFolder={updateFolder}
         variant={variant === "list" ? "expandable" : "basic"}
         onClick={() => handleFolderClick(folder.id)}

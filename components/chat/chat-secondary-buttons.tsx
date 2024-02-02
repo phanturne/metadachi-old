@@ -58,9 +58,6 @@ export const ChatSecondaryButtons: FC<ChatSecondaryButtonsProps> = ({}) => {
           />
         </>
       )}
-
-      {/* TODO: ShareMenu */}
-      {/* <ShareMenu item={selectedChat} contentType="chats" /> */}
     </>
   )
 }

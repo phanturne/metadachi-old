@@ -9,7 +9,7 @@ import {
   Stack,
   Typography
 } from "@mui/joy"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/lib/supabase/browser-client"
 import { AuthFormType } from "@/components/auth/AuthModal"
@@ -41,6 +41,21 @@ export function LoginForm({
       setError(error.message)
       return
     }
+
+    const { data: homeWorkspace, error: homeWorkspaceError } = await supabase
+      .from("workspaces")
+      .select("*")
+      .eq("user_id", data.user.id)
+      .eq("is_home", true)
+      .single()
+
+    if (!homeWorkspace) {
+      throw new Error(
+        homeWorkspaceError?.message || "An unexpected error occurred"
+      )
+    }
+
+    // return redirect(`/${homeWorkspace.id}/chat`)
 
     // Handle successful login
     setSnackbar({ message: "Successfully logged in", color: "success" })

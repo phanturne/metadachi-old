@@ -2,14 +2,16 @@ import { cn } from "@/lib/utils"
 import { Tables } from "@/supabase/types"
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react"
 import { FC, useRef, useState } from "react"
-import { DeleteFolder } from "./delete-folder"
 import { UpdateFolder } from "./update-folder"
 import { FolderRounded } from "@mui/icons-material"
 import { Box, Typography } from "@mui/joy"
 import * as React from "react"
+import { DeleteFolder } from "@/components/folders/delete-folder"
+import { ContentType } from "@/types"
 
 interface FolderProps {
   folder: Tables<"folders">
+  contentType: ContentType
   children: React.ReactNode
   onUpdateFolder: (itemId: string, folderId: string | null) => void
   variant: "basic" | "expandable"
@@ -18,6 +20,7 @@ interface FolderProps {
 
 export const Folder: FC<FolderProps> = ({
   folder,
+  contentType,
   children,
   onUpdateFolder,
   variant,
@@ -146,7 +149,7 @@ export const Folder: FC<FolderProps> = ({
               sx={{ marginLeft: 2, display: "flex", gap: 2, flexShrink: 0 }}
             >
               <UpdateFolder folder={folder} />
-              <DeleteFolder folder={folder} />
+              <DeleteFolder folder={folder} contentType={contentType} />
             </Box>
           )}
         </Box>

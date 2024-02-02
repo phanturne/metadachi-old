@@ -9,6 +9,7 @@ import { CreateFile } from "../sidebar/items/files/create-file"
 import { CreatePreset } from "../sidebar/items/presets/create-preset"
 import { CreatePrompt } from "../sidebar/items/prompts/create-prompt"
 import { CreateTool } from "../sidebar/items/tools/create-tool"
+import { CreateModel } from "../sidebar/items/models/create-model"
 import { Box, Button, IconButton } from "@mui/joy"
 import { AddRounded, CreateNewFolderRounded } from "@mui/icons-material"
 
@@ -31,6 +32,8 @@ export const ChatTabCreateButtons: FC<SidebarCreateButtonsProps> = ({
   const [isCreatingCollection, setIsCreatingCollection] = useState(false)
   const [isCreatingAssistant, setIsCreatingAssistant] = useState(false)
   const [isCreatingTool, setIsCreatingTool] = useState(false)
+  const [isCreatingModel, setIsCreatingModel] = useState(false)
+
   const contentTypeString =
     contentType.charAt(0).toUpperCase() +
     contentType.slice(1, contentType.length - 1)
@@ -84,6 +87,11 @@ export const ChatTabCreateButtons: FC<SidebarCreateButtonsProps> = ({
       case "tools":
         return async () => {
           setIsCreatingTool(true)
+        }
+
+      case "models":
+        return async () => {
+          setIsCreatingModel(true)
         }
 
       default:
@@ -146,6 +154,13 @@ export const ChatTabCreateButtons: FC<SidebarCreateButtonsProps> = ({
 
       {isCreatingTool && (
         <CreateTool isOpen={isCreatingTool} onOpenChange={setIsCreatingTool} />
+      )}
+
+      {isCreatingModel && (
+        <CreateModel
+          isOpen={isCreatingModel}
+          onOpenChange={setIsCreatingModel}
+        />
       )}
     </Box>
   )

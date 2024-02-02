@@ -20,4 +20,4 @@ export const Routes = {
   NotFound: "/404"
 }
 
-export const GUEST_LLM_LIST: LLMID[] = ["gpt-3.5-turbo-1106"]
+export const GUEST_LLM_LIST: LLMID[] = ["gpt-3.5-turbo"]

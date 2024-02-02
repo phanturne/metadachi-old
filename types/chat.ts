@@ -12,7 +12,7 @@ export interface ChatSettings {
 }
 
 export const DEFAULT_CHAT_SETTINGS: ChatSettings = {
-  model: "gpt-3.5-turbo-1106",
+  model: "gpt-3.5-turbo",
   prompt: "",
   temperature: 0.5,
   contextLength: 4096,

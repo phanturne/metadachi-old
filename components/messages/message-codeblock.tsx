@@ -49,7 +49,6 @@ export const generateRandomString = (length: number, lowercase = false) => {
   return lowercase ? result.toLowerCase() : result
 }
 
-// TODO: Redesign
 export const MessageCodeBlock: FC<MessageCodeBlockProps> = memo(
   ({ language, value }) => {
     const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 })

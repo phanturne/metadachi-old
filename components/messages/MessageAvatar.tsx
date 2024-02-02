@@ -57,7 +57,7 @@ export default function MessageAvatar({
                 display={<div>{modelData.modelName}</div>}
                 trigger={
                   <ModelIcon
-                    modelId={message.model as LLMID}
+                    provider={modelData.provider}
                     height={ICON_SIZE}
                     width={ICON_SIZE}
                   />

@@ -8,7 +8,6 @@ interface MessageMarkdownProps {
   content: string
 }
 
-// TODO: Redesign
 export const MessageMarkdown: FC<MessageMarkdownProps> = ({ content }) => {
   return (
     <MessageMarkdownMemoized

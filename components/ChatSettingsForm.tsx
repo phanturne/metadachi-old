@@ -1,9 +1,7 @@
 "use client"
 
-import { ChatbotUIContext } from "@/context/context"
-import { LLM_LIST } from "@/lib/models/llm/llm-list"
 import { ChatSettings } from "@/types"
-import { FC, useContext } from "react"
+import { FC } from "react"
 import { ModelSelect } from "./models/ModelSelect"
 import { AdvancedSettings } from "./ui/advanced-settings"
 import { Box, Textarea, Typography } from "@mui/joy"
@@ -20,8 +18,6 @@ export const ChatSettingsForm: FC<ChatSettingsFormProps> = ({
   onChangeChatSettings,
   showTooltip = true
 }) => {
-  const { availableLocalModels } = useContext(ChatbotUIContext)
-
   return (
     <Sheet
       variant="outlined"
@@ -39,8 +35,6 @@ export const ChatSettingsForm: FC<ChatSettingsFormProps> = ({
         </Typography>
 
         <ModelSelect
-          hostedModelOptions={LLM_LIST}
-          localModelOptions={availableLocalModels}
           selectedModelId={chatSettings.model}
           onSelectModel={model => {
             onChangeChatSettings({ ...chatSettings, model })
