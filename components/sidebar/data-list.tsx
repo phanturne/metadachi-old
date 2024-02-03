@@ -238,12 +238,12 @@ export const DataList: FC<DataList> = ({
     const searchParamFolder = searchParams.get("f")
     if (searchParamFolder != currentFolder) {
       setCurrentFolder(searchParamFolder)
-      // TODO: [BUG] Calling setDisplayedFiles here causes an issue
-      // setDisplayedFiles(
-      //   data.filter(item => item.folder_id == searchParamFolder)
-      // )
     }
   }, [searchParams])
+
+  useEffect(() => {
+    setDisplayedFiles(data.filter(item => item.folder_id === currentFolder))
+  }, [data])
 
   const handleFolderClick = (folderId: string | null) => {
     const folderString = folderId ? `&f=${folderId}` : ""

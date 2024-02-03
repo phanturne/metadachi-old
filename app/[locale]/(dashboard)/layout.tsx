@@ -2,15 +2,14 @@
 
 import Sidebar from "@/components/Sidebar"
 import { Button } from "@/components/ui/button"
-import useHotkey from "@/lib/hooks/use-hotkey"
-import { cn } from "@/lib/utils"
-import { IconChevronCompactRight } from "@tabler/icons-react"
-import { useState } from "react"
-import { CommandK } from "@/components/utility/command-k"
 import { Box } from "@mui/joy"
-import { HelpButton } from "@/components/chat/help-button"
-import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { SIDEBAR_WIDTH } from "@/lib/constants"
+import { IconChevronCompactRight } from "@tabler/icons-react"
+import { useChatHandler } from "@/lib/hooks/use-chat-handler"
+import useHotkey from "@/lib/hooks/use-hotkey"
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+import { HelpButton } from "@/components/chat/help-button"
 
 export default function DashboardLayout({
   children
@@ -57,7 +56,7 @@ export default function DashboardLayout({
         overflow: "none"
       }}
     >
-      <CommandK />
+      {/*<CommandK />*/}
 
       {/* TODO: Change to Menu Button*/}
       <Button
@@ -76,6 +75,7 @@ export default function DashboardLayout({
       </Button>
 
       {showSidebar && <Sidebar />}
+
       <Box
         sx={{
           display: "flex",

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import Box from "@mui/joy/Box"
 import List from "@mui/joy/List"
 import ListItem from "@mui/joy/ListItem"
@@ -9,7 +9,7 @@ import ListItemButton from "@mui/joy/ListItemButton"
 import ListItemContent from "@mui/joy/ListItemContent"
 import Sheet from "@mui/joy/Sheet"
 import ListItemDecorator from "@mui/joy/ListItemDecorator"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import {
   AddCircleOutlineRounded,
   AutoAwesomeRounded,
@@ -29,6 +29,7 @@ import { ChatbotUIContext } from "@/context/context"
 import Divider from "@mui/joy/Divider"
 import { supabase } from "@/lib/supabase/browser-client"
 import { useSnackbar } from "@/lib/providers/SnackbarProvider"
+import { Session } from "@supabase/gotrue-js"
 
 const routeDictionary: Record<
   string,
@@ -43,16 +44,24 @@ const routeDictionary: Record<
   [Routes.Profile]: { icon: <PersonRounded />, label: "Profile" }
 }
 
-export default async function Sidebar() {
+export default function Sidebar() {
   const [selectedRoute, setSelectedRoute] = React.useState(Routes.Home)
   const router = useRouter()
 
   const { chats, selectedWorkspace, setSelectedWorkspace, workspaces } =
     useContext(ChatbotUIContext)
-  const pathname = usePathname()
   const { setSnackbar } = useSnackbar()
-  const session = (await supabase.auth.getSession()).data.session
+  const [session, setSession] = useState<Session | null>(null)
   const homeWorkspace = workspaces.find(w => w.is_home)
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const sessionData = (await supabase.auth.getSession()).data.session
+      setSession(sessionData)
+    }
+
+    fetchSession()
+  }, [])
 
   function MenuItem({
     route,
@@ -161,9 +170,9 @@ export default async function Sidebar() {
           "--ListItem-radius": theme => theme.vars.radius.sm
         }}
       >
-        {/* TODO: Add Image Generation*/}
+        {/* TODO: Add Image Generation & Toolbox*/}
         {/*<MenuItem route={Routes.Images} />*/}
-        <MenuItem route={Routes.Toolbox} />
+        {/*<MenuItem route={Routes.Toolbox} />*/}
         <MenuItem route={Routes.Explore} />
         <Divider sx={{ m: 1 }} />
         <DataList
@@ -201,8 +210,6 @@ export default async function Sidebar() {
 }
 
 function SidebarHeader() {
-  const router = useRouter()
-
   return (
     <Box
       sx={{
@@ -212,9 +219,10 @@ function SidebarHeader() {
       }}
     >
       <Button
+        component="a"
+        href={Routes.Home}
         variant="plain"
         startDecorator={<AutoAwesomeRounded />}
-        onClick={() => router.push(Routes.Home)}
         sx={{
           width: "100%",
           justifyContent: "start",
