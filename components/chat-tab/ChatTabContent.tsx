@@ -10,12 +10,14 @@ interface SidebarContentProps {
   contentType: ContentType
   data: DataListType
   folders: Tables<"folders">[]
+  variant?: "list" | "grid"
 }
 
 export const ChatTabContent: FC<SidebarContentProps> = ({
   contentType,
   data,
-  folders
+  folders,
+  variant = "grid"
 }) => {
   const [searchTerm, setSearchTerm] = useState("")
 
@@ -27,10 +29,11 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
     <Box
       sx={{
         display: "flex",
+        width: variant === "grid" ? "100%" : 250,
         flexDirection: "column",
         height: "100%",
         flexGrow: 1,
-        mt: 5
+        mt: variant === "grid" ? 5 : 2
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexGrow: 0 }}>
@@ -42,6 +45,7 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
         <ChatTabCreateButtons
           contentType={contentType}
           hasData={data.length > 0}
+          variant={variant}
         />
       </Box>
 
@@ -49,7 +53,7 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
         contentType={contentType}
         data={filteredData}
         folders={folders}
-        variant="grid"
+        variant={variant}
       />
     </Box>
   )

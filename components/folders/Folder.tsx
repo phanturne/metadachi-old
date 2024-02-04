@@ -63,7 +63,6 @@ export const Folder: FC<FolderProps> = ({
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("e", e)
     if (onClick) onClick()
     if (variant === "expandable") {
       setIsExpanded(!isExpanded)

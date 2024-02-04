@@ -43,6 +43,8 @@ export const DataList: FC<DataList> = ({
   const router = useRouter()
   const chatId = searchParams.get("id")
   const chatSearchParam = chatId ? `id=${chatId}&` : ""
+  const tab = searchParams.get("tab")
+  const tabSearchParam = tab ? `tab=${tab}&` : ""
 
   const {
     setChats,
@@ -234,22 +236,26 @@ export const DataList: FC<DataList> = ({
   )
   const [displayedFiles, setDisplayedFiles] = useState(dataWithoutFolders)
 
-  useEffect(() => {
-    const searchParamFolder = searchParams.get("f")
-    if (searchParamFolder != currentFolder) {
-      setCurrentFolder(searchParamFolder)
-    }
-  }, [searchParams])
+  // TODO: Uncommenting the useEffect() below will fix the issue of incorrect displayed files and folders
+  //  after a refresh. However, it will also mess with the folders and files in the ChatSidebar...
+  // useEffect(() => {
+  //   const searchParamFolder = searchParams.get("f")
+  //   if (searchParamFolder != currentFolder) {
+  //     setCurrentFolder(searchParamFolder)
+  //   }
+  // }, [searchParams])
 
-  useEffect(() => {
-    setDisplayedFiles(data.filter(item => item.folder_id === currentFolder))
-  }, [data])
+  // useEffect(() => {
+  //   setDisplayedFiles(data.filter(item => item.folder_id === currentFolder))
+  // }, [data])
 
   const handleFolderClick = (folderId: string | null) => {
-    const folderString = folderId ? `&f=${folderId}` : ""
-    router.push(`${pathname}?${chatSearchParam}tab=files${folderString}`)
     setCurrentFolder(folderId)
     setDisplayedFiles(data.filter(item => item.folder_id == folderId))
+    const folderString = folderId ? `f=${folderId}` : ""
+    router.push(
+      `${pathname}?${chatSearchParam}${tabSearchParam}${folderString}`
+    )
   }
 
   function FolderData({ folder }: { folder: Tables<"folders"> }) {
@@ -260,7 +266,9 @@ export const DataList: FC<DataList> = ({
         contentType={contentType}
         onUpdateFolder={updateFolder}
         variant={variant === "list" ? "expandable" : "basic"}
-        onClick={() => handleFolderClick(folder.id)}
+        onClick={
+          variant === "grid" ? () => handleFolderClick(folder.id) : undefined
+        }
       >
         {dataWithFolders
           .filter(item => item.folder_id === folder.id)

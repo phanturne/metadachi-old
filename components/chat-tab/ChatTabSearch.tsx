@@ -1,6 +1,7 @@
 import { ContentType } from "@/types"
 import { FC } from "react"
 import { Input } from "@mui/joy"
+import { SearchRounded } from "@mui/icons-material"
 
 interface SidebarSearchProps {
   contentType: ContentType
@@ -18,6 +19,7 @@ export const ChatTabSearch: FC<SidebarSearchProps> = ({
       placeholder={`Search ${contentType}...`}
       value={searchTerm}
       onChange={e => setSearchTerm(e.target.value)}
+      startDecorator={<SearchRounded />}
       sx={{ width: "100%" }}
     />
   )

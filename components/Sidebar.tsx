@@ -31,6 +31,7 @@ import { Session } from "@supabase/gotrue-js"
 import ComingSoonChip from "@/components/Chips"
 import ProfileMenu from "@/components/ProfileMenu"
 import { SidebarItem, SidebarRouteItem } from "@/components/sidebar/SidebarItem"
+import Divider from "@mui/joy/Divider"
 
 export const routeDictionary: Record<
   string,
@@ -130,7 +131,7 @@ export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
     <Sheet
       sx={{
         width: `${SIDEBAR_WIDTH}px`,
-        py: 2,
+        py: 1.5,
         flexShrink: 0,
         display: "flex",
         flexDirection: "column",
@@ -157,6 +158,7 @@ export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
           selectedRoute={selectedRoute}
           setSelectedRoute={setSelectedRoute}
         />
+        <Divider sx={{ mx: 1.5 }} />
         <SidebarRouteItem
           route={Routes.Chat}
           selectedRoute={selectedRoute}
@@ -180,6 +182,7 @@ export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
           setSelectedRoute={setSelectedRoute}
           trailingContent={<ComingSoonChip />}
         />
+        <Divider sx={{ mx: 1.5 }} />
         <SidebarRouteItem
           route={Routes.Collections}
           selectedRoute={selectedRoute}

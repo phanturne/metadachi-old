@@ -44,6 +44,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setTab(searchParams.get("tab") ?? "chat")
     const fetchData = async () => {
       await fetchMessages()
       await fetchChat()

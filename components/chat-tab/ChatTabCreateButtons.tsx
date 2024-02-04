@@ -16,11 +16,13 @@ import { AddRounded, CreateNewFolderRounded } from "@mui/icons-material"
 interface SidebarCreateButtonsProps {
   contentType: ContentType
   hasData: boolean
+  variant: "list" | "grid"
 }
 
 export const ChatTabCreateButtons: FC<SidebarCreateButtonsProps> = ({
   contentType,
-  hasData
+  hasData,
+  variant = "grid"
 }) => {
   const { profile, selectedWorkspace, folders, setFolders } =
     useContext(ChatbotUIContext)
@@ -101,14 +103,24 @@ export const ChatTabCreateButtons: FC<SidebarCreateButtonsProps> = ({
 
   return (
     <Box sx={{ display: "flex", flexShrink: 0, gap: 1 }}>
-      <Button
-        variant="outlined"
-        color="neutral"
-        onClick={getCreateFunction()}
-        startDecorator={<AddRounded />}
-      >
-        {`New ${contentTypeString}`}
-      </Button>
+      {variant === "grid" ? (
+        <>
+          <Button
+            variant="outlined"
+            color="neutral"
+            onClick={getCreateFunction()}
+            startDecorator={<AddRounded />}
+          >
+            {`New ${contentTypeString}`}
+          </Button>
+        </>
+      ) : (
+        <>
+          <IconButton variant="outlined" onClick={getCreateFunction()}>
+            <AddRounded />
+          </IconButton>
+        </>
+      )}
 
       {hasData && (
         <IconButton
