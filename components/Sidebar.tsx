@@ -30,15 +30,20 @@ import Divider from "@mui/joy/Divider"
 import { supabase } from "@/lib/supabase/browser-client"
 import { useSnackbar } from "@/lib/providers/SnackbarProvider"
 import { Session } from "@supabase/gotrue-js"
+import ComingSoonChip from "@/components/Chips"
 
 const routeDictionary: Record<
   string,
-  { icon: React.ReactNode; label: string }
+  { icon: React.ReactNode; label: string; disabled?: boolean }
 > = {
   [Routes.Home]: { icon: <HomeRounded />, label: "Home" },
   [Routes.Chat]: { icon: <ChatRounded />, label: "Chats" },
-  [Routes.Images]: { icon: <ImageRounded />, label: "Images" },
-  [Routes.Toolbox]: { icon: <HomeRepairServiceRounded />, label: "Toolbox" },
+  [Routes.Images]: { icon: <ImageRounded />, label: "Images", disabled: true },
+  [Routes.Toolbox]: {
+    icon: <HomeRepairServiceRounded />,
+    label: "Toolbox",
+    disabled: true
+  },
   [Routes.Explore]: { icon: <ExploreRounded />, label: "Explore" },
   [Routes.Settings]: { icon: <SettingsRounded />, label: "Settings" },
   [Routes.Profile]: { icon: <PersonRounded />, label: "Profile" }
@@ -91,6 +96,7 @@ export default function Sidebar() {
                   router.push(route)
                 }
           }
+          disabled={routeDictionary[route].disabled}
         >
           <ListItemDecorator>{routeDictionary[route].icon}</ListItemDecorator>
           <ListItemContent>
@@ -171,8 +177,8 @@ export default function Sidebar() {
         }}
       >
         {/* TODO: Add Image Generation & Toolbox*/}
-        {/*<MenuItem route={Routes.Images} />*/}
-        {/*<MenuItem route={Routes.Toolbox} />*/}
+        <MenuItem route={Routes.Images} trailingContent={<ComingSoonChip />} />
+        <MenuItem route={Routes.Toolbox} trailingContent={<ComingSoonChip />} />
         <MenuItem route={Routes.Explore} />
         <Divider sx={{ m: 1 }} />
         <DataList
