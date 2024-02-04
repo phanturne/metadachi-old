@@ -89,10 +89,11 @@ export default function SetupPage() {
             setAvailableOpenRouterModels(openRouterModels)
           }
 
-          const homeWorkspaceId = await getHomeWorkspaceByUserId(
-            session.user.id
-          )
-          return router.push(`/${homeWorkspaceId}/chat`)
+          // const homeWorkspaceId = await getHomeWorkspaceByUserId(
+          //   session.user.id
+          // )
+          return router.push(`/chat`)
+          // return router.push(`/${homeWorkspaceId}/chat`)
         }
       }
     })()
@@ -150,7 +151,7 @@ export default function SetupPage() {
     setSelectedWorkspace(homeWorkspace!)
     setWorkspaces(workspaces)
 
-    return router.push(`/${homeWorkspace?.id}/chat`)
+    return router.push(`/chat`)
   }
 
   const renderStep = (stepNum: number) => {

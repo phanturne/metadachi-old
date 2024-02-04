@@ -11,11 +11,10 @@ import { getPresetWorkspacesByWorkspaceId } from "@/db/presets"
 import { getPromptWorkspacesByWorkspaceId } from "@/db/prompts"
 import { getAssistantImageFromStorage } from "@/db/storage/assistant-images"
 import { getToolWorkspacesByWorkspaceId } from "@/db/tools"
-import { getWorkspaceById } from "@/db/workspaces"
+import { getHomeWorkspaceByUserId, getWorkspaceById } from "@/db/workspaces"
 import { convertBlobToBase64 } from "@/lib/blob-to-b64"
 import { supabase } from "@/lib/supabase/browser-client"
 import { LLMID } from "@/types"
-import { useParams, useRouter } from "next/navigation"
 import { ReactNode, useContext, useEffect, useState } from "react"
 import Loading from "@/app/[locale]/loading"
 
@@ -24,11 +23,6 @@ interface WorkspaceLayoutProps {
 }
 
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
-  const router = useRouter()
-
-  const params = useParams()
-  const workspaceId = params.workspaceid as string
-
   const {
     setChatSettings,
     setAssistants,
@@ -65,13 +59,17 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
         setLoading(false)
         return
       } else {
-        await fetchWorkspaceData(workspaceId)
+        await fetchWorkspaceData(selectedWorkspace?.id)
       }
     })()
   }, [])
 
   useEffect(() => {
-    ;(async () => await fetchWorkspaceData(workspaceId))()
+    ;(async () => {
+      await fetchWorkspaceData(selectedWorkspace?.id)
+    })()
+
+    if (!selectedWorkspace) return
 
     setUserInput("")
     setChatMessages([])
@@ -85,9 +83,19 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setNewMessageFiles([])
     setNewMessageImages([])
     setShowFilesDisplay(false)
-  }, [workspaceId])
+  }, [selectedWorkspace?.id])
 
-  const fetchWorkspaceData = async (workspaceId: string) => {
+  const fetchWorkspaceData = async (workspaceId?: string) => {
+    if (!workspaceId) {
+      const session = (await supabase.auth.getSession()).data.session
+      if (!session) return
+      workspaceId = await getHomeWorkspaceByUserId(session.user.id)
+    }
+
+    if (!workspaceId) {
+      return
+    }
+
     setLoading(true)
 
     const workspace = await getWorkspaceById(workspaceId)

@@ -23,10 +23,8 @@ import { useAuthModal } from "@/lib/providers/AuthContextProvider"
 import { useSnackbar } from "@/lib/providers/SnackbarProvider"
 
 export default function ProfileMenu({
-  children,
   placement = "bottom"
 }: {
-  children?: React.ReactNode
   placement?: "left" | "right" | "top" | "bottom"
 }) {
   const router = useRouter()
@@ -44,21 +42,18 @@ export default function ProfileMenu({
 
   return (
     <Dropdown>
-      {children && <>{children}</>}
-      {!children && (
-        <MenuButton
-          slots={{ root: Avatar }}
-          slotProps={{
-            root: { variant: "solid", size: "sm" }
-          }}
-        >
-          <Avatar
-            variant="solid"
-            size="sm"
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-          />
-        </MenuButton>
-      )}
+      <MenuButton
+        slots={{ root: Avatar }}
+        slotProps={{
+          root: { variant: "solid", size: "sm" }
+        }}
+      >
+        <Avatar
+          variant="solid"
+          size="sm"
+          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+        />
+      </MenuButton>
 
       <Menu placement={placement} sx={{ width: "250px" }}>
         <Box sx={{ display: "flex", m: 1, mx: 1.5 }}>

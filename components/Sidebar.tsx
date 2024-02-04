@@ -4,8 +4,6 @@ import * as React from "react"
 import { useContext, useEffect, useState } from "react"
 import Box from "@mui/joy/Box"
 import List from "@mui/joy/List"
-import ListItem from "@mui/joy/ListItem"
-import ListItemButton from "@mui/joy/ListItemButton"
 import ListItemContent from "@mui/joy/ListItemContent"
 import Sheet from "@mui/joy/Sheet"
 import ListItemDecorator from "@mui/joy/ListItemDecorator"
@@ -14,27 +12,29 @@ import {
   AddCircleOutlineRounded,
   AutoAwesomeRounded,
   ChatRounded,
+  CollectionsBookmarkRounded,
   ExploreRounded,
   HomeRepairServiceRounded,
   HomeRounded,
   ImageRounded,
   PersonRounded,
-  SettingsRounded
+  SettingsRounded,
+  SportsEsportsRounded
 } from "@mui/icons-material"
-import { Button } from "@mui/joy"
-import { Routes, SIDEBAR_WIDTH } from "@/lib/constants"
+import { Button, IconButton } from "@mui/joy"
+import { Routes } from "@/lib/constants"
 import Typography from "@mui/joy/Typography"
-import { DataList } from "@/components/sidebar/data-list"
 import { ChatbotUIContext } from "@/context/context"
-import Divider from "@mui/joy/Divider"
 import { supabase } from "@/lib/supabase/browser-client"
 import { useSnackbar } from "@/lib/providers/SnackbarProvider"
 import { Session } from "@supabase/gotrue-js"
 import ComingSoonChip from "@/components/Chips"
+import ProfileMenu from "@/components/ProfileMenu"
+import { SidebarItem, SidebarRouteItem } from "@/components/sidebar/SidebarItem"
 
-const routeDictionary: Record<
+export const routeDictionary: Record<
   string,
-  { icon: React.ReactNode; label: string; disabled?: boolean }
+  { icon: React.ReactElement; label: string; disabled?: boolean }
 > = {
   [Routes.Home]: { icon: <HomeRounded />, label: "Home" },
   [Routes.Chat]: { icon: <ChatRounded />, label: "Chats" },
@@ -44,20 +44,34 @@ const routeDictionary: Record<
     label: "Toolbox",
     disabled: true
   },
-  [Routes.Explore]: { icon: <ExploreRounded />, label: "Explore" },
+  [Routes.Games]: {
+    icon: <SportsEsportsRounded />,
+    label: "Games",
+    disabled: true
+  },
+  [Routes.Collections]: {
+    icon: <CollectionsBookmarkRounded />,
+    label: "Collections"
+  },
+  [Routes.Explore]: {
+    icon: <ExploreRounded />,
+    label: "Explore",
+    disabled: true
+  },
   [Routes.Settings]: { icon: <SettingsRounded />, label: "Settings" },
   [Routes.Profile]: { icon: <PersonRounded />, label: "Profile" }
 }
 
-export default function Sidebar() {
+export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
   const [selectedRoute, setSelectedRoute] = React.useState(Routes.Home)
   const router = useRouter()
 
-  const { chats, selectedWorkspace, setSelectedWorkspace, workspaces } =
+  const { selectedWorkspace, setSelectedWorkspace, workspaces } =
     useContext(ChatbotUIContext)
   const { setSnackbar } = useSnackbar()
   const [session, setSession] = useState<Session | null>(null)
   const homeWorkspace = workspaces.find(w => w.is_home)
+  const SIDEBAR_WIDTH = isShrunk ? 60 : 260
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -67,48 +81,6 @@ export default function Sidebar() {
 
     fetchSession()
   }, [])
-
-  function MenuItem({
-    route,
-    trailingContent,
-    onClick,
-    onMouseOver
-  }: {
-    route: string
-    trailingContent?: React.ReactNode
-    onClick?: React.MouseEventHandler<HTMLAnchorElement>
-    onMouseOver?: React.MouseEventHandler<HTMLAnchorElement>
-  }) {
-    if (!routeDictionary[route]) {
-      return
-    }
-
-    return (
-      <ListItem sx={{ m: 0 }}>
-        <ListItemButton
-          selected={route === selectedRoute}
-          onMouseOver={onMouseOver}
-          onClick={
-            onClick !== undefined
-              ? onClick
-              : () => {
-                  setSelectedRoute(route)
-                  router.push(route)
-                }
-          }
-          disabled={routeDictionary[route].disabled}
-        >
-          <ListItemDecorator>{routeDictionary[route].icon}</ListItemDecorator>
-          <ListItemContent>
-            <Typography level="title-sm">
-              {routeDictionary[route].label}
-            </Typography>
-          </ListItemContent>
-          {trailingContent}
-        </ListItemButton>
-      </ListItem>
-    )
-  }
 
   function NewChatButton() {
     const handleNewChat = async () => {
@@ -135,19 +107,22 @@ export default function Sidebar() {
       }
 
       setSelectedRoute(Routes.Chat)
-      return router.push(`/${workspaceId}/${Routes.Chat}`)
+      return router.push(`/${Routes.Chat}`)
     }
 
     return (
-      <Button
-        variant="outlined"
-        color="neutral"
-        size="sm"
-        onClick={handleNewChat}
-        startDecorator={<AddCircleOutlineRounded />}
-      >
-        <Typography level="title-sm">New Chat</Typography>
-      </Button>
+      <SidebarItem onClick={handleNewChat}>
+        {isShrunk ? (
+          <AddCircleOutlineRounded />
+        ) : (
+          <>
+            <ListItemDecorator>{<AddCircleOutlineRounded />}</ListItemDecorator>
+            <ListItemContent>
+              <Typography level="title-sm">New Chat</Typography>
+            </ListItemContent>
+          </>
+        )}
+      </SidebarItem>
     )
   }
 
@@ -155,17 +130,17 @@ export default function Sidebar() {
     <Sheet
       sx={{
         width: `${SIDEBAR_WIDTH}px`,
-        p: 2,
+        py: 2,
         flexShrink: 0,
         display: "flex",
         flexDirection: "column",
         gap: 1.5,
         borderRight: "1px solid",
-        borderColor: "divider"
+        borderColor: "divider",
+        overflow: "hidden"
       }}
     >
       <SidebarHeader />
-      <NewChatButton />
 
       <List
         size="sm"
@@ -176,69 +151,114 @@ export default function Sidebar() {
           "--ListItem-radius": theme => theme.vars.radius.sm
         }}
       >
-        {/* TODO: Add Image Generation & Toolbox*/}
-        <MenuItem route={Routes.Images} trailingContent={<ComingSoonChip />} />
-        <MenuItem route={Routes.Toolbox} trailingContent={<ComingSoonChip />} />
-        <MenuItem route={Routes.Explore} />
-        <Divider sx={{ m: 1 }} />
-        <DataList
-          contentType="chats"
-          data={chats}
-          // folders={chatFolders}
-          folders={[]} // Chat folders will not be displayed in the sidebar
+        {/*<NewChatButton />*/}
+        <SidebarRouteItem
+          route={Routes.Home}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+        />
+        <SidebarRouteItem
+          route={Routes.Chat}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+        />
+        <SidebarRouteItem
+          route={Routes.Images}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+          trailingContent={<ComingSoonChip />}
+        />
+        <SidebarRouteItem
+          route={Routes.Toolbox}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+          trailingContent={<ComingSoonChip />}
+        />
+        <SidebarRouteItem
+          route={Routes.Games}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+          trailingContent={<ComingSoonChip />}
+        />
+        <SidebarRouteItem
+          route={Routes.Collections}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+        />
+        <SidebarRouteItem
+          route={Routes.Explore}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+          trailingContent={<ComingSoonChip />}
         />
       </List>
 
-      {/*<List*/}
-      {/*  size="sm"*/}
-      {/*  sx={{*/}
-      {/*    overflow: "hidden",*/}
-      {/*    mt: 1,*/}
-      {/*    flexGrow: 0,*/}
-      {/*    "--ListItem-radius": theme => theme.vars.radius.sm,*/}
-      {/*    "--List-gap": "8px"*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <MenuItem route={Routes.Settings} />*/}
+      <List
+        size="sm"
+        sx={{
+          gap: 1,
+          overflow: "hidden",
+          mt: 1,
+          flexGrow: 0,
+          "--ListItem-radius": theme => theme.vars.radius.sm
+        }}
+      >
+        <SidebarRouteItem
+          route={Routes.Settings}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+        />
 
-      {/*  <ProfileMenu placement="right">*/}
-      {/*    <MenuButton*/}
-      {/*      component="button"*/}
-      {/*      variant="plain"*/}
-      {/*      sx={{ justifyContent: "start", fontWeight: "normal", p: 0, m: 0 }}*/}
-      {/*    >*/}
-      {/*      <MenuItem route={Routes.Profile} onClick={() => {}} />*/}
-      {/*    </MenuButton>*/}
-      {/*  </ProfileMenu>*/}
-      {/*</List>*/}
+        <SidebarItem onClick={() => {}}>
+          <ProfileMenu placement="right"></ProfileMenu>
+        </SidebarItem>
+      </List>
     </Sheet>
   )
 }
 
-function SidebarHeader() {
+function SidebarHeader({ isShrunk = true }: { isShrunk?: boolean }) {
   return (
     <Box
       sx={{
         display: "flex",
-        alignItems: "center",
-        mb: 1
+        alignContent: "center",
+        justifyContent: "center"
       }}
     >
-      <Button
-        component="a"
-        href={Routes.Home}
-        variant="plain"
-        startDecorator={<AutoAwesomeRounded />}
-        sx={{
-          width: "100%",
-          justifyContent: "start",
-          "&:hover": {
-            backgroundColor: "transparent"
-          }
-        }}
-      >
-        <Typography level="title-lg">Metadachi</Typography>
-      </Button>
+      {isShrunk ? (
+        <IconButton
+          component="a"
+          href={Routes.Home}
+          variant="outlined"
+          color="primary"
+          sx={{
+            alignContent: "center",
+            justifyContent: "center",
+            "&:hover": {
+              backgroundColor: "transparent"
+            }
+          }}
+        >
+          <AutoAwesomeRounded />
+        </IconButton>
+      ) : (
+        <Button
+          component="a"
+          href={Routes.Home}
+          variant="plain"
+          startDecorator={<AutoAwesomeRounded />}
+          sx={{
+            width: "100%",
+            justifyContent: "start",
+            "&:hover": {
+              backgroundColor: "transparent"
+            }
+          }}
+        >
+          <Typography level="title-lg">Metadachi</Typography>
+        </Button>
+      )}
     </Box>
   )
 }

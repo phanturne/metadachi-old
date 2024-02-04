@@ -33,7 +33,7 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
 
   const handleClick = () => {
     if (!selectedWorkspace) return
-    return router.push(`/${selectedWorkspace.id}/chat/?id=${chat.id}`)
+    return router.push(`/chat/?id=${chat.id}`)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {

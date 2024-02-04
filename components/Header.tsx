@@ -59,7 +59,7 @@ export default function Header({
         {/*<IconButton color="neutral" size="sm">*/}
         {/*  <NotificationsNoneRounded />*/}
         {/*</IconButton>*/}
-        <ProfileMenu />
+        {/*<ProfileMenu />*/}
       </Box>
     </Sheet>
   )

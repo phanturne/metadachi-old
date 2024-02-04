@@ -4,15 +4,14 @@ export const SIDEBAR_WIDTH = 260
 
 export const Routes = {
   Home: "/",
-  Auth: "/auth",
   Login: "/login",
   SignUp: "/signup",
   Setup: "/setup",
-  NewChat: "/chat?new",
   Chat: "/chat",
   Images: "/images",
   Collections: "/collections",
   Toolbox: "/toolbox",
+  Games: "/games",
   Explore: "/explore",
   Settings: "/settings",
   Profile: "/profile",

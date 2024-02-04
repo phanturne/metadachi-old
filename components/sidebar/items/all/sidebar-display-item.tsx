@@ -60,7 +60,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
       setChats(prevState => [createdChat, ...prevState])
       setSelectedAssistant(assistant)
 
-      return router.push(`/${selectedWorkspace.id}/chat/?id=${createdChat.id}`)
+      return router.push(`/chat/?id=${createdChat.id}`)
     },
     tools: async (item: any) => {},
     models: async (item: any) => {}
