@@ -10,7 +10,8 @@ export default function ChatLayout({
       style={{
         display: "flex",
         height: "100%",
-        width: "100%"
+        width: "100%",
+        overflow: "hidden"
       }}
     >
       <ChatSidebar />
