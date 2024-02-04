@@ -3,7 +3,6 @@
 import * as React from "react"
 import Sheet from "@mui/joy/Sheet"
 import Box from "@mui/joy/Box"
-import ProfileMenu from "@/components/ProfileMenu"
 
 export default function Header({
   startContent,

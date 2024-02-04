@@ -2,10 +2,7 @@
 
 import { ChatbotUIContext } from "@/context/context"
 import { getProfileByUserId, updateProfile } from "@/db/profile"
-import {
-  getHomeWorkspaceByUserId,
-  getWorkspacesByUserId
-} from "@/db/workspaces"
+import { getWorkspacesByUserId } from "@/db/workspaces"
 import {
   fetchHostedModels,
   fetchOpenRouterModels
