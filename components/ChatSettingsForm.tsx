@@ -30,7 +30,11 @@ export const ChatSettingsForm: FC<ChatSettingsFormProps> = ({
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        <Typography level="title-sm" fontWeight="bold">
+        <Typography
+          level="title-sm"
+          fontWeight="bold"
+          sx={{ alignSelf: "flex-start" }}
+        >
           Model
         </Typography>
 
@@ -43,7 +47,11 @@ export const ChatSettingsForm: FC<ChatSettingsFormProps> = ({
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        <Typography level="title-sm" fontWeight="bold">
+        <Typography
+          level="title-sm"
+          fontWeight="bold"
+          sx={{ alignSelf: "flex-start" }}
+        >
           Prompt
         </Typography>
 

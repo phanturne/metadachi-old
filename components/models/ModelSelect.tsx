@@ -1,10 +1,10 @@
 import { ChatbotUIContext } from "@/context/context"
 import { LLMID, ModelProvider } from "@/types"
-import React, { FC, useContext, useEffect, useState } from "react"
+import React, { FC, useContext, useState } from "react"
 import { ModelIcon } from "./model-icon"
-import { Autocomplete, Option, Select } from "@mui/joy"
+import { Autocomplete, Box } from "@mui/joy"
 import { ModelOption } from "@/components/models/ModelOption"
-import { GUEST_LLM_LIST } from "@/lib/constants"
+import { ModelFilterDropdown } from "@/components/models/ModelFilterDropdown"
 
 interface ModelSelectProps {
   selectedModelId: string
@@ -25,7 +25,7 @@ const MODEL_FILTERS = {
 } as const
 
 type ModelFilter = (typeof MODEL_FILTERS)[keyof typeof MODEL_FILTERS]
-const MODEL_FILTER_LIST = Object.keys(MODEL_FILTERS) as ModelFilter[]
+export const MODEL_FILTER_LIST = Object.keys(MODEL_FILTERS) as ModelFilter[]
 
 export const ModelSelect: FC<ModelSelectProps> = ({
   selectedModelId,
@@ -112,26 +112,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     return model.provider === filter
   })
 
-  const ModelFilterDropdown = () => {
-    return (
-      <Select
-        variant="soft"
-        defaultValue={MODEL_FILTER_LIST[0]}
-        value={modelFilter}
-        onChange={(_, v) => {
-          setModelFilter(v ?? MODEL_FILTERS.All)
-        }}
-        sx={{ ml: "-12px", width: "150px", mr: 1 }}
-      >
-        {MODEL_FILTER_LIST.map(filter => (
-          <Option value={filter} key={`model-filter-${filter}`}>
-            {filter}
-          </Option>
-        ))}
-      </Select>
-    )
-  }
-
   return (
     <Autocomplete
       defaultValue={selectedModel}
@@ -140,14 +120,25 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       options={filteredModels}
       groupBy={option => option.provider}
       startDecorator={
-        <>
-          <ModelFilterDropdown />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 1,
+            alignItems: "center",
+            ml: "-12px"
+          }}
+        >
+          <ModelFilterDropdown
+            modelFilter={modelFilter}
+            setModelFilter={setModelFilter}
+          />
           <ModelIcon
             provider={selectedModel?.provider}
             width={26}
             height={26}
           />
-        </>
+        </Box>
       }
       autoHighlight
       getOptionLabel={model => model.modelName}

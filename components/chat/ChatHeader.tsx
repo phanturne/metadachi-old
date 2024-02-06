@@ -1,6 +1,6 @@
 import Header from "@/components/Header"
 import { QuickSettings } from "@/components/chat/quick-settings"
-import { ChatSettingsPopup } from "@/components/chat/chat-settings-popup"
+import { ChatSettingsPopup } from "@/components/chat/ChatSettingsPopup"
 import { ChatScrollButtons } from "@/components/chat/chat-scroll-buttons"
 import { Typography } from "@mui/joy"
 import { ChatSecondaryButtons } from "@/components/chat/chat-secondary-buttons"
