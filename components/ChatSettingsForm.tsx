@@ -3,7 +3,7 @@
 import { ChatSettings } from "@/types"
 import { FC } from "react"
 import { ModelSelect } from "./models/ModelSelect"
-import { AdvancedSettings } from "./ui/advanced-settings"
+import { AdvancedModelSettings } from "./models/AdvancedModelSettings"
 import { Box, Textarea, Typography } from "@mui/joy"
 import Sheet from "@mui/joy/Sheet"
 
@@ -66,7 +66,7 @@ export const ChatSettingsForm: FC<ChatSettingsFormProps> = ({
         />
       </Box>
 
-      <AdvancedSettings
+      <AdvancedModelSettings
         chatSettings={chatSettings}
         onChangeChatSettings={onChangeChatSettings}
         showTooltip={showTooltip}

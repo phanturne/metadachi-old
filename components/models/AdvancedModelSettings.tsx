@@ -1,34 +1,40 @@
-import { IconInfoCircle } from "@tabler/icons-react"
 import { FC, useContext } from "react"
 import { ChatSettings } from "@/types"
 import { ChatbotUIContext } from "@/context/context"
 import { CHAT_SETTING_LIMITS } from "@/lib/chat-setting-limits"
-import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/joy"
 import {
-  Typography,
-  Slider,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
   Checkbox,
-  Tooltip,
+  IconButton,
+  Option,
   Select,
-  MenuItem,
-  IconButton
+  Slider,
+  Tooltip,
+  Typography
 } from "@mui/joy"
-import InfoIcon from "@mui/icons-material/Info"
+import { InfoRounded } from "@mui/icons-material"
 
-interface AdvancedSettingsProps {
+interface AdvancedModelSettingsProps {
   chatSettings: ChatSettings
   onChangeChatSettings: (value: ChatSettings) => void
   showTooltip: boolean
 }
 
-export const AdvancedSettings: FC<AdvancedSettingsProps> = ({
+export const AdvancedModelSettings: FC<AdvancedModelSettingsProps> = ({
   chatSettings,
   onChangeChatSettings,
   showTooltip
 }) => {
   return (
-    <Accordion>
-      <AccordionSummary>Advanced Settings</AccordionSummary>
+    <Accordion sx={{ ml: -1.5 }}>
+      <AccordionSummary>
+        <Typography level="title-md" fontWeight="bold">
+          Advanced Settings
+        </Typography>
+      </AccordionSummary>
       <AccordionDetails>
         <AdvancedContent
           chatSettings={chatSettings}
@@ -70,43 +76,48 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
   }
 
   return (
-    <Box mt={1}>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-        <Typography
-          level="title-sm"
-          fontWeight="bold"
-          sx={{ display: "flex", alignItems: "center", gap: 1 }}
-        >
-          Temperature:
-          <Typography>{chatSettings.temperature}</Typography>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", mt: 2 }}>
+        <Typography level="title-sm" fontWeight="bold">
+          {`Temperature: ${chatSettings.temperature}`}
         </Typography>
 
-        {/*<Slider*/}
-        {/*  value={[chatSettings.temperature]}*/}
-        {/*  onChange={(event, newValue) => onChangeChatSettings({ ...chatSettings, temperature: newValue[0] })}*/}
-        {/*  min={MODEL_LIMITS.MIN_TEMPERATURE}*/}
-        {/*  max={MODEL_LIMITS.MAX_TEMPERATURE}*/}
-        {/*  step={0.01}*/}
-        {/*/>*/}
+        <Slider
+          value={[chatSettings.temperature]}
+          onChange={(event, newValue) =>
+            onChangeChatSettings({
+              ...chatSettings,
+              temperature: newValue as number
+            })
+          }
+          min={MODEL_LIMITS.MIN_TEMPERATURE}
+          max={MODEL_LIMITS.MAX_TEMPERATURE}
+          step={0.01}
+        />
       </Box>
 
-      <Box mt={6} sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-        <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          Context Length:
-          <Typography>{chatSettings.contextLength}</Typography>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Typography level="title-sm" fontWeight="bold">
+          {`Context Length: ${chatSettings.contextLength}`}
         </Typography>
 
-        {/*<Slider*/}
-        {/*  value={[chatSettings.contextLength]}*/}
-        {/*  onChange={(event, newValue) => onChangeChatSettings({ ...chatSettings, contextLength: newValue[0] })}*/}
-        {/*  min={0}*/}
-        {/*  max={MODEL_LIMITS.MAX_CONTEXT_LENGTH - 200}*/}
-        {/*  step={1}*/}
-        {/*/>*/}
+        <Slider
+          value={[chatSettings.contextLength]}
+          onChange={(event, newValue) =>
+            onChangeChatSettings({
+              ...chatSettings,
+              contextLength: newValue as number
+            })
+          }
+          min={0}
+          max={MODEL_LIMITS.MAX_CONTEXT_LENGTH - 200}
+          step={1}
+        />
       </Box>
 
-      <Box mt={7} sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <Checkbox
+          size="sm"
           checked={chatSettings.includeProfileContext}
           onChange={event =>
             onChangeChatSettings({
@@ -116,19 +127,22 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
           }
         />
 
-        <Typography level="body-md">Chats Include Profile Context</Typography>
+        <Typography level="title-sm" fontWeight="bold">
+          Chats Include Profile Context
+        </Typography>
 
         {showTooltip && (
           <Tooltip title={profile?.profile_context || "No profile context."}>
-            <IconButton>
-              <InfoIcon />
+            <IconButton size="sm">
+              <InfoRounded />
             </IconButton>
           </Tooltip>
         )}
       </Box>
 
-      <Box mt={4} sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <Checkbox
+          size="sm"
           checked={chatSettings.includeWorkspaceInstructions}
           onChange={event =>
             onChangeChatSettings({
@@ -138,7 +152,7 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
           }
         />
 
-        <Typography level="body-md">
+        <Typography level="title-sm" fontWeight="bold">
           Chats Include Workspace Instructions
         </Typography>
 
@@ -148,15 +162,19 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
               selectedWorkspace?.instructions || "No workspace instructions."
             }
           >
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
+            <Tooltip title={profile?.profile_context || "No profile context."}>
+              <IconButton size="sm">
+                <InfoRounded />
+              </IconButton>
+            </Tooltip>
           </Tooltip>
         )}
       </Box>
 
-      <Box mt={5}>
-        <Typography>Embeddings Provider</Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 2 }}>
+        <Typography level="title-sm" fontWeight="bold">
+          Embeddings Provider
+        </Typography>
 
         <Select
           value={chatSettings.embeddingsProvider}
@@ -167,8 +185,12 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
             })
           }
         >
-          {/*<MenuItem value="openai">{profile?.use_azure_openai ? "Azure OpenAI" : "OpenAI"}</MenuItem>*/}
-          {/*{window.location.hostname === "localhost" && <MenuItem value="local">Local</MenuItem>}*/}
+          <Option value="openai">
+            {profile?.use_azure_openai ? "Azure OpenAI" : "OpenAI"}
+          </Option>
+          {window.location.hostname === "localhost" && (
+            <Option value="local">Local</Option>
+          )}
         </Select>
       </Box>
     </Box>

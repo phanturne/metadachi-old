@@ -52,6 +52,7 @@ export function ChatSettingsPopup() {
       <Button
         ref={buttonRef}
         variant="plain"
+        color="neutral"
         endDecorator={<TuneRounded />}
         onClick={() => {
           setOpen(!open)

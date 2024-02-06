@@ -1,5 +1,4 @@
 import Header from "@/components/Header"
-import { QuickSettings } from "@/components/chat/quick-settings"
 import { ChatSettingsPopup } from "@/components/chat/ChatSettingsPopup"
 import { ChatScrollButtons } from "@/components/chat/chat-scroll-buttons"
 import { Typography } from "@mui/joy"
@@ -18,7 +17,7 @@ export default function ChatHeader({ variant }: { variant: "new" | null }) {
     <>
       {variant === "new" ? (
         <Header
-          startContent={<QuickSettings />}
+          // startContent={<QuickSettings />}
           endContent={<ChatSettingsPopup />}
         />
       ) : (
