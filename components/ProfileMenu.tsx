@@ -48,19 +48,12 @@ export default function ProfileMenu({
           root: { variant: "solid", size: "sm" }
         }}
       >
-        <Avatar
-          variant="solid"
-          size="sm"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-        />
+        <Avatar variant="soft" size="sm" src={profile?.image_url} />
       </MenuButton>
 
       <Menu placement={placement} sx={{ width: "250px" }}>
         <Box sx={{ display: "flex", m: 1, mx: 1.5 }}>
-          <Avatar
-            variant="solid"
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-          />
+          <Avatar variant="soft" src={profile?.image_url} />
           <Box
             sx={{
               display: "flex",
