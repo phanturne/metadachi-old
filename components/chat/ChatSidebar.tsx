@@ -11,7 +11,9 @@ export default function ChatSidebar() {
   const chatFolders = folders.filter(folder => folder.type === "chats")
 
   return (
-    <Sheet sx={{ p: 2, pt: 1.5 }}>
+    <Sheet
+      sx={{ p: 2, pt: 1.5, borderRight: "1px solid", borderColor: "divider" }}
+    >
       <Typography level="h4">Chats</Typography>
       <ChatTabContent
         contentType="chats"

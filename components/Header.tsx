@@ -26,8 +26,8 @@ export default function Header({
         width: "100%",
         height: 55,
         px: 2,
-        borderBottom: "1px solid",
-        borderColor: "background.level1",
+        border: "1px solid",
+        borderColor: "divider",
         boxShadow: "sm"
       }}
     >

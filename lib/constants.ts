@@ -1,6 +1,7 @@
 import { LLMID } from "@/types"
 
 export const SIDEBAR_WIDTH = 260
+export const SIDEBAR_ICON_SIZE = 28
 
 export const Routes = {
   Home: "/",

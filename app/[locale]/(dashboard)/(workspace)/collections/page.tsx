@@ -1,7 +1,7 @@
 "use client"
 import * as React from "react"
 import { useContext } from "react"
-import { Tab, tabClasses, TabList, TabPanel, Tabs } from "@mui/joy"
+import { Tab, tabClasses, TabList, TabPanel, Tabs, Typography } from "@mui/joy"
 import { ChatbotUIContext } from "@/context/context"
 import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
 import { ContentType } from "@/types"
@@ -51,7 +51,9 @@ export default function CollectionsPage() {
 
   return (
     <>
-      <Header />
+      <Header
+        startContent={<Typography level="title-lg">Collections</Typography>}
+      />
       <Tabs
         aria-label="tabs"
         defaultValue="prompts"
