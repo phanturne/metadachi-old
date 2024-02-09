@@ -12,7 +12,12 @@ export default function ChatSidebar() {
 
   return (
     <Sheet
-      sx={{ p: 2, pt: 1.5, borderRight: "1px solid", borderColor: "divider" }}
+      sx={{
+        height: "100%",
+        p: 2,
+        borderRight: "1px solid",
+        borderColor: "divider"
+      }}
     >
       <Typography level="h4">Chats</Typography>
       <ChatTabContent

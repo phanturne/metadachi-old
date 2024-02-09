@@ -31,7 +31,6 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
         display: "flex",
         width: variant === "grid" ? "100%" : 250,
         flexDirection: "column",
-        height: "100%",
         flexGrow: 1,
         mt: variant === "grid" ? 5 : 2
       }}

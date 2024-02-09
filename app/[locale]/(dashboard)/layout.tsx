@@ -4,6 +4,7 @@ import Sidebar from "@/components/Sidebar"
 import { Box } from "@mui/joy"
 import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import useHotkey from "@/lib/hooks/use-hotkey"
+import ChatSidebar from "@/components/chat/ChatSidebar"
 
 export default function DashboardLayout({
   children
@@ -18,9 +19,9 @@ export default function DashboardLayout({
     <Box
       sx={{
         display: "flex",
-        height: "100%",
+        height: "100vh",
         width: "100%",
-        overflow: "none"
+        overflow: "hidden"
       }}
     >
       {/*<CommandK />*/}
@@ -31,9 +32,8 @@ export default function DashboardLayout({
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          height: "100dvh",
           alignItems: "center",
-          overflow: "auto"
+          overflow: "hidden"
         }}
       >
         {children}
