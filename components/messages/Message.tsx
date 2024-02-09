@@ -100,7 +100,6 @@ export const Message: FC<MessageProps> = ({
     ...availableOpenRouterModels
   ].find(llm => llm.modelId === message.model) as LLM
 
-  console.log("model data", MODEL_DATA)
   return (
     <Box
       sx={{ display: "flex", width: "100%", justifyContent: "center" }}

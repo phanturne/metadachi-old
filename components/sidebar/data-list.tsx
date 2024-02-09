@@ -230,30 +230,27 @@ export const DataList: FC<DataList> = ({
 
   const dataWithFolders = data.filter(item => item.folder_id)
   const dataWithoutFolders = data.filter(item => item.folder_id === null)
-  // TODO: Assuming only one level of folders, read search params to save state where user is already in a folder
+  // TODO: Fix bug where selectign a folder from ChatTabContent will collapse the folders in SidebarChats
   const [currentFolder, setCurrentFolder] = useState<string | null>(
-    searchParams.get("f")
+    searchParams.get(`${contentType}-folders`)
   )
   const [displayedFiles, setDisplayedFiles] = useState(dataWithoutFolders)
 
-  // TODO: Uncommenting the useEffect() below will fix the issue of incorrect displayed files and folders
-  //  after a refresh. However, it will also mess with the folders and files in the ChatSidebar...
-  // useEffect(() => {
-  //   const searchParamFolder = searchParams.get("f")
-  //   if (searchParamFolder != currentFolder) {
-  //     setCurrentFolder(searchParamFolder)
-  //   }
-  // }, [searchParams])
-
-  // useEffect(() => {
-  //   setDisplayedFiles(data.filter(item => item.folder_id === currentFolder))
-  // }, [data])
+  // Important: Refreshes the data list when the data changes
+  useEffect(() => {
+    console.log(
+      contentType,
+      currentFolder,
+      data.filter(item => item.folder_id === currentFolder)
+    )
+    setDisplayedFiles(data.filter(item => item.folder_id === currentFolder))
+  }, [data])
 
   const handleFolderClick = (folderId: string | null) => {
     setCurrentFolder(folderId)
     setDisplayedFiles(data.filter(item => item.folder_id == folderId))
-    const folderString = folderId ? `f=${folderId}` : ""
-    router.push(
+    const folderString = folderId ? `${contentType}-folders=${folderId}` : ""
+    router.replace(
       `${pathname}?${chatSearchParam}${tabSearchParam}${folderString}`
     )
   }
