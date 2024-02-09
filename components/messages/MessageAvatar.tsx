@@ -55,10 +55,10 @@ export default function MessageAvatar({
               )
             ) : (
               <WithTooltip
-                display={<div>{modelData.modelName}</div>}
+                display={<div>{modelData?.modelName}</div>}
                 trigger={
                   <ModelIcon
-                    provider={modelData.provider}
+                    provider={modelData?.provider}
                     height={ICON_SIZE}
                     width={ICON_SIZE}
                   />
