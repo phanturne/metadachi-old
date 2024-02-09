@@ -23,6 +23,7 @@ export default function MessageAvatar({
     image => image.path === selectedAssistant?.image_path
   )?.base64
 
+  console.log("modelData", modelData)
   return (
     <>
       {message.role === "system" ? (
