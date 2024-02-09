@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const { data: usernames, error } = await supabaseAdmin
       .from("profiles")
       .select("username")
-      .eq("username", username)
+      .ilike("username", username)
 
     if (!usernames) {
       throw new Error(error.message)
