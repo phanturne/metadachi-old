@@ -40,7 +40,6 @@ export default function ProfileMenu({
     router.refresh()
   }
 
-  console.log("profile", profile?.display_name)
   return (
     <Dropdown>
       <MenuButton

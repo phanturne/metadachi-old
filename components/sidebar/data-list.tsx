@@ -238,11 +238,6 @@ export const DataList: FC<DataList> = ({
 
   // Important: Refreshes the data list when the data changes
   useEffect(() => {
-    console.log(
-      contentType,
-      currentFolder,
-      data.filter(item => item.folder_id === currentFolder)
-    )
     setDisplayedFiles(data.filter(item => item.folder_id === currentFolder))
   }, [data])
 

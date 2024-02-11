@@ -9,6 +9,7 @@ import { ChatbotUIContext } from "@/context/context"
 import { Dispatch, SetStateAction, useContext } from "react"
 import Image from "next/image"
 import { MessageImage } from "@/types"
+import { Link } from "@mui/joy"
 
 export function MessageFiles({
   fileItems,
@@ -29,22 +30,39 @@ export function MessageFiles({
       {fileItems.length > 0 && (
         <div className="mt-6 text-lg font-bold">
           {!viewSources ? (
-            <div
-              className="flex cursor-pointer items-center hover:opacity-50"
+            <Link
+              component="button"
+              level="body-sm"
+              underline="none"
+              color="neutral"
               onClick={() => setViewSources(true)}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer"
+              }}
             >
-              View {fileItems.length} Sources{" "}
+              {`View ${fileItems.length} Source ${
+                fileItems.length == 1 ? "" : "s"
+              }`}
               <IconCaretRightFilled className="ml-1" />
-            </div>
+            </Link>
           ) : (
             <>
-              <div
-                className="flex cursor-pointer items-center hover:opacity-50"
+              <Link
+                component="button"
+                level="body-sm"
+                underline="none"
+                color="neutral"
                 onClick={() => setViewSources(false)}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer"
+                }}
               >
                 Sources <IconCaretDownFilled className="ml-1" />
-              </div>
-
+              </Link>
               <div className="mt-2 grid grid-cols-2 gap-2">
                 {fileItems.map((fileItem, index) => {
                   const parentFile = files.find(
