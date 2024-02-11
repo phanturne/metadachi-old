@@ -4,7 +4,7 @@ import { Tables } from "@/supabase/types"
 import { FC } from "react"
 import Image from "next/image"
 import { DrawingCanvas } from "@/components/utility/drawing-canvas"
-import { IconFileFilled } from "@tabler/icons-react"
+import { InsertDriveFileRounded } from "@mui/icons-material"
 
 interface FilePreviewProps {
   type: "image" | "file" | "file_item"
@@ -56,9 +56,14 @@ export const FilePreview: FC<FilePreviewProps> = ({
             <Typography>{(item as Tables<"file_items">).content}</Typography>
           </Box>
         ) : (
-          <div className="rounded bg-blue-500 p-2">
-            <IconFileFilled /> {/* Add the missing icon */}
-          </div>
+          <Box
+            sx={{
+              borderRadius: 2,
+              p: 2
+            }}
+          >
+            <InsertDriveFileRounded />
+          </Box>
         )}
       </ModalDialog>
     </Modal>
