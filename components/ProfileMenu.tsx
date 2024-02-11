@@ -40,6 +40,7 @@ export default function ProfileMenu({
     router.refresh()
   }
 
+  console.log("profile", profile?.display_name)
   return (
     <Dropdown>
       <MenuButton
@@ -59,16 +60,17 @@ export default function ProfileMenu({
               display: "flex",
               flexDirection: "column",
               pl: 1.5,
-              overflow: "hidden"
+              overflow: "hidden",
+              justifyContent: "center",
+              justifyContentItems: "center"
             }}
           >
             <Typography
-              level="title-sm"
+              level="body-lg"
               sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
             >
-              {profile?.display_name ?? "Guest"}
+              {(profile?.display_name || profile?.username) ?? "Guest"}
             </Typography>
-            <Typography level="body-sm">Subtitle</Typography>
           </Box>
         </Box>
         <Divider sx={{ m: 0.5 }} />
@@ -79,27 +81,28 @@ export default function ProfileMenu({
           {/*{process.env.BUILD_MODE === 'export' && <FloatingWindowToggle />}*/}
         </Box>
 
-        <MenuItem
-          onClick={() => {
-            router.push(Routes.Collections)
-          }}
-        >
-          <ListItemDecorator>
-            <CollectionsBookmarkRounded />
-          </ListItemDecorator>
-          Collections
-        </MenuItem>
+        {/*<MenuItem*/}
+        {/*  onClick={() => {*/}
+        {/*    router.push(Routes.Collections)*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <ListItemDecorator>*/}
+        {/*    <CollectionsBookmarkRounded />*/}
+        {/*  </ListItemDecorator>*/}
+        {/*  Collections*/}
+        {/*</MenuItem>*/}
 
-        <MenuItem
-          onClick={() => {
-            router.push(Routes.Settings)
-          }}
-        >
-          <ListItemDecorator>
-            <SettingsRounded />
-          </ListItemDecorator>
-          Settings
-        </MenuItem>
+        {/*<MenuItem*/}
+        {/*  onClick={() => {*/}
+        {/*    router.push(Routes.Settings)*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <ListItemDecorator>*/}
+        {/*    <SettingsRounded />*/}
+        {/*  </ListItemDecorator>*/}
+        {/*  Settings*/}
+        {/*</MenuItem>*/}
+
         <Divider sx={{ m: 0.5 }} />
         {profile !== null && (
           <MenuItem onClick={handleSignOut}>
