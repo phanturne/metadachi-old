@@ -1,10 +1,8 @@
-> ⚠️ **This project is currently undergoing reconstruction and will experience changes.** 
+> ⚠️ **This project is currently undergoing reconstruction and will experience breaking changes.** 
 
 <div align="center">
-<div style="text-align: center;">
-  <img src="public/docs/images/icon-circle.png" alt="Metadachi Icon" style="display: inline-block; vertical-align: middle; width: 50px; height: auto; margin-right: 5px;" />
-  <h1 style="display: inline-block; vertical-align: middle; margin-top: 0;">Metadachi</h1>
-</div>
+<img src="public/docs/images/icon-circle.png" alt="Metadachi Icon" style="width: 80px; height: auto;" />
+<h1>Metadachi</h1>
 
 [//]: # ([![Web][Web-image]][web-url])
 [//]: # ([![Windows][Windows-image]][download-url])
@@ -16,7 +14,7 @@
 [Windows-image]: https://img.shields.io/badge/-Windows-blue?logo=windows
 [MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
 [Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
-Supercharge your productivity with our versatile AI assistant, seamlessly accessible on desktop and web. Navigate tasks effortlessly using a range of powerful AI tools that enhance your workflow. Metadachi goes beyond individual productivity, fostering community collaboration by offering a dedicated space for sharing AI prompts, templates, and generations. Elevate your work experience with the next level of AI-driven efficiency.
+Metadachi is built with community collaboration at its core, fostering a space for knowledge sharing, innovation, and joint development. Whether you're an AI enthusiast, developer, or just curious about the potential of intelligent assistants, we welcome you to contribute, learn, and shape the future of AI together. Join the movement and bring the power of AI to your fingertips!
 
 > This project builds on the outstanding work by McKay Wrigley and the contributors of [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui).
 
