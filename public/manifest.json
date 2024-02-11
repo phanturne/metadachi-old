@@ -3,23 +3,42 @@
   "name": "Metadachi",
   "icons": [
     {
-      "src": "/icon-192x192.png",
+      "src": "/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/favicon.ico",
       "type": "image/ico",
-      "sizes": "192x192"
+      "sizes": "48x48"
     },
     {
-      "src": "/icon-256x256.png",
+      "src": "/apple-touch-icon.png",
       "type": "image/png",
-      "sizes": "256x256"
+      "sizes": "180x180",
+      "purpose": "maskable"
     },
     {
-      "src": "/icon-512x512.png",
+      "src": "/android-chrome-192x192.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#000000"
+  "background_color": "#000000",
+  "description": "Empowering Tomorrow Together: Your Community-Powered AI Assistant"
 }

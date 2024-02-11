@@ -18,7 +18,7 @@ import {
 import Image from "next/image"
 import { FC, useContext, useState } from "react"
 import { Button } from "../ui/button"
-import { FilePreview } from "../ui/file-preview"
+import { FilePreview } from "../ui/FilePreview"
 import { WithTooltip } from "../ui/with-tooltip"
 import { ChatRetrievalSettings } from "./chat-retrieval-settings"
 

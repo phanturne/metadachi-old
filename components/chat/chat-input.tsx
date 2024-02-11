@@ -125,8 +125,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
   return (
     <>
-      <ChatFilesDisplay />
-
       <div className="flex flex-wrap justify-center gap-2">
         {selectedTools &&
           selectedTools.map((tool, index) => (
