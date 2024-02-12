@@ -1,4 +1,4 @@
-import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
+import { CreateItemModal } from "@/components/sidebar/items/all/CreateItemModal"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ChatbotUIContext } from "@/context/context"
@@ -44,7 +44,7 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
   if (!selectedWorkspace) return null
 
   return (
-    <SidebarCreateItem
+    <CreateItemModal
       contentType="collections"
       createState={
         {

@@ -19,17 +19,19 @@ export default function ChatTabs({
 
   return (
     <Tabs
-      aria-label="Pipeline"
       value={tab}
       onChange={(event, value) => {
         setTab((value as string) ?? "chat")
         router.push(`${pathname}?${chatSearchParam}tab=${value}`)
       }}
+      sx={{ zIndex: 0, backgroundColor: "transparent" }}
     >
       <TabList
+        disableUnderline
         sx={{
           pt: 1,
           justifyContent: "center",
+          // fontSize: "sm",
           [`&& .${tabClasses.root}`]: {
             flex: "initial",
             bgcolor: "transparent",

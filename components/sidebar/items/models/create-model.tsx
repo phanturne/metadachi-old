@@ -1,4 +1,4 @@
-import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
+import { CreateItemModal } from "@/components/sidebar/items/all/CreateItemModal"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ChatbotUIContext } from "@/context/context"
@@ -25,7 +25,7 @@ export const CreateModel: FC<CreateModelProps> = ({ isOpen, onOpenChange }) => {
   if (!profile || !selectedWorkspace) return null
 
   return (
-    <SidebarCreateItem
+    <CreateItemModal
       contentType="models"
       isOpen={isOpen}
       isTyping={isTyping}

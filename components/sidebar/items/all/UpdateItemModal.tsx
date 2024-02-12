@@ -1,13 +1,3 @@
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger
-} from "@/components/ui/sheet"
 import { AssignWorkspaces } from "@/components/workspace/assign-workspaces"
 import { ChatbotUIContext } from "@/context/context"
 import {
@@ -83,21 +73,32 @@ import { CollectionFile, ContentType, DataItemType } from "@/types"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { toast } from "sonner"
-import { SidebarDeleteItem } from "./sidebar-delete-item"
+import { DeleteItemButton } from "./DeleteItemButton"
+import {
+  Box,
+  Button,
+  DialogTitle,
+  Modal,
+  ModalDialog,
+  Stack,
+  Typography
+} from "@mui/joy"
 
 interface SidebarUpdateItemProps {
+  open: boolean
+  setOpen: (open: boolean) => void
   isTyping: boolean
   item: DataItemType
   contentType: ContentType
-  children: React.ReactNode
   renderInputs: (renderState: any) => JSX.Element
   updateState: any
 }
 
-export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
+export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
+  open,
+  setOpen,
   item,
   contentType,
-  children,
   renderInputs,
   updateState,
   isTyping
@@ -118,7 +119,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
 
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const [isOpen, setIsOpen] = useState(false)
   const [startingWorkspaces, setStartingWorkspaces] = useState<
     Tables<"workspaces">[]
   >([])
@@ -153,7 +153,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
   >([])
 
   useEffect(() => {
-    if (isOpen) {
+    if (open) {
       const fetchData = async () => {
         if (workspaces.length > 1) {
           const workspaces = await fetchSelectedWorkspaces()
@@ -168,7 +168,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
 
       fetchData()
     }
-  }, [isOpen])
+  }, [open])
 
   const renderState = {
     chats: null,
@@ -598,7 +598,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
         )
       )
 
-      setIsOpen(false)
+      setOpen(false)
 
       toast.success(`${contentType.slice(0, -1)} updated successfully`)
     } catch (error) {
@@ -622,59 +622,53 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     })
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!isTyping && e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      buttonRef.current?.click()
-    }
-  }
-
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>{children}</SheetTrigger>
-
-      <SheetContent
-        className="flex min-w-[450px] flex-col justify-between"
-        side="left"
-        onKeyDown={handleKeyDown}
-      >
-        <div className="grow overflow-auto">
-          <SheetHeader>
-            <SheetTitle className="text-2xl font-bold">
-              Edit {contentType.slice(0, -1)}
-            </SheetTitle>
-          </SheetHeader>
-
-          <div className="mt-4 space-y-3">
+    <Modal open={open} onClose={() => setOpen(false)}>
+      <ModalDialog sx={{ minWidth: "450px" }}>
+        <DialogTitle>{`Edit ${contentType.slice(0, -1)}`}</DialogTitle>
+        <form
+          onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault()
+            handleUpdate()
+          }}
+        >
+          <Stack spacing={2}>
             {workspaces.length > 1 && (
-              <div className="space-y-1">
-                <Label>Assigned Workspaces</Label>
+              <Box sx={{ gap: 1 }}>
+                <Typography>Assigned Workspaces</Typography>
 
                 <AssignWorkspaces
                   selectedWorkspaces={selectedWorkspaces}
                   onSelectWorkspace={handleSelectWorkspace}
                 />
-              </div>
+              </Box>
             )}
-
             {renderInputs(renderState[contentType])}
-          </div>
-        </div>
+            <Box
+              sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}
+            >
+              <DeleteItemButton item={item} contentType={contentType} />
 
-        <SheetFooter className="mt-2 flex justify-between">
-          <SidebarDeleteItem item={item} contentType={contentType} />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexGrow: 1,
+                  justifyContent: "flex-end",
+                  gap: 2
+                }}
+              >
+                <Button variant="outlined" onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
 
-          <div className="flex grow justify-end space-x-2">
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
-              Cancel
-            </Button>
-
-            <Button ref={buttonRef} onClick={handleUpdate}>
-              Save
-            </Button>
-          </div>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+                <Button ref={buttonRef} onClick={handleUpdate}>
+                  Save
+                </Button>
+              </Box>
+            </Box>
+          </Stack>
+        </form>
+      </ModalDialog>
+    </Modal>
   )
 }

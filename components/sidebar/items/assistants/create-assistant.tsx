@@ -1,4 +1,4 @@
-import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
+import { CreateItemModal } from "@/components/sidebar/items/all/CreateItemModal"
 import ImagePicker from "@/components/ui/image-picker"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -104,7 +104,7 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
   if (!selectedWorkspace) return null
 
   return (
-    <SidebarCreateItem
+    <CreateItemModal
       contentType="assistants"
       createState={
         {
