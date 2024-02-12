@@ -1,4 +1,4 @@
-import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
+import { CreateItemModal } from "@/components/sidebar/items/all/CreateItemModal"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -27,7 +27,7 @@ export const CreateTool: FC<CreateToolProps> = ({ isOpen, onOpenChange }) => {
   if (!profile || !selectedWorkspace) return null
 
   return (
-    <SidebarCreateItem
+    <CreateItemModal
       contentType="tools"
       createState={
         {

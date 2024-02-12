@@ -1,11 +1,3 @@
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle
-} from "@/components/ui/sheet"
 import { ChatbotUIContext } from "@/context/context"
 import { createAssistantCollections } from "@/db/assistant-collections"
 import { createAssistantFiles } from "@/db/assistant-files"
@@ -28,8 +20,9 @@ import { Tables, TablesInsert } from "@/supabase/types"
 import { ContentType } from "@/types"
 import { FC, useContext, useRef, useState } from "react"
 import { toast } from "sonner"
+import { Box, Button, DialogTitle, Modal, ModalDialog, Stack } from "@mui/joy"
 
-interface SidebarCreateItemProps {
+interface CreateItemModalProps {
   isOpen: boolean
   isTyping: boolean
   onOpenChange: (isOpen: boolean) => void
@@ -38,7 +31,7 @@ interface SidebarCreateItemProps {
   createState: any
 }
 
-export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
+export const CreateItemModal: FC<CreateItemModalProps> = ({
   isOpen,
   onOpenChange,
   contentType,
@@ -208,47 +201,50 @@ export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!isTyping && e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      buttonRef.current?.click()
-    }
-  }
+  const modalTitle = `Create ${
+    contentType.charAt(0).toUpperCase() + contentType.slice(1, -1)
+  }`
 
   return (
-    <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent
-        className="flex min-w-[450px] flex-col justify-between"
-        side="left"
-        onKeyDown={handleKeyDown}
-      >
-        <div className="grow">
-          <SheetHeader>
-            <SheetTitle className="text-2xl font-bold">
-              Create{" "}
-              {contentType.charAt(0).toUpperCase() + contentType.slice(1, -1)}
-            </SheetTitle>
-          </SheetHeader>
-
-          <div className="mt-4 space-y-3">{renderInputs()}</div>
-        </div>
-
-        <SheetFooter className="mt-2 flex justify-between">
-          <div className="flex grow justify-end space-x-2">
-            <Button
-              disabled={creating}
-              variant="outline"
-              onClick={() => onOpenChange(false)}
+    <Modal open={isOpen} onClose={() => onOpenChange(false)}>
+      <ModalDialog sx={{ minWidth: "450px" }}>
+        <DialogTitle>{modalTitle}</DialogTitle>
+        <form
+          onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault()
+            handleCreate()
+          }}
+        >
+          <Stack spacing={2}>
+            {renderInputs()}
+            <Box
+              sx={{
+                display: "flex",
+                flexGrow: 1,
+                justifyContent: "flex-end",
+                gap: 2
+              }}
             >
-              Cancel
-            </Button>
+              <Button
+                disabled={creating}
+                variant="plain"
+                color="neutral"
+                onClick={() => onOpenChange(false)}
+              >
+                Cancel
+              </Button>
 
-            <Button disabled={creating} ref={buttonRef} onClick={handleCreate}>
-              {creating ? "Creating..." : "Create"}
-            </Button>
-          </div>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+              <Button
+                disabled={creating}
+                ref={buttonRef}
+                onClick={handleCreate}
+              >
+                {creating ? "Creating..." : "Create"}
+              </Button>
+            </Box>
+          </Stack>
+        </form>
+      </ModalDialog>
+    </Modal>
   )
 }

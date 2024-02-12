@@ -1,11 +1,11 @@
 import { ACCEPTED_FILE_TYPES } from "@/lib/hooks/use-select-file-handler"
-import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { CreateItemModal } from "@/components/sidebar/items/all/CreateItemModal"
 import { ChatbotUIContext } from "@/context/context"
 import { FILE_NAME_MAX } from "@/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { FC, useContext, useState } from "react"
+import { FormControl, FormLabel, Input } from "@mui/joy"
+import InputFileUpload from "@/components/ui/InputFileUpload"
 
 interface CreateFileProps {
   isOpen: boolean
@@ -36,7 +36,7 @@ export const CreateFile: FC<CreateFileProps> = ({ isOpen, onOpenChange }) => {
   if (!selectedWorkspace) return null
 
   return (
-    <SidebarCreateItem
+    <CreateItemModal
       contentType="files"
       createState={
         {
@@ -55,26 +55,26 @@ export const CreateFile: FC<CreateFileProps> = ({ isOpen, onOpenChange }) => {
       onOpenChange={onOpenChange}
       renderInputs={() => (
         <>
-          <div className="space-y-1">
-            <Label>File</Label>
-
-            <Input
-              type="file"
-              onChange={handleSelectedFile}
+          <FormControl>
+            <FormLabel>File</FormLabel>
+            <InputFileUpload
+              handleSelectedFile={handleSelectedFile}
+              required={true}
               accept={ACCEPTED_FILE_TYPES}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
+              required
               placeholder="File name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={FILE_NAME_MAX}
+              slotProps={{ input: { maxLength: FILE_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
         </>
       )}
     />

@@ -1,13 +1,3 @@
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog"
 import { ChatbotUIContext } from "@/context/context"
 import { deleteAssistant } from "@/db/assistants"
 import { deleteChat } from "@/db/chats"
@@ -20,14 +10,22 @@ import { deleteFileFromStorage } from "@/db/storage/files"
 import { deleteTool } from "@/db/tools"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/types"
-import { FC, useContext, useRef, useState } from "react"
+import { FC, useContext, useState } from "react"
+import {
+  Box,
+  Button,
+  DialogContent,
+  DialogTitle,
+  Modal,
+  ModalDialog
+} from "@mui/joy"
 
 interface SidebarDeleteItemProps {
   item: DataItemType
   contentType: ContentType
 }
 
-export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
+export const DeleteItemButton: FC<SidebarDeleteItemProps> = ({
   item,
   contentType
 }) => {
@@ -42,9 +40,7 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     setModels
   } = useContext(ChatbotUIContext)
 
-  const buttonRef = useRef<HTMLButtonElement>(null)
-
-  const [showDialog, setShowDialog] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const deleteFunctions = {
     chats: async (chat: Tables<"chats">) => {
@@ -100,43 +96,41 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
       prevItems.filter((prevItem: any) => prevItem.id !== item.id)
     )
 
-    setShowDialog(false)
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
-      e.stopPropagation()
-      buttonRef.current?.click()
-    }
+    setOpen(false)
   }
 
   return (
-    <Dialog open={showDialog} onOpenChange={setShowDialog}>
-      <DialogTrigger asChild>
-        <Button className="text-red-500" variant="ghost">
-          Delete
-        </Button>
-      </DialogTrigger>
-
-      <DialogContent onKeyDown={handleKeyDown}>
-        <DialogHeader>
+    <>
+      <Button color="danger" onClick={() => setOpen(true)} variant="plain">
+        Delete
+      </Button>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <ModalDialog>
           <DialogTitle>Delete {contentType.slice(0, -1)}</DialogTitle>
-
-          <DialogDescription>
+          <DialogContent>
             Are you sure you want to delete {item.name}?
-          </DialogDescription>
-        </DialogHeader>
+          </DialogContent>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between"
+            }}
+          >
+            <Button
+              variant="plain"
+              color="neutral"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </Button>
 
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => setShowDialog(false)}>
-            Cancel
-          </Button>
-
-          <Button ref={buttonRef} variant="destructive" onClick={handleDelete}>
-            Delete
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+            <Button color="danger" onClick={handleDelete}>
+              Delete
+            </Button>
+          </Box>
+        </ModalDialog>
+      </Modal>
+    </>
   )
 }

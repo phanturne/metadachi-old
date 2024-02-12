@@ -1,11 +1,9 @@
-import { SidebarCreateItem } from "@/components/sidebar/items/all/sidebar-create-item"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { TextareaAutosize } from "@/components/ui/textarea-autosize"
+import { CreateItemModal } from "@/components/sidebar/items/all/CreateItemModal"
 import { ChatbotUIContext } from "@/context/context"
 import { PROMPT_NAME_MAX } from "@/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { FC, useContext, useState } from "react"
+import { FormControl, FormLabel, Input, Textarea } from "@mui/joy"
 
 interface CreatePromptProps {
   isOpen: boolean
@@ -25,7 +23,7 @@ export const CreatePrompt: FC<CreatePromptProps> = ({
   if (!selectedWorkspace) return null
 
   return (
-    <SidebarCreateItem
+    <CreateItemModal
       contentType="prompts"
       isOpen={isOpen}
       isTyping={isTyping}
@@ -39,32 +37,33 @@ export const CreatePrompt: FC<CreatePromptProps> = ({
       }
       renderInputs={() => (
         <>
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
+              required
               placeholder="Prompt name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={PROMPT_NAME_MAX}
+              slotProps={{ input: { maxLength: PROMPT_NAME_MAX } }}
               onCompositionStart={() => setIsTyping(true)}
               onCompositionEnd={() => setIsTyping(false)}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Prompt</Label>
+          <FormControl>
+            <FormLabel>Prompt</FormLabel>
 
-            <TextareaAutosize
+            <Textarea
               placeholder="Prompt content..."
               value={content}
-              onValueChange={setContent}
+              onChange={e => setContent(e.target.value)}
               minRows={6}
               maxRows={20}
               onCompositionStart={() => setIsTyping(true)}
               onCompositionEnd={() => setIsTyping(false)}
             />
-          </div>
+          </FormControl>
         </>
       )}
     />

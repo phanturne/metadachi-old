@@ -5,7 +5,7 @@ import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/types"
 import { useRouter } from "next/navigation"
 import { FC, useContext, useRef, useState } from "react"
-import { SidebarUpdateItem } from "./sidebar-update-item"
+import { UpdateItemModal } from "./UpdateItemModal"
 
 interface SidebarItemProps {
   item: DataItemType
@@ -32,6 +32,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   const itemRef = useRef<HTMLDivElement>(null)
 
   const [isHovering, setIsHovering] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const actionMap = {
     chats: async (item: any) => {},
@@ -84,13 +85,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   // }
 
   return (
-    <SidebarUpdateItem
-      item={item}
-      isTyping={isTyping}
-      contentType={contentType}
-      updateState={updateState}
-      renderInputs={renderInputs}
-    >
+    <>
       <div
         ref={itemRef}
         className={cn(
@@ -100,6 +95,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
         onKeyDown={handleKeyDown}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
+        onClick={() => setOpen(true)}
       >
         {icon}
 
@@ -122,6 +118,16 @@ export const SidebarItem: FC<SidebarItemProps> = ({
           />
         )} */}
       </div>
-    </SidebarUpdateItem>
+
+      <UpdateItemModal
+        open={open}
+        setOpen={setOpen}
+        item={item}
+        isTyping={isTyping}
+        contentType={contentType}
+        updateState={updateState}
+        renderInputs={renderInputs}
+      />
+    </>
   )
 }
