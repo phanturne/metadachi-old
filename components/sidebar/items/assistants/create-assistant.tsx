@@ -8,7 +8,7 @@ import { Tables, TablesInsert } from "@/supabase/types"
 import { FC, useContext, useEffect, useState } from "react"
 import { AssistantRetrievalSelect } from "./assistant-retrieval-select"
 import { AssistantToolSelect } from "./assistant-tool-select"
-import { ChatSettingsForm } from "@/components/ChatSettingsForm"
+import { ChatSettingsForm } from "@/components/forms/ChatSettingsForm"
 
 interface CreateAssistantProps {
   isOpen: boolean

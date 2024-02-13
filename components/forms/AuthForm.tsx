@@ -1,9 +1,9 @@
 import Image from "next/image"
-import { LoginForm } from "@/components/auth/LoginForm"
-import { SignUpForm } from "@/components/auth/SignUpForm"
+import { LoginForm } from "@/components/forms/LoginForm"
+import { SignUpForm } from "@/components/forms/SignUpForm"
 import { Box } from "@mui/joy"
 import { useState } from "react"
-import { ResetPasswordForm } from "@/components/auth/ForgotPasswordForm"
+import { ResetPasswordForm } from "@/components/forms/ForgotPasswordForm"
 
 export const enum AuthFormType {
   Login,

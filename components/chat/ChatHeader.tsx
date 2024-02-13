@@ -1,4 +1,4 @@
-import Header from "@/components/Header"
+import Header from "@/components/ui/Header"
 import { ChatSettingsPopup } from "@/components/chat/ChatSettingsPopup"
 import { ChatScrollButtons } from "@/components/chat/chat-scroll-buttons"
 import { Typography } from "@mui/joy"

@@ -1,7 +1,7 @@
 "use client"
 
 import { Alert, Box } from "@mui/joy"
-import AuthForm from "@/components/auth/AuthForm"
+import AuthForm from "@/components/forms/AuthForm"
 
 export default function Login({
   searchParams

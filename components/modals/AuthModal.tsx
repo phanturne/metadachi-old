@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { DialogContent, Modal, ModalDialog } from "@mui/joy"
-import AuthForm from "@/components/auth/AuthForm"
+import AuthForm from "@/components/forms/AuthForm"
 
 export default function AuthModal({
   isAuthPage,

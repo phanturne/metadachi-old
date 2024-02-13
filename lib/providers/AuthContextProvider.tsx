@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState } from "react"
-import AuthModal from "@/components/auth/AuthModal"
+import AuthModal from "@/components/modals/AuthModal"
 
 // Create a context with initial values
 const AuthContext = createContext({

@@ -1,11 +1,11 @@
 "use client"
 
 import { ChatInput } from "@/components/chat/chat-input"
-import FileDropzoneContainer from "@/components/FileDropzoneContainer"
+import FileDropzoneContainer from "@/components/ui/FileDropzoneContainer"
 import ChatTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/ChatTab"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
-import ChatTabs from "@/components/ChatTabs"
+import ChatTabs from "@/components/chat-tab/ChatTabs"
 import { useContext, useEffect, useState } from "react"
 import AssistantsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/AssistantsTab"
 import PromptsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/PromptsTab"
