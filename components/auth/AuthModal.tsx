@@ -1,13 +1,6 @@
 import { useState } from "react"
-import { Box, DialogContent, Modal, ModalDialog } from "@mui/joy"
-import { LoginForm } from "@/components/auth/LoginForm"
-import { SignupForm } from "@/components/auth/SignupForm"
-
-export const enum AuthFormType {
-  Login,
-  SignUp,
-  ResetPassword
-}
+import { DialogContent, Modal, ModalDialog } from "@mui/joy"
+import AuthForm from "@/components/auth/AuthForm"
 
 export default function AuthModal({
   isAuthPage,
@@ -16,9 +9,6 @@ export default function AuthModal({
   isAuthPage?: boolean
   onClose?: () => void
 }) {
-  const [authFormType, setAuthFormType] = useState<AuthFormType>(
-    AuthFormType.Login
-  )
   const [open, setOpen] = useState<boolean>(true)
 
   return (
@@ -32,22 +22,7 @@ export default function AuthModal({
     >
       <ModalDialog layout={isAuthPage ? "fullscreen" : "center"} sx={{ p: 0 }}>
         <DialogContent>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              height: "auto"
-            }}
-          >
-            <Box sx={{ p: 5 }}>
-              {authFormType === AuthFormType.Login && (
-                <LoginForm setAuthFormType={setAuthFormType} />
-              )}
-              {authFormType === AuthFormType.SignUp && (
-                <SignupForm setAuthFormType={setAuthFormType} />
-              )}
-            </Box>
-          </Box>
+          <AuthForm />
         </DialogContent>
       </ModalDialog>
     </Modal>

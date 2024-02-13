@@ -3,18 +3,17 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  FormLabel,
-  Input,
   Link,
   Stack,
   Typography
 } from "@mui/joy"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/lib/supabase/browser-client"
-import { AuthFormType } from "@/components/auth/AuthModal"
 import { useAuthModal } from "@/lib/providers/AuthContextProvider"
 import { useSnackbar } from "@/lib/providers/SnackbarProvider"
+import { AuthFormType } from "@/components/auth/AuthForm"
+import { EmailInput, PasswordInput } from "@/components/input"
 
 export function LoginForm({
   setAuthFormType
@@ -55,8 +54,6 @@ export function LoginForm({
       )
     }
 
-    // return redirect(`/${homeWorkspace.id}/chat`)
-
     // Handle successful login
     setSnackbar({ message: "Successfully logged in", color: "success" })
     closeAuthModal()
@@ -70,12 +67,10 @@ export function LoginForm({
           Welcome Back
         </Typography>
         <FormControl error={error != ""}>
-          <FormLabel>Email</FormLabel>
-          <Input name="email" type="email" autoFocus required />
+          <EmailInput />
         </FormControl>
         <FormControl error={error != ""}>
-          <FormLabel>Password</FormLabel>
-          <Input name="password" type="password" required />
+          <PasswordInput />
           {error && (
             <FormHelperText>
               <InfoOutlined />
@@ -84,21 +79,29 @@ export function LoginForm({
           )}
         </FormControl>
         <Button type="submit">Login</Button>
-        <Typography
-          endDecorator={
-            <Link
-              component="button"
-              onClick={() => {
-                setAuthFormType(AuthFormType.SignUp)
-              }}
-            >
-              Sign up
-            </Link>
-          }
-          fontSize="sm"
-          sx={{ alignSelf: "center" }}
-        >
-          {`Don't have an account?`}
+        <Typography fontSize="sm" sx={{ alignSelf: "center" }}>
+          {"Forgot your "}
+          <Link
+            component="button"
+            onClick={() => {
+              setAuthFormType(AuthFormType.ResetPassword)
+            }}
+          >
+            password
+          </Link>
+          {"?"}
+        </Typography>
+
+        <Typography fontSize="sm" sx={{ alignSelf: "center" }}>
+          {`New to Metadachi? `}
+          <Link
+            component="button"
+            onClick={() => {
+              setAuthFormType(AuthFormType.SignUp)
+            }}
+          >
+            Sign up
+          </Link>
         </Typography>
       </Stack>
     </form>

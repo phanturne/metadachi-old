@@ -1,5 +1,8 @@
 import { LLMID } from "@/types"
 
+// This flag is used for handling logic, NOT enabling/disabling email verification
+export const EMAIL_VERIFICATION = false
+
 export const SIDEBAR_WIDTH = 260
 export const SIDEBAR_ICON_SIZE = 28
 

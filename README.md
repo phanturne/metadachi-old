@@ -32,26 +32,27 @@ Metadachi is built with community collaboration at its core, fostering a space f
 - **Cross Platform**: Sync sessions across Windows, macOS, and the web
 - **Easy Self-Hosting**: Deploy effortlessly to Vercel or run locally
 
-## Roadmap
-| Backlog                          | In Progress           | Completed |
-|----------------------------------|-----------------------|-----------|
-| More UI Customization Options    | Desktop App           | |
-| 🐶 Interactive Desktop Companion | 🤝 Community Features | |
-| Multi-Agent Chats                |                       | |
-| 🎨 Visual Alchemy                |                       | |
-| AI Toolbox                       |                       | |
-| Backend Alternatives             |                       | |
-| Mobile App                       |                       | |
+## Upcoming Features
+| Planned                           | In Progress                                 | 
+|-----------------------------------|---------------------------------------------|
+| More UI Customization Options     | Transition to JoyUI components              |
+| 🐶 Interactive Desktop Companion  | 🤝 Community Features                       |
+| Multi-Agent Chats                 | Heart's Symphony (Multiplayer AI Chat Game) |
+| 🎨 Visual Alchemy                 | Apollo Client Integration                   |
+| AI Toolbox                        |                                             |
+| Backend Alternatives              |                                             |
+| Mobile App (Capacitor)            |                                             |
+| Desktop App (Tauri)               |                                             |
 
 ## Technology Stack
-| Technology     | Description                                                                                                 |
-|----------------|-------------------------------------------------------------------------------------------------------------|
-| Next.js v14    | React framework for server-rendered, statically-generated, & hybrid sites, delivering optimal performance & SEO. |
-| Tauri          | Build native desktop apps with web technologies, offering speed, platform-specific features, & offline capabilities. |
-| Vercel         | Streamlined deployment & scaling platform for Next.js apps, optimizing performance & simplifying infrastructure. |
-| Supabase       | Real-time database & authentication with instant updates, eliminating backend setup & enabling rich user experiences. |
-| JoyUI          | Extensive UI component library for React, accelerating development with pre-built & customizable components. |
-| Apollo Client  | Powerful GraphQL client for React, simplifying data fetching & management with optimizations & built-in caching. |
+| Technology     | Description                                                                                                            |
+|----------------|------------------------------------------------------------------------------------------------------------------------|
+| Next.js v14    | React framework for server-rendered, statically-generated, & hybrid sites, delivering optimal performance & SEO.       |
+| Tauri          | Build native desktop apps with web technologies, offering speed, platform-specific features, & offline capabilities.   |
+| Vercel         | Streamlined deployment & scaling platform for Next.js apps, optimizing performance & simplifying infrastructure.       |
+| Supabase       | Real-time database & authentication with instant updates, eliminating backend setup & enabling rich user experiences.  |
+| JoyUI          | Extensive UI component library for React, accelerating development with pre-built & customizable components.           |
+| Apollo Client  | Powerful GraphQL client for React, simplifying data fetching & management with optimizations & built-in caching.       |
 
 
 ## Getting Started

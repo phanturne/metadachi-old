@@ -3,8 +3,6 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  FormLabel,
-  Input,
   Link,
   Stack,
   Typography
@@ -12,27 +10,61 @@ import {
 import { useRouter } from "next/navigation"
 import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/lib/supabase/browser-client"
-import { AuthFormType } from "@/components/auth/AuthModal"
 import { useAuthModal } from "@/lib/providers/AuthContextProvider"
-import { Routes } from "@/lib/constants"
+import { EMAIL_VERIFICATION, Routes } from "@/lib/constants"
+import { AuthFormType } from "@/components/auth/AuthForm"
+import { EmailInput, PasswordInput } from "@/components/input"
+import { get } from "@vercel/edge-config"
 
-export function SignupForm({
+export function SignUpForm({
   setAuthFormType
 }: {
   setAuthFormType: React.Dispatch<React.SetStateAction<AuthFormType>>
 }) {
   const [error, setError] = useState<string>("")
-  const router = useRouter()
   const { closeAuthModal } = useAuthModal()
+  const router = useRouter()
 
   async function handleSignup(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const formJson = Object.fromEntries(formData.entries())
 
-    const { data, error } = await supabase.auth.signUp({
-      email: formJson["email"] as string,
-      password: formJson["password"] as string
+    const email = formJson["email"] as string
+    const password = formJson["password"] as string
+
+    if (process.env.EMAIL_DOMAIN_WHITELIST || process.env.EDGE_CONFIG) {
+      let patternsString = process.env.EMAIL_DOMAIN_WHITELIST
+
+      if (process.env.EDGE_CONFIG)
+        patternsString = await get<string>("EMAIL_DOMAIN_WHITELIST")
+
+      const emailDomainWhitelist = patternsString?.split(",") ?? []
+
+      if (
+        emailDomainWhitelist.length > 0 &&
+        !emailDomainWhitelist.includes(email.split("@")[1])
+      ) {
+        return setError(`Email is not from a whitelisted domain.`)
+      }
+    }
+
+    if (process.env.EMAIL_WHITELIST || process.env.EDGE_CONFIG) {
+      let patternsString = process.env.EMAIL_WHITELIST
+
+      if (process.env.EDGE_CONFIG)
+        patternsString = await get<string>("EMAIL_WHITELIST")
+
+      const emailWhitelist = patternsString?.split(",") ?? []
+
+      if (emailWhitelist.length > 0 && !emailWhitelist.includes(email)) {
+        return setError(`Email is not whitelisted.`)
+      }
+    }
+
+    const { error } = await supabase.auth.signUp({
+      email: email,
+      password: password
     })
 
     // Show error message and return early if the signup failed
@@ -43,7 +75,12 @@ export function SignupForm({
 
     // Handle successful signup
     closeAuthModal()
-    router.push(Routes.Setup)
+    setAuthFormType(AuthFormType.Login)
+    return router.push(
+      EMAIL_VERIFICATION
+        ? Routes.Setup
+        : `${Routes.Login}?message=Check inbox to verify email address&variant=success`
+    )
   }
 
   return (
@@ -53,12 +90,10 @@ export function SignupForm({
           Join Now
         </Typography>
         <FormControl error={error != ""}>
-          <FormLabel>Email</FormLabel>
-          <Input name="email" type="email" autoFocus required />
+          <EmailInput />
         </FormControl>
         <FormControl error={error != ""}>
-          <FormLabel>Password</FormLabel>
-          <Input name="password" type="password" required />
+          <PasswordInput />
           {error && (
             <FormHelperText>
               <InfoOutlined />
