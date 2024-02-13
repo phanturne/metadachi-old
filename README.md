@@ -54,6 +54,7 @@ Metadachi is built with community collaboration at its core, fostering a space f
 | JoyUI          | Extensive UI component library for React, accelerating development with pre-built & customizable components.           |
 | Apollo Client  | Powerful GraphQL client for React, simplifying data fetching & management with optimizations & built-in caching.       |
 
+
 ## Getting Started
 Feel free to use our [official hosted version](https://metadachi.com) or follow the guide below to deploy your own.
 
