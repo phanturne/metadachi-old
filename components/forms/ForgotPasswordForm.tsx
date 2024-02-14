@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase/browser-client"
 import { useAuthModal } from "@/lib/providers/AuthContextProvider"
-import { AuthFormType } from "@/components/auth/AuthForm"
+import { AuthFormType } from "@/components/forms/AuthForm"
 import { EmailInput } from "@/components/input"
 import { InfoOutlined } from "@mui/icons-material"
 

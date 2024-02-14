@@ -5,7 +5,7 @@ import { Tooltip } from "@mui/joy"
 import ListItemDecorator from "@mui/joy/ListItemDecorator"
 import ListItemContent from "@mui/joy/ListItemContent"
 import Typography from "@mui/joy/Typography"
-import { routeDictionary } from "@/components/Sidebar"
+import { routeDictionary } from "@/components/ui/Sidebar"
 import { useRouter } from "next/navigation"
 
 export function SidebarItem({

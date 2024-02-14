@@ -12,7 +12,7 @@ import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/lib/supabase/browser-client"
 import { useAuthModal } from "@/lib/providers/AuthContextProvider"
 import { EMAIL_VERIFICATION, Routes } from "@/lib/constants"
-import { AuthFormType } from "@/components/auth/AuthForm"
+import { AuthFormType } from "@/components/forms/AuthForm"
 import { EmailInput, PasswordInput } from "@/components/input"
 import { get } from "@vercel/edge-config"
 

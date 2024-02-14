@@ -5,7 +5,7 @@ import { Tab, tabClasses, TabList, TabPanel, Tabs, Typography } from "@mui/joy"
 import { ChatbotUIContext } from "@/context/context"
 import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
 import { ContentType } from "@/types"
-import Header from "@/components/Header"
+import Header from "@/components/ui/Header"
 
 export default function CollectionsPage() {
   const {

@@ -16,7 +16,9 @@ export default function ThemeToggleButton() {
     )
   }
   return (
+    // Temporarily force dark mode
     <Button
+      disabled
       id="theme-toggle"
       size="sm"
       variant="outlined"

@@ -7,16 +7,10 @@ import MenuButton from "@mui/joy/MenuButton"
 import Dropdown from "@mui/joy/Dropdown"
 import Avatar from "@mui/joy/Avatar"
 import { Box, Typography } from "@mui/joy"
-import {
-  CollectionsBookmarkRounded,
-  LoginRounded,
-  LogoutRounded,
-  SettingsRounded
-} from "@mui/icons-material"
+import { LoginRounded, LogoutRounded } from "@mui/icons-material"
 import { useRouter } from "next/navigation"
-import { Routes } from "@/lib/constants"
 import Divider from "@mui/joy/Divider"
-import ThemeToggleButton from "@/components/ThemeToggle"
+import ThemeToggleButton from "@/components/ui/ThemeToggle"
 import { ChatbotUIContext } from "@/context/context"
 import { supabase } from "@/lib/supabase/browser-client"
 import { useAuthModal } from "@/lib/providers/AuthContextProvider"

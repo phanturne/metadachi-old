@@ -1,4 +1,4 @@
-import Header from "@/components/Header"
+import Header from "@/components/ui/Header"
 import { Typography } from "@mui/joy"
 import React from "react"
 

@@ -11,7 +11,7 @@ import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { SidebarItem } from "../all/sidebar-display-item"
 import { AssistantRetrievalSelect } from "./assistant-retrieval-select"
 import { AssistantToolSelect } from "./assistant-tool-select"
-import { ChatSettingsForm } from "@/components/ChatSettingsForm"
+import { ChatSettingsForm } from "@/components/forms/ChatSettingsForm"
 
 interface AssistantItemProps {
   assistant: Tables<"assistants">

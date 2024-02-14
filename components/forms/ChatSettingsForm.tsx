@@ -2,8 +2,8 @@
 
 import { ChatSettings } from "@/types"
 import { FC } from "react"
-import { ModelSelect } from "./models/ModelSelect"
-import { AdvancedModelSettings } from "./models/AdvancedModelSettings"
+import { ModelSelect } from "../models/ModelSelect"
+import { AdvancedModelSettings } from "../models/AdvancedModelSettings"
 import { Box, Textarea, Typography } from "@mui/joy"
 import Sheet from "@mui/joy/Sheet"
 

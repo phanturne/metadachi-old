@@ -1,5 +1,5 @@
 import { ModelIcon } from "@/components/models/model-icon"
-import { ChatSettingsForm } from "@/components/ChatSettingsForm"
+import { ChatSettingsForm } from "@/components/forms/ChatSettingsForm"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PRESET_NAME_MAX } from "@/db/limits"
