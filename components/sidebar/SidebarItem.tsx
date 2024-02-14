@@ -5,22 +5,22 @@ import { Tooltip } from "@mui/joy"
 import ListItemDecorator from "@mui/joy/ListItemDecorator"
 import ListItemContent from "@mui/joy/ListItemContent"
 import Typography from "@mui/joy/Typography"
-import { routeDictionary } from "@/components/ui/Sidebar"
 import { useRouter } from "next/navigation"
+import { routeDictionary } from "@/components/sidebar/RouteDictionary"
 
 export function SidebarItem({
   selected = false,
   disabled,
   onClick,
   isShrunk = true,
-
+  variant,
   children
 }: {
   selected?: boolean
   disabled?: boolean
   onClick?: React.MouseEventHandler<HTMLAnchorElement>
   isShrunk?: boolean
-
+  variant?: "workspace"
   children?: React.ReactNode
 }) {
   return (
@@ -31,12 +31,14 @@ export function SidebarItem({
       }}
     >
       <ListItemButton
-        selected={selected}
+        selected={selected && variant !== "workspace"}
         onClick={onClick}
         sx={{
           justifyContent: "center",
           flexGrow: isShrunk ? 0 : 1,
-          px: 2
+          px: 2,
+          border:
+            variant === "workspace" && selected ? "1px solid gray" : "none"
         }}
         disabled={disabled}
       >
