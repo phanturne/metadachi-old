@@ -1,6 +1,6 @@
 "use client"
 
-import Sidebar from "@/components/ui/Sidebar"
+import Sidebar from "@/components/sidebar/Sidebar"
 import { Box } from "@mui/joy"
 import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import useHotkey from "@/lib/hooks/use-hotkey"
