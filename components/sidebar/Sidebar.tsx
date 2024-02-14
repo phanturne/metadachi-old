@@ -9,6 +9,8 @@ import ProfileMenu from "@/components/ui/ProfileMenu"
 import { SidebarItem, SidebarRouteItem } from "@/components/sidebar/SidebarItem"
 import Divider from "@mui/joy/Divider"
 import { SidebarHeader } from "@/components/sidebar/SidebarHeader"
+import { CreateWorkspaceButton } from "@/components/workspace/CreateWorkspaceButton"
+import { WorkspaceList } from "@/components/workspace/WorkspaceList"
 
 export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
   const [selectedRoute, setSelectedRoute] = React.useState(Routes.Home)
@@ -65,23 +67,27 @@ export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
           trailingContent={<ComingSoonChip />}
         />
         <SidebarRouteItem
-          route={Routes.Games}
-          selectedRoute={selectedRoute}
-          setSelectedRoute={setSelectedRoute}
-          trailingContent={<ComingSoonChip />}
-        />
-        <Divider sx={{ mx: 1.5 }} />
-        <SidebarRouteItem
-          route={Routes.Collections}
-          selectedRoute={selectedRoute}
-          setSelectedRoute={setSelectedRoute}
-        />
-        <SidebarRouteItem
           route={Routes.Explore}
           selectedRoute={selectedRoute}
           setSelectedRoute={setSelectedRoute}
           trailingContent={<ComingSoonChip />}
         />
+        {/*<SidebarRouteItem*/}
+        {/*  route={Routes.Games}*/}
+        {/*  selectedRoute={selectedRoute}*/}
+        {/*  setSelectedRoute={setSelectedRoute}*/}
+        {/*  trailingContent={<ComingSoonChip />}*/}
+        {/*/>*/}
+        <Divider sx={{ mx: 1.5 }} />
+        {/*<SidebarRouteItem*/}
+        {/*  route={Routes.Collections}*/}
+        {/*  selectedRoute={selectedRoute}*/}
+        {/*  setSelectedRoute={setSelectedRoute}*/}
+        {/*/>*/}
+        <WorkspaceList variant="sidebar" />
+        <SidebarItem onClick={() => {}}>
+          <CreateWorkspaceButton />
+        </SidebarItem>
       </List>
 
       <List
