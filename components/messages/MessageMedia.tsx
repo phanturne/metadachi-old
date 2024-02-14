@@ -42,7 +42,7 @@ export function MessageFiles({
                 cursor: "pointer"
               }}
             >
-              {`View ${fileItems.length} Source ${
+              {`View ${fileItems.length} Source${
                 fileItems.length == 1 ? "" : "s"
               }`}
               <IconCaretRightFilled className="ml-1" />
