@@ -21,7 +21,7 @@ import { getChatById } from "@/db/chats"
 import Loading from "@/app/[locale]/loading"
 import ChatHeader from "@/components/chat/ChatHeader"
 import { getChatFilesByChatId } from "@/db/chat-files"
-import { ChatFilesDisplay } from "@/components/chat/chat-files-display"
+import { ChatFilesDisplay } from "@/components/files/chat-files-display"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()

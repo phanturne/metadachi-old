@@ -1,12 +1,13 @@
 "use client"
 
 import { ChatbotUIContext } from "@/context/context"
+import * as React from "react"
 import { useContext, useEffect } from "react"
 import { Box, Typography } from "@mui/joy"
-import { AutoAwesomeRounded } from "@mui/icons-material"
 import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { useScroll } from "@/lib/hooks/use-scroll"
 import ChatMessages from "@/components/chat/ChatMessages"
+import Image from "next/image"
 
 export default function ChatTab({ chatId }: { chatId: string | null }) {
   const { chatMessages } = useContext(ChatbotUIContext)
@@ -28,7 +29,12 @@ export default function ChatTab({ chatId }: { chatId: string | null }) {
           justifyContent: "center"
         }}
       >
-        <AutoAwesomeRounded />
+        <Image
+          src="/metadachi.svg"
+          alt="Metadachi Icon"
+          width={50}
+          height={50}
+        />
         <Typography level="title-lg" sx={{ mt: 2, mb: 5 }}>
           How may I help you today?
         </Typography>
