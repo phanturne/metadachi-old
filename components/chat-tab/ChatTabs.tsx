@@ -63,7 +63,7 @@ export default function ChatTabs({
         <Tab indicatorInset value="files">
           Files
         </Tab>
-        <Tab indicatorInset value="tools">
+        <Tab indicatorInset value="tools" disabled>
           Tools
         </Tab>
       </TabList>

@@ -3,9 +3,10 @@
 import * as React from "react"
 import Button from "@mui/joy/Button"
 import SvgIcon from "@mui/joy/SvgIcon"
-import { styled } from "@mui/joy"
+import { IconButton, styled } from "@mui/joy"
+import { AddCircleOutlineRounded } from "@mui/icons-material"
 
-const VisuallyHiddenInput = styled("input")`
+export const VisuallyHiddenInput = styled("input")`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
@@ -17,7 +18,7 @@ const VisuallyHiddenInput = styled("input")`
   width: 1px;
 `
 
-export default function InputFileUpload({
+export default function FileInput({
   handleSelectedFile,
   accept,
   required
@@ -59,5 +60,34 @@ export default function InputFileUpload({
         accept={accept}
       />
     </Button>
+  )
+}
+
+export function FileInputIconButton({
+  handleSelectedFile,
+  accept,
+  required
+}: {
+  handleSelectedFile: (e: React.ChangeEvent<HTMLInputElement>) => void
+  accept?: string
+  required?: boolean
+}) {
+  return (
+    <IconButton
+      component="label"
+      role={undefined}
+      tabIndex={-1}
+      variant="plain"
+      color="neutral"
+      size="md"
+    >
+      <AddCircleOutlineRounded />
+      <VisuallyHiddenInput
+        type="file"
+        required={required}
+        onChange={handleSelectedFile}
+        accept={accept}
+      />
+    </IconButton>
   )
 }
