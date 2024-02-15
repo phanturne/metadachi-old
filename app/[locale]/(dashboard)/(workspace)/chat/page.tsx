@@ -1,6 +1,6 @@
 "use client"
 
-import { ChatInput } from "@/components/chat/chat-input"
+import { ChatInput } from "@/components/chat/ChatInput"
 import FileDropzoneContainer from "@/components/ui/FileDropzoneContainer"
 import ChatTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/ChatTab"
 import { useSearchParams } from "next/navigation"
@@ -22,6 +22,7 @@ import Loading from "@/app/[locale]/loading"
 import ChatHeader from "@/components/chat/ChatHeader"
 import { getChatFilesByChatId } from "@/db/chat-files"
 import { ChatFilesDisplay } from "@/components/files/chat-files-display"
+import { ChatToolsDisplay } from "@/components/chat/ChatToolsDisplay"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -217,6 +218,7 @@ export default function ChatPage() {
             }
           }}
         >
+          <ChatToolsDisplay />
           <ChatFilesDisplay />
           <ChatTabs tab={tab} setTab={setTab} />
           <ChatInput />

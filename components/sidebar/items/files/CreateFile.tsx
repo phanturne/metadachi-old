@@ -5,7 +5,7 @@ import { FILE_NAME_MAX } from "@/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { FC, useContext, useState } from "react"
 import { FormControl, FormLabel, Input } from "@mui/joy"
-import InputFileUpload from "@/components/ui/InputFileUpload"
+import FileInput from "@/components/input/FileInput"
 
 interface CreateFileProps {
   isOpen: boolean
@@ -57,7 +57,7 @@ export const CreateFile: FC<CreateFileProps> = ({ isOpen, onOpenChange }) => {
         <>
           <FormControl>
             <FormLabel>File</FormLabel>
-            <InputFileUpload
+            <FileInput
               handleSelectedFile={handleSelectedFile}
               required={true}
               accept={ACCEPTED_FILE_TYPES}
