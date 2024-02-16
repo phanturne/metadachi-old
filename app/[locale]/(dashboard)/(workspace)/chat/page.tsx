@@ -1,28 +1,28 @@
 "use client"
 
-import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatInput"
-import FileDropzoneContainer from "@/components/ui/FileDropzoneContainer"
-import ChatsCollection from "@/components/collections/types/ChatsCollection"
+import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatInput"
+import FileDropzoneContainer from "@/app/components/ui/FileDropzoneContainer"
+import ChatsCollection from "@/app/components/collections/types/ChatsCollection"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
-import ChatTabs from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatTabs"
+import ChatTabs from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatTabs"
 import { useContext, useEffect, useState } from "react"
-import AssistantsCollection from "@/components/collections/types/AssistantsCollection"
-import PromptsCollection from "@/components/collections/types/PromptsCollection"
-import FilesCollection from "@/components/collections/types/FilesCollection"
-import ToolsCollection from "@/components/collections/types/ToolsCollection"
-import { ChatbotUIContext } from "@/context/context"
-import { getMessagesByChatId } from "@/db/messages"
-import { LLMID, MessageImage } from "@/types"
-import { getMessageImageFromStorage } from "@/db/storage/message-images"
-import { convertBlobToBase64 } from "@/lib/blob-to-b64"
-import { getMessageFileItemsByMessageId } from "@/db/message-file-items"
-import { getChatById } from "@/db/chats"
+import AssistantsCollection from "@/app/components/collections/types/AssistantsCollection"
+import PromptsCollection from "@/app/components/collections/types/PromptsCollection"
+import FilesCollection from "@/app/components/collections/types/FilesCollection"
+import ToolsCollection from "@/app/components/collections/types/ToolsCollection"
+import { MetadachiContext } from "@/app/lib/context"
+import { getMessagesByChatId } from "@/app/lib/db/messages"
+import { LLMID, MessageImage } from "@/app/lib/types"
+import { getMessageImageFromStorage } from "@/app/lib/db/storage/message-images"
+import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
+import { getMessageFileItemsByMessageId } from "@/app/lib/db/message-file-items"
+import { getChatById } from "@/app/lib/db/chats"
 import Loading from "@/app/[locale]/loading"
-import ChatHeader from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatHeader"
-import { getChatFilesByChatId } from "@/db/chat-files"
-import { ChatFilesDisplay } from "@/components/files/chat-files-display"
-import { ChatToolsDisplay } from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatToolsDisplay"
+import ChatHeader from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatHeader"
+import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
+import { ChatFilesDisplay } from "@/app/components/files/chat-files-display"
+import { ChatToolsDisplay } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatToolsDisplay"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -41,7 +41,7 @@ export default function ChatPage() {
     setChatFiles,
     setShowFilesDisplay,
     setUseRetrieval
-  } = useContext(ChatbotUIContext)
+  } = useContext(MetadachiContext)
 
   const [loading, setLoading] = useState(true)
 

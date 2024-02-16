@@ -1,23 +1,23 @@
 "use client"
 
-import { ChatbotUIContext } from "@/context/context"
-import { getProfileByUserId, updateProfile } from "@/db/profile"
-import { getWorkspacesByUserId } from "@/db/workspaces"
+import { MetadachiContext } from "@/app/lib/context"
+import { getProfileByUserId, updateProfile } from "@/app/lib/db/profile"
+import { getWorkspacesByUserId } from "@/app/lib/db/workspaces"
 import {
   fetchHostedModels,
   fetchOpenRouterModels
-} from "@/lib/models/fetch-models"
-import { supabase } from "@/lib/supabase/browser-client"
+} from "@/app/lib/models/fetch-models"
+import { supabase } from "@/app/lib/supabase/browser-client"
 import { TablesUpdate } from "@/supabase/types"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
-import { APIStep } from "@/components/setup/api-step"
-import { FinishStep } from "@/components/setup/finish-step"
-import { ProfileStep } from "@/components/setup/profile-step"
+import { APIStep } from "@/app/components/setup/api-step"
+import { FinishStep } from "@/app/components/setup/finish-step"
+import { ProfileStep } from "@/app/components/setup/profile-step"
 import {
   SETUP_STEP_COUNT,
   StepContainer
-} from "@/components/setup/step-container"
+} from "@/app/components/setup/step-container"
 
 export default function SetupPage() {
   const {
@@ -28,7 +28,7 @@ export default function SetupPage() {
     setEnvKeyMap,
     setAvailableHostedModels,
     setAvailableOpenRouterModels
-  } = useContext(ChatbotUIContext)
+  } = useContext(MetadachiContext)
 
   const router = useRouter()
 

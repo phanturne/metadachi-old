@@ -1,4 +1,7 @@
-import { checkApiKey, getServerProfile } from "@/lib/server/server-chat-helpers"
+import {
+  checkApiKey,
+  getServerProfile
+} from "@/app/lib/server/server-chat-helpers"
 import { ServerRuntime } from "next"
 import OpenAI from "openai"
 

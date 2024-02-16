@@ -1,7 +1,7 @@
 "use client"
 
-import { ChangePassword } from "@/components/utility/change-password"
-import { supabase } from "@/lib/supabase/browser-client"
+import { ChangePassword } from "@/app/components/utility/change-password"
+import { supabase } from "@/app/lib/supabase/browser-client"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 

@@ -1,5 +1,5 @@
-import { ProfileSettings } from "@/components/utility/profile-settings"
-import Header from "@/components/ui/Header"
+import { ProfileSettings } from "@/app/components/utility/profile-settings"
+import Header from "@/app/components/ui/Header"
 import { Typography } from "@mui/joy"
 import React from "react"
 

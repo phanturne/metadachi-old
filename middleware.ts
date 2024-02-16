@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/middleware"
+import { createClient } from "@/app/lib/supabase/middleware"
 import { i18nRouter } from "next-i18n-router"
 import { NextResponse, type NextRequest } from "next/server"
 import i18nConfig from "./i18nConfig"

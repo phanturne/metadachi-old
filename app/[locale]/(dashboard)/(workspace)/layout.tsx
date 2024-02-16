@@ -1,22 +1,25 @@
 "use client"
 
-import { ChatbotUIContext } from "@/context/context"
-import { getAssistantWorkspacesByWorkspaceId } from "@/db/assistants"
-import { getChatsByWorkspaceId } from "@/db/chats"
-import { getCollectionWorkspacesByWorkspaceId } from "@/db/collections"
-import { getFileWorkspacesByWorkspaceId } from "@/db/files"
-import { getFoldersByWorkspaceId } from "@/db/folders"
-import { getModelWorkspacesByWorkspaceId } from "@/db/models"
-import { getPresetWorkspacesByWorkspaceId } from "@/db/presets"
-import { getPromptWorkspacesByWorkspaceId } from "@/db/prompts"
-import { getAssistantImageFromStorage } from "@/db/storage/assistant-images"
-import { getToolWorkspacesByWorkspaceId } from "@/db/tools"
-import { getHomeWorkspaceByUserId, getWorkspaceById } from "@/db/workspaces"
-import { convertBlobToBase64 } from "@/lib/blob-to-b64"
-import { supabase } from "@/lib/supabase/browser-client"
-import { LLMID } from "@/types"
+import { MetadachiContext } from "@/app/lib/context"
+import { getAssistantWorkspacesByWorkspaceId } from "@/app/lib/db/assistants"
+import { getChatsByWorkspaceId } from "@/app/lib/db/chats"
+import { getCollectionWorkspacesByWorkspaceId } from "@/app/lib/db/collections"
+import { getFileWorkspacesByWorkspaceId } from "@/app/lib/db/files"
+import { getFoldersByWorkspaceId } from "@/app/lib/db/folders"
+import { getModelWorkspacesByWorkspaceId } from "@/app/lib/db/models"
+import { getPresetWorkspacesByWorkspaceId } from "@/app/lib/db/presets"
+import { getPromptWorkspacesByWorkspaceId } from "@/app/lib/db/prompts"
+import { getAssistantImageFromStorage } from "@/app/lib/db/storage/assistant-images"
+import { getToolWorkspacesByWorkspaceId } from "@/app/lib/db/tools"
+import {
+  getHomeWorkspaceByUserId,
+  getWorkspaceById
+} from "@/app/lib/db/workspaces"
+import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
+import { supabase } from "@/app/lib/supabase/browser-client"
 import { ReactNode, useContext, useEffect, useState } from "react"
 import Loading from "@/app/[locale]/loading"
+import { LLMID } from "@/app/lib/types"
 
 interface WorkspaceLayoutProps {
   children: ReactNode
@@ -47,7 +50,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setNewMessageFiles,
     setNewMessageImages,
     setShowFilesDisplay
-  } = useContext(ChatbotUIContext)
+  } = useContext(MetadachiContext)
 
   const [loading, setLoading] = useState(true)
 

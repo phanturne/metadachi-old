@@ -2,10 +2,10 @@
 import * as React from "react"
 import { useContext } from "react"
 import { Tab, tabClasses, TabList, TabPanel, Tabs, Typography } from "@mui/joy"
-import { ChatbotUIContext } from "@/context/context"
-import { CollectionsWrapper } from "@/components/collections/CollectionsWrapper"
-import { ContentType } from "@/types"
-import Header from "@/components/ui/Header"
+import { MetadachiContext } from "@/app/lib/context"
+import { CollectionsWrapper } from "@/app/components/collections/CollectionsWrapper"
+import { ContentType } from "@/app/lib/types"
+import Header from "@/app/components/ui/Header"
 
 export default function CollectionsPage() {
   const {
@@ -17,7 +17,7 @@ export default function CollectionsPage() {
     collections,
     assistants,
     tools
-  } = useContext(ChatbotUIContext)
+  } = useContext(MetadachiContext)
   const chatFolders = folders.filter(folder => folder.type === "chats")
   const presetFolders = folders.filter(folder => folder.type === "presets")
   const promptFolders = folders.filter(folder => folder.type === "prompts")
