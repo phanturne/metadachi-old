@@ -9,7 +9,7 @@ interface SidebarSearchProps {
   setSearchTerm: Function
 }
 
-export const ChatTabSearch: FC<SidebarSearchProps> = ({
+export const CollectionsSearch: FC<SidebarSearchProps> = ({
   contentType,
   searchTerm,
   setSearchTerm

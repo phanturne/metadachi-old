@@ -19,7 +19,7 @@ interface SidebarCreateButtonsProps {
   variant: "list" | "grid"
 }
 
-export const ChatTabCreateButtons: FC<SidebarCreateButtonsProps> = ({
+export const CollectionsCreateButtons: FC<SidebarCreateButtonsProps> = ({
   contentType,
   hasData,
   variant = "grid"

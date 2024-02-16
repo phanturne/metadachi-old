@@ -2,14 +2,14 @@
 
 import { ChatbotUIContext } from "@/context/context"
 import { useContext } from "react"
-import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
+import { CollectionsWrapper } from "@/components/collections/CollectionsWrapper"
 
-export default function PromptsTab() {
+export default function PromptsCollection() {
   const { folders, prompts } = useContext(ChatbotUIContext)
   const promptFolders = folders.filter(folder => folder.type === "prompts")
 
   return (
-    <ChatTabContent
+    <CollectionsWrapper
       contentType="prompts"
       data={prompts}
       folders={promptFolders}

@@ -3,7 +3,7 @@ import * as React from "react"
 import { useContext } from "react"
 import { Tab, tabClasses, TabList, TabPanel, Tabs, Typography } from "@mui/joy"
 import { ChatbotUIContext } from "@/context/context"
-import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
+import { CollectionsWrapper } from "@/components/collections/CollectionsWrapper"
 import { ContentType } from "@/types"
 import Header from "@/components/ui/Header"
 
@@ -87,7 +87,7 @@ export default function CollectionsPage() {
 
         {Object.entries(CollectionTabs).map(([key, value]) => (
           <TabPanel value={key} key={`${key}-collections-tab-panel`}>
-            <ChatTabContent
+            <CollectionsWrapper
               contentType={key as ContentType}
               data={value.data}
               folders={value.folders}

@@ -1,9 +1,9 @@
 import { Tables } from "@/supabase/types"
 import { ContentType, DataListType } from "@/types"
 import { FC, useState } from "react"
-import { ChatTabCreateButtons } from "./ChatTabCreateButtons"
+import { CollectionsCreateButtons } from "./CollectionsCreateButtons"
 import { DataList } from "../sidebar/data-list"
-import { ChatTabSearch } from "./ChatTabSearch"
+import { CollectionsSearch } from "./CollectionsSearch"
 import { Box } from "@mui/joy"
 
 interface SidebarContentProps {
@@ -13,7 +13,7 @@ interface SidebarContentProps {
   variant?: "list" | "grid"
 }
 
-export const ChatTabContent: FC<SidebarContentProps> = ({
+export const CollectionsWrapper: FC<SidebarContentProps> = ({
   contentType,
   data,
   folders,
@@ -36,12 +36,12 @@ export const ChatTabContent: FC<SidebarContentProps> = ({
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexGrow: 0 }}>
-        <ChatTabSearch
+        <CollectionsSearch
           contentType={contentType}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
-        <ChatTabCreateButtons
+        <CollectionsCreateButtons
           contentType={contentType}
           hasData={data.length > 0}
           variant={variant}

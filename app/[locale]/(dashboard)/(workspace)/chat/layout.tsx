@@ -1,4 +1,4 @@
-import ChatSidebar from "@/components/chat/ChatSidebar"
+import ChatSidebar from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatSidebar"
 import { Box } from "@mui/joy"
 
 export default function ChatLayout({

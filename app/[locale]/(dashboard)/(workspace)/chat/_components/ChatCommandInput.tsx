@@ -1,9 +1,9 @@
-import { ChatbotUIContext } from "@/context/context"
 import { FC, useContext } from "react"
+import { ChatbotUIContext } from "@/context/context"
 import { usePromptAndCommand } from "@/lib/hooks/use-prompt-and-command"
-import { FilePicker } from "./file-picker"
-import { PromptPicker } from "./prompt-picker"
-import { ToolPicker } from "./tool-picker"
+import { PromptPicker } from "@/components/chat/prompt-picker"
+import { FilePicker } from "@/components/chat/file-picker"
+import { ToolPicker } from "@/components/chat/tool-picker"
 
 interface ChatCommandInputProps {}
 

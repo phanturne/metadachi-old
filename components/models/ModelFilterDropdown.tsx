@@ -4,14 +4,16 @@ import { MODEL_FILTER_LIST } from "@/components/models/ModelSelect"
 
 export function ModelFilterDropdown({
   modelFilter,
-  setModelFilter
+  setModelFilter,
+  disabled
 }: {
   modelFilter: string
   setModelFilter: (v: string) => void
+  disabled?: boolean
 }) {
   return (
     <Select
-      variant="soft"
+      disabled={disabled}
       defaultValue={MODEL_FILTER_LIST[0]}
       value={modelFilter}
       onChange={(_, v) => {

@@ -31,7 +31,7 @@ export const AdvancedModelSettings: FC<AdvancedModelSettingsProps> = ({
   return (
     <Accordion sx={{ ml: -1.5 }}>
       <AccordionSummary>
-        <Typography level="title-md" fontWeight="bold">
+        <Typography level="title-sm" fontWeight="bold">
           Advanced Settings
         </Typography>
       </AccordionSummary>

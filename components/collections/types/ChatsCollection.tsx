@@ -6,10 +6,10 @@ import { useContext, useEffect } from "react"
 import { Box } from "@mui/joy"
 import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { useScroll } from "@/lib/hooks/use-scroll"
-import ChatMessages from "@/components/chat/ChatMessages"
-import { NewChatContent } from "@/components/chat/NewChatContent"
+import ChatMessages from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatMessages"
+import { NewChatContent } from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/NewChatContent"
 
-export default function ChatTab({ chatId }: { chatId: string | null }) {
+export default function ChatsCollection({ chatId }: { chatId: string | null }) {
   const { chatMessages } = useContext(ChatbotUIContext)
   const { handleFocusChatInput } = useChatHandler()
   const { messagesStartRef, messagesEndRef } = useScroll()

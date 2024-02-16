@@ -1,16 +1,16 @@
 "use client"
 
-import { ChatInput } from "@/components/chat/ChatInput"
+import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatInput"
 import FileDropzoneContainer from "@/components/ui/FileDropzoneContainer"
-import ChatTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/ChatTab"
+import ChatsCollection from "@/components/collections/types/ChatsCollection"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
-import ChatTabs from "@/components/chat-tab/ChatTabs"
+import ChatTabs from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatTabs"
 import { useContext, useEffect, useState } from "react"
-import AssistantsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/AssistantsTab"
-import PromptsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/PromptsTab"
-import FilesTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/FilesTab"
-import ToolsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/ToolsTab"
+import AssistantsCollection from "@/components/collections/types/AssistantsCollection"
+import PromptsCollection from "@/components/collections/types/PromptsCollection"
+import FilesCollection from "@/components/collections/types/FilesCollection"
+import ToolsCollection from "@/components/collections/types/ToolsCollection"
 import { ChatbotUIContext } from "@/context/context"
 import { getMessagesByChatId } from "@/db/messages"
 import { LLMID, MessageImage } from "@/types"
@@ -19,10 +19,10 @@ import { convertBlobToBase64 } from "@/lib/blob-to-b64"
 import { getMessageFileItemsByMessageId } from "@/db/message-file-items"
 import { getChatById } from "@/db/chats"
 import Loading from "@/app/[locale]/loading"
-import ChatHeader from "@/components/chat/ChatHeader"
+import ChatHeader from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatHeader"
 import { getChatFilesByChatId } from "@/db/chat-files"
 import { ChatFilesDisplay } from "@/components/files/chat-files-display"
-import { ChatToolsDisplay } from "@/components/chat/ChatToolsDisplay"
+import { ChatToolsDisplay } from "@/app/[locale]/(dashboard)/(workspace)/chat/_components/ChatToolsDisplay"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -185,7 +185,7 @@ export default function ChatPage() {
         <ChatHeader variant={isNewChat ? "new" : null} />
 
         {tab === "chat" ? (
-          <ChatTab chatId={chatId} />
+          <ChatsCollection chatId={chatId} />
         ) : (
           <Box
             sx={{
@@ -196,10 +196,10 @@ export default function ChatPage() {
               px: 10
             }}
           >
-            {tab === "assistants" && <AssistantsTab />}
-            {tab === "prompts" && <PromptsTab />}
-            {tab === "files" && <FilesTab />}
-            {tab === "tools" && <ToolsTab />}
+            {tab === "assistants" && <AssistantsCollection />}
+            {tab === "prompts" && <PromptsCollection />}
+            {tab === "files" && <FilesCollection />}
+            {tab === "tools" && <ToolsCollection />}
           </Box>
         )}
 

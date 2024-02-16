@@ -2,13 +2,17 @@
 
 import { ChatbotUIContext } from "@/context/context"
 import { useContext } from "react"
-import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
+import { CollectionsWrapper } from "@/components/collections/CollectionsWrapper"
 
-export default function FilesTab() {
+export default function FilesCollection() {
   const { folders, files } = useContext(ChatbotUIContext)
   const fileFolders = folders.filter(folder => folder.type === "files")
 
   return (
-    <ChatTabContent contentType="files" data={files} folders={fileFolders} />
+    <CollectionsWrapper
+      contentType="files"
+      data={files}
+      folders={fileFolders}
+    />
   )
 }

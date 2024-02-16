@@ -2,7 +2,7 @@ import { useChatHandler } from "@/lib/hooks/use-chat-handler"
 import { ChatbotUIContext } from "@/context/context"
 import { Tables } from "@/supabase/types"
 import { useContext, useState } from "react"
-import { Message } from "../messages/Message"
+import { Message } from "@/components/messages/Message"
 
 export default function ChatMessages() {
   const { chatMessages, chatFileItems } = useContext(ChatbotUIContext)

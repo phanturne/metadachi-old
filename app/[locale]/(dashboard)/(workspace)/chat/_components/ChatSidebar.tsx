@@ -2,7 +2,7 @@
 import * as React from "react"
 import { useContext } from "react"
 import { ChatbotUIContext } from "@/context/context"
-import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
+import { CollectionsWrapper } from "@/components/collections/CollectionsWrapper"
 import { Typography } from "@mui/joy"
 import Sheet from "@mui/joy/Sheet"
 
@@ -20,7 +20,7 @@ export default function ChatSidebar() {
       }}
     >
       <Typography level="h4">Chats</Typography>
-      <ChatTabContent
+      <CollectionsWrapper
         contentType="chats"
         data={chats}
         folders={chatFolders}

@@ -2,13 +2,17 @@
 
 import { ChatbotUIContext } from "@/context/context"
 import { useContext } from "react"
-import { ChatTabContent } from "@/components/chat-tab/ChatTabContent"
+import { CollectionsWrapper } from "@/components/collections/CollectionsWrapper"
 
-export default function ToolsTab() {
+export default function ToolsCollection() {
   const { folders, tools } = useContext(ChatbotUIContext)
   const toolFolders = folders.filter(folder => folder.type === "tools")
 
   return (
-    <ChatTabContent contentType="tools" data={tools} folders={toolFolders} />
+    <CollectionsWrapper
+      contentType="tools"
+      data={tools}
+      folders={toolFolders}
+    />
   )
 }

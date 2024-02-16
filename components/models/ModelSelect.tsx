@@ -7,6 +7,7 @@ import { ModelOption } from "@/components/models/ModelOption"
 import { ModelFilterDropdown } from "@/components/models/ModelFilterDropdown"
 
 interface ModelSelectProps {
+  disabled?: boolean
   selectedModelId: string
   onSelectModel: (modelId: LLMID) => void
 }
@@ -28,6 +29,7 @@ type ModelFilter = (typeof MODEL_FILTERS)[keyof typeof MODEL_FILTERS]
 export const MODEL_FILTER_LIST = Object.keys(MODEL_FILTERS) as ModelFilter[]
 
 export const ModelSelect: FC<ModelSelectProps> = ({
+  disabled,
   selectedModelId,
   onSelectModel
 }) => {
@@ -114,6 +116,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
 
   return (
     <Autocomplete
+      disabled={disabled}
       defaultValue={selectedModel}
       value={selectedModel}
       onChange={(_, value) => onSelectModel(value?.modelId as LLMID)}
@@ -130,6 +133,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
           }}
         >
           <ModelFilterDropdown
+            disabled={disabled}
             modelFilter={modelFilter}
             setModelFilter={setModelFilter}
           />
