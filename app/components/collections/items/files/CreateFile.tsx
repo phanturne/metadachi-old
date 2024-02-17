@@ -1,5 +1,5 @@
 import { ACCEPTED_FILE_TYPES } from "@/app/lib/hooks/use-select-file-handler"
-import { CreateItemModal } from "@/app/components/sidebar/items/all/CreateItemModal"
+import { CreateItemModal } from "@/app/components/collections/items/all/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
 import { FILE_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"

@@ -1,4 +1,4 @@
-import { CreateItemModal } from "@/app/components/sidebar/items/all/CreateItemModal"
+import { CreateItemModal } from "@/app/components/collections/items/all/CreateItemModal"
 import ImagePicker from "@/app/components/ui/image-picker"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"

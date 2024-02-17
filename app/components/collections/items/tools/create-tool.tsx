@@ -1,4 +1,4 @@
-import { CreateItemModal } from "@/app/components/sidebar/items/all/CreateItemModal"
+import { CreateItemModal } from "@/app/components/collections/items/all/CreateItemModal"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
 import { Tabs, TabsList, TabsTrigger } from "@/app/components/ui/tabs"

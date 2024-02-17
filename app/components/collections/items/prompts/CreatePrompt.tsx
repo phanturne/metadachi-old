@@ -1,4 +1,4 @@
-import { CreateItemModal } from "@/app/components/sidebar/items/all/CreateItemModal"
+import { CreateItemModal } from "@/app/components/collections/items/all/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
 import { PROMPT_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"

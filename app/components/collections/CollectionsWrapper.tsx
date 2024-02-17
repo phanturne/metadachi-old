@@ -2,9 +2,9 @@ import { Tables } from "@/supabase/types"
 import { ContentType, DataListType } from "@/app/lib/types"
 import { FC, useState } from "react"
 import { CollectionsCreateButtons } from "./CollectionsCreateButtons"
-import { DataList } from "../sidebar/data-list"
 import { CollectionsSearch } from "./CollectionsSearch"
 import { Box } from "@mui/joy"
+import { DataList } from "@/app/components/collections/data-list"
 
 interface SidebarContentProps {
   contentType: ContentType
