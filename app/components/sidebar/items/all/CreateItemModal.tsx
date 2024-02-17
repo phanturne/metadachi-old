@@ -17,18 +17,27 @@ import {
 import { createTool } from "@/app/lib/db/tools"
 import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
 import { Tables, TablesInsert } from "@/supabase/types"
-import { ContentType } from "../../../../lib/types"
-import { FC, useContext, useRef, useState } from "react"
+import { ContentType } from "@/app/lib/types"
+import { FC, useContext, useState } from "react"
 import { toast } from "sonner"
-import { Box, Button, DialogTitle, Modal, ModalDialog, Stack } from "@mui/joy"
+import {
+  Box,
+  Button,
+  DialogContent,
+  DialogTitle,
+  Modal,
+  ModalDialog,
+  Stack
+} from "@mui/joy"
 
 interface CreateItemModalProps {
   isOpen: boolean
-  isTyping: boolean
+  isTyping: boolean // TODO: Remove?
   onOpenChange: (isOpen: boolean) => void
   contentType: ContentType
   renderInputs: () => JSX.Element
   createState: any
+  subtitle?: string
 }
 
 export const CreateItemModal: FC<CreateItemModalProps> = ({
@@ -37,7 +46,8 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
   contentType,
   renderInputs,
   createState,
-  isTyping
+  isTyping,
+  subtitle
 }) => {
   const {
     selectedWorkspace,
@@ -51,8 +61,6 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
     setTools,
     setModels
   } = useContext(MetadachiContext)
-
-  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const [creating, setCreating] = useState(false)
 
@@ -209,6 +217,7 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
     <Modal open={isOpen} onClose={() => onOpenChange(false)}>
       <ModalDialog sx={{ minWidth: "450px" }}>
         <DialogTitle>{modalTitle}</DialogTitle>
+        {subtitle && <DialogContent>{subtitle}</DialogContent>}
         <form
           onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault()
@@ -234,11 +243,7 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
                 Cancel
               </Button>
 
-              <Button
-                disabled={creating}
-                ref={buttonRef}
-                onClick={handleCreate}
-              >
+              <Button disabled={creating} onClick={handleCreate}>
                 {creating ? "Creating..." : "Create"}
               </Button>
             </Box>

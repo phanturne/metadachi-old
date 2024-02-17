@@ -28,6 +28,7 @@ export const CreatePrompt: FC<CreatePromptProps> = ({
       isOpen={isOpen}
       isTyping={isTyping}
       onOpenChange={onOpenChange}
+      subtitle="Add prompt variables with double braces: {{variable}}"
       createState={
         {
           user_id: profile.user_id,

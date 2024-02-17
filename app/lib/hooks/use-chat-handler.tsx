@@ -16,7 +16,7 @@ import {
   handleRetrieval,
   processResponse,
   validateChatSettings
-} from "@/app/components/chat/chat-helpers"
+} from "@/app/lib/chat-helpers"
 
 export const useChatHandler = () => {
   const router = useRouter()

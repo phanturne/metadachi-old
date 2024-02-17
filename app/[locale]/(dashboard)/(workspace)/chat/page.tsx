@@ -1,6 +1,6 @@
 "use client"
 
-import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatInput"
+import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatInput"
 import FileDropzoneContainer from "@/app/components/ui/FileDropzoneContainer"
 import ChatsCollection from "@/app/components/collections/types/ChatsCollection"
 import { useSearchParams } from "next/navigation"

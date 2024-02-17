@@ -7,7 +7,11 @@ import MenuButton from "@mui/joy/MenuButton"
 import Dropdown from "@mui/joy/Dropdown"
 import Avatar from "@mui/joy/Avatar"
 import { Box, Typography } from "@mui/joy"
-import { LoginRounded, LogoutRounded } from "@mui/icons-material"
+import {
+  CollectionsBookmarkRounded,
+  LoginRounded,
+  LogoutRounded
+} from "@mui/icons-material"
 import { useRouter } from "next/navigation"
 import Divider from "@mui/joy/Divider"
 import ThemeToggleButton from "@/app/components/ui/ThemeToggle"
@@ -15,6 +19,7 @@ import { MetadachiContext } from "@/app/lib/context"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { useSnackbar } from "@/app/lib/providers/SnackbarProvider"
+import { Routes } from "@/app/lib/constants"
 
 export default function ProfileMenu({
   placement = "bottom"
@@ -74,16 +79,16 @@ export default function ProfileMenu({
           {/*{process.env.BUILD_MODE === 'export' && <FloatingWindowToggle />}*/}
         </Box>
 
-        {/*<MenuItem*/}
-        {/*  onClick={() => {*/}
-        {/*    router.push(Routes.Collections)*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  <ListItemDecorator>*/}
-        {/*    <CollectionsBookmarkRounded />*/}
-        {/*  </ListItemDecorator>*/}
-        {/*  Collections*/}
-        {/*</MenuItem>*/}
+        <MenuItem
+          onClick={() => {
+            router.push(Routes.Collections)
+          }}
+        >
+          <ListItemDecorator>
+            <CollectionsBookmarkRounded />
+          </ListItemDecorator>
+          Collections
+        </MenuItem>
 
         {/*<MenuItem*/}
         {/*  onClick={() => {*/}

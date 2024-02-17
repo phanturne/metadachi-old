@@ -4,7 +4,7 @@ import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
 import * as React from "react"
 import { FC, useContext, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { ChatCommandInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatCommandInput"
+import { ChatCommands } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatCommands"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { useSelectFileHandler } from "@/app/lib/hooks/use-select-file-handler"
@@ -124,19 +124,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         justifyContent: "center"
       }}
     >
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: "55px",
-          left: 0,
-          maxHeight: "300px",
-          width: "100%",
-          overflow: "auto",
-          borderRadius: "xl"
-        }}
-      >
-        <ChatCommandInput />
-      </Box>
+      <ChatCommands />
 
       <Textarea
         slotProps={{ textarea: { ref: chatInputRef } }}
