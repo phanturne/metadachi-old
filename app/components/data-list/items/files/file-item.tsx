@@ -1,4 +1,4 @@
-import { FileIcon } from "@/app/components/ui/file-icon"
+import { FileIcon } from "@/app/components/files/file-icon"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
 import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"

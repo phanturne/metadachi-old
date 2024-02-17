@@ -1,4 +1,4 @@
-import { openapiToFunctions } from "@/app/lib/openapi-conversion"
+import { openapiToFunctions } from "@/app/lib/utils/openapi-conversion"
 import {
   checkApiKey,
   getServerProfile

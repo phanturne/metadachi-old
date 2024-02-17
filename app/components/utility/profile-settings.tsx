@@ -9,7 +9,7 @@ import {
 } from "@/app/lib/db/limits"
 import { updateProfile } from "@/app/lib/db/profile"
 import { uploadProfileImage } from "@/app/lib/db/storage/profile-images"
-import { exportLocalStorageAsJSON } from "@/app/lib/export-old-data"
+import { exportLocalStorageAsJSON } from "@/app/lib/utils/export-old-data"
 import { fetchOpenRouterModels } from "@/app/lib/models/fetch-models"
 import { LLM_LIST_MAP } from "@/app/lib/models/llm/llm-list"
 import { OpenRouterLLM } from "@/app/lib/types"
@@ -147,7 +147,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
       "openrouter"
     ]
 
-    providers.forEach(async provider => {
+    for (const provider of providers) {
       let providerKey: keyof typeof profile
 
       if (provider === "google") {
@@ -194,7 +194,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
           }
         }
       }
-    })
+    }
   }
 
   const debounce = (func: (...args: any[]) => void, wait: number) => {

@@ -1,8 +1,8 @@
 import { Toaster } from "@/app/components/ui/sonner"
-import { GlobalState } from "@/app/components/utility/global-state"
-import { Providers } from "@/app/components/utility/providers"
-import TranslationsProvider from "@/app/components/utility/translations-provider"
-import initTranslations from "@/app/lib/i18n"
+import { GlobalStateProvider } from "@/app/lib/providers/GlobalStateProvider"
+import { Providers } from "@/app/lib/providers/Providers"
+import TranslationsProvider from "@/app/lib/providers/TranslationsProvider"
+import initTranslations from "@/app/lib/utils/i18n"
 import { Database } from "@/supabase/types"
 import { createServerClient } from "@supabase/ssr"
 import { Metadata, Viewport } from "next"
@@ -105,7 +105,11 @@ export default async function RootLayout({
                 alignItems: "center"
               }}
             >
-              {session ? <GlobalState>{children}</GlobalState> : children}
+              {session ? (
+                <GlobalStateProvider>{children}</GlobalStateProvider>
+              ) : (
+                children
+              )}
             </Box>
           </TranslationsProvider>
         </Providers>

@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/utils"
+import { cn } from "@/app/lib/utils/utils"
 import { FC } from "react"
 import ReactTextareaAutosize from "react-textarea-autosize"
 

@@ -1,4 +1,4 @@
-import { generateLocalEmbedding } from "@/app/lib/generate-local-embedding"
+import { generateLocalEmbedding } from "@/app/lib/utils/generate-local-embedding"
 import { processDocX } from "@/app/lib/retrieval/processing"
 import {
   checkApiKey,

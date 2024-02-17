@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/utils"
+import { cn } from "@/app/lib/utils/utils"
 import mistral from "@/public/providers/mistral.png"
 import perplexity from "@/public/providers/perplexity.png"
 import { ModelProvider } from "@/app/lib/types"

@@ -7,7 +7,7 @@ import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { ChatCommandsList } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatCommandsList"
 import { FolderRounded } from "@mui/icons-material"
 import SvgIcon from "@mui/joy/SvgIcon"
-import { FileIcon } from "@/app/components/ui/file-icon"
+import { FileIcon } from "@/app/components/files/file-icon"
 
 interface FilePickerProps {}
 

@@ -1,4 +1,4 @@
-import { isUsingEnvironmentKey } from "@/app/lib/envs"
+import { isUsingEnvironmentKey } from "@/app/lib/utils/envs"
 import { createResponse } from "@/app/lib/server/server-utils"
 import { EnvKey } from "@/app/lib/types/key-type"
 import { VALID_ENV_KEYS } from "@/app/lib/types/valid-keys"

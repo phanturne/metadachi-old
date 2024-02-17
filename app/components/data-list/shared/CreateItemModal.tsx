@@ -15,7 +15,7 @@ import {
   uploadAssistantImage
 } from "@/app/lib/db/storage/assistant-images"
 import { createTool } from "@/app/lib/db/tools"
-import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
+import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { Tables, TablesInsert } from "@/supabase/types"
 import { ContentType } from "@/app/lib/types"
 import { FC, useContext, useState } from "react"

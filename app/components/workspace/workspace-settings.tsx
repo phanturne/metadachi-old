@@ -5,7 +5,7 @@ import {
   uploadWorkspaceImage
 } from "@/app/lib/db/storage/workspace-images"
 import { updateWorkspace } from "@/app/lib/db/workspaces"
-import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
+import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { LLMID } from "@/app/lib/types"
 import { IconHome, IconSettings } from "@tabler/icons-react"
 import { FC, useContext, useEffect, useRef, useState } from "react"

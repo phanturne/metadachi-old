@@ -1,4 +1,4 @@
-import { CHAT_SETTING_LIMITS } from "@/app/lib/chat-setting-limits"
+import { CHAT_SETTING_LIMITS } from "@/app/lib/utils/chat-setting-limits"
 import {
   checkApiKey,
   getServerProfile

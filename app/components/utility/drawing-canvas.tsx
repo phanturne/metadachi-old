@@ -92,7 +92,7 @@ export const DrawingCanvas: FC<DrawingCanvasProps> = ({ imageItem }) => {
   return (
     <canvas
       ref={canvasRef}
-      className="cursor-crosshair rounded"
+      // className="cursor-crosshair rounded"
       width={2000}
       height={2000}
       onMouseDown={startDrawing}
@@ -100,6 +100,8 @@ export const DrawingCanvas: FC<DrawingCanvasProps> = ({ imageItem }) => {
       onMouseMove={draw}
       onMouseLeave={finishDrawing}
       style={{
+        cursor: "crosshair",
+        borderRadius: "0.25rem",
         maxHeight: "67vh",
         maxWidth: "67vw"
       }}

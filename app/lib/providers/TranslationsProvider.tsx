@@ -1,6 +1,6 @@
 "use client"
 
-import initTranslations from "@/app/lib/i18n"
+import initTranslations from "@/app/lib/utils/i18n"
 import { createInstance } from "i18next"
 import { I18nextProvider } from "react-i18next"
 

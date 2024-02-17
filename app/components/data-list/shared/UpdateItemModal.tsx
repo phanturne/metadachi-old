@@ -67,7 +67,7 @@ import {
   getToolWorkspacesByToolId,
   updateTool
 } from "@/app/lib/db/tools"
-import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
+import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { Tables, TablesUpdate } from "@/supabase/types"
 import { CollectionFile, ContentType, DataItemType } from "../../../lib/types"
 import { FC, useContext, useEffect, useRef, useState } from "react"

@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/utils"
+import { cn } from "@/app/lib/utils/utils"
 import { Tables } from "@/supabase/types"
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react"
 import { FC, useRef, useState } from "react"

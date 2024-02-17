@@ -6,7 +6,7 @@ import { MetadachiContext } from "@/app/lib/context"
 import { getProfileByUserId } from "@/app/lib/db/profile"
 import { getWorkspaceImageFromStorage } from "@/app/lib/db/storage/workspace-images"
 import { getWorkspacesByUserId } from "@/app/lib/db/workspaces"
-import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
+import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import {
   fetchHostedModels,
   fetchOllamaModels,
@@ -22,9 +22,9 @@ import {
   MessageImage,
   OpenRouterLLM,
   WorkspaceImage
-} from "../../lib/types"
-import { AssistantImage } from "../../lib/types/images/assistant-image"
-import { VALID_ENV_KEYS } from "../../lib/types/valid-keys"
+} from "../types"
+import { AssistantImage } from "@/app/lib/types"
+import { VALID_ENV_KEYS } from "../types/valid-keys"
 import { useRouter } from "next/navigation"
 import { FC, useEffect, useState } from "react"
 
@@ -32,7 +32,7 @@ interface GlobalStateProps {
   children: React.ReactNode
 }
 
-export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
+export const GlobalStateProvider: FC<GlobalStateProps> = ({ children }) => {
   const router = useRouter()
 
   // PROFILE STORE

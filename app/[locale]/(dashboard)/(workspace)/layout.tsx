@@ -15,7 +15,7 @@ import {
   getHomeWorkspaceByUserId,
   getWorkspaceById
 } from "@/app/lib/db/workspaces"
-import { convertBlobToBase64 } from "@/app/lib/blob-to-b64"
+import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { ReactNode, useContext, useEffect, useState } from "react"
 import Loading from "@/app/[locale]/loading"

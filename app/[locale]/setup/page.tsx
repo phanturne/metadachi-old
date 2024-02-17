@@ -18,6 +18,7 @@ import {
   SETUP_STEP_COUNT,
   StepContainer
 } from "@/app/components/setup/step-container"
+import { Box } from "@mui/joy"
 
 export default function SetupPage() {
   const {
@@ -159,7 +160,7 @@ export default function SetupPage() {
           <StepContainer
             stepDescription="Let's create your profile."
             stepNum={currentStep}
-            stepTitle="Welcome to Chatbot UI"
+            stepTitle="Welcome to Metadachi!"
             onShouldProceed={handleShouldProceed}
             showNextButton={!!(username && usernameAvailable)}
             showBackButton={false}
@@ -243,8 +244,15 @@ export default function SetupPage() {
   }
 
   return (
-    <div className="flex h-full items-center justify-center">
+    <Box
+      sx={{
+        display: "flex",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+    >
       {renderStep(currentStep)}
-    </div>
+    </Box>
   )
 }

@@ -8,8 +8,8 @@ import { uploadMessageImage } from "@/app/lib/db/storage/message-images"
 import {
   buildFinalMessages,
   buildGoogleGeminiFinalMessages
-} from "@/app/lib/build-prompt"
-import { consumeReadableStream } from "@/app/lib/consume-stream"
+} from "@/app/lib/utils/build-prompt"
+import { consumeReadableStream } from "@/app/lib/utils/consume-stream"
 import { Tables, TablesInsert } from "@/supabase/types"
 import {
   ChatFile,

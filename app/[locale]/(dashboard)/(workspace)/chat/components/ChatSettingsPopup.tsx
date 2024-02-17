@@ -1,5 +1,5 @@
 import { MetadachiContext } from "@/app/lib/context"
-import { CHAT_SETTING_LIMITS } from "@/app/lib/chat-setting-limits"
+import { CHAT_SETTING_LIMITS } from "@/app/lib/utils/chat-setting-limits"
 import useHotkey from "@/app/lib/hooks/use-hotkey"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
 import * as React from "react"

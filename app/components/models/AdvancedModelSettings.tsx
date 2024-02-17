@@ -1,7 +1,7 @@
 import { FC, useContext } from "react"
 import { ChatSettings } from "@/app/lib/types"
 import { MetadachiContext } from "@/app/lib/context"
-import { CHAT_SETTING_LIMITS } from "@/app/lib/chat-setting-limits"
+import { CHAT_SETTING_LIMITS } from "@/app/lib/utils/chat-setting-limits"
 import {
   Accordion,
   AccordionDetails,

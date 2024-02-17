@@ -1,7 +1,7 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { updateChat } from "@/app/lib/db/chats"
 import { deleteMessagesIncludingAndAfter } from "@/app/lib/db/messages"
-import { buildFinalMessages } from "@/app/lib/build-prompt"
+import { buildFinalMessages } from "@/app/lib/utils/build-prompt"
 import { Tables } from "@/supabase/types"
 import { ChatMessage, ChatPayload, LLMID, ModelProvider } from "@/app/lib/types"
 import { useRouter } from "next/navigation"
@@ -16,7 +16,7 @@ import {
   handleRetrieval,
   processResponse,
   validateChatSettings
-} from "@/app/lib/chat-helpers"
+} from "@/app/lib/utils/chat-helpers"
 
 export const useChatHandler = () => {
   const router = useRouter()

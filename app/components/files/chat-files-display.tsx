@@ -15,7 +15,7 @@ import {
 } from "@tabler/icons-react"
 import Image from "next/image"
 import { FC, useContext, useState } from "react"
-import { FilePreview } from "../ui/FilePreview"
+import { FilePreview } from "./FilePreview"
 import { FileRetrievalSettings } from "./FileRetrievalSettings"
 import { Box, Button } from "@mui/joy"
 import { RetrievalToggle } from "@/app/components/files/FileRetrievalToggle"
