@@ -2,15 +2,15 @@
 
 import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatInput"
 import FileDropzoneContainer from "@/app/components/ui/FileDropzoneContainer"
-import ChatsCollection from "@/app/components/collections/types/ChatsCollection"
+import ChatsList from "@/app/components/data-list/items/chat/ChatsList"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
 import ChatTabs from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatTabs"
 import { useContext, useEffect, useState } from "react"
-import AssistantsCollection from "@/app/components/collections/types/AssistantsCollection"
-import PromptsCollection from "@/app/components/collections/types/PromptsCollection"
-import FilesCollection from "@/app/components/collections/types/FilesCollection"
-import ToolsCollection from "@/app/components/collections/types/ToolsCollection"
+import AssistantsList from "@/app/components/data-list/items/assistants/AssistantsList"
+import PromptsList from "@/app/components/data-list/items/prompts/PromptsList"
+import FilesList from "@/app/components/data-list/items/files/FilesList"
+import ToolsList from "@/app/components/data-list/items/tools/ToolsList"
 import { MetadachiContext } from "@/app/lib/context"
 import { getMessagesByChatId } from "@/app/lib/db/messages"
 import { LLMID, MessageImage } from "@/app/lib/types"
@@ -185,7 +185,7 @@ export default function ChatPage() {
         <ChatHeader variant={isNewChat ? "new" : null} />
 
         {tab === "chat" ? (
-          <ChatsCollection chatId={chatId} />
+          <ChatsList chatId={chatId} />
         ) : (
           <Box
             sx={{
@@ -196,10 +196,10 @@ export default function ChatPage() {
               px: 10
             }}
           >
-            {tab === "assistants" && <AssistantsCollection />}
-            {tab === "prompts" && <PromptsCollection />}
-            {tab === "files" && <FilesCollection />}
-            {tab === "tools" && <ToolsCollection />}
+            {tab === "assistants" && <AssistantsList />}
+            {tab === "prompts" && <PromptsList />}
+            {tab === "files" && <FilesList />}
+            {tab === "tools" && <ToolsList />}
           </Box>
         )}
 

@@ -3,7 +3,7 @@ import * as React from "react"
 import { useContext } from "react"
 import { Tab, tabClasses, TabList, TabPanel, Tabs, Typography } from "@mui/joy"
 import { MetadachiContext } from "@/app/lib/context"
-import { CollectionsWrapper } from "@/app/components/collections/CollectionsWrapper"
+import { DataListWrapper } from "@/app/components/data-list/shared/DataListWrapper"
 import { ContentType } from "@/app/lib/types"
 import Header from "@/app/components/ui/Header"
 
@@ -87,7 +87,7 @@ export default function CollectionsPage() {
 
         {Object.entries(CollectionTabs).map(([key, value]) => (
           <TabPanel value={key} key={`${key}-collections-tab-panel`}>
-            <CollectionsWrapper
+            <DataListWrapper
               contentType={key as ContentType}
               data={value.data}
               folders={value.folders}

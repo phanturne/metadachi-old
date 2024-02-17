@@ -2,7 +2,7 @@
 import * as React from "react"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
-import { CollectionsWrapper } from "@/app/components/collections/CollectionsWrapper"
+import { DataListWrapper } from "@/app/components/data-list/shared/DataListWrapper"
 import { Typography } from "@mui/joy"
 import Sheet from "@mui/joy/Sheet"
 
@@ -20,7 +20,7 @@ export default function ChatSidebar() {
       }}
     >
       <Typography level="h4">Chats</Typography>
-      <CollectionsWrapper
+      <DataListWrapper
         contentType="chats"
         data={chats}
         folders={chatFolders}
