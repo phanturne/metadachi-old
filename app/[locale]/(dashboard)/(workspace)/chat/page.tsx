@@ -21,7 +21,7 @@ import { getChatById } from "@/app/lib/db/chats"
 import Loading from "@/app/[locale]/loading"
 import ChatHeader from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatHeader"
 import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
-import { ChatFilesDisplay } from "@/app/components/files/chat-files-display"
+import { ChatFilesDisplay } from "@/app/components/files/ChatFilesDisplay"
 import { ChatToolsDisplay } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatToolsDisplay"
 
 export default function ChatPage() {

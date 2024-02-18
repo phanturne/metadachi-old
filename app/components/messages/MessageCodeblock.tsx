@@ -1,9 +1,10 @@
-import { Button } from "@/app/components/ui/button"
 import { useCopyToClipboard } from "@/app/lib/hooks/use-copy-to-clipboard"
-import { IconCheck, IconCopy, IconDownload } from "@tabler/icons-react"
 import { FC, memo } from "react"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { Box, IconButton, Typography } from "@mui/joy"
+import Sheet from "@mui/joy/Sheet"
+import { CheckRounded, ContentCopy, DownloadRounded } from "@mui/icons-material"
 
 interface MessageCodeBlockProps {
   language: string
@@ -49,7 +50,7 @@ export const generateRandomString = (length: number, lowercase = false) => {
   return lowercase ? result.toLowerCase() : result
 }
 
-export const MessageCodeBlock: FC<MessageCodeBlockProps> = memo(
+export const MessageCodeblock: FC<MessageCodeBlockProps> = memo(
   ({ language, value }) => {
     const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 })
 
@@ -86,29 +87,36 @@ export const MessageCodeBlock: FC<MessageCodeBlockProps> = memo(
     }
 
     return (
-      <div className="codeblock relative w-full bg-zinc-950 font-sans">
-        <div className="flex w-full items-center justify-between bg-zinc-700 px-4 text-white">
-          <span className="text-xs lowercase">{language}</span>
-          <div className="flex items-center space-x-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
-              onClick={downloadAsFile}
-            >
-              <IconDownload size={16} />
-            </Button>
+      <Sheet
+        variant="outlined"
+        color="neutral"
+        sx={{ position: "relative", width: "100%", borderRadius: "md" }}
+      >
+        <Sheet
+          variant="soft"
+          sx={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: 2,
+            borderRadius: "md"
+          }}
+        >
+          <Typography fontSize="small" sx={{ textTransform: "lowercase" }}>
+            {language}
+          </Typography>
+          <Box sx={{ py: 0.25 }}>
+            <IconButton variant="plain" size="sm" onClick={downloadAsFile}>
+              <DownloadRounded />
+            </IconButton>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-xs hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
-              onClick={onCopy}
-            >
-              {isCopied ? <IconCheck size={16} /> : <IconCopy size={16} />}
-            </Button>
-          </div>
-        </div>
+            <IconButton variant="plain" size="sm" onClick={onCopy}>
+              {isCopied ? <CheckRounded /> : <ContentCopy />}
+            </IconButton>
+          </Box>
+        </Sheet>
+
         <SyntaxHighlighter
           language={language}
           style={oneDark}
@@ -127,9 +135,9 @@ export const MessageCodeBlock: FC<MessageCodeBlockProps> = memo(
         >
           {value}
         </SyntaxHighlighter>
-      </div>
+      </Sheet>
     )
   }
 )
 
-MessageCodeBlock.displayName = "MessageCodeBlock"
+MessageCodeblock.displayName = "MessageCodeBlock"

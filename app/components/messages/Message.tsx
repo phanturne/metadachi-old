@@ -6,14 +6,12 @@ import { LLM, MessageImage } from "@/app/lib/types"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import { FilePreview } from "../files/FilePreview"
 import { MessageActions } from "./MessageActions"
-import { MessageMarkdown } from "./message-markdown"
+import { MessageMarkdown } from "./MessageMarkdown"
 import { Box, Button, Textarea } from "@mui/joy"
 import MessageAvatar from "@/app/components/messages/MessageAvatar"
-import {
-  MessageFiles,
-  MessageImages
-} from "@/app/components/messages/MessageMedia"
+import { MessageFiles } from "@/app/components/messages/MessageFiles"
 import MessagePlaceholder from "@/app/components/messages/MessagePlaceholder"
+import { MessageImages } from "@/app/components/messages/MessageImages"
 
 interface MessageProps {
   message: Tables<"messages">
