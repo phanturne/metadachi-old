@@ -26,7 +26,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.12.4",
+    "@anthropic-ai/sdk": "^0.14.0",
     "@apidevtools/json-schema-ref-parser": "^11.1.0",
     "@azure/openai": "^1.0.0-beta.8",
     "@emotion/react": "^11.11.3",
