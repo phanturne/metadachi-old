@@ -1,7 +1,7 @@
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
 import { FC } from "react"
-import { Button } from "../ui/button"
+import { Button } from "../../components/ui/button"
 
 interface APIStepProps {
   openaiAPIKey: string

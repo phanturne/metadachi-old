@@ -11,14 +11,12 @@ import { supabase } from "@/app/lib/supabase/browser-client"
 import { TablesUpdate } from "@/supabase/types"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
-import { APIStep } from "@/app/components/setup/api-step"
-import { FinishStep } from "@/app/components/setup/finish-step"
-import { ProfileStep } from "@/app/components/setup/profile-step"
-import {
-  SETUP_STEP_COUNT,
-  StepContainer
-} from "@/app/components/setup/step-container"
+import { APIStep } from "@/app/[locale]/setup/api-step"
+import { ProfileStep } from "@/app/[locale]/setup/profile-step"
+import { StepContainer } from "@/app/components/surfaces/StepContainer"
 import { Box } from "@mui/joy"
+
+const STEP_COUNT = 2
 
 export default function SetupPage() {
   const {
@@ -99,7 +97,7 @@ export default function SetupPage() {
 
   const handleShouldProceed = (proceed: boolean) => {
     if (proceed) {
-      if (currentStep === SETUP_STEP_COUNT) {
+      if (currentStep === STEP_COUNT) {
         handleSaveSetupSetting()
       } else {
         setCurrentStep(currentStep + 1)
@@ -158,6 +156,7 @@ export default function SetupPage() {
       case 1:
         return (
           <StepContainer
+            stepCount={STEP_COUNT}
             stepDescription="Let's create your profile."
             stepNum={currentStep}
             stepTitle="Welcome to Metadachi!"
@@ -180,6 +179,7 @@ export default function SetupPage() {
       case 2:
         return (
           <StepContainer
+            stepCount={STEP_COUNT}
             stepDescription="Enter API keys for each service you'd like to use."
             stepNum={currentStep}
             stepTitle="Set API Keys (optional)"
@@ -219,21 +219,6 @@ export default function SetupPage() {
             />
           </StepContainer>
         )
-
-      // Finish Step
-      case 3:
-        return (
-          <StepContainer
-            stepDescription="You are all set up!"
-            stepNum={currentStep}
-            stepTitle="Setup Complete"
-            onShouldProceed={handleShouldProceed}
-            showNextButton={true}
-            showBackButton={true}
-          >
-            <FinishStep displayName={displayName} />
-          </StepContainer>
-        )
       default:
         return null
     }
@@ -249,7 +234,8 @@ export default function SetupPage() {
         display: "flex",
         height: "100%",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        p: 5
       }}
     >
       {renderStep(currentStep)}

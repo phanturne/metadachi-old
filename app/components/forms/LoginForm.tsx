@@ -58,8 +58,10 @@ export function LoginForm({
     // Handle successful login
     setSnackbar({ message: "Successfully logged in", color: "success" })
     closeAuthModal()
-    // router.refresh()
+
+    // Refresh is required because routing to home won't work if the user is already on the home page
     router.push(Routes.Home)
+    router.refresh()
   }
 
   return (

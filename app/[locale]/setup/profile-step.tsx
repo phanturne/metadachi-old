@@ -11,7 +11,7 @@ import {
   IconLoader2
 } from "@tabler/icons-react"
 import { FC, useCallback, useState } from "react"
-import { LimitDisplay } from "../ui/limit-display"
+import { LimitDisplay } from "../../components/ui/limit-display"
 
 interface ProfileStepProps {
   username: string
