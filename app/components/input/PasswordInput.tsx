@@ -2,13 +2,20 @@ import { KeyRounded } from "@mui/icons-material"
 import { Input } from "@mui/joy"
 import React from "react"
 
-export default function PasswordInput() {
+// TODO: Add "view password" icon
+export default function PasswordInput({
+  name = "password",
+  placeholder = "Password"
+}: {
+  name?: string
+  placeholder?: string
+}) {
   return (
     <Input
-      name="password"
+      name={name}
       type="password"
       startDecorator={<KeyRounded />}
-      placeholder="Password"
+      placeholder={placeholder}
       required
     />
   )

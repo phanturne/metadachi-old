@@ -11,10 +11,11 @@ import { useRouter } from "next/navigation"
 import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { EMAIL_VERIFICATION, Routes } from "@/app/lib/constants"
+import { Routes } from "@/app/lib/constants"
 import { AuthFormType } from "@/app/components/forms/AuthForm"
 import { EmailInput, PasswordInput } from "@/app/components/input"
 import { get } from "@vercel/edge-config"
+import { EMAIL_VERIFICATION } from "@/app/lib/config"
 
 export function SignUpForm({
   setAuthFormType

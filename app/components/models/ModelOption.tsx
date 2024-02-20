@@ -3,7 +3,8 @@ import { LLM } from "@/app/lib/types"
 import React, { FC, useContext, useEffect, useState } from "react"
 import { ModelIcon } from "./model-icon"
 import { AutocompleteOption, ListItemContent } from "@mui/joy"
-import { GUEST_LLM_LIST } from "@/app/lib/constants"
+
+import { GUEST_LLM_LIST } from "@/app/lib/config"
 
 interface ModelOptionProps {
   model: LLM

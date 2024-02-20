@@ -14,6 +14,7 @@ import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { useSnackbar } from "@/app/lib/providers/SnackbarProvider"
 import { AuthFormType } from "@/app/components/forms/AuthForm"
 import { EmailInput, PasswordInput } from "@/app/components/input"
+import { Routes } from "@/app/lib/constants"
 
 export function LoginForm({
   setAuthFormType
@@ -57,7 +58,8 @@ export function LoginForm({
     // Handle successful login
     setSnackbar({ message: "Successfully logged in", color: "success" })
     closeAuthModal()
-    router.refresh()
+    // router.refresh()
+    router.push(Routes.Home)
   }
 
   return (
@@ -84,7 +86,7 @@ export function LoginForm({
           <Link
             component="button"
             onClick={() => {
-              setAuthFormType(AuthFormType.ResetPassword)
+              setAuthFormType(AuthFormType.ForgotPassword)
             }}
           >
             password

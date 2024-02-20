@@ -3,16 +3,20 @@ import { LoginForm } from "@/app/components/forms/LoginForm"
 import { SignUpForm } from "@/app/components/forms/SignUpForm"
 import { Box } from "@mui/joy"
 import { useState } from "react"
-import { ResetPasswordForm } from "@/app/components/forms/ForgotPasswordForm"
+import { ForgotPasswordForm } from "@/app/components/forms/ForgotPasswordForm"
+import { ResetPasswordForm } from "@/app/components/forms/ResetPasswordForm"
 
 export const enum AuthFormType {
   Login,
   SignUp,
+  ForgotPassword,
   ResetPassword
 }
 
-export default function AuthForm() {
-  const [formType, setFormType] = useState<AuthFormType>(AuthFormType.Login)
+export default function AuthForm({ type }: { type?: AuthFormType }) {
+  const [formType, setFormType] = useState<AuthFormType>(
+    type ?? AuthFormType.Login
+  )
 
   return (
     <Box
@@ -37,9 +41,10 @@ export default function AuthForm() {
       {formType === AuthFormType.SignUp && (
         <SignUpForm setAuthFormType={setFormType} />
       )}
-      {formType === AuthFormType.ResetPassword && (
-        <ResetPasswordForm setAuthFormType={setFormType} />
+      {formType === AuthFormType.ForgotPassword && (
+        <ForgotPasswordForm setAuthFormType={setFormType} />
       )}
+      {formType === AuthFormType.ResetPassword && <ResetPasswordForm />}
     </Box>
   )
 }

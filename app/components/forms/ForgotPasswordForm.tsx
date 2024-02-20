@@ -14,8 +14,10 @@ import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { AuthFormType } from "@/app/components/forms/AuthForm"
 import { EmailInput } from "@/app/components/input"
 import { InfoOutlined } from "@mui/icons-material"
+import { Routes } from "@/app/lib/constants"
+import { ROOT_URL } from "@/app/lib/config"
 
-export function ResetPasswordForm({
+export function ForgotPasswordForm({
   setAuthFormType
 }: {
   setAuthFormType: React.Dispatch<React.SetStateAction<AuthFormType>>
@@ -29,7 +31,10 @@ export function ResetPasswordForm({
     const formData = new FormData(event.currentTarget)
     const email = formData.get("email") as string
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
+    /* In order for redirect to work, make sure ROOT_URL is set correctly. This absolute URL must be saved in your Supabase's allowed Redirect URLs list found at Authentication > Redirect Configuration. */
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${ROOT_URL}${Routes.ResetPassword}`
+    })
 
     // Show error message and return early if the signup failed
     if (error) {
@@ -41,7 +46,7 @@ export function ResetPasswordForm({
     closeAuthModal()
     setAuthFormType(AuthFormType.Login)
     return router.push(
-      "/login?message=Check inbox to reset password&variant=success"
+      "/login?message=Check inbox for password reset link&variant=success"
     )
   }
 
@@ -60,7 +65,7 @@ export function ResetPasswordForm({
             </FormHelperText>
           )}
         </FormControl>
-        <Button type="submit">Reset Password</Button>
+        <Button type="submit">Forgot Your Password?</Button>
         <Box
           sx={{
             display: "flex",
