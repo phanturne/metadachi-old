@@ -1,3 +1,4 @@
+"use client"
 import { ProfileSettings } from "@/app/components/utility/profile-settings"
 import Header from "@/app/components/ui/Header"
 import { Typography } from "@mui/joy"

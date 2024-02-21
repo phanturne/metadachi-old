@@ -1,9 +1,8 @@
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
+import { Box, FormControl, FormLabel, Input, Stack, Typography } from "@mui/joy"
 import { FC } from "react"
-import { Button } from "../../components/ui/button"
+import Button from "@mui/joy/Button"
 
-interface APIStepProps {
+interface ApiInputsProps {
   openaiAPIKey: string
   openaiOrgID: string
   azureOpenaiAPIKey: string
@@ -34,7 +33,7 @@ interface APIStepProps {
   onUseAzureOpenaiChange: (value: boolean) => void
 }
 
-export const APIStep: FC<APIStepProps> = ({
+export const ApiInputs: FC<ApiInputsProps> = ({
   openaiAPIKey,
   openaiOrgID,
   azureOpenaiAPIKey,
@@ -65,22 +64,33 @@ export const APIStep: FC<APIStepProps> = ({
   onOpenrouterAPIKeyChange
 }) => {
   return (
-    <>
-      <div className="mt-5 space-y-2">
-        <Label className="flex items-center">
-          <div>
+    <Stack spacing={2}>
+      <FormControl>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 1
+          }}
+        >
+          <FormLabel sx={{ alignSelf: "center" }}>
             {useAzureOpenai ? "Azure OpenAI API Key" : "OpenAI API Key"}
-          </div>
+          </FormLabel>
 
           <Button
-            className="ml-3 h-[18px] w-[150px] text-[11px]"
+            size="sm"
+            color="neutral"
+            variant="outlined"
             onClick={() => onUseAzureOpenaiChange(!useAzureOpenai)}
+            sx={{ mb: 1 }}
           >
-            {useAzureOpenai
-              ? "Switch To Standard OpenAI"
-              : "Switch To Azure OpenAI"}
+            <Typography fontSize="x-small">
+              {useAzureOpenai
+                ? "Switch To Standard OpenAI"
+                : "Switch To Azure OpenAI"}
+            </Typography>
           </Button>
-        </Label>
+        </Box>
 
         <Input
           placeholder={
@@ -94,13 +104,13 @@ export const APIStep: FC<APIStepProps> = ({
               : onOpenaiAPIKeyChange(e.target.value)
           }
         />
-      </div>
+      </FormControl>
 
-      <div className="ml-8 space-y-3">
+      <Stack sx={{ pl: 3, gap: 2 }}>
         {useAzureOpenai ? (
           <>
-            <div className="space-y-1">
-              <Label>Azure OpenAI Endpoint</Label>
+            <FormControl>
+              <FormLabel>Azure OpenAI Endpoint</FormLabel>
 
               <Input
                 placeholder="https://your-endpoint.openai.azure.com"
@@ -108,10 +118,10 @@ export const APIStep: FC<APIStepProps> = ({
                 value={azureOpenaiEndpoint}
                 onChange={e => onAzureOpenaiEndpointChange(e.target.value)}
               />
-            </div>
+            </FormControl>
 
-            <div className="space-y-1">
-              <Label>Azure OpenAI GPT-3.5 Turbo ID</Label>
+            <FormControl>
+              <FormLabel>Azure OpenAI GPT-3.5 Turbo ID</FormLabel>
 
               <Input
                 placeholder="Azure OpenAI GPT-3.5 Turbo ID"
@@ -119,10 +129,10 @@ export const APIStep: FC<APIStepProps> = ({
                 value={azureOpenai35TurboID}
                 onChange={e => onAzureOpenai35TurboIDChange(e.target.value)}
               />
-            </div>
+            </FormControl>
 
-            <div className="space-y-1">
-              <Label>Azure OpenAI GPT-4.5 Turbo ID</Label>
+            <FormControl>
+              <FormLabel>Azure OpenAI GPT-4.5 Turbo ID</FormLabel>
 
               <Input
                 placeholder="Azure OpenAI GPT-4.5 Turbo ID"
@@ -130,10 +140,10 @@ export const APIStep: FC<APIStepProps> = ({
                 value={azureOpenai45TurboID}
                 onChange={e => onAzureOpenai45TurboIDChange(e.target.value)}
               />
-            </div>
+            </FormControl>
 
-            <div className="space-y-1">
-              <Label>Azure OpenAI GPT-4.5 Vision ID</Label>
+            <FormControl>
+              <FormLabel>Azure OpenAI GPT-4.5 Vision ID</FormLabel>
 
               <Input
                 placeholder="Azure OpenAI GPT-4.5 Vision ID"
@@ -141,10 +151,10 @@ export const APIStep: FC<APIStepProps> = ({
                 value={azureOpenai45VisionID}
                 onChange={e => onAzureOpenai45VisionIDChange(e.target.value)}
               />
-            </div>
+            </FormControl>
 
-            <div className="space-y-1">
-              <Label>Azure OpenAI Embeddings ID</Label>
+            <FormControl>
+              <FormLabel>Azure OpenAI Embeddings ID</FormLabel>
 
               <Input
                 placeholder="Azure OpenAI Embeddings ID"
@@ -152,12 +162,12 @@ export const APIStep: FC<APIStepProps> = ({
                 value={azureOpenaiEmbeddingsID}
                 onChange={e => onAzureOpenaiEmbeddingsIDChange(e.target.value)}
               />
-            </div>
+            </FormControl>
           </>
         ) : (
           <>
-            <div className="space-y-1">
-              <Label>OpenAI Organization ID</Label>
+            <FormControl>
+              <FormLabel>OpenAI Organization ID</FormLabel>
 
               <Input
                 placeholder="OpenAI Organization ID (optional)"
@@ -165,13 +175,13 @@ export const APIStep: FC<APIStepProps> = ({
                 value={openaiOrgID}
                 onChange={e => onOpenaiOrgIDChange(e.target.value)}
               />
-            </div>
+            </FormControl>
           </>
         )}
-      </div>
+      </Stack>
 
-      <div className="space-y-1">
-        <Label>Anthropic API Key</Label>
+      <FormControl>
+        <FormLabel>Anthropic API Key</FormLabel>
 
         <Input
           placeholder="Anthropic API Key"
@@ -179,10 +189,10 @@ export const APIStep: FC<APIStepProps> = ({
           value={anthropicAPIKey}
           onChange={e => onAnthropicAPIKeyChange(e.target.value)}
         />
-      </div>
+      </FormControl>
 
-      <div className="space-y-1">
-        <Label>Google Gemini API Key</Label>
+      <FormControl>
+        <FormLabel>Google Gemini API Key</FormLabel>
 
         <Input
           placeholder="Google Gemini API Key"
@@ -190,10 +200,10 @@ export const APIStep: FC<APIStepProps> = ({
           value={googleGeminiAPIKey}
           onChange={e => onGoogleGeminiAPIKeyChange(e.target.value)}
         />
-      </div>
+      </FormControl>
 
-      <div className="space-y-1">
-        <Label>Mistral API Key</Label>
+      <FormControl>
+        <FormLabel>Mistral API Key</FormLabel>
 
         <Input
           placeholder="Mistral API Key"
@@ -201,10 +211,10 @@ export const APIStep: FC<APIStepProps> = ({
           value={mistralAPIKey}
           onChange={e => onMistralAPIKeyChange(e.target.value)}
         />
-      </div>
+      </FormControl>
 
-      <div className="space-y-1">
-        <Label>Perplexity API Key</Label>
+      <FormControl>
+        <FormLabel>Perplexity API Key</FormLabel>
 
         <Input
           placeholder="Perplexity API Key"
@@ -212,9 +222,9 @@ export const APIStep: FC<APIStepProps> = ({
           value={perplexityAPIKey}
           onChange={e => onPerplexityAPIKeyChange(e.target.value)}
         />
-      </div>
-      <div className="space-y-1">
-        <Label>OpenRouter API Key</Label>
+      </FormControl>
+      <FormControl>
+        <FormLabel>OpenRouter API Key</FormLabel>
 
         <Input
           placeholder="OpenRouter API Key"
@@ -222,7 +232,7 @@ export const APIStep: FC<APIStepProps> = ({
           value={openrouterAPIKey}
           onChange={e => onOpenrouterAPIKeyChange(e.target.value)}
         />
-      </div>
-    </>
+      </FormControl>
+    </Stack>
   )
 }

@@ -11,9 +11,8 @@ import { supabase } from "@/app/lib/supabase/browser-client"
 import { TablesUpdate } from "@/supabase/types"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
-import { APIStep } from "@/app/[locale]/setup/api-step"
-import { ProfileStep } from "@/app/[locale]/setup/profile-step"
-import { StepContainer } from "@/app/components/surfaces/StepContainer"
+import { ApiStep } from "@/app/[locale]/setup/ApiStep"
+import { ProfileStep } from "@/app/[locale]/setup/ProfileStep"
 import { Box } from "@mui/joy"
 
 const STEP_COUNT = 2
@@ -150,80 +149,6 @@ export default function SetupPage() {
     return router.push(`/chat`)
   }
 
-  const renderStep = (stepNum: number) => {
-    switch (stepNum) {
-      // Profile Step
-      case 1:
-        return (
-          <StepContainer
-            stepCount={STEP_COUNT}
-            stepDescription="Let's create your profile."
-            stepNum={currentStep}
-            stepTitle="Welcome to Metadachi!"
-            onShouldProceed={handleShouldProceed}
-            showNextButton={!!(username && usernameAvailable)}
-            showBackButton={false}
-          >
-            <ProfileStep
-              username={username}
-              usernameAvailable={usernameAvailable}
-              displayName={displayName}
-              onUsernameAvailableChange={setUsernameAvailable}
-              onUsernameChange={setUsername}
-              onDisplayNameChange={setDisplayName}
-            />
-          </StepContainer>
-        )
-
-      // API Step
-      case 2:
-        return (
-          <StepContainer
-            stepCount={STEP_COUNT}
-            stepDescription="Enter API keys for each service you'd like to use."
-            stepNum={currentStep}
-            stepTitle="Set API Keys (optional)"
-            onShouldProceed={handleShouldProceed}
-            showNextButton={true}
-            showBackButton={true}
-          >
-            <APIStep
-              openaiAPIKey={openaiAPIKey}
-              openaiOrgID={openaiOrgID}
-              azureOpenaiAPIKey={azureOpenaiAPIKey}
-              azureOpenaiEndpoint={azureOpenaiEndpoint}
-              azureOpenai35TurboID={azureOpenai35TurboID}
-              azureOpenai45TurboID={azureOpenai45TurboID}
-              azureOpenai45VisionID={azureOpenai45VisionID}
-              azureOpenaiEmbeddingsID={azureOpenaiEmbeddingsID}
-              anthropicAPIKey={anthropicAPIKey}
-              googleGeminiAPIKey={googleGeminiAPIKey}
-              mistralAPIKey={mistralAPIKey}
-              perplexityAPIKey={perplexityAPIKey}
-              useAzureOpenai={useAzureOpenai}
-              onOpenaiAPIKeyChange={setOpenaiAPIKey}
-              onOpenaiOrgIDChange={setOpenaiOrgID}
-              onAzureOpenaiAPIKeyChange={setAzureOpenaiAPIKey}
-              onAzureOpenaiEndpointChange={setAzureOpenaiEndpoint}
-              onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
-              onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
-              onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
-              onAzureOpenaiEmbeddingsIDChange={setAzureOpenaiEmbeddingsID}
-              onAnthropicAPIKeyChange={setAnthropicAPIKey}
-              onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
-              onMistralAPIKeyChange={setMistralAPIKey}
-              onPerplexityAPIKeyChange={setPerplexityAPIKey}
-              onUseAzureOpenaiChange={setUseAzureOpenai}
-              openrouterAPIKey={openrouterAPIKey}
-              onOpenrouterAPIKeyChange={setOpenrouterAPIKey}
-            />
-          </StepContainer>
-        )
-      default:
-        return null
-    }
-  }
-
   if (loading) {
     return null
   }
@@ -238,7 +163,54 @@ export default function SetupPage() {
         p: 5
       }}
     >
-      {renderStep(currentStep)}
+      {currentStep === 1 && (
+        <ProfileStep
+          stepCount={STEP_COUNT}
+          currentStep={currentStep}
+          handleShouldProceed={handleShouldProceed}
+          username={username}
+          usernameAvailable={usernameAvailable}
+          displayName={displayName}
+          onUsernameAvailableChange={setUsernameAvailable}
+          onUsernameChange={setUsername}
+          onDisplayNameChange={setDisplayName}
+        />
+      )}
+      {currentStep === 2 && (
+        <ApiStep
+          stepCount={STEP_COUNT}
+          currentStep={currentStep}
+          handleShouldProceed={handleShouldProceed}
+          openaiAPIKey={openaiAPIKey}
+          openaiOrgID={openaiOrgID}
+          azureOpenaiAPIKey={azureOpenaiAPIKey}
+          azureOpenaiEndpoint={azureOpenaiEndpoint}
+          azureOpenai35TurboID={azureOpenai35TurboID}
+          azureOpenai45TurboID={azureOpenai45TurboID}
+          azureOpenai45VisionID={azureOpenai45VisionID}
+          azureOpenaiEmbeddingsID={azureOpenaiEmbeddingsID}
+          anthropicAPIKey={anthropicAPIKey}
+          googleGeminiAPIKey={googleGeminiAPIKey}
+          mistralAPIKey={mistralAPIKey}
+          perplexityAPIKey={perplexityAPIKey}
+          useAzureOpenai={useAzureOpenai}
+          onOpenaiAPIKeyChange={setOpenaiAPIKey}
+          onOpenaiOrgIDChange={setOpenaiOrgID}
+          onAzureOpenaiAPIKeyChange={setAzureOpenaiAPIKey}
+          onAzureOpenaiEndpointChange={setAzureOpenaiEndpoint}
+          onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
+          onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
+          onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
+          onAzureOpenaiEmbeddingsIDChange={setAzureOpenaiEmbeddingsID}
+          onAnthropicAPIKeyChange={setAnthropicAPIKey}
+          onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
+          onMistralAPIKeyChange={setMistralAPIKey}
+          onPerplexityAPIKeyChange={setPerplexityAPIKey}
+          onUseAzureOpenaiChange={setUseAzureOpenai}
+          openrouterAPIKey={openrouterAPIKey}
+          onOpenrouterAPIKeyChange={setOpenrouterAPIKey}
+        />
+      )}
     </Box>
   )
 }
