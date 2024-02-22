@@ -1,5 +1,5 @@
 import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
-import ImagePicker from "@/app/components/ui/image-picker"
+import ImageInput from "@/app/components/ui/image-input"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
 import { MetadachiContext } from "@/app/lib/context"
@@ -166,7 +166,7 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
               <div className="text-xs">(optional)</div>
             </Label>
 
-            <ImagePicker
+            <ImageInput
               src={imageLink}
               image={selectedImage}
               onSrcChange={setImageLink}

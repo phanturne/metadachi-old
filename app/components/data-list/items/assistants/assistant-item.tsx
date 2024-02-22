@@ -1,4 +1,4 @@
-import ImagePicker from "@/app/components/ui/image-picker"
+import ImageInput from "@/app/components/ui/image-input"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
 import { MetadachiContext } from "@/app/lib/context"
@@ -194,7 +194,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
           <div className="space-y-1">
             <Label>Image</Label>
 
-            <ImagePicker
+            <ImageInput
               src={imageLink}
               image={selectedImage}
               onSrcChange={setImageLink}

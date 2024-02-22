@@ -1,9 +1,11 @@
-import Image from "next/image"
-import { ChangeEvent, FC, useState } from "react"
+import * as React from "react"
 import { toast } from "sonner"
-import { Input } from "./input"
+import Button from "@mui/joy/Button"
+import { FileUploadRounded } from "@mui/icons-material"
+import { VisuallyHiddenInput } from "@/app/components/input/VisuallyHiddenInput"
+import { Box } from "@mui/joy"
 
-interface ImagePickerProps {
+interface ImageInputProps {
   src: string
   image: File | null
   onSrcChange: (src: string) => void
@@ -12,7 +14,7 @@ interface ImagePickerProps {
   height?: number
 }
 
-const ImagePicker: FC<ImagePickerProps> = ({
+const ImageInput: React.FC<ImageInputProps> = ({
   src,
   image,
   onSrcChange,
@@ -20,10 +22,10 @@ const ImagePicker: FC<ImagePickerProps> = ({
   width = 200,
   height = 200
 }) => {
-  const [previewSrc, setPreviewSrc] = useState<string>(src)
-  const [previewImage, setPreviewImage] = useState<File | null>(image)
+  const [previewSrc, setPreviewSrc] = React.useState<string>(src)
+  const [previewImage, setPreviewImage] = React.useState<File | null>(image)
 
-  const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0]
 
@@ -73,26 +75,36 @@ const ImagePicker: FC<ImagePickerProps> = ({
   }
 
   return (
-    <div>
+    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
       {previewSrc && (
-        <Image
-          style={{ width: `${width}px`, height: `${width}px` }}
+        <img
+          style={{ width: `${width}px`, height: `${height}px` }}
           className="rounded"
-          height={width}
+          height={height}
           width={width}
           src={previewSrc}
           alt={"Image"}
         />
       )}
 
-      <Input
-        className="mt-1 cursor-pointer hover:opacity-50"
-        type="file"
-        accept="image/png, image/jpeg, image/jpg"
-        onChange={handleImageSelect}
-      />
-    </div>
+      <Button
+        size="sm"
+        component="label"
+        role={undefined}
+        tabIndex={-1}
+        variant="outlined"
+        color="neutral"
+        startDecorator={<FileUploadRounded />}
+      >
+        Upload an image
+        <VisuallyHiddenInput
+          type="file"
+          accept="image/png, image/jpeg, image/jpg"
+          onChange={handleImageSelect}
+        />
+      </Button>
+    </Box>
   )
 }
 
-export default ImagePicker
+export default ImageInput

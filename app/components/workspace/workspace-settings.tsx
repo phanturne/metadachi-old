@@ -12,7 +12,7 @@ import { FC, useContext, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { Button } from "../ui/button"
 import { ChatSettingsForm } from "../forms/ChatSettingsForm"
-import ImagePicker from "../ui/image-picker"
+import ImageInput from "../ui/image-input"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { LimitDisplay } from "../ui/limit-display"
@@ -229,7 +229,7 @@ export const WorkspaceSettings: FC<WorkspaceSettingsProps> = ({}) => {
                 <div className="space-y-1">
                   <Label>Image</Label>
 
-                  <ImagePicker
+                  <ImageInput
                     src={imageLink}
                     image={selectedImage}
                     onSrcChange={setImageLink}

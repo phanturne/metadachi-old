@@ -1,6 +1,3 @@
-export const SIDEBAR_WIDTH = 260
-export const SIDEBAR_ICON_SIZE = 28
-
 export const Routes = {
   Home: "/",
   Login: "/login",
@@ -18,3 +15,8 @@ export const Routes = {
   Support: "/support",
   NotFound: "/404"
 }
+
+// Styles
+export const SIDEBAR_WIDTH = 260
+export const SIDEBAR_ICON_SIZE = 28
+export const FULL_WIDTH_PADDING_X = { xs: 5, sm: 10, md: 20, lg: 30 }

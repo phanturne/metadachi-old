@@ -33,7 +33,9 @@ export default function MessageAvatar({
       ? selectedAssistant
         ? selectedAssistant?.name
         : modelData?.modelName
-      : profile?.display_name ?? profile?.username
+      : profile?.display_name
+        ? profile?.display_name
+        : profile?.username
 
   return (
     <Box

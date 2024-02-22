@@ -3,20 +3,9 @@
 import * as React from "react"
 import Button from "@mui/joy/Button"
 import SvgIcon from "@mui/joy/SvgIcon"
-import { IconButton, styled } from "@mui/joy"
+import { IconButton } from "@mui/joy"
 import { AddCircleOutlineRounded } from "@mui/icons-material"
-
-export const VisuallyHiddenInput = styled("input")`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`
+import { VisuallyHiddenInput } from "@/app/components/input/VisuallyHiddenInput"
 
 export default function FileInput({
   handleSelectedFile,
