@@ -1,10 +1,9 @@
 import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
 import { MetadachiContext } from "@/app/lib/context"
 import { MODEL_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { FC, useContext, useState } from "react"
+import { FormControl, FormHelperText, FormLabel, Input } from "@mui/joy"
 
 interface CreateModelProps {
   isOpen: boolean
@@ -42,38 +41,29 @@ export const CreateModel: FC<CreateModelProps> = ({ isOpen, onOpenChange }) => {
       }
       renderInputs={() => (
         <>
-          <div className="space-y-1.5 text-sm">
-            <div>Create a custom model.</div>
-
-            <div>
-              Your API <span className="font-bold">*must*</span> be compatible
-              with the OpenAI SDK.
-            </div>
-          </div>
-
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="Model name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={MODEL_NAME_MAX}
+              slotProps={{ input: { maxLength: MODEL_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Model ID</Label>
+          <FormControl>
+            <FormLabel>Model ID</FormLabel>
 
             <Input
               placeholder="Model ID..."
               value={modelId}
               onChange={e => setModelId(e.target.value)}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Base URL</Label>
+          <FormControl>
+            <FormLabel>Base URL</FormLabel>
 
             <Input
               placeholder="Base URL..."
@@ -81,13 +71,13 @@ export const CreateModel: FC<CreateModelProps> = ({ isOpen, onOpenChange }) => {
               onChange={e => setBaseUrl(e.target.value)}
             />
 
-            <div className="pt-1 text-xs italic">
+            <FormHelperText>
               Your API must be compatible with the OpenAI SDK.
-            </div>
-          </div>
+            </FormHelperText>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>API Key</Label>
+          <FormControl>
+            <FormLabel>API Key</FormLabel>
 
             <Input
               type="password"
@@ -95,7 +85,7 @@ export const CreateModel: FC<CreateModelProps> = ({ isOpen, onOpenChange }) => {
               value={apiKey}
               onChange={e => setApiKey(e.target.value)}
             />
-          </div>
+          </FormControl>
         </>
       )}
     />

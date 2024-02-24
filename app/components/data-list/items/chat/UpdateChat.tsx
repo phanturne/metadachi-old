@@ -1,4 +1,3 @@
-import { Input } from "@/app/components/ui/input"
 import { MetadachiContext } from "@/app/lib/context"
 import { updateChat } from "@/app/lib/db/chats"
 import { Tables } from "@/supabase/types"
@@ -9,6 +8,7 @@ import {
   FormControl,
   FormLabel,
   IconButton,
+  Input,
   Modal,
   ModalDialog,
   Stack

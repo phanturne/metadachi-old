@@ -1,10 +1,10 @@
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
 import { MODEL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables, TablesUpdate } from "@/supabase/types"
-import { IconSparkles } from "@tabler/icons-react"
 import { FC, useState } from "react"
 import { DataListItem } from "@/app/components/data-list/shared/DataListItem"
+import { AutoAwesomeRounded } from "@mui/icons-material"
+import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
+import { FormControl, FormHelperText, FormLabel, Input } from "@mui/joy"
 
 interface ModelItemProps {
   model: Tables<"models">
@@ -24,7 +24,7 @@ export const ModelItem: FC<ModelItemProps> = ({ model }) => {
       item={model}
       isTyping={isTyping}
       contentType="models"
-      icon={<IconSparkles height={30} width={30} />}
+      icon={<AutoAwesomeRounded sx={DATA_LIST_ITEM_ICON_STYLE} />}
       updateState={
         {
           api_key: apiKey,
@@ -36,29 +36,29 @@ export const ModelItem: FC<ModelItemProps> = ({ model }) => {
       }
       renderInputs={() => (
         <>
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="Model name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={MODEL_NAME_MAX}
+              slotProps={{ input: { maxLength: MODEL_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Model ID</Label>
+          <FormControl>
+            <FormLabel>Model ID</FormLabel>
 
             <Input
               placeholder="Model ID..."
               value={modelId}
               onChange={e => setModelId(e.target.value)}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Base URL</Label>
+          <FormControl>
+            <FormLabel>Base URL</FormLabel>
 
             <Input
               placeholder="Base URL..."
@@ -66,13 +66,13 @@ export const ModelItem: FC<ModelItemProps> = ({ model }) => {
               onChange={e => setBaseUrl(e.target.value)}
             />
 
-            <div className="pt-1 text-xs italic">
+            <FormHelperText>
               Your API must be compatible with the OpenAI SDK.
-            </div>
-          </div>
+            </FormHelperText>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>API Key</Label>
+          <FormControl>
+            <FormLabel>API Key</FormLabel>
 
             <Input
               type="password"
@@ -80,7 +80,7 @@ export const ModelItem: FC<ModelItemProps> = ({ model }) => {
               value={apiKey}
               onChange={e => setApiKey(e.target.value)}
             />
-          </div>
+          </FormControl>
         </>
       )}
     />

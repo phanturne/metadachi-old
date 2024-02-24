@@ -4,7 +4,7 @@ import { PromptItem } from "./items/prompts/PromptItem"
 import { FileItem } from "./items/files/FileItem"
 import { AssistantItem } from "./items/assistants/AssistantItem"
 import { ToolItem } from "./items/tools/ToolItem"
-import { ModelItem } from "./items/models/model-item"
+import { ModelItem } from "./items/models/ModelItem"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/app/lib/types"
 
