@@ -1,28 +1,28 @@
 "use client"
 
-import { ChatInput } from "@/components/chat/ChatInput"
-import FileDropzoneContainer from "@/components/ui/FileDropzoneContainer"
-import ChatTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/ChatTab"
+import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatInput"
+import FileDropzoneContainer from "@/app/components/files/FileDropzoneContainer"
+import ChatContent from "@/app/components/data-list/items/chat/ChatContent"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
-import ChatTabs from "@/components/chat-tab/ChatTabs"
+import ChatTabs from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatTabs"
 import { useContext, useEffect, useState } from "react"
-import AssistantsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/AssistantsTab"
-import PromptsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/PromptsTab"
-import FilesTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/FilesTab"
-import ToolsTab from "@/app/[locale]/(dashboard)/(workspace)/chat/(chat-tabs)/ToolsTab"
-import { ChatbotUIContext } from "@/context/context"
-import { getMessagesByChatId } from "@/db/messages"
-import { LLMID, MessageImage } from "@/types"
-import { getMessageImageFromStorage } from "@/db/storage/message-images"
-import { convertBlobToBase64 } from "@/lib/blob-to-b64"
-import { getMessageFileItemsByMessageId } from "@/db/message-file-items"
-import { getChatById } from "@/db/chats"
+import AssistantsList from "@/app/components/data-list/items/assistants/AssistantsList"
+import PromptsList from "@/app/components/data-list/items/prompts/PromptsList"
+import FilesList from "@/app/components/data-list/items/files/FilesList"
+import ToolsList from "@/app/components/data-list/items/tools/ToolsList"
+import { MetadachiContext } from "@/app/lib/context"
+import { getMessagesByChatId } from "@/app/lib/db/messages"
+import { LLMID, MessageImage } from "@/app/lib/types"
+import { getMessageImageFromStorage } from "@/app/lib/db/storage/message-images"
+import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
+import { getMessageFileItemsByMessageId } from "@/app/lib/db/message-file-items"
+import { getChatById } from "@/app/lib/db/chats"
 import Loading from "@/app/[locale]/loading"
-import ChatHeader from "@/components/chat/ChatHeader"
-import { getChatFilesByChatId } from "@/db/chat-files"
-import { ChatFilesDisplay } from "@/components/files/chat-files-display"
-import { ChatToolsDisplay } from "@/components/chat/ChatToolsDisplay"
+import ChatHeader from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatHeader"
+import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
+import { ChatFilesDisplay } from "@/app/components/files/ChatFilesDisplay"
+import { ChatToolsDisplay } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatToolsDisplay"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -41,7 +41,7 @@ export default function ChatPage() {
     setChatFiles,
     setShowFilesDisplay,
     setUseRetrieval
-  } = useContext(ChatbotUIContext)
+  } = useContext(MetadachiContext)
 
   const [loading, setLoading] = useState(true)
 
@@ -185,7 +185,7 @@ export default function ChatPage() {
         <ChatHeader variant={isNewChat ? "new" : null} />
 
         {tab === "chat" ? (
-          <ChatTab chatId={chatId} />
+          <ChatContent chatId={chatId} />
         ) : (
           <Box
             sx={{
@@ -196,10 +196,10 @@ export default function ChatPage() {
               px: 10
             }}
           >
-            {tab === "assistants" && <AssistantsTab />}
-            {tab === "prompts" && <PromptsTab />}
-            {tab === "files" && <FilesTab />}
-            {tab === "tools" && <ToolsTab />}
+            {tab === "assistants" && <AssistantsList />}
+            {tab === "prompts" && <PromptsList />}
+            {tab === "files" && <FilesList />}
+            {tab === "tools" && <ToolsList />}
           </Box>
         )}
 
@@ -207,7 +207,7 @@ export default function ChatPage() {
           sx={{
             position: "relative",
             width: "300px",
-            paddingBottom: "8px",
+            paddingBottom: 2,
             paddingTop: "5px",
             minWidth: {
               xs: "300px",

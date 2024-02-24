@@ -1,14 +1,17 @@
-import { generateLocalEmbedding } from "@/lib/generate-local-embedding"
+import { generateLocalEmbedding } from "@/app/lib/utils/generate-local-embedding"
 import {
   processCSV,
   processJSON,
   processMarkdown,
   processPdf,
   processTxt
-} from "@/lib/retrieval/processing"
-import { checkApiKey, getServerProfile } from "@/lib/server/server-chat-helpers"
+} from "@/app/lib/retrieval/processing"
+import {
+  checkApiKey,
+  getServerProfile
+} from "@/app/lib/server/server-chat-helpers"
 import { Database } from "@/supabase/types"
-import { FileItemChunk } from "@/types"
+import { FileItemChunk } from "@/app/lib/types"
 import { createClient } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
 import OpenAI from "openai"

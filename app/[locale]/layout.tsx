@@ -1,15 +1,14 @@
-import { Toaster } from "@/components/ui/sonner"
-import { GlobalState } from "@/components/utility/global-state"
-import { Providers } from "@/components/utility/providers"
-import TranslationsProvider from "@/components/utility/translations-provider"
-import initTranslations from "@/lib/i18n"
+import { Toaster } from "@/app/components/ui/sonner"
+import { GlobalStateProvider } from "@/app/lib/providers/GlobalStateProvider"
+import { Providers } from "@/app/lib/providers/Providers"
+import TranslationsProvider from "@/app/lib/providers/TranslationsProvider"
+import initTranslations from "@/app/lib/utils/i18n"
 import { Database } from "@/supabase/types"
 import { createServerClient } from "@supabase/ssr"
 import { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import { cookies } from "next/headers"
 import { ReactNode } from "react"
-import "./globals.css"
 import { Box } from "@mui/joy"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -105,7 +104,11 @@ export default async function RootLayout({
                 alignItems: "center"
               }}
             >
-              {session ? <GlobalState>{children}</GlobalState> : children}
+              {session ? (
+                <GlobalStateProvider>{children}</GlobalStateProvider>
+              ) : (
+                children
+              )}
             </Box>
           </TranslationsProvider>
         </Providers>

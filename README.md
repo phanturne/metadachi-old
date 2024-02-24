@@ -1,5 +1,3 @@
-> ⚠️ **This project is currently undergoing reconstruction and will experience breaking changes.** 
-
 <div align="center">
 <img src="public/docs/images/icon-circle.png" alt="Metadachi Icon" style="width: 80px; height: auto;" />
 <h1>Metadachi</h1>
@@ -23,26 +21,26 @@ Metadachi is built with community collaboration at its core, fostering a space f
 </div>
 
 ## Features
-- **Custom Prompts & Personas**: Create custom prompts and chat personas for tailored AI interactions
+- 🎭 **Custom Prompts & Personas**: Create custom prompts and chat personas for tailored AI interactions
 - ⚜️ **Chat Commands**: Interact with prompts using `/` commands and files using `@` commands
 - 📁 **Folders & Workspaces**: Navigate your project effortlessly with a folder hierarchy and workspaces.
-- **LLM Options**: Anthropic, Google, Mistral, Ollama, OpenAI, OpenRouter, Perplexity
-- **Hotkeys**: Quick access to frequently used actions and commands.
+- 🤖 **LLM Options**: Anthropic, Google, Mistral, Ollama, OpenAI, OpenRouter, Perplexity
+- ⌨️ **Hotkeys**: Quick access to frequently used actions and commands.
 - 🔒 **Privacy Guaranteed**: Maintain complete data privacy by storing data in your own private database
-- **Cross Platform**: Sync sessions across Windows, macOS, and the web
-- **Easy Self-Hosting**: Deploy effortlessly to Vercel or run locally
+- 🌐 **Cross Platform**: Sync sessions across Windows, macOS, and the web
+- 🚀 **Easy Self-Hosting**: Deploy effortlessly to Vercel or run locally
 
 ## Upcoming Features
-| Planned                           | In Progress                                 | 
-|-----------------------------------|---------------------------------------------|
-| More UI Customization Options     | Transition to JoyUI components              |
-| 🐶 Interactive Desktop Companion  | 🤝 Community Features                       |
-| Multi-Agent Chats                 | Heart's Symphony (Multiplayer AI Chat Game) |
-| 🎨 Visual Alchemy                 | Apollo Client Integration                   |
-| AI Toolbox                        |                                             |
-| Backend Alternatives              |                                             |
-| Mobile App (Capacitor)            |                                             |
-| Desktop App (Tauri)               |                                             |
+| Planned                           | In Progress                                   |
+|-----------------------------------|-----------------------------------------------|
+| More UI Customization Options     | 🤝 Community Features                         |
+| 🐶 Interactive Desktop Companion  | Heart's Symphony (Multiplayer AI Chat Game)   |
+| Multi-Agent Chats                 |                                               |
+| 🎨 Visual Alchemy                 |                                               |
+| AI Toolbox                        |                                               |
+| Backend Alternatives              |                                               |
+| Mobile App (Capacitor)            |                                               |
+| Desktop App (Tauri)               |                                               |
 
 ## Technology Stack
 | Technology     | Description                                                                                                            |
@@ -52,7 +50,6 @@ Metadachi is built with community collaboration at its core, fostering a space f
 | Vercel         | Streamlined deployment & scaling platform for Next.js apps, optimizing performance & simplifying infrastructure.       |
 | Supabase       | Real-time database & authentication with instant updates, eliminating backend setup & enabling rich user experiences.  |
 | JoyUI          | Extensive UI component library for React, accelerating development with pre-built & customizable components.           |
-| Apollo Client  | Powerful GraphQL client for React, simplifying data fetching & management with optimizations & built-in caching.       |
 
 
 ## Getting Started
