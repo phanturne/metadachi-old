@@ -2,7 +2,7 @@
 
 import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatInput"
 import FileDropzoneContainer from "@/app/components/files/FileDropzoneContainer"
-import ChatsList from "@/app/components/data-list/items/chat/ChatsList"
+import ChatContent from "@/app/components/data-list/items/chat/ChatContent"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
 import ChatTabs from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatTabs"
@@ -185,7 +185,7 @@ export default function ChatPage() {
         <ChatHeader variant={isNewChat ? "new" : null} />
 
         {tab === "chat" ? (
-          <ChatsList chatId={chatId} />
+          <ChatContent chatId={chatId} />
         ) : (
           <Box
             sx={{

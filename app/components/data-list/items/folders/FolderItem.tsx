@@ -62,7 +62,7 @@ export const FolderItem: FC<FolderProps> = ({
     }
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = () => {
     if (onClick) onClick()
     if (variant === "expandable") {
       setIsExpanded(!isExpanded)
@@ -112,7 +112,7 @@ export const FolderItem: FC<FolderProps> = ({
           alignItems: "center",
           justifyContent: "space-between",
           borderRadius: 2,
-          padding: 2
+          padding: variant === "expandable" ? 0 : 2
         }}
       >
         <Box

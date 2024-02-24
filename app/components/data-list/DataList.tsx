@@ -13,7 +13,7 @@ import { Box, Typography } from "@mui/joy"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { updateModel } from "@/app/lib/db/models"
 import { FilesView } from "@/app/components/data-list/items/files/FilesView"
-import { ChatsView } from "@/app/components/data-list/items/chat/ChatsView"
+import { ChatsList } from "@/app/components/data-list/items/chat/ChatsList"
 import { FoldersView } from "@/app/components/data-list/items/folders/FoldersView"
 
 interface DataList {
@@ -210,7 +210,7 @@ export const DataList: FC<DataList> = ({
             )}
 
             {contentType === "chats" ? (
-              <ChatsView
+              <ChatsList
                 displayedFiles={displayedFiles}
                 handleDrop={handleDrop}
                 handleDragEnter={handleDragEnter}

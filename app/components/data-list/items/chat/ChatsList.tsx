@@ -1,42 +1,67 @@
-"use client"
+import { Box, Typography } from "@mui/joy"
+import { FC } from "react"
+import { ContentType } from "@/app/lib/types"
+import { DataListContent } from "@/app/components/data-list/DataListContent"
+import { getSortedData } from "@/app/components/data-list/data-list-utils"
 
-import { MetadachiContext } from "@/app/lib/context"
-import * as React from "react"
-import { useContext, useEffect } from "react"
-import { Box } from "@mui/joy"
-import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
-import { useScroll } from "@/app/lib/hooks/use-scroll"
-import ChatMessages from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatMessages"
-import { NewChatContent } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/NewChatContent"
+interface ChatsViewProps {
+  displayedFiles: any[]
+  handleDrop: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragEnter: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragLeave: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragStart: (e: React.DragEvent<HTMLDivElement>, id: string) => void
+  contentType: ContentType
+}
 
-export default function ChatsList({ chatId }: { chatId: string | null }) {
-  const { chatMessages } = useContext(MetadachiContext)
-  const { handleFocusChatInput } = useChatHandler()
-  const { messagesStartRef, messagesEndRef } = useScroll()
-
-  useEffect(() => {
-    handleFocusChatInput()
-  }, [])
-
+export const ChatsList: FC<ChatsViewProps> = ({
+  displayedFiles,
+  handleDrop,
+  handleDragEnter,
+  handleDragLeave,
+  handleDragOver,
+  handleDragStart,
+  contentType
+}) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        overflowY: "auto"
-      }}
-    >
-      {!chatId && chatMessages.length === 0 ? (
-        <NewChatContent />
-      ) : (
-        <>
-          <div ref={messagesStartRef} />
-          <ChatMessages />
-          <div ref={messagesEndRef} />
-        </>
-      )}
-    </Box>
+    <>
+      {["Today", "Yesterday", "Previous Week", "Older"].map(dateCategory => {
+        const sortedData = getSortedData(
+          displayedFiles,
+          dateCategory as "Today" | "Yesterday" | "Previous Week" | "Older"
+        )
+        return (
+          sortedData.length > 0 && (
+            <Box>
+              <Typography level="body-sm" sx={{ mb: 1 }}>
+                {dateCategory}
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flexGrow: 1
+                }}
+                onDrop={handleDrop}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDragOver={handleDragOver}
+              >
+                {sortedData.map((item: any) => (
+                  <Box
+                    key={item.id}
+                    draggable="true"
+                    onDragStart={e => handleDragStart(e, item.id)}
+                  >
+                    <DataListContent contentType={contentType} item={item} />
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          )
+        )
+      })}
+    </>
   )
 }
