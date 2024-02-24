@@ -20,8 +20,6 @@ interface DeleteChatProps {
 }
 
 export const DeleteChat: FC<DeleteChatProps> = ({ chat }) => {
-  // useHotkey("Backspace", () => setShowChatDialog(true))
-
   const { setChats } = useContext(MetadachiContext)
   const { handleNewChat } = useChatHandler()
 

@@ -11,6 +11,7 @@ export const Routes = {
   Games: "/games",
   Explore: "/explore",
   Settings: "/settings",
+  WorkspaceSettings: "/workspace-settings",
   Profile: "/profile",
   Support: "/support",
   NotFound: "/404"

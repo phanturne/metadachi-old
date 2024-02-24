@@ -22,7 +22,11 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
       multiple
       disableCloseOnSelect
       placeholder={`Search collections/files...`}
-      value={selectedAssistantRetrievalItems}
+      value={
+        (files || collections)?.filter(item =>
+          selectedAssistantRetrievalItems.map(i => i.id).includes(item.id)
+        ) as (Tables<"files"> | Tables<"collections">)[]
+      }
       onChange={(_, newValue) => {
         setSelectedAssistantRetrievalItems(newValue)
       }}

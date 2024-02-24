@@ -23,7 +23,9 @@ export const AssistantToolSelect: FC<AssistantToolSelectProps> = ({
       multiple
       disableCloseOnSelect
       placeholder={`Search tools...`}
-      value={selectedAssistantTools}
+      value={tools.filter(tool =>
+        selectedAssistantTools.map(t => t.id).includes(tool.id)
+      )}
       onChange={(_, newValue) => {
         setSelectedAssistantTools(newValue)
       }}

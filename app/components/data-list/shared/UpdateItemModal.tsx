@@ -1,4 +1,4 @@
-import { AssignWorkspaces } from "@/app/components/workspace/assign-workspaces"
+import { AssignWorkspaces } from "@/app/components/workspace/AssignWorkspaces"
 import { MetadachiContext } from "@/app/lib/context"
 import {
   createAssistantCollection,
@@ -606,22 +606,6 @@ export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
     }
   }
 
-  const handleSelectWorkspace = (workspace: Tables<"workspaces">) => {
-    setSelectedWorkspaces(prevState => {
-      const isWorkspaceAlreadySelected = prevState.find(
-        selectedWorkspace => selectedWorkspace.id === workspace.id
-      )
-
-      if (isWorkspaceAlreadySelected) {
-        return prevState.filter(
-          selectedWorkspace => selectedWorkspace.id !== workspace.id
-        )
-      } else {
-        return [...prevState, workspace]
-      }
-    })
-  }
-
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
       <ModalDialog sx={{ minWidth: "450px" }}>
@@ -639,7 +623,7 @@ export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
 
                 <AssignWorkspaces
                   selectedWorkspaces={selectedWorkspaces}
-                  onSelectWorkspace={handleSelectWorkspace}
+                  setSelectedWorkspaces={setSelectedWorkspaces}
                 />
               </Box>
             )}

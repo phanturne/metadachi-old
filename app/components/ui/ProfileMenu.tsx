@@ -10,7 +10,8 @@ import { Box, Typography } from "@mui/joy"
 import {
   CollectionsBookmarkRounded,
   LoginRounded,
-  LogoutRounded
+  LogoutRounded,
+  SettingsApplicationsRounded
 } from "@mui/icons-material"
 import { useRouter } from "next/navigation"
 import Divider from "@mui/joy/Divider"
@@ -99,8 +100,19 @@ export default function ProfileMenu({
         {/*  <ListItemDecorator>*/}
         {/*    <SettingsRounded />*/}
         {/*  </ListItemDecorator>*/}
-        {/*  Settings*/}
+        {/*  User Settings*/}
         {/*</MenuItem>*/}
+
+        <MenuItem
+          onClick={() => {
+            router.push(Routes.WorkspaceSettings)
+          }}
+        >
+          <ListItemDecorator>
+            <SettingsApplicationsRounded />
+          </ListItemDecorator>
+          Workspace Settings
+        </MenuItem>
 
         <Divider sx={{ m: 0.5 }} />
         {profile !== null && (

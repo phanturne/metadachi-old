@@ -95,8 +95,9 @@ export default function SettingsPage() {
     if (!profile) {
       toast.error("You must be logged in to save settings.")
       openAuthModal()
+      return
     }
-    if (!profile) return
+
     let profileImageUrl = profile.image_url
     let profileImagePath = ""
 
