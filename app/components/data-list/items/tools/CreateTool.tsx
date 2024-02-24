@@ -1,5 +1,4 @@
 import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
-import { TextareaAutosize } from "@/app/components/ui/textarea-autosize"
 import { MetadachiContext } from "@/app/lib/context"
 import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
@@ -98,10 +97,10 @@ export const CreateTool: FC<CreateToolProps> = ({ isOpen, onOpenChange }) => {
           <FormControl>
             <FormLabel>Custom Headers</FormLabel>
 
-            <TextareaAutosize
+            <Textarea
               placeholder={`{"X-api-key": "1234567890"}`}
               value={customHeaders}
-              onValueChange={setCustomHeaders}
+              onChange={e => setCustomHeaders(e.target.value)}
               minRows={1}
             />
           </FormControl>

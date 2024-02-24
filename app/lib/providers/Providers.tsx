@@ -1,6 +1,5 @@
 "use client"
 
-import { TooltipProvider } from "@/app/components/ui/tooltip"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { ThemeProviderProps } from "next-themes/dist/types"
 import { FC } from "react"
@@ -13,9 +12,7 @@ export const Providers: FC<ThemeProviderProps> = ({ children, ...props }) => {
     <ThemeProvider options={{ key: "joy" }}>
       <SnackbarProvider>
         <NextThemesProvider {...props}>
-          <TooltipProvider>
-            <AuthContextProvider>{children}</AuthContextProvider>
-          </TooltipProvider>
+          <AuthContextProvider>{children}</AuthContextProvider>
         </NextThemesProvider>
       </SnackbarProvider>
     </ThemeProvider>

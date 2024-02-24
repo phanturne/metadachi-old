@@ -9,7 +9,6 @@ import { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import { cookies } from "next/headers"
 import { ReactNode } from "react"
-import "./globals.css"
 import { Box } from "@mui/joy"
 
 const inter = Inter({ subsets: ["latin"] })

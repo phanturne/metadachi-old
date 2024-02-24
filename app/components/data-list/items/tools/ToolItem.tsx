@@ -1,4 +1,3 @@
-import { TextareaAutosize } from "@/app/components/ui/textarea-autosize"
 import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
 import { FC, useState } from "react"
@@ -93,10 +92,10 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
           <FormControl>
             <FormLabel>Custom Headers</FormLabel>
 
-            <TextareaAutosize
+            <Textarea
               placeholder={`{"X-api-key": "1234567890"}`}
               value={customHeaders}
-              onValueChange={setCustomHeaders}
+              onChange={e => setCustomHeaders(e.target.value)}
               minRows={1}
             />
           </FormControl>
