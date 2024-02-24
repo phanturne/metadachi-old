@@ -4,7 +4,7 @@ import { MetadachiContext } from "@/app/lib/context"
 import { PROFILE_CONTEXT_MAX } from "@/app/lib/db/limits"
 import { exportLocalStorageAsJSON } from "@/app/lib/utils/export-old-data"
 import React, { FC, useContext } from "react"
-import ImageInput from "../../../components/ui/image-input"
+import ImageInput from "../../../components/input/ImageInput"
 import {
   Box,
   FormControl,

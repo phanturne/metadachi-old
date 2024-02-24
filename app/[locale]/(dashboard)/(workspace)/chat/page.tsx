@@ -207,7 +207,7 @@ export default function ChatPage() {
           sx={{
             position: "relative",
             width: "300px",
-            paddingBottom: "8px",
+            paddingBottom: 2,
             paddingTop: "5px",
             minWidth: {
               xs: "300px",

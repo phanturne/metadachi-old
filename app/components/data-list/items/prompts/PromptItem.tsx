@@ -1,11 +1,10 @@
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { TextareaAutosize } from "@/app/components/ui/textarea-autosize"
 import { PROMPT_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
-import { IconPencil } from "@tabler/icons-react"
 import { FC, useState } from "react"
 import { DataListItem } from "@/app/components/data-list/shared/DataListItem"
+import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
+import { EditRounded } from "@mui/icons-material"
+import { FormControl, FormLabel, Input, Textarea } from "@mui/joy"
 
 interface PromptItemProps {
   prompt: Tables<"prompts">
@@ -20,36 +19,32 @@ export const PromptItem: FC<PromptItemProps> = ({ prompt }) => {
       item={prompt}
       isTyping={isTyping}
       contentType="prompts"
-      icon={<IconPencil size={30} />}
+      icon={<EditRounded sx={DATA_LIST_ITEM_ICON_STYLE} />}
       updateState={{ name, content }}
       renderInputs={() => (
         <>
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="Prompt name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={PROMPT_NAME_MAX}
-              onCompositionStart={() => setIsTyping(true)}
-              onCompositionEnd={() => setIsTyping(false)}
+              slotProps={{ input: { maxLength: PROMPT_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Prompt</Label>
+          <FormControl>
+            <FormLabel>Prompt</FormLabel>
 
-            <TextareaAutosize
+            <Textarea
               placeholder="Prompt..."
               value={content}
-              onValueChange={setContent}
+              onChange={e => setContent(e.target.value)}
               minRows={6}
               maxRows={20}
-              onCompositionStart={() => setIsTyping(true)}
-              onCompositionEnd={() => setIsTyping(false)}
             />
-          </div>
+          </FormControl>
         </>
       )}
     />

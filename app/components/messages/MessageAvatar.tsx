@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { Box, Tooltip, Typography } from "@mui/joy"
-import { CreateRounded, SmartToyRounded } from "@mui/icons-material"
+import { AssistantRounded, CreateRounded } from "@mui/icons-material"
 import { Tables } from "@/supabase/types"
 import { LLM } from "@/app/lib/types"
 import Avatar from "@mui/joy/Avatar"
@@ -55,10 +55,9 @@ export default function MessageAvatar({
 
       {isAssistantRole && (
         <AssistantAvatar
-          selectedAssistant={selectedAssistant}
+          selectedAssistantId={selectedAssistant?.id}
           selectedAssistantImage={selectedAssistantImage}
           modelData={modelData}
-          size={ICON_SIZE}
         />
       )}
 
@@ -72,19 +71,19 @@ export const UserAvatar = ({ image_url }: { image_url?: string }) => {
 }
 
 interface AssistantAvatarProps {
-  selectedAssistant: Tables<"assistants"> | null
-  selectedAssistantImage: string | undefined
+  selectedAssistantId?: string | null
+  selectedAssistantImage?: string
   modelData: LLM
-  size: number
+  size?: number
 }
 
 export const AssistantAvatar = ({
-  selectedAssistant,
+  selectedAssistantId: selectedAssistantId,
   selectedAssistantImage,
   modelData,
-  size
+  size = ICON_SIZE
 }: AssistantAvatarProps) => {
-  if (selectedAssistant) {
+  if (selectedAssistantId) {
     return selectedAssistantImage ? (
       <Image
         className="rounded"
@@ -95,7 +94,7 @@ export const AssistantAvatar = ({
       />
     ) : (
       <Avatar size="sm">
-        <SmartToyRounded />
+        <AssistantRounded />
       </Avatar>
     )
   } else {

@@ -80,6 +80,7 @@ export default function ProfileMenu({
         </Box>
 
         <MenuItem
+          disabled
           onClick={() => {
             router.push(Routes.Collections)
           }}

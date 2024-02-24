@@ -41,7 +41,7 @@ export function PromptVariableModal({
       open={showPromptVariables}
       onClose={() => setShowPromptVariables(false)}
     >
-      <ModalDialog sx={{ minWidth: "400px" }}>
+      <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
         <DialogContent>
           <form onSubmit={handleSubmitPromptVariables}>
             <Stack spacing={2}>

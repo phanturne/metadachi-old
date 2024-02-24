@@ -3,7 +3,7 @@ import { createChat } from "@/app/lib/db/chats"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/app/lib/types"
 import { useRouter } from "next/navigation"
-import { FC, useContext, useRef, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { UpdateItemModal } from "./UpdateItemModal"
 import { Button, Typography } from "@mui/joy"
 
@@ -29,9 +29,6 @@ export const DataListItem: FC<SidebarItemProps> = ({
 
   const router = useRouter()
 
-  const itemRef = useRef<HTMLDivElement>(null)
-
-  const [isHovering, setIsHovering] = useState(false)
   const [open, setOpen] = useState(false)
 
   const actionMap = {
@@ -65,13 +62,6 @@ export const DataListItem: FC<SidebarItemProps> = ({
     },
     tools: async (item: any) => {},
     models: async (item: any) => {}
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
-      e.stopPropagation()
-      itemRef.current?.click()
-    }
   }
 
   // const handleClickAction = async (
@@ -131,7 +121,6 @@ export const DataListItem: FC<SidebarItemProps> = ({
         open={open}
         setOpen={setOpen}
         item={item}
-        isTyping={isTyping}
         contentType={contentType}
         updateState={updateState}
         renderInputs={renderInputs}

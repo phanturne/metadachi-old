@@ -215,7 +215,7 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
 
   return (
     <Modal open={isOpen} onClose={() => onOpenChange(false)}>
-      <ModalDialog sx={{ minWidth: "450px" }}>
+      <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
         <DialogTitle>{modalTitle}</DialogTitle>
         {subtitle && <DialogContent>{subtitle}</DialogContent>}
         <form

@@ -69,7 +69,7 @@ import {
 } from "@/app/lib/db/tools"
 import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { Tables, TablesUpdate } from "@/supabase/types"
-import { CollectionFile, ContentType, DataItemType } from "../../../lib/types"
+import { CollectionFile, ContentType, DataItemType } from "@/app/lib/types"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { toast } from "sonner"
@@ -87,7 +87,7 @@ import {
 interface SidebarUpdateItemProps {
   open: boolean
   setOpen: (open: boolean) => void
-  isTyping: boolean
+  // isTyping: boolean
   item: DataItemType
   contentType: ContentType
   renderInputs: (renderState: any) => JSX.Element
@@ -100,8 +100,8 @@ export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
   item,
   contentType,
   renderInputs,
-  updateState,
-  isTyping
+  updateState
+  // isTyping
 }) => {
   const {
     workspaces,
@@ -588,7 +588,7 @@ export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
       const setStateFunction = stateUpdateFunctions[contentType]
 
       if (!updateFunction || !setStateFunction) return
-      if (isTyping) return // Prevent update while typing
+      // if (isTyping) return // Prevent update while typing
 
       const updatedItem = await updateFunction(item.id, updateState)
 

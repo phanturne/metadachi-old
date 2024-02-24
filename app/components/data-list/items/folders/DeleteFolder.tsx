@@ -1,21 +1,21 @@
-import { Button } from "@/app/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/app/components/ui/dialog"
 import { MetadachiContext } from "@/app/lib/context"
 import { deleteFolder } from "@/app/lib/db/folders"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { Tables } from "@/supabase/types"
 import { ContentType } from "@/app/lib/types"
-import { IconTrash } from "@tabler/icons-react"
-import { FC, useContext, useRef, useState } from "react"
+import React, { FC, useContext, useState } from "react"
 import { toast } from "sonner"
+import { DeleteRounded } from "@mui/icons-material"
+import {
+  Box,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Modal,
+  ModalDialog,
+  Stack
+} from "@mui/joy"
+import Button from "@mui/joy/Button"
 
 interface DeleteFolderProps {
   folder: Tables<"folders">
@@ -38,9 +38,7 @@ export const DeleteFolder: FC<DeleteFolderProps> = ({
     setModels
   } = useContext(MetadachiContext)
 
-  const buttonRef = useRef<HTMLButtonElement>(null)
-
-  const [showFolderDialog, setShowFolderDialog] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const stateUpdateFunctions = {
     chats: setChats,
@@ -58,7 +56,7 @@ export const DeleteFolder: FC<DeleteFolderProps> = ({
 
     setFolders(prevState => prevState.filter(c => c.id !== folder.id))
 
-    setShowFolderDialog(false)
+    setOpen(false)
 
     const setStateFunction = stateUpdateFunctions[contentType]
 
@@ -100,42 +98,48 @@ export const DeleteFolder: FC<DeleteFolderProps> = ({
   }
 
   return (
-    <Dialog open={showFolderDialog} onOpenChange={setShowFolderDialog}>
-      <DialogTrigger asChild>
-        <IconTrash className="hover:opacity-50" size={18} />
-      </DialogTrigger>
-
-      <DialogContent className="min-w-[550px]">
-        <DialogHeader>
-          <DialogTitle>Delete {folder.name}</DialogTitle>
-
-          <DialogDescription>
+    <>
+      <IconButton
+        onClick={() => setOpen(true)}
+        size="sm"
+        sx={{ "&:hover": { backgroundColor: "transparent" }, ml: -1 }}
+      >
+        <DeleteRounded />
+      </IconButton>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <ModalDialog sx={{ minWidth: "550px" }}>
+          <DialogTitle>{`Delete "${folder.name}"`}</DialogTitle>
+          <DialogContent>
             Are you sure you want to delete this folder?
-          </DialogDescription>
-        </DialogHeader>
+          </DialogContent>
+          <Stack spacing={2}>
+            <Box
+              sx={{
+                display: "flex",
+                flexGrow: 1,
+                justifyContent: "flex-end",
+                gap: 2
+              }}
+            >
+              <Button
+                variant="plain"
+                color="neutral"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
 
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => setShowFolderDialog(false)}>
-            Cancel
-          </Button>
+              <Button color="danger" onClick={handleDeleteFolderAndItems}>
+                Delete Folder & Included Items
+              </Button>
 
-          <Button
-            ref={buttonRef}
-            variant="destructive"
-            onClick={handleDeleteFolderAndItems}
-          >
-            Delete Folder & Included Items
-          </Button>
-
-          <Button
-            ref={buttonRef}
-            variant="destructive"
-            onClick={handleDeleteFolderOnly}
-          >
-            Delete Folder Only
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+              <Button color="danger" onClick={handleDeleteFolderOnly}>
+                Delete Folder Only
+              </Button>
+            </Box>
+          </Stack>
+        </ModalDialog>
+      </Modal>
+    </>
   )
 }

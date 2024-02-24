@@ -1,70 +1,64 @@
-import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { Tabs, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
 import { TextareaAutosize } from "@/app/components/ui/textarea-autosize"
-import { MetadachiContext } from "@/app/lib/context"
 import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"
-import { TablesInsert } from "@/supabase/types"
-import { FC, useContext, useState } from "react"
+import { Tables } from "@/supabase/types"
+import { FC, useState } from "react"
+import { DataListItem } from "@/app/components/data-list/shared/DataListItem"
+import { FormControl, FormLabel, Input, Switch, Textarea } from "@mui/joy"
+import { BuildRounded, LinkRounded, WebAssetRounded } from "@mui/icons-material"
+import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
 
-interface CreateToolProps {
-  isOpen: boolean
-  onOpenChange: (isOpen: boolean) => void
+interface ToolItemProps {
+  tool: Tables<"tools">
 }
 
-export const CreateTool: FC<CreateToolProps> = ({ isOpen, onOpenChange }) => {
-  const { profile, selectedWorkspace } = useContext(MetadachiContext)
-
-  const [name, setName] = useState("")
+export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
+  const [name, setName] = useState(tool.name)
   const [isTyping, setIsTyping] = useState(false)
-  const [description, setDescription] = useState("")
-  const [url, setUrl] = useState("")
-  const [customHeaders, setCustomHeaders] = useState("")
-  const [schema, setSchema] = useState("")
-  const [isRequestInBody, setIsRequestInBody] = useState(true)
-
-  if (!profile || !selectedWorkspace) return null
+  const [description, setDescription] = useState(tool.description)
+  const [url, setUrl] = useState(tool.url)
+  const [customHeaders, setCustomHeaders] = useState(
+    tool.custom_headers as string
+  )
+  const [schema, setSchema] = useState(tool.schema as string)
+  const [isRequestInBody, setIsRequestInBody] = useState(tool.request_in_body)
 
   return (
-    <CreateItemModal
-      contentType="tools"
-      createState={
-        {
-          user_id: profile.user_id,
-          name,
-          description,
-          url,
-          custom_headers: customHeaders,
-          schema,
-          request_in_body: isRequestInBody
-        } as TablesInsert<"tools">
-      }
-      isOpen={isOpen}
+    <DataListItem
+      item={tool}
       isTyping={isTyping}
+      contentType="tools"
+      icon={<BuildRounded sx={DATA_LIST_ITEM_ICON_STYLE} />}
+      updateState={{
+        name,
+        description,
+        url,
+        custom_headers: customHeaders,
+        schema,
+        request_in_body: isRequestInBody
+      }}
       renderInputs={() => (
         <>
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="Tool name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={TOOL_NAME_MAX}
+              slotProps={{ input: { maxLength: TOOL_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Description</Label>
+          <FormControl>
+            <FormLabel>Description</FormLabel>
 
             <Input
               placeholder="Tool description..."
               value={description}
               onChange={e => setDescription(e.target.value)}
-              maxLength={TOOL_DESCRIPTION_MAX}
+              slotProps={{ input: { maxLength: TOOL_DESCRIPTION_MAX } }}
             />
-          </div>
+          </FormControl>
 
           {/* <div className="space-y-1">
             <Label>URL</Label>
@@ -96,8 +90,8 @@ export const CreateTool: FC<CreateToolProps> = ({ isOpen, onOpenChange }) => {
             </div>
           </div> */}
 
-          <div className="space-y-1">
-            <Label>Custom Headers</Label>
+          <FormControl>
+            <FormLabel>Custom Headers</FormLabel>
 
             <TextareaAutosize
               placeholder={`{"X-api-key": "1234567890"}`}
@@ -105,12 +99,12 @@ export const CreateTool: FC<CreateToolProps> = ({ isOpen, onOpenChange }) => {
               onValueChange={setCustomHeaders}
               minRows={1}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Schema</Label>
+          <FormControl>
+            <FormLabel>Schema</FormLabel>
 
-            <TextareaAutosize
+            <Textarea
               placeholder={`{
                 "openapi": "3.1.0",
                 "info": {
@@ -148,37 +142,36 @@ export const CreateTool: FC<CreateToolProps> = ({ isOpen, onOpenChange }) => {
                 }
               }`}
               value={schema}
-              onValueChange={setSchema}
-              minRows={15}
+              onChange={e => setSchema(e.target.value)}
+              maxRows={10}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Request in...</Label>
+          <FormControl>
+            <FormLabel>Request in...</FormLabel>
 
-            <Tabs
-              defaultValue={isRequestInBody ? "body" : "url"}
-              className="w-[400px]"
-            >
-              <TabsList>
-                <TabsTrigger
-                  value="body"
-                  onClick={() => setIsRequestInBody(true)}
-                >
+            <Switch
+              startDecorator={
+                <>
+                  <WebAssetRounded />
                   Body
-                </TabsTrigger>
-                <TabsTrigger
-                  value="url"
-                  onClick={() => setIsRequestInBody(false)}
-                >
+                </>
+              }
+              endDecorator={
+                <>
+                  <LinkRounded />
                   URL
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
+                </>
+              }
+              checked={isRequestInBody}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setIsRequestInBody(event.target.checked)
+              }
+              sx={{ alignSelf: "flex-start" }}
+            />
+          </FormControl>
         </>
       )}
-      onOpenChange={onOpenChange}
     />
   )
 }

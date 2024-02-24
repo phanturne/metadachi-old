@@ -1,12 +1,12 @@
 import { cn } from "@/app/lib/utils/utils"
 import { Tables } from "@/supabase/types"
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react"
+import * as React from "react"
 import { FC, useRef, useState } from "react"
-import { UpdateFolder } from "./update-folder"
+import { UpdateFolder } from "./UpdateFolder"
 import { FolderRounded } from "@mui/icons-material"
 import { Box, Typography } from "@mui/joy"
-import * as React from "react"
-import { DeleteFolder } from "@/app/components/data-list/items/folders/delete-folder"
+import { DeleteFolder } from "@/app/components/data-list/items/folders/DeleteFolder"
 import { ContentType } from "@/app/lib/types"
 
 interface FolderProps {
@@ -18,7 +18,7 @@ interface FolderProps {
   onClick: any
 }
 
-export const Folder: FC<FolderProps> = ({
+export const FolderItem: FC<FolderProps> = ({
   folder,
   contentType,
   children,
@@ -145,7 +145,7 @@ export const Folder: FC<FolderProps> = ({
                 e.stopPropagation()
                 e.preventDefault()
               }}
-              sx={{ marginLeft: 2, display: "flex", gap: 2, flexShrink: 0 }}
+              sx={{ display: "flex", flexShrink: 0 }}
             >
               <UpdateFolder folder={folder} />
               <DeleteFolder folder={folder} contentType={contentType} />

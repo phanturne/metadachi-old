@@ -1,11 +1,12 @@
 import { FileIcon } from "@/app/components/files/file-icon"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
 import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"
 import { getFileFromStorage } from "@/app/lib/db/storage/files"
 import { Tables } from "@/supabase/types"
 import { FC, useState } from "react"
 import { DataListItem } from "@/app/components/data-list/shared/DataListItem"
+import { Box, FormControl, FormLabel, Input, Typography } from "@mui/joy"
+import Button from "@mui/joy/Button"
+import { formatFileSize } from "@/app/lib/utils/file-utils"
 
 interface FileItemProps {
   file: Tables<"files">
@@ -30,66 +31,45 @@ export const FileItem: FC<FileItemProps> = ({ file }) => {
       updateState={{ name }}
       renderInputs={() => (
         <>
-          <div
-            className="cursor-pointer underline hover:opacity-50"
-            onClick={getLinkAndView}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1
+            }}
           >
-            View {file.name}
-          </div>
+            <Button variant="outlined" color="neutral" onClick={getLinkAndView}>
+              View {file.name}
+            </Button>
 
-          <div className="flex flex-col justify-between">
-            <div>{file.type}</div>
+            <Typography level="body-sm">{`Type: ${file.type.toUpperCase()} | Size: ${formatFileSize(
+              file.size
+            )} | ${file.tokens.toLocaleString()} tokens`}</Typography>
+          </Box>
 
-            <div>{formatFileSize(file.size)}</div>
-
-            <div>{file.tokens.toLocaleString()} tokens</div>
-          </div>
-
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="File name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={FILE_NAME_MAX}
+              slotProps={{ input: { maxLength: FILE_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Description</Label>
+          <FormControl>
+            <FormLabel>Description</FormLabel>
 
             <Input
               placeholder="File description..."
               value={description}
               onChange={e => setDescription(e.target.value)}
-              maxLength={FILE_DESCRIPTION_MAX}
+              slotProps={{ input: { maxLength: FILE_DESCRIPTION_MAX } }}
             />
-          </div>
+          </FormControl>
         </>
       )}
     />
   )
-}
-
-export const formatFileSize = (sizeInBytes: number): string => {
-  let size = sizeInBytes
-  let unit = "bytes"
-
-  if (size >= 1024) {
-    size /= 1024
-    unit = "KB"
-  }
-
-  if (size >= 1024) {
-    size /= 1024
-    unit = "MB"
-  }
-
-  if (size >= 1024) {
-    size /= 1024
-    unit = "GB"
-  }
-
-  return `${size.toFixed(2)} ${unit}`
 }

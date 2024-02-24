@@ -1,4 +1,4 @@
-import { Folder } from "@/app/components/data-list/items/folders/Folder"
+import { FolderItem } from "@/app/components/data-list/items/folders/FolderItem"
 import { DataListContent } from "@/app/components/data-list/DataListContent"
 import { Tables } from "@/supabase/types"
 import { ContentType } from "@/app/lib/types"
@@ -27,7 +27,7 @@ export const FolderData: FC<FolderDataProps> = ({
   onDragStart
 }) => {
   return (
-    <Folder
+    <FolderItem
       key={key}
       folder={folder}
       contentType={contentType}
@@ -46,6 +46,6 @@ export const FolderData: FC<FolderDataProps> = ({
             <DataListContent contentType={contentType} item={item} />
           </Box>
         ))}
-    </Folder>
+    </FolderItem>
   )
 }

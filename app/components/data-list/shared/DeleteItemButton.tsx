@@ -105,7 +105,7 @@ export const DeleteItemButton: FC<SidebarDeleteItemProps> = ({
         Delete
       </Button>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <ModalDialog>
+        <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
           <DialogTitle>Delete {contentType.slice(0, -1)}</DialogTitle>
           <DialogContent>
             Are you sure you want to delete {item.name}?

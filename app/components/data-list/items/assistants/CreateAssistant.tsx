@@ -1,7 +1,4 @@
 import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
-import ImageInput from "@/app/components/ui/image-input"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
 import { MetadachiContext } from "@/app/lib/context"
 import {
   ASSISTANT_DESCRIPTION_MAX,
@@ -9,9 +6,11 @@ import {
 } from "@/app/lib/db/limits"
 import { Tables, TablesInsert } from "@/supabase/types"
 import { FC, useContext, useEffect, useState } from "react"
-import { AssistantRetrievalSelect } from "./assistant-retrieval-select"
-import { AssistantToolSelect } from "./assistant-tool-select"
+import { AssistantRetrievalSelect } from "./AssistantRetrievalSelect"
+import { AssistantToolSelect } from "./AssistantToolSelect"
 import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
+import { FormControl, FormLabel, Input } from "@mui/joy"
+import ImageInput from "@/app/components/input/ImageInput"
 
 interface CreateAssistantProps {
   isOpen: boolean
@@ -43,6 +42,7 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
   const [selectedAssistantToolItems, setSelectedAssistantToolItems] = useState<
     Tables<"tools">[]
   >([])
+  const [isModelToolCompatible, setIsModelToolCompatible] = useState(false)
 
   useEffect(() => {
     setAssistantChatSettings(prevSettings => {
@@ -58,35 +58,9 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
     })
   }, [name])
 
-  const handleRetrievalItemSelect = (
-    item: Tables<"files"> | Tables<"collections">
-  ) => {
-    setSelectedAssistantRetrievalItems(prevState => {
-      const isItemAlreadySelected = prevState.find(
-        selectedItem => selectedItem.id === item.id
-      )
-
-      if (isItemAlreadySelected) {
-        return prevState.filter(selectedItem => selectedItem.id !== item.id)
-      } else {
-        return [...prevState, item]
-      }
-    })
-  }
-
-  const handleToolSelect = (item: Tables<"tools">) => {
-    setSelectedAssistantToolItems(prevState => {
-      const isItemAlreadySelected = prevState.find(
-        selectedItem => selectedItem.id === item.id
-      )
-
-      if (isItemAlreadySelected) {
-        return prevState.filter(selectedItem => selectedItem.id !== item.id)
-      } else {
-        return [...prevState, item]
-      }
-    })
-  }
+  useEffect(() => {
+    setIsModelToolCompatible(checkIfModelIsToolCompatible())
+  }, [])
 
   const checkIfModelIsToolCompatible = () => {
     if (!assistantChatSettings.model) return false
@@ -134,37 +108,34 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
         } as TablesInsert<"assistants">
       }
       isOpen={isOpen}
+      onOpenChange={onOpenChange}
       isTyping={isTyping}
       renderInputs={() => (
         <>
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="Assistant name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={ASSISTANT_NAME_MAX}
+              slotProps={{ input: { maxLength: ASSISTANT_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1 pt-2">
-            <Label>Description</Label>
+          <FormControl>
+            <FormLabel>Description</FormLabel>
 
             <Input
               placeholder="Assistant description..."
               value={description}
               onChange={e => setDescription(e.target.value)}
-              maxLength={ASSISTANT_DESCRIPTION_MAX}
+              slotProps={{ input: { maxLength: ASSISTANT_DESCRIPTION_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1 pt-2">
-            <Label className="flex space-x-1">
-              <div>Image</div>
-
-              <div className="text-xs">(optional)</div>
-            </Label>
+          <FormControl>
+            <FormLabel>Image (Optional)</FormLabel>
 
             <ImageInput
               src={imageLink}
@@ -174,39 +145,35 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
               width={100}
               height={100}
             />
-          </div>
+          </FormControl>
 
           <ChatSettingsForm
             chatSettings={assistantChatSettings as any}
             onChangeChatSettings={setAssistantChatSettings}
           />
 
-          <div className="space-y-1 pt-2">
-            <Label>Files & Collections</Label>
+          <FormControl>
+            <FormLabel>Files & Collections</FormLabel>
 
             <AssistantRetrievalSelect
               selectedAssistantRetrievalItems={selectedAssistantRetrievalItems}
-              onAssistantRetrievalItemsSelect={handleRetrievalItemSelect}
+              setSelectedAssistantRetrievalItems={
+                setSelectedAssistantRetrievalItems
+              }
             />
-          </div>
+          </FormControl>
 
-          {checkIfModelIsToolCompatible() ? (
-            <div className="space-y-1">
-              <Label>Tools</Label>
+          <FormControl>
+            <FormLabel>Tools</FormLabel>
 
-              <AssistantToolSelect
-                selectedAssistantTools={selectedAssistantToolItems}
-                onAssistantToolsSelect={handleToolSelect}
-              />
-            </div>
-          ) : (
-            <div className="pt-1 font-semibold">
-              Model is not compatible with tools.
-            </div>
-          )}
+            <AssistantToolSelect
+              disabled={!checkIfModelIsToolCompatible()}
+              selectedAssistantTools={selectedAssistantToolItems}
+              setSelectedAssistantTools={setSelectedAssistantToolItems}
+            />
+          </FormControl>
         </>
       )}
-      onOpenChange={onOpenChange}
     />
   )
 }

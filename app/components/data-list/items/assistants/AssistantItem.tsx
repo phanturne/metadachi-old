@@ -1,20 +1,20 @@
-import ImageInput from "@/app/components/ui/image-input"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
+import ImageInput from "@/app/components/input/ImageInput"
 import { MetadachiContext } from "@/app/lib/context"
 import {
   ASSISTANT_DESCRIPTION_MAX,
   ASSISTANT_NAME_MAX
 } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
-import { IconRobotFace } from "@tabler/icons-react"
 import Image from "next/image"
 import { FC, useContext, useEffect, useState } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { DataListItem } from "@/app/components/data-list/shared/DataListItem"
-import { AssistantRetrievalSelect } from "./assistant-retrieval-select"
-import { AssistantToolSelect } from "./assistant-tool-select"
+import { AssistantRetrievalSelect } from "./AssistantRetrievalSelect"
+import { AssistantToolSelect } from "./AssistantToolSelect"
 import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
+import { AssistantRounded } from "@mui/icons-material"
+import { FormControl, FormLabel, Input } from "@mui/joy"
+import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
 
 interface AssistantItemProps {
   assistant: Tables<"assistants">
@@ -44,65 +44,6 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
     setImageLink(assistantImage)
   }, [assistant, assistantImages])
 
-  const handleFileSelect = (
-    file: Tables<"files">,
-    setSelectedAssistantFiles: React.Dispatch<
-      React.SetStateAction<Tables<"files">[]>
-    >
-  ) => {
-    setSelectedAssistantFiles(prevState => {
-      const isFileAlreadySelected = prevState.find(
-        selectedFile => selectedFile.id === file.id
-      )
-
-      if (isFileAlreadySelected) {
-        return prevState.filter(selectedFile => selectedFile.id !== file.id)
-      } else {
-        return [...prevState, file]
-      }
-    })
-  }
-
-  const handleCollectionSelect = (
-    collection: Tables<"collections">,
-    setSelectedAssistantCollections: React.Dispatch<
-      React.SetStateAction<Tables<"collections">[]>
-    >
-  ) => {
-    setSelectedAssistantCollections(prevState => {
-      const isCollectionAlreadySelected = prevState.find(
-        selectedCollection => selectedCollection.id === collection.id
-      )
-
-      if (isCollectionAlreadySelected) {
-        return prevState.filter(
-          selectedCollection => selectedCollection.id !== collection.id
-        )
-      } else {
-        return [...prevState, collection]
-      }
-    })
-  }
-
-  const handleToolSelect = (
-    tool: Tables<"tools">,
-    setSelectedAssistantTools: React.Dispatch<
-      React.SetStateAction<Tables<"tools">[]>
-    >
-  ) => {
-    setSelectedAssistantTools(prevState => {
-      const isToolAlreadySelected = prevState.find(
-        selectedTool => selectedTool.id === tool.id
-      )
-
-      if (isToolAlreadySelected) {
-        return prevState.filter(selectedTool => selectedTool.id !== tool.id)
-      } else {
-        return [...prevState, tool]
-      }
-    })
-  }
-
   if (!profile) return null
   if (!selectedWorkspace) return null
 
@@ -122,10 +63,11 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             height={30}
           />
         ) : (
-          <IconRobotFace
-            className="bg-primary text-secondary border-primary rounded border-[1px] p-1"
-            size={30}
-          />
+          <AssistantRounded style={DATA_LIST_ITEM_ICON_STYLE} />
+          // <IconRobotFace
+          //   className="bg-primary text-secondary border-primary rounded border-[1px] p-1"
+          //   size={30}
+          // />
         )
       }
       updateState={{
@@ -169,30 +111,30 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
         >
       }) => (
         <>
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="Assistant name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={ASSISTANT_NAME_MAX}
+              slotProps={{ input: { maxLength: ASSISTANT_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1 pt-2">
-            <Label>Description</Label>
+          <FormControl>
+            <FormLabel>Description</FormLabel>
 
             <Input
               placeholder="Assistant description..."
               value={description}
               onChange={e => setDescription(e.target.value)}
-              maxLength={ASSISTANT_DESCRIPTION_MAX}
+              slotProps={{ input: { maxLength: ASSISTANT_DESCRIPTION_MAX } }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Image</Label>
+          <FormControl>
+            <FormLabel>Image</FormLabel>
 
             <ImageInput
               src={imageLink}
@@ -202,15 +144,15 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
               width={100}
               height={100}
             />
-          </div>
+          </FormControl>
 
           <ChatSettingsForm
             chatSettings={assistantChatSettings as any}
             onChangeChatSettings={setAssistantChatSettings}
           />
 
-          <div className="space-y-1 pt-2">
-            <Label>Files & Collections</Label>
+          <FormControl>
+            <FormLabel>Files & Collections</FormLabel>
 
             <AssistantRetrievalSelect
               selectedAssistantRetrievalItems={
@@ -257,22 +199,21 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
                       )
                     ]
               }
-              onAssistantRetrievalItemsSelect={item =>
-                "type" in item
-                  ? handleFileSelect(
-                      item,
-                      renderState.setSelectedAssistantFiles
-                    )
-                  : handleCollectionSelect(
-                      item,
-                      renderState.setSelectedAssistantCollections
-                    )
-              }
+              setSelectedAssistantRetrievalItems={items => {
+                const files = items.filter(
+                  item => "type" in item
+                ) as Tables<"files">[]
+                const collections = items.filter(
+                  item => !("type" in item)
+                ) as Tables<"collections">[]
+                renderState.setSelectedAssistantFiles(files)
+                renderState.setSelectedAssistantCollections(collections)
+              }}
             />
-          </div>
+          </FormControl>
 
-          <div className="space-y-1">
-            <Label>Tools</Label>
+          <FormControl>
+            <FormLabel>Tools</FormLabel>
 
             <AssistantToolSelect
               selectedAssistantTools={
@@ -293,11 +234,9 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
                       )
                     ]
               }
-              onAssistantToolsSelect={tool =>
-                handleToolSelect(tool, renderState.setSelectedAssistantTools)
-              }
+              setSelectedAssistantTools={renderState.setSelectedAssistantTools}
             />
-          </div>
+          </FormControl>
         </>
       )}
     />

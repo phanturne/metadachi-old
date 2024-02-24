@@ -5,13 +5,13 @@ import { ContentType } from "@/app/lib/types"
 import { FC, useContext, useState } from "react"
 // import { CreateCollection } from "@/app/components/data-list/items/collections/create-collection"
 import { CreateFile } from "@/app/components/data-list/items/files/CreateFile"
-import { CreatePreset } from "@/app/components/data-list/items/presets/create-preset"
+import { CreatePreset } from "@/app/components/data-list/items/presets/CreatePreset"
 import { CreatePrompt } from "@/app/components/data-list/items/prompts/CreatePrompt"
-import { CreateTool } from "@/app/components/data-list/items/tools/create-tool"
+import { CreateTool } from "@/app/components/data-list/items/tools/CreateTool"
 import { CreateModel } from "@/app/components/data-list/items/models/create-model"
 import { Box, Button, IconButton } from "@mui/joy"
 import { AddRounded, CreateNewFolderRounded } from "@mui/icons-material"
-import { CreateAssistant } from "@/app/components/data-list/items/assistants/create-assistant"
+import { CreateAssistant } from "@/app/components/data-list/items/assistants/CreateAssistant"
 
 interface SidebarCreateButtonsProps {
   contentType: ContentType

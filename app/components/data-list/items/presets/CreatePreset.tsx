@@ -1,11 +1,10 @@
 import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
 import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
 import { MetadachiContext } from "@/app/lib/context"
 import { PRESET_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { FC, useContext, useState } from "react"
+import { FormControl, FormLabel, Input } from "@mui/joy"
 
 interface CreatePresetProps {
   isOpen: boolean
@@ -58,16 +57,16 @@ export const CreatePreset: FC<CreatePresetProps> = ({
       }
       renderInputs={() => (
         <>
-          <div className="space-y-1">
-            <Label>Name</Label>
+          <FormControl>
+            <FormLabel>Name</FormLabel>
 
             <Input
               placeholder="Preset name..."
               value={name}
               onChange={e => setName(e.target.value)}
-              maxLength={PRESET_NAME_MAX}
+              slotProps={{ input: { maxLength: PRESET_NAME_MAX } }}
             />
-          </div>
+          </FormControl>
 
           <ChatSettingsForm
             chatSettings={presetChatSettings as any}
