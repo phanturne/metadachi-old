@@ -42,8 +42,9 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   } = useContext(MetadachiContext)
 
   const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTER_LIST[0])
+  // const [filteredModels, setFilteredModels] = useState<LLM[]>([])
   // const [isLocked, setIsLocked] = useState<boolean>(true)
-  const [lockedModels, setLockedModels] = useState<LLMID[]>([])
+  // const [lockedModels, setLockedModels] = useState<LLMID[]>([])
 
   const ALL_MODELS = [
     ...models.map(model => ({
@@ -59,8 +60,9 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     ...availableOpenRouterModels
   ]
 
-  const ALL_MODEL_IDS = ALL_MODELS.map(model => model.modelId)
+  console.log(ALL_MODELS)
 
+  // const ALL_MODEL_IDS = ALL_MODELS.map(model => model.modelId)
   // useEffect(() => {
   //   const checkModelLock = async () => {
   //     const isUsingAzure = profile?.use_azure_openai
@@ -98,7 +100,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     model => model.modelId === selectedModelId
   )
 
-  if (!selectedModel) return null
+  // if (!selectedModel) return null
 
   const filteredModels = ALL_MODELS.filter(model => {
     const filter = modelFilter.toLowerCase()
@@ -117,6 +119,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   return (
     <Autocomplete
       disabled={disabled}
+      placeholder={"Select a model"}
       defaultValue={selectedModel}
       value={selectedModel}
       onChange={(_, value) => onSelectModel(value?.modelId as LLMID)}
@@ -146,7 +149,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       }
       autoHighlight
       getOptionLabel={model => model.modelName}
-      getOptionDisabled={model => lockedModels.includes(model.modelId)}
+      // getOptionDisabled={model => lockedModels.includes(model.modelId)}
       renderOption={(props, model) => (
         <ModelOption model={model} props={props} />
       )}

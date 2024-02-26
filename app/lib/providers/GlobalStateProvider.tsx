@@ -112,7 +112,7 @@ export const GlobalStateProvider: FC<GlobalStateProps> = ({ children }) => {
   const [newMessageImages, setNewMessageImages] = useState<MessageImage[]>([])
   const [showFilesDisplay, setShowFilesDisplay] = useState<boolean>(false)
 
-  // RETIEVAL STORE
+  // RETRIEVAL STORE
   const [useRetrieval, setUseRetrieval] = useState<boolean>(true)
   const [sourceCount, setSourceCount] = useState<number>(4)
 

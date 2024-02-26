@@ -11,7 +11,7 @@ import { GoogleSVG } from "../icons/google-svg"
 import { OpenAISVG } from "../icons/openai-svg"
 
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
-  provider: ModelProvider
+  provider?: ModelProvider
   height: number
   width: number
 }

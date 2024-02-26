@@ -8,6 +8,7 @@ import {
   HomeRounded,
   ImageRounded,
   PersonRounded,
+  RoomPreferencesRounded,
   SettingsRounded,
   SportsEsportsRounded
 } from "@mui/icons-material"
@@ -38,6 +39,10 @@ export const routeDictionary: Record<
     label: "Explore",
     disabled: true
   },
-  [Routes.Settings]: { icon: <SettingsRounded />, label: "Settings" },
+  [Routes.Settings]: { icon: <SettingsRounded />, label: "User Settings" },
+  [Routes.WorkspaceSettings]: {
+    icon: <RoomPreferencesRounded />,
+    label: "Workspace Settings"
+  },
   [Routes.Profile]: { icon: <PersonRounded />, label: "Profile" }
 }

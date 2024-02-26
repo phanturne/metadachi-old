@@ -93,7 +93,7 @@ export default function SettingsPage() {
 
   const handleSave = async () => {
     if (!profile) {
-      toast.error("You must be logged in to save settings.")
+      toast.error("You must be logged in to save user settings.")
       openAuthModal()
       return
     }
@@ -259,7 +259,7 @@ export default function SettingsPage() {
               </Tab>
               <Tab disableIndicator value="api">
                 <KeyRounded />
-                API
+                API Keys
               </Tab>
             </TabList>
           </Tabs>

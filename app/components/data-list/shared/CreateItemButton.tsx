@@ -3,7 +3,6 @@ import { MetadachiContext } from "@/app/lib/context"
 import { createFolder } from "@/app/lib/db/folders"
 import { ContentType } from "@/app/lib/types"
 import { FC, useContext, useState } from "react"
-// import { CreateCollection } from "@/app/components/data-list/items/collections/create-collection"
 import { CreateFile } from "@/app/components/data-list/items/files/CreateFile"
 import { CreatePreset } from "@/app/components/data-list/items/presets/CreatePreset"
 import { CreatePrompt } from "@/app/components/data-list/items/prompts/CreatePrompt"
@@ -12,6 +11,9 @@ import { CreateModel } from "@/app/components/data-list/items/models/CreateModel
 import { Box, Button, IconButton } from "@mui/joy"
 import { AddRounded, CreateNewFolderRounded } from "@mui/icons-material"
 import { CreateAssistant } from "@/app/components/data-list/items/assistants/CreateAssistant"
+import { CreateCollection } from "@/app/components/data-list/items/collections/CreateCollection"
+import { toast } from "sonner"
+import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 
 interface SidebarCreateButtonsProps {
   contentType: ContentType
@@ -27,6 +29,7 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
   const { profile, selectedWorkspace, folders, setFolders } =
     useContext(MetadachiContext)
   const { handleNewChat } = useChatHandler()
+  const { openAuthModal } = useAuthModal()
 
   const [isCreatingPrompt, setIsCreatingPrompt] = useState(false)
   const [isCreatingPreset, setIsCreatingPreset] = useState(false)
@@ -55,6 +58,13 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
   }
 
   const getCreateFunction = () => {
+    if (!profile) {
+      return () => {
+        openAuthModal()
+        toast.error(`You must be logged in to create ${contentType}.`)
+      }
+    }
+
     switch (contentType) {
       case "chats":
         return async () => {
@@ -150,12 +160,12 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
         <CreateFile isOpen={isCreatingFile} onOpenChange={setIsCreatingFile} />
       )}
 
-      {/*{isCreatingCollection && (*/}
-      {/*  <CreateCollection*/}
-      {/*    isOpen={isCreatingCollection}*/}
-      {/*    onOpenChange={setIsCreatingCollection}*/}
-      {/*  />*/}
-      {/*)}*/}
+      {isCreatingCollection && (
+        <CreateCollection
+          isOpen={isCreatingCollection}
+          onOpenChange={setIsCreatingCollection}
+        />
+      )}
 
       {isCreatingAssistant && (
         <CreateAssistant

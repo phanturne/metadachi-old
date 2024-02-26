@@ -1,7 +1,7 @@
 import Header from "@/app/components/ui/Header"
 import { ChatSettingsPopup } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatSettingsPopup"
 import { ScrollButtons } from "@/app/components/buttons/ScrollButtons"
-import { Typography } from "@mui/joy"
+import { Box, Typography } from "@mui/joy"
 import { ChatInfoButton } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatInfoButton"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
@@ -32,9 +32,19 @@ export default function ChatHeader({ variant }: { variant: "new" | null }) {
             />
           }
           middleContent={
-            <Typography noWrap>{selectedChat?.name || "Chat"}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <Typography noWrap>{selectedChat?.name || "Chat"}</Typography>
+              <ChatInfoButton />
+            </Box>
           }
-          endContent={<ChatInfoButton />}
+          // endContent={<ChatInfoButton />}
         />
       )}
     </>

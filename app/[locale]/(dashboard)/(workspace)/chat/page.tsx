@@ -2,7 +2,7 @@
 
 import { ChatInput } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatInput"
 import FileDropzoneContainer from "@/app/components/files/FileDropzoneContainer"
-import ChatContent from "@/app/components/data-list/items/chat/ChatContent"
+import ChatContent from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatContent"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
 import ChatTabs from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatTabs"

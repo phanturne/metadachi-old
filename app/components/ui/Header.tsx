@@ -3,6 +3,10 @@
 import * as React from "react"
 import Sheet from "@mui/joy/Sheet"
 import Box from "@mui/joy/Box"
+import ProfileMenu from "@/app/components/ui/ProfileMenu"
+import { IconButton } from "@mui/joy"
+import { NotificationsNoneRounded } from "@mui/icons-material"
+import Divider from "@mui/joy/Divider"
 
 export default function Header({
   startContent,
@@ -51,14 +55,14 @@ export default function Header({
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
-          gap: 2
+          gap: 1
         }}
       >
         {endContent}
-        {/*<IconButton color="neutral" size="sm">*/}
-        {/*  <NotificationsNoneRounded />*/}
-        {/*</IconButton>*/}
-        {/*<ProfileMenu />*/}
+        <IconButton disabled color="neutral">
+          <NotificationsNoneRounded />
+        </IconButton>
+        <ProfileMenu />
       </Box>
     </Sheet>
   )

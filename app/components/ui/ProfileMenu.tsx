@@ -11,7 +11,8 @@ import {
   CollectionsBookmarkRounded,
   LoginRounded,
   LogoutRounded,
-  SettingsApplicationsRounded
+  RoomPreferencesRounded,
+  SettingsRounded
 } from "@mui/icons-material"
 import { useRouter } from "next/navigation"
 import Divider from "@mui/joy/Divider"
@@ -92,16 +93,16 @@ export default function ProfileMenu({
           Collections
         </MenuItem>
 
-        {/*<MenuItem*/}
-        {/*  onClick={() => {*/}
-        {/*    router.push(Routes.Settings)*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  <ListItemDecorator>*/}
-        {/*    <SettingsRounded />*/}
-        {/*  </ListItemDecorator>*/}
-        {/*  User Settings*/}
-        {/*</MenuItem>*/}
+        <MenuItem
+          onClick={() => {
+            router.push(Routes.Settings)
+          }}
+        >
+          <ListItemDecorator>
+            <SettingsRounded />
+          </ListItemDecorator>
+          User Settings
+        </MenuItem>
 
         <MenuItem
           onClick={() => {
@@ -109,7 +110,7 @@ export default function ProfileMenu({
           }}
         >
           <ListItemDecorator>
-            <SettingsApplicationsRounded />
+            <RoomPreferencesRounded />
           </ListItemDecorator>
           Workspace Settings
         </MenuItem>

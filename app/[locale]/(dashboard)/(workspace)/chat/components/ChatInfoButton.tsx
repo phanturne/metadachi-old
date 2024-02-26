@@ -11,6 +11,7 @@ import {
 } from "@mui/joy"
 import { ModelSelect } from "@/app/components/models/ModelSelect"
 import { InfoOutlined } from "@mui/icons-material"
+import SvgIcon from "@mui/joy/SvgIcon"
 
 interface ChatSecondaryButtonsProps {}
 
@@ -98,7 +99,9 @@ export const ChatInfoButton: FC<ChatSecondaryButtonsProps> = ({}) => {
         </Box>
       }
     >
-      <InfoOutlined />
+      <SvgIcon size="sm">
+        <InfoOutlined />
+      </SvgIcon>
     </Tooltip>
   )
 }
