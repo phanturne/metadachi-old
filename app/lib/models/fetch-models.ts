@@ -1,7 +1,8 @@
 import { Tables } from "@/supabase/types"
 import { LLM, LLMID, OpenRouterLLM } from "@/app/lib/types"
 import { toast } from "sonner"
-import { LLM_LIST_MAP } from "./llm/llm-list"
+import { LLM_LIST, LLM_LIST_MAP } from "./llm/llm-list"
+import { SYSTEM_LLM_ID_LIST } from "@/app/lib/config"
 
 export const fetchHostedModels = async (profile: Tables<"profiles">) => {
   try {
@@ -23,6 +24,7 @@ export const fetchHostedModels = async (profile: Tables<"profiles">) => {
 
     let modelsToAdd: LLM[] = []
 
+    const systemKeysHaveFullAccess = SYSTEM_LLM_ID_LIST.length === 0
     for (const provider of providers) {
       let providerKey: keyof typeof profile
 
@@ -34,11 +36,24 @@ export const fetchHostedModels = async (profile: Tables<"profiles">) => {
         providerKey = `${provider}_api_key` as keyof typeof profile
       }
 
-      if (profile?.[providerKey] || data.isUsingEnvKeyMap[provider]) {
+      if (
+        profile?.[providerKey] ||
+        (data.isUsingEnvKeyMap[provider] && systemKeysHaveFullAccess)
+      ) {
         const models = LLM_LIST_MAP[provider]
 
         if (Array.isArray(models)) {
           modelsToAdd.push(...models)
+        }
+      }
+    }
+
+    // Add system models
+    if (!systemKeysHaveFullAccess) {
+      for (const id of SYSTEM_LLM_ID_LIST) {
+        const llm = LLM_LIST.find(llm => llm.modelId === id)
+        if (llm) {
+          modelsToAdd.push(llm)
         }
       }
     }

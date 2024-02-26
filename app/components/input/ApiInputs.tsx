@@ -1,6 +1,7 @@
 import { Box, FormControl, FormLabel, Input, Stack, Typography } from "@mui/joy"
 import { FC } from "react"
 import Button from "@mui/joy/Button"
+import Divider from "@mui/joy/Divider"
 
 interface ApiInputsProps {
   openaiAPIKey: string
@@ -65,6 +66,11 @@ export const ApiInputs: FC<ApiInputsProps> = ({
 }) => {
   return (
     <Stack spacing={2}>
+      <Typography>
+        Adding an API Key will override its corresponding system API key (if it
+        exists).
+      </Typography>
+      <Divider />
       <FormControl>
         <Box
           sx={{

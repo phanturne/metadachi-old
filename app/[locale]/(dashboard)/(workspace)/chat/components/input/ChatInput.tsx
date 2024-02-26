@@ -11,6 +11,8 @@ import { useSelectFileHandler } from "@/app/lib/hooks/use-select-file-handler"
 import { Box, IconButton, Textarea } from "@mui/joy"
 import { SendRounded, StopRounded } from "@mui/icons-material"
 import { FileInputIconButton } from "@/app/components/input/FileInput"
+import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
+import { toast } from "sonner"
 
 interface ChatInputProps {}
 
@@ -21,9 +23,12 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     handleFocusChatInput()
   })
 
+  const { openAuthModal } = useAuthModal()
+
   const [isTyping, setIsTyping] = useState<boolean>(false)
 
   const {
+    profile,
     userInput,
     chatMessages,
     isGenerating,
@@ -60,9 +65,15 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   }, [selectedPreset, selectedAssistant])
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (!profile) {
+      openAuthModal()
+      return toast.error("You must be logged in to send messages.")
+    }
+
     if (!isTyping && event.key === "Enter" && !event.shiftKey) {
       event.preventDefault()
       setIsPromptPickerOpen(false)
+
       handleSendMessage(userInput, chatMessages, false)
     }
 
@@ -128,8 +139,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
       <Textarea
         slotProps={{ textarea: { ref: chatInputRef } }}
-        // placeholder={`Ask anything. Type "/" for prompts, "#" for files, and "!" for tools.`}
-        placeholder={`Ask anything. Type "/" for prompts and "#" for files.`}
+        placeholder={`Ask anything. Type "/" for prompts, "#" for files, and "!" for tools.`}
         onChange={e => handleInputChange(e.target.value)}
         value={userInput}
         minRows={1}
@@ -175,6 +185,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
             ) : (
               <IconButton
                 size="md"
+                disabled={!userInput}
                 onClick={() => {
                   if (!userInput) return
 

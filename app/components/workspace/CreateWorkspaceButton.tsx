@@ -4,15 +4,31 @@ import { MetadachiContext } from "@/app/lib/context"
 import { createWorkspace } from "@/app/lib/db/workspaces"
 import * as React from "react"
 import { useContext } from "react"
-import { IconButton } from "@mui/joy"
+import { IconButton, Tooltip } from "@mui/joy"
 import { AddCircleOutlineRounded } from "@mui/icons-material"
+import { toast } from "sonner"
+import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 
 export const CreateWorkspaceButton = () => {
-  const { workspaces, selectedWorkspace, setSelectedWorkspace, setWorkspaces } =
-    useContext(MetadachiContext)
+  const {
+    profile,
+    workspaces,
+    selectedWorkspace,
+    setSelectedWorkspace,
+    setWorkspaces
+  } = useContext(MetadachiContext)
+
+  const { openAuthModal } = useAuthModal()
 
   const handleCreateWorkspace = async () => {
-    if (!selectedWorkspace) return
+    if (!profile) {
+      openAuthModal()
+      return toast.error("You must be logged in to create a workspace.")
+    }
+
+    if (!selectedWorkspace) {
+      return toast.error("No workspace selected.")
+    }
 
     const createdWorkspace = await createWorkspace({
       user_id: selectedWorkspace.user_id,
@@ -35,8 +51,18 @@ export const CreateWorkspaceButton = () => {
   }
 
   return (
-    <IconButton size="sm" onClick={handleCreateWorkspace}>
-      <AddCircleOutlineRounded />
-    </IconButton>
+    <Tooltip
+      placement="right"
+      variant="outlined"
+      title="Create a new workspace"
+    >
+      <IconButton
+        size="sm"
+        onClick={handleCreateWorkspace}
+        // disabled={!profile && !selectedWorkspace}
+      >
+        <AddCircleOutlineRounded />
+      </IconButton>
+    </Tooltip>
   )
 }

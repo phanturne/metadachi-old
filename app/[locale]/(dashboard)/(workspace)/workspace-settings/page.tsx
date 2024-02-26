@@ -47,8 +47,6 @@ export default function WorkspaceSettingsPage() {
     setWorkspaceImages
   } = useContext(MetadachiContext)
 
-  const [isOpen, setIsOpen] = useState(false)
-
   const [name, setName] = useState(selectedWorkspace?.name || "")
   const [imageLink, setImageLink] = useState("")
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
@@ -81,14 +79,12 @@ export default function WorkspaceSettingsPage() {
 
   const handleSave = async () => {
     if (!profile) {
-      toast.error("You must be logged in to save settings.")
       openAuthModal()
-      return
+      return toast.error("You must be logged in to save workspace settings.")
     }
 
     if (!selectedWorkspace) {
-      toast.error("No workspace selected.")
-      return
+      return toast.error("No workspace selected.")
     }
 
     let imagePath = ""
@@ -154,7 +150,6 @@ export default function WorkspaceSettingsPage() {
       })
     }
 
-    setIsOpen(false)
     setSelectedWorkspace(updatedWorkspace)
     setWorkspaces(workspaces => {
       return workspaces.map(workspace => {
@@ -173,7 +168,7 @@ export default function WorkspaceSettingsPage() {
     return
   }
 
-  if (!selectedWorkspace || !profile) return null
+  // if (!selectedWorkspace || !profile) return null
 
   return (
     <>

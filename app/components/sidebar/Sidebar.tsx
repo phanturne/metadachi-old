@@ -5,7 +5,6 @@ import List from "@mui/joy/List"
 import Sheet from "@mui/joy/Sheet"
 import { Routes } from "@/app/lib/constants"
 import ComingSoonChip from "@/app/components/ui/Chips"
-import ProfileMenu from "@/app/components/ui/ProfileMenu"
 import {
   SidebarItem,
   SidebarRouteItem
@@ -109,9 +108,15 @@ export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
           setSelectedRoute={setSelectedRoute}
         />
 
-        <SidebarItem onClick={() => {}}>
-          <ProfileMenu placement="right"></ProfileMenu>
-        </SidebarItem>
+        <SidebarRouteItem
+          route={Routes.WorkspaceSettings}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+        />
+
+        {/*<SidebarItem onClick={() => {}}>*/}
+        {/*  <ProfileMenu placement="right"></ProfileMenu>*/}
+        {/*</SidebarItem>*/}
       </List>
     </Sheet>
   )

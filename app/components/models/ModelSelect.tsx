@@ -42,6 +42,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   } = useContext(MetadachiContext)
 
   const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTER_LIST[0])
+  // const [filteredModels, setFilteredModels] = useState<LLM[]>([])
   // const [isLocked, setIsLocked] = useState<boolean>(true)
   const [lockedModels, setLockedModels] = useState<LLMID[]>([])
 
@@ -59,13 +60,15 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     ...availableOpenRouterModels
   ]
 
-  const ALL_MODEL_IDS = ALL_MODELS.map(model => model.modelId)
+  console.log(ALL_MODELS)
 
+  // const ALL_MODEL_IDS = ALL_MODELS.map(model => model.modelId)
   // useEffect(() => {
   //   const checkModelLock = async () => {
   //     const isUsingAzure = profile?.use_azure_openai
   //
   //     // If the user is not logged in, lock all models except the guest models
+  //     // TODO: Also allow guest models for users who are logged in
   //     if (!profile) {
   //       setLockedModels(
   //         ALL_MODEL_IDS.filter(id => !GUEST_LLM_LIST.includes(id))
@@ -98,7 +101,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     model => model.modelId === selectedModelId
   )
 
-  if (!selectedModel) return null
+  // if (!selectedModel) return null
 
   const filteredModels = ALL_MODELS.filter(model => {
     const filter = modelFilter.toLowerCase()
@@ -117,6 +120,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   return (
     <Autocomplete
       disabled={disabled}
+      placeholder={"Select a model"}
       defaultValue={selectedModel}
       value={selectedModel}
       onChange={(_, value) => onSelectModel(value?.modelId as LLMID)}
@@ -146,7 +150,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       }
       autoHighlight
       getOptionLabel={model => model.modelName}
-      getOptionDisabled={model => lockedModels.includes(model.modelId)}
+      // getOptionDisabled={model => lockedModels.includes(model.modelId)}
       renderOption={(props, model) => (
         <ModelOption model={model} props={props} />
       )}

@@ -56,8 +56,9 @@ function addApiKeysToProfile(profile: Tables<"profiles">) {
     [VALID_ENV_KEYS.AZURE_EMBEDDINGS_NAME]: "azure_openai_embeddings_id"
   }
 
+  // Add the system API keys WITHOUT overriding the user's API keys
   for (const [envKey, profileKey] of Object.entries(apiKeys)) {
-    if (process.env[envKey]) {
+    if (!(profile as any)[profileKey] && process.env[envKey]) {
       ;(profile as any)[profileKey] = process.env[envKey]
     }
   }
