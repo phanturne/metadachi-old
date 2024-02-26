@@ -44,7 +44,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTER_LIST[0])
   // const [filteredModels, setFilteredModels] = useState<LLM[]>([])
   // const [isLocked, setIsLocked] = useState<boolean>(true)
-  const [lockedModels, setLockedModels] = useState<LLMID[]>([])
+  // const [lockedModels, setLockedModels] = useState<LLMID[]>([])
 
   const ALL_MODELS = [
     ...models.map(model => ({
@@ -68,7 +68,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   //     const isUsingAzure = profile?.use_azure_openai
   //
   //     // If the user is not logged in, lock all models except the guest models
-  //     // TODO: Also allow guest models for users who are logged in
   //     if (!profile) {
   //       setLockedModels(
   //         ALL_MODEL_IDS.filter(id => !GUEST_LLM_LIST.includes(id))

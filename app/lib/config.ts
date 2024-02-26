@@ -1,5 +1,4 @@
 import { ChatSettings, LLMID } from "@/app/lib/types"
-import { OPENAI_LLM_LIST } from "@/app/lib/models/llm/openai-llm-list"
 
 // Required for redirecting the user after resetting the password
 export const ROOT_URL = "https://metadachi.com"

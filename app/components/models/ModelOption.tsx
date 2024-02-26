@@ -1,10 +1,8 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { LLM } from "@/app/lib/types"
-import React, { FC, useContext, useEffect, useState } from "react"
+import React, { FC, useContext } from "react"
 import { ModelIcon } from "./model-icon"
 import { AutocompleteOption, ListItemContent } from "@mui/joy"
-
-import { SYSTEM_LLM_ID_LIST } from "@/app/lib/config"
 
 interface ModelOptionProps {
   model: LLM
@@ -13,7 +11,7 @@ interface ModelOptionProps {
 
 export const ModelOption: FC<ModelOptionProps> = ({ model, props }) => {
   const { profile } = useContext(MetadachiContext)
-  const [isLocked, setIsLocked] = useState<Boolean>(true)
+  // const [isLocked, setIsLocked] = useState<Boolean>(true)
 
   // useEffect(() => {
   //   async function setup() {
