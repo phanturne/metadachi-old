@@ -4,7 +4,7 @@ import { ChatSettings, LLMID } from "@/app/lib/types"
 export const ROOT_URL = "https://metadachi.com"
 
 // Used for handling sign-up logic, DOES NOT modify email verification
-export const EMAIL_VERIFICATION = false
+export const EMAIL_VERIFICATION = true
 
 // Configure the default available models available for all users
 // Set it to an empty list to enable all models available from providers w/ API keys

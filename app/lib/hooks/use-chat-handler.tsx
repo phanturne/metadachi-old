@@ -123,8 +123,7 @@ export const useChatHandler = () => {
       })
     } else if (selectedWorkspace) {
       setChatSettings({
-        model: (selectedWorkspace.default_model ||
-          "gpt-4-1106-preview") as LLMID,
+        model: (selectedWorkspace.default_model || "gpt-3.5-turbo") as LLMID,
         prompt:
           selectedWorkspace.default_prompt ||
           "You are a friendly, helpful AI assistant.",
