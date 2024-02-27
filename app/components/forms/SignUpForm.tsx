@@ -79,8 +79,8 @@ export function SignUpForm({
     setAuthFormType(AuthFormType.Login)
     return router.push(
       EMAIL_VERIFICATION
-        ? Routes.Setup
-        : `${Routes.Login}?message=Check inbox to verify email address&variant=success`
+        ? `${Routes.Login}?message=Check inbox to verify email address&variant=success`
+        : Routes.Setup
     )
   }
 
