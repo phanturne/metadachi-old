@@ -60,8 +60,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     ...availableOpenRouterModels
   ]
 
-  console.log(ALL_MODELS)
-
   // const ALL_MODEL_IDS = ALL_MODELS.map(model => model.modelId)
   // useEffect(() => {
   //   const checkModelLock = async () => {

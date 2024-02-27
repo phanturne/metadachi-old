@@ -15,7 +15,7 @@ import { Routes } from "@/app/lib/constants"
 import { AuthFormType } from "@/app/components/forms/AuthForm"
 import { EmailInput, PasswordInput } from "@/app/components/input"
 import { get } from "@vercel/edge-config"
-import { EMAIL_VERIFICATION } from "@/app/lib/config"
+import { EMAIL_VERIFICATION, ROOT_URL } from "@/app/lib/config"
 
 export function SignUpForm({
   setAuthFormType
@@ -65,7 +65,10 @@ export function SignUpForm({
 
     const { error } = await supabase.auth.signUp({
       email: email,
-      password: password
+      password: password,
+      options: {
+        emailRedirectTo: `${ROOT_URL}/${Routes.Setup}`
+      }
     })
 
     // Show error message and return early if the signup failed
@@ -77,11 +80,16 @@ export function SignUpForm({
     // Handle successful signup
     closeAuthModal()
     setAuthFormType(AuthFormType.Login)
-    return router.push(
-      EMAIL_VERIFICATION
-        ? `${Routes.Login}?message=Check inbox to verify email address&variant=success`
-        : Routes.Setup
-    )
+
+    if (!EMAIL_VERIFICATION) {
+      // Temporary workaround: Reload to set the access/refresh token properly
+      window.location.reload()
+      router.push(Routes.Setup)
+    } else {
+      router.push(
+        `${Routes.Login}?message=Check inbox to verify email address&variant=success`
+      )
+    }
   }
 
   return (
