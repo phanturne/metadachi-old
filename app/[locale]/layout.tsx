@@ -1,4 +1,4 @@
-import { Toaster } from "@/app/components/ui/sonner"
+import { Toaster } from "@/app/components/utility/Toaster"
 import { GlobalStateProvider } from "@/app/lib/providers/GlobalStateProvider"
 import { Providers } from "@/app/lib/providers/Providers"
 import TranslationsProvider from "@/app/lib/providers/TranslationsProvider"

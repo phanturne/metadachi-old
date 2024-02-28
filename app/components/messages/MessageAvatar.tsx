@@ -86,7 +86,7 @@ export const AssistantAvatar = ({
   if (selectedAssistantId) {
     return selectedAssistantImage ? (
       <Image
-        className="rounded"
+        style={{ borderRadius: "0.25rem" }}
         src={selectedAssistantImage || ""}
         alt="assistant image"
         height={size}

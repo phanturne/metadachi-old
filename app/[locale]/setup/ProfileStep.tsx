@@ -2,7 +2,7 @@ import { FC } from "react"
 import { Stack } from "@mui/joy"
 import { UsernameInput } from "@/app/components/input/profile/UsernameInput"
 import { DisplayNameInput } from "@/app/components/input/profile/DisplayNameInput"
-import { StepContainer } from "@/app/components/surfaces/StepContainer"
+import { StepContainer } from "@/app/components/ui/StepContainer"
 
 interface ProfileStepProps {
   stepCount: number

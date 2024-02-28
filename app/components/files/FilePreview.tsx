@@ -33,14 +33,14 @@ export const FilePreview: FC<FilePreviewProps> = ({
             <DrawingCanvas imageItem={item as MessageImage} />
           ) : (
             <Image
-              className="rounded"
               src={(item as MessageImage).base64 || (item as MessageImage).url}
               alt="File image"
               width={2000}
               height={2000}
               style={{
                 maxHeight: "67vh",
-                maxWidth: "67vw"
+                maxWidth: "67vw",
+                borderRadius: "0.25rem"
               }}
             />
           )

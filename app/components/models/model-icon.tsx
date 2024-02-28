@@ -1,25 +1,27 @@
-import { cn } from "@/app/lib/utils/utils"
 import mistral from "@/public/providers/mistral.png"
 import perplexity from "@/public/providers/perplexity.png"
 import { ModelProvider } from "@/app/lib/types"
-import { IconSparkles } from "@tabler/icons-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import { FC, HTMLAttributes } from "react"
-import { AnthropicSVG } from "../icons/anthropic-svg"
-import { GoogleSVG } from "../icons/google-svg"
-import { OpenAISVG } from "../icons/openai-svg"
+import { AnthropicSVG } from "@/app/components/icons/anthropic-svg"
+import { GoogleSVG } from "@/app/components/icons/google-svg"
+import { OpenAISVG } from "@/app/components/icons/openai-svg"
+import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
+import { AutoAwesomeRounded } from "@mui/icons-material"
+import SvgIcon from "@mui/joy/SvgIcon"
 
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
   provider?: ModelProvider
   height: number
   width: number
+  size: number
 }
 
 export const ModelIcon: FC<ModelIconProps> = ({
   provider,
-  height,
-  width,
+  height = 30,
+  width = 30,
   ...props
 }) => {
   const { theme } = useTheme()
@@ -27,23 +29,17 @@ export const ModelIcon: FC<ModelIconProps> = ({
   switch (provider as ModelProvider) {
     case "openai":
       return (
-        <OpenAISVG
-          className={cn(
-            "rounded-sm bg-[#fff] p-1 text-black",
-            props.className,
-            theme === "dark" ? "bg-white" : "border-[1px] border-black"
-          )}
-          width={width}
-          height={height}
-        />
+        <SvgIcon style={{ width: width, height: height }}>
+          <OpenAISVG />
+        </SvgIcon>
       )
     case "mistral":
       return (
         <Image
-          className={cn(
-            "rounded-sm p-1",
-            theme === "dark" ? "bg-white" : "border-[1px] border-black"
-          )}
+          // className={cn(
+          //   "rounded-sm p-1",
+          //   theme === "dark" ? "bg-white" : "border-[1px] border-black"
+          // )}
           src={mistral.src}
           alt="Mistral"
           width={width}
@@ -53,34 +49,43 @@ export const ModelIcon: FC<ModelIconProps> = ({
     case "anthropic":
       return (
         <AnthropicSVG
-          className={cn(
-            "rounded-sm bg-[#fff] p-1 text-black",
-            props.className,
-            theme === "dark" ? "bg-white" : "border-[1px] border-black"
-          )}
+          // className={cn(
+          //   "rounded-sm bg-[#fff] p-1 text-black",
+          //   props.className,
+          //   theme === "dark" ? "bg-white" : "border-[1px] border-black"
+          // )}
           width={width}
           height={height}
         />
       )
     case "google":
       return (
-        <GoogleSVG
-          className={cn(
-            "rounded-sm bg-[#fff] p-1 text-black",
-            props.className,
-            theme === "dark" ? "bg-white" : "border-[1px] border-black"
-          )}
-          width={width}
-          height={height}
-        />
+        // <GoogleSVG
+        //   // className={cn(
+        //   //   "rounded-sm bg-[#fff] p-1 text-black",
+        //   //   props.className,
+        //   //   theme === "dark" ? "bg-white" : "border-[1px] border-black"
+        //   // )}
+        //   width={width}
+        //   height={height}
+        // />
+        <SvgIcon style={{ width: width, height: height }}>
+          <GoogleSVG />
+        </SvgIcon>
       )
     case "perplexity":
       return (
         <Image
-          className={cn(
-            "rounded-sm p-1",
-            theme === "dark" ? "bg-white" : "border-[1px] border-black"
-          )}
+          // className={cn(
+          //   "rounded-sm p-1",
+          //   theme === "dark" ? "bg-white" : "border-[1px] border-black"
+          // )}
+          style={{
+            borderRadius: "0.125rem",
+            padding: "0.25rem",
+            backgroundColor: theme === "dark" ? "white" : "",
+            border: theme === "dark" ? "" : "1px solid black"
+          }}
           src={perplexity.src}
           alt="Mistral"
           width={width}
@@ -88,6 +93,6 @@ export const ModelIcon: FC<ModelIconProps> = ({
         />
       )
     default:
-      return <IconSparkles size={width} />
+      return <AutoAwesomeRounded style={{ width: width, height: height }} />
   }
 }

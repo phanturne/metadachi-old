@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { StepContainer } from "@/app/components/surfaces/StepContainer"
+import { StepContainer } from "@/app/components/ui/StepContainer"
 import { ApiInputs } from "@/app/components/input/ApiInputs"
 
 interface APIStepProps {

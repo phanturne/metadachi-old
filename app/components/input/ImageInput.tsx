@@ -78,8 +78,11 @@ const ImageInput: React.FC<ImageInputProps> = ({
     <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
       {previewSrc && (
         <img
-          style={{ width: `${width}px`, height: `${height}px` }}
-          className="rounded"
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            borderRadius: "0.25rem"
+          }}
           height={height}
           width={width}
           src={previewSrc}

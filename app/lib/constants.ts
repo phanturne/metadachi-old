@@ -24,5 +24,6 @@ export const FULL_WIDTH_PADDING_X = { xs: 5, sm: 10, md: 20, lg: 30 }
 export const DATA_LIST_ITEM_ICON_STYLE = {
   fontSize: "30px",
   width: "30px",
-  marginLeft: "0.25px"
+  marginLeft: "0.25px",
+  color: "red"
 }
