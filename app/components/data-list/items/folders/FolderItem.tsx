@@ -1,4 +1,3 @@
-import { cn } from "@/app/lib/utils/utils"
 import { Tables } from "@/supabase/types"
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react"
 import * as React from "react"
@@ -85,7 +84,6 @@ export const FolderItem: FC<FolderProps> = ({
     <Box
       ref={itemRef}
       id="folder"
-      className={cn("rounded focus:outline-none", isDragOver && "bg-accent")}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}

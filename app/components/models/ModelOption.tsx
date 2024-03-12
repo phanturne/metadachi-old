@@ -1,7 +1,7 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { LLM } from "@/app/lib/types"
 import React, { FC, useContext } from "react"
-import { ModelIcon } from "./model-icon"
+import { ModelIcon } from "./ModelIcon"
 import { AutocompleteOption, ListItemContent } from "@mui/joy"
 
 interface ModelOptionProps {

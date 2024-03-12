@@ -16,7 +16,6 @@ export default function ThemeToggleButton() {
     )
   }
   return (
-    // Temporarily force dark mode
     <Button
       id="theme-toggle"
       size="sm"
@@ -34,7 +33,7 @@ export default function ThemeToggleButton() {
       }}
       sx={{ flexGrow: 1 }}
     >
-      {mode === "dark" ? "Light" : "Dark"}{" "}
+      {mode === "dark" ? "Dark" : "Light"}{" "}
       {process.env.BUILD_MODE !== "export" && "Mode"}
     </Button>
   )

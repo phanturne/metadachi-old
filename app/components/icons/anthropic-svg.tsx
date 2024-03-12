@@ -1,24 +1,12 @@
 import { FC } from "react"
 
 interface AnthropicSVGProps {
-  height?: number
-  width?: number
   className?: string
 }
 
-export const AnthropicSVG: FC<AnthropicSVGProps> = ({
-  height = 40,
-  width = 40,
-  className
-}) => {
+export const AnthropicSVG: FC<AnthropicSVGProps> = ({ className }) => {
   return (
-    <svg
-      className={className}
-      width={width}
-      height={height}
-      viewBox="0 0 24 16"
-      overflow="visible"
-    >
+    <svg className={className} viewBox="0 0 24 16" overflow="visible">
       <g
         style={{
           transform: "translateX(13px) rotateZ(0deg)",

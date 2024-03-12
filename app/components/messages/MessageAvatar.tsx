@@ -5,7 +5,7 @@ import { AssistantRounded, CreateRounded } from "@mui/icons-material"
 import { Tables } from "@/supabase/types"
 import { LLM } from "@/app/lib/types"
 import Avatar from "@mui/joy/Avatar"
-import { ModelIcon } from "@/app/components/models/model-icon"
+import { ModelIcon } from "@/app/components/models/ModelIcon"
 import Image from "next/image"
 
 const ICON_SIZE = 28
@@ -86,7 +86,7 @@ export const AssistantAvatar = ({
   if (selectedAssistantId) {
     return selectedAssistantImage ? (
       <Image
-        className="rounded"
+        style={{ borderRadius: "0.25rem" }}
         src={selectedAssistantImage || ""}
         alt="assistant image"
         height={size}

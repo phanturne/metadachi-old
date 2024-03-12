@@ -1,21 +1,13 @@
 import { FC } from "react"
 
 interface GoogleSVGProps {
-  height?: number
-  width?: number
   className?: string
 }
 
-export const GoogleSVG: FC<GoogleSVGProps> = ({
-  height = 40,
-  width = 40,
-  className
-}) => {
+export const GoogleSVG: FC<GoogleSVGProps> = ({ className }) => {
   return (
     <svg
       className={className}
-      width={width}
-      height={height}
       xmlns="http://www.w3.org/2000/svg"
       x="0px"
       y="0px"

@@ -1,7 +1,7 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { LLMID, ModelProvider } from "@/app/lib/types"
 import React, { FC, useContext, useState } from "react"
-import { ModelIcon } from "./model-icon"
+import { ModelIcon } from "./ModelIcon"
 import { Autocomplete, Box } from "@mui/joy"
 import { ModelOption } from "@/app/components/models/ModelOption"
 import { ModelFilterDropdown } from "@/app/components/models/ModelFilterDropdown"

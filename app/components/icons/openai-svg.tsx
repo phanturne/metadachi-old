@@ -1,21 +1,13 @@
 import { FC } from "react"
 
 interface OpenAISVGProps {
-  height?: number
-  width?: number
-  className?: string
+  style?: any
 }
 
-export const OpenAISVG: FC<OpenAISVGProps> = ({
-  height = 40,
-  width = 40,
-  className
-}) => {
+export const OpenAISVG: FC<OpenAISVGProps> = ({ style }) => {
   return (
     <svg
-      className={className}
-      width={width}
-      height={height}
+      style={style}
       viewBox="0 0 41 41"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -18,7 +18,7 @@ export const MessageMarkdown: FC<MessageMarkdownProps> = ({ content }) => {
           return <Typography>{children}</Typography>
         },
         img({ node, ...props }) {
-          return <img className="max-w-[67%]" {...props} /> // TODO: Remove TailwindCSS style
+          return <img style={{ maxWidth: "67%" }} {...props} />
         },
         code({ node, className, children, ...props }) {
           const childArray = React.Children.toArray(children)

@@ -3,7 +3,7 @@
 import * as React from "react"
 import Sheet from "@mui/joy/Sheet"
 import Box from "@mui/joy/Box"
-import ProfileMenu from "@/app/components/ui/ProfileMenu"
+import ProfileMenu from "@/app/components/utility/ProfileMenu"
 import { IconButton } from "@mui/joy"
 import { NotificationsNoneRounded } from "@mui/icons-material"
 import Divider from "@mui/joy/Divider"

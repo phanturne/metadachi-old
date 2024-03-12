@@ -58,8 +58,6 @@ export default function ThemeProvider(props: { options: any; children: any }) {
 
   return (
     <CacheProvider value={cache}>
-      {/*<CssVarsProvider defaultMode="system">*/}
-      {/*Temporarily force dark mode*/}
       <CssVarsProvider defaultMode="dark">
         <CssBaseline />
         {/* Prevents theme switch flickering on first load: https://mui.com/joy-ui/main-features/dark-mode-optimization/*/}

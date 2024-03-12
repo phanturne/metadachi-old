@@ -16,7 +16,7 @@ import {
 } from "@mui/icons-material"
 import { useRouter } from "next/navigation"
 import Divider from "@mui/joy/Divider"
-import ThemeToggleButton from "@/app/components/ui/ThemeToggle"
+import ThemeToggleButton from "@/app/components/utility/ThemeToggle"
 import { MetadachiContext } from "@/app/lib/context"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
