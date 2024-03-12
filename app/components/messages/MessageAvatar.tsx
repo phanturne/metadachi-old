@@ -5,7 +5,7 @@ import { AssistantRounded, CreateRounded } from "@mui/icons-material"
 import { Tables } from "@/supabase/types"
 import { LLM } from "@/app/lib/types"
 import Avatar from "@mui/joy/Avatar"
-import { ModelIcon } from "@/app/components/models/model-icon"
+import { ModelIcon } from "@/app/components/models/ModelIcon"
 import Image from "next/image"
 
 const ICON_SIZE = 28

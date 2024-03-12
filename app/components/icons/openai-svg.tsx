@@ -1,16 +1,10 @@
 import { FC } from "react"
 
 interface OpenAISVGProps {
-  height?: number
-  width?: number
   style?: any
 }
 
-export const OpenAISVG: FC<OpenAISVGProps> = ({
-  height = 40,
-  width = 40,
-  style
-}) => {
+export const OpenAISVG: FC<OpenAISVGProps> = ({ style }) => {
   return (
     <svg
       style={style}

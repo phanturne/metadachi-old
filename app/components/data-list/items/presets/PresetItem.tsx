@@ -1,4 +1,4 @@
-import { ModelIcon } from "@/app/components/models/model-icon"
+import { ModelIcon } from "@/app/components/models/ModelIcon"
 import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
 import { PRESET_NAME_MAX } from "@/app/lib/db/limits"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
