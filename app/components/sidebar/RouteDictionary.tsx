@@ -27,8 +27,7 @@ export const routeDictionary: Record<
   },
   [Routes.Games]: {
     icon: <SportsEsportsRounded />,
-    label: "Games",
-    disabled: true
+    label: "Games"
   },
   [Routes.Collections]: {
     icon: <CollectionsBookmarkRounded />,
