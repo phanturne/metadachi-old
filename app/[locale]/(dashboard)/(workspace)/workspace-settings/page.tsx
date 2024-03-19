@@ -30,6 +30,7 @@ import { updateWorkspace } from "@/app/lib/db/workspaces"
 import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import ImageInput from "@/app/components/input/ImageInput"
 import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
+import { DeleteWorkspace } from "@/app/components/workspace/DeleteWorkspace"
 
 export default function WorkspaceSettingsPage() {
   const searchParams = useSearchParams()
@@ -295,16 +296,27 @@ export default function WorkspaceSettingsPage() {
       <Box
         sx={{
           display: "flex",
-          alignSelf: "flex-end",
-          gap: 2,
+          width: "100%",
+          justifyContent: "space-between",
           py: 2,
           px: FULL_WIDTH_PADDING_X
         }}
       >
-        <Button variant="outlined" color="neutral" onClick={handleReset}>
-          Reset
-        </Button>
-        <Button onClick={handleSave}>Save</Button>
+        {selectedWorkspace && !selectedWorkspace.is_home && (
+          <DeleteWorkspace workspace={selectedWorkspace} />
+        )}
+
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2
+          }}
+        >
+          <Button variant="outlined" color="neutral" onClick={handleReset}>
+            Reset
+          </Button>
+          <Button onClick={handleSave}>Save</Button>
+        </Box>
       </Box>
     </>
   )

@@ -8,7 +8,8 @@ import {
   Box,
   DialogContent,
   DialogTitle,
-  IconButton,
+  FormControl,
+  FormHelperText,
   Input,
   Modal,
   ModalDialog,
@@ -19,7 +20,7 @@ import Button from "@mui/joy/Button"
 
 interface DeleteWorkspaceProps {
   workspace: Tables<"workspaces">
-  onDelete: () => void
+  onDelete?: () => void
 }
 
 export const DeleteWorkspace: FC<DeleteWorkspaceProps> = ({
@@ -30,10 +31,15 @@ export const DeleteWorkspace: FC<DeleteWorkspaceProps> = ({
   const { handleNewChat } = useChatHandler()
 
   const [open, setOpen] = useState(false)
-
+  const [hasError, setHasError] = useState(false)
   const [name, setName] = useState("")
 
   const handleDeleteWorkspace = async () => {
+    if (name !== workspace.name) {
+      setHasError(true)
+      return
+    }
+
     await deleteWorkspace(workspace.id)
 
     setWorkspaces(prevWorkspaces => {
@@ -47,20 +53,21 @@ export const DeleteWorkspace: FC<DeleteWorkspaceProps> = ({
     })
 
     setOpen(false)
-    onDelete()
+    onDelete?.()
 
     handleNewChat()
   }
 
   return (
     <>
-      <IconButton
+      <Button
+        variant="plain"
+        color="danger"
         onClick={() => setOpen(true)}
-        size="sm"
-        sx={{ "&:hover": { backgroundColor: "transparent" }, ml: -1 }}
+        startDecorator={<DeleteRounded />}
       >
-        <DeleteRounded />
-      </IconButton>
+        Delete Workspace
+      </Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
           <DialogTitle>{`Delete "${workspace.name}"`}</DialogTitle>
@@ -70,12 +77,19 @@ export const DeleteWorkspace: FC<DeleteWorkspaceProps> = ({
             </Typography>
           </DialogContent>
 
-          <Input
-            className="mt-4"
-            placeholder="Type the name of this workspace to confirm"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
+          <FormControl error={hasError}>
+            <Input
+              className="mt-4"
+              placeholder="Type the name of this workspace to confirm"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+            {hasError && (
+              <FormHelperText>
+                The name you entered does not match the workspace name.
+              </FormHelperText>
+            )}
+          </FormControl>
 
           <Stack spacing={2}>
             <Box
