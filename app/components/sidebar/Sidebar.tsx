@@ -74,12 +74,12 @@ export default function Sidebar({ isShrunk = true }: { isShrunk?: boolean }) {
           setSelectedRoute={setSelectedRoute}
           trailingContent={<ComingSoonChip />}
         />
-        <SidebarRouteItem
-          route={Routes.Games}
-          selectedRoute={selectedRoute}
-          setSelectedRoute={setSelectedRoute}
-          trailingContent={<ComingSoonChip />}
-        />
+        {/*<SidebarRouteItem*/}
+        {/*  route={Routes.Games}*/}
+        {/*  selectedRoute={selectedRoute}*/}
+        {/*  setSelectedRoute={setSelectedRoute}*/}
+        {/*  trailingContent={<ComingSoonChip />}*/}
+        {/*/>*/}
         <Divider sx={{ mx: 1.5 }} />
         {/*<SidebarRouteItem*/}
         {/*  route={Routes.Collections}*/}
