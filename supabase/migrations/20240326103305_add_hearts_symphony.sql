@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS hearts_symphony (
     -- GAME CONFIG
     difficulty TEXT DEFAULT 'Normal',
     modifiers TEXT[] DEFAULT '{}',
-    character_id UUID NOT NULL,
+    character_id UUID NOT NULL REFERENCES characters(id),
     num_players INT DEFAULT 2,
     turn_time INT,
 
