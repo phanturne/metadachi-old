@@ -31,7 +31,9 @@ export default function HeartsSymphonyGamePage() {
     <>
       <Header
         startContent={
-          <Typography level="title-lg">{"Heart's Symphony"}</Typography>
+          <Typography level="title-lg">
+            {"Heart's Symphony (Work In Progress)"}
+          </Typography>
         }
       />
 
@@ -269,7 +271,9 @@ export default function HeartsSymphonyGamePage() {
             </Box>
 
             <Divider />
-            <Button color="success">Create Game</Button>
+            <Button color="success" disabled>
+              Create Game
+            </Button>
           </Box>
 
           <Box
