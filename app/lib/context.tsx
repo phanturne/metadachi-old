@@ -250,4 +250,6 @@ export const MetadachiContext = createContext<MetadachiContext>({
   setSelectedTools: () => {},
   toolInUse: "none",
   setToolInUse: () => {}
+
+  // TODO: GAMES STORE
 })
