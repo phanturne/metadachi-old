@@ -17,6 +17,7 @@ interface APIStepProps {
   anthropicAPIKey: string
   googleGeminiAPIKey: string
   mistralAPIKey: string
+  groqAPIKey: string
   perplexityAPIKey: string
   useAzureOpenai: boolean
   openrouterAPIKey: string
@@ -32,6 +33,7 @@ interface APIStepProps {
   onAnthropicAPIKeyChange: (value: string) => void
   onGoogleGeminiAPIKeyChange: (value: string) => void
   onMistralAPIKeyChange: (value: string) => void
+  onGroqAPIKeyChange: (value: string) => void
   onPerplexityAPIKeyChange: (value: string) => void
   onUseAzureOpenaiChange: (value: boolean) => void
 }
@@ -51,6 +53,7 @@ export const ApiStep: FC<APIStepProps> = ({
   anthropicAPIKey,
   googleGeminiAPIKey,
   mistralAPIKey,
+  groqAPIKey,
   perplexityAPIKey,
   openrouterAPIKey,
   useAzureOpenai,
@@ -65,6 +68,7 @@ export const ApiStep: FC<APIStepProps> = ({
   onAnthropicAPIKeyChange,
   onGoogleGeminiAPIKeyChange,
   onMistralAPIKeyChange,
+  onGroqAPIKeyChange,
   onPerplexityAPIKeyChange,
   onUseAzureOpenaiChange,
   onOpenrouterAPIKeyChange
@@ -91,6 +95,7 @@ export const ApiStep: FC<APIStepProps> = ({
         anthropicAPIKey={anthropicAPIKey}
         googleGeminiAPIKey={googleGeminiAPIKey}
         mistralAPIKey={mistralAPIKey}
+        groqAPIKey={groqAPIKey}
         perplexityAPIKey={perplexityAPIKey}
         useAzureOpenai={useAzureOpenai}
         openrouterAPIKey={openrouterAPIKey}
@@ -106,6 +111,7 @@ export const ApiStep: FC<APIStepProps> = ({
         onAnthropicAPIKeyChange={onAnthropicAPIKeyChange}
         onGoogleGeminiAPIKeyChange={onGoogleGeminiAPIKeyChange}
         onMistralAPIKeyChange={onMistralAPIKeyChange}
+        onGroqAPIKeyChange={onGroqAPIKeyChange}
         onPerplexityAPIKeyChange={onPerplexityAPIKeyChange}
         onUseAzureOpenaiChange={onUseAzureOpenaiChange}
       />

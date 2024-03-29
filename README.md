@@ -24,7 +24,7 @@ Metadachi is built with community collaboration at its core, fostering a space f
 - 🎭 **Custom Prompts & Personas**: Create custom prompts and chat personas for tailored AI interactions
 - ⚜️ **Chat Commands**: Interact with prompts using `/` commands and files using `@` commands
 - 📁 **Folders & Workspaces**: Navigate your project effortlessly with a folder hierarchy and workspaces.
-- 🤖 **LLM Options**: Anthropic, Google, Mistral, Ollama, OpenAI, OpenRouter, Perplexity
+- 🤖 **LLM Options**: Anthropic, Claude, Groq, Google, Mistral, Ollama, OpenAI, OpenRouter, Perplexity
 - ⌨️ **Hotkeys**: Quick access to frequently used actions and commands.
 - 🔒 **Privacy Guaranteed**: Maintain complete data privacy by storing data in your own private database
 - 🌐 **Cross Platform**: Sync sessions across Windows, macOS, and the web
