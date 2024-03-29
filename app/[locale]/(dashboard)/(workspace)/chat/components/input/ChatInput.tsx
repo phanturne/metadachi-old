@@ -13,6 +13,7 @@ import { SendRounded, StopRounded } from "@mui/icons-material"
 import { FileInputIconButton } from "@/app/components/input/FileInput"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { toast } from "sonner"
+import { useChatHistoryHandler } from "@/app/lib/hooks/use-chat-history"
 
 interface ChatInputProps {}
 
@@ -61,6 +62,11 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
   const { filesToAccept, handleSelectDeviceFile } = useSelectFileHandler()
 
+  const {
+    setNewMessageContentToNextUserMessage,
+    setNewMessageContentToPreviousUserMessage
+  } = useChatHistoryHandler()
+
   useEffect(() => {
     setTimeout(() => {
       handleFocusChatInput()
@@ -68,46 +74,52 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   }, [selectedPreset, selectedAssistant])
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (!profile) {
-      openAuthModal()
-      return toast.error("You must be logged in to send messages.")
-    }
-
     if (!isTyping && event.key === "Enter" && !event.shiftKey) {
       event.preventDefault()
       setIsPromptPickerOpen(false)
-
       handleSendMessage(userInput, chatMessages, false)
     }
 
+    // Consolidate conditions to avoid TypeScript error
     if (
-      isPromptPickerOpen &&
-      (event.key === "Tab" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown")
+      isPromptPickerOpen ||
+      isFilePickerOpen ||
+      isToolPickerOpen ||
+      isAssistantPickerOpen
     ) {
-      event.preventDefault()
-      setFocusPrompt(!focusPrompt)
+      if (
+        event.key === "Tab" ||
+        event.key === "ArrowUp" ||
+        event.key === "ArrowDown"
+      ) {
+        event.preventDefault()
+        // Toggle focus based on picker type
+        if (isPromptPickerOpen) setFocusPrompt(!focusPrompt)
+        if (isFilePickerOpen) setFocusFile(!focusFile)
+        if (isToolPickerOpen) setFocusTool(!focusTool)
+        if (isAssistantPickerOpen) setFocusAssistant(!focusAssistant)
+      }
     }
 
-    if (
-      isFilePickerOpen &&
-      (event.key === "Tab" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown")
-    ) {
+    if (event.key === "ArrowUp" && event.shiftKey && event.ctrlKey) {
       event.preventDefault()
-      setFocusFile(!focusFile)
+      setNewMessageContentToPreviousUserMessage()
     }
 
-    if (
-      isToolPickerOpen &&
-      (event.key === "Tab" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown")
-    ) {
+    if (event.key === "ArrowDown" && event.shiftKey && event.ctrlKey) {
       event.preventDefault()
-      setFocusTool(!focusTool)
+      setNewMessageContentToNextUserMessage()
+    }
+
+    //use shift+ctrl+up and shift+ctrl+down to navigate through chat history
+    if (event.key === "ArrowUp" && event.shiftKey && event.ctrlKey) {
+      event.preventDefault()
+      setNewMessageContentToPreviousUserMessage()
+    }
+
+    if (event.key === "ArrowDown" && event.shiftKey && event.ctrlKey) {
+      event.preventDefault()
+      setNewMessageContentToNextUserMessage()
     }
 
     if (
