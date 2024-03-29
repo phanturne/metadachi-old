@@ -1,20 +1,15 @@
 import * as React from "react"
-import { FC, useContext } from "react"
-import { MetadachiContext } from "@/app/lib/context"
+import { FC } from "react"
 import { PromptPicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/PromptPicker"
 import { FilePicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/FilePicker"
-// import { ToolPicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/tool-picker"
 import Sheet from "@mui/joy/Sheet"
 import List from "@mui/joy/List"
+import { AssistantPicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/AssistantPicker"
+import { ToolPicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/tool-picker"
 
 interface ChatActionsProps {}
 
 export const ChatCommands: FC<ChatActionsProps> = ({}) => {
-  const { isPromptPickerOpen, isToolPickerOpen, isAtPickerOpen } =
-    useContext(MetadachiContext)
-
-  if (!isAtPickerOpen && !isPromptPickerOpen && !isToolPickerOpen) return
-
   return (
     <Sheet
       variant="outlined"
@@ -31,9 +26,10 @@ export const ChatCommands: FC<ChatActionsProps> = ({}) => {
       }}
     >
       <List>
-        {isPromptPickerOpen && <PromptPicker />}
-        {isAtPickerOpen && <FilePicker />}
-        {/*{isToolPickerOpen && <ToolPicker />}*/}
+        <PromptPicker />
+        <FilePicker />
+        <ToolPicker />
+        <AssistantPicker />
       </List>
     </Sheet>
   )

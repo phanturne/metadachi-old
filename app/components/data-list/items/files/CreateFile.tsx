@@ -1,7 +1,7 @@
 import { ACCEPTED_FILE_TYPES } from "@/app/lib/hooks/use-select-file-handler"
 import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
-import { FILE_NAME_MAX } from "@/app/lib/db/limits"
+import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { FC, useContext, useState } from "react"
 import { FormControl, FormLabel, Input } from "@mui/joy"
@@ -73,6 +73,17 @@ export const CreateFile: FC<CreateFileProps> = ({ isOpen, onOpenChange }) => {
               value={name}
               onChange={e => setName(e.target.value)}
               slotProps={{ input: { maxLength: FILE_NAME_MAX } }}
+            />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Description</FormLabel>
+
+            <Input
+              placeholder="File description..."
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              slotProps={{ input: { maxLength: FILE_DESCRIPTION_MAX } }}
             />
           </FormControl>
         </>

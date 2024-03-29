@@ -26,7 +26,7 @@ export const uploadFile = async (
     })
 
   if (error) {
-    console.log(`Error uploading file with path: ${filePath}`, error)
+    console.error(`Error uploading file with path: ${filePath}`, error)
     throw new Error("Error uploading file")
   }
 

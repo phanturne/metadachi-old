@@ -42,6 +42,7 @@ next-env.d.ts
 seed.sql
 .VSCodeCounter
 tool-schemas
+prompts
 
 sw.js
 sw.js.map

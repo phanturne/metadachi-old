@@ -29,6 +29,9 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
   const {
     profile,
+    isAssistantPickerOpen,
+    focusAssistant,
+    setFocusAssistant,
     userInput,
     chatMessages,
     isGenerating,
@@ -42,7 +45,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     isToolPickerOpen,
     isPromptPickerOpen,
     setIsPromptPickerOpen,
-    isAtPickerOpen,
+    isFilePickerOpen,
     setFocusFile,
     chatSettings
   } = useContext(MetadachiContext)
@@ -88,7 +91,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     }
 
     if (
-      isAtPickerOpen &&
+      isFilePickerOpen &&
       (event.key === "Tab" ||
         event.key === "ArrowUp" ||
         event.key === "ArrowDown")
@@ -105,6 +108,16 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     ) {
       event.preventDefault()
       setFocusTool(!focusTool)
+    }
+
+    if (
+      isAssistantPickerOpen &&
+      (event.key === "Tab" ||
+        event.key === "ArrowUp" ||
+        event.key === "ArrowDown")
+    ) {
+      event.preventDefault()
+      setFocusAssistant(!focusAssistant)
     }
   }
 
@@ -139,7 +152,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
       <Textarea
         slotProps={{ textarea: { ref: chatInputRef } }}
-        placeholder={`Ask anything. Type "/" for prompts, "#" for files, and "!" for tools.`}
+        placeholder={`Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`}
         onChange={e => handleInputChange(e.target.value)}
         value={userInput}
         minRows={1}

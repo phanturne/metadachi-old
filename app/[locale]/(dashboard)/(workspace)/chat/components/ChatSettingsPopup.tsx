@@ -1,11 +1,10 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { CHAT_SETTING_LIMITS } from "@/app/lib/utils/chat-setting-limits"
 import useHotkey from "@/app/lib/hooks/use-hotkey"
-import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
 import * as React from "react"
 import { useContext, useEffect } from "react"
 import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
-import { DEFAULT_CHAT_SETTINGS } from "@/app/lib/types"
+import { DEFAULT_CHAT_SETTINGS, LLMID, ModelProvider } from "@/app/lib/types"
 import { Button, MenuList, Typography } from "@mui/joy"
 import { TuneRounded } from "@mui/icons-material"
 import { ClickAwayListener } from "@mui/base"
@@ -25,7 +24,14 @@ export function ChatSettingsPopup() {
     setOpen(false)
   }
 
-  const { chatSettings, setChatSettings } = useContext(MetadachiContext)
+  const {
+    chatSettings,
+    setChatSettings,
+    models,
+    availableHostedModels,
+    availableLocalModels,
+    availableOpenRouterModels
+  } = useContext(MetadachiContext)
 
   useEffect(() => {
     if (!chatSettings) return
@@ -43,9 +49,23 @@ export function ChatSettingsPopup() {
     })
   }, [chatSettings?.model])
 
-  const fullModel = LLM_LIST.find(
-    llm => llm.modelId === (chatSettings?.model ?? DEFAULT_CHAT_SETTINGS.model)
-  )
+  if (!chatSettings) return
+
+  const allModels = [
+    ...models.map(model => ({
+      modelId: model.model_id as LLMID,
+      modelName: model.name,
+      provider: "custom" as ModelProvider,
+      hostedId: model.id,
+      platformLink: "",
+      imageInput: false
+    })),
+    ...availableHostedModels,
+    ...availableLocalModels,
+    ...availableOpenRouterModels
+  ]
+
+  const fullModel = allModels.find(llm => llm.modelId === chatSettings.model)
 
   return (
     <>
