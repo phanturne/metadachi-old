@@ -23,6 +23,8 @@ import ChatHeader from "@/app/[locale]/(dashboard)/(workspace)/chat/components/C
 import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
 import { ChatFilesDisplay } from "@/app/components/files/ChatFilesDisplay"
 import { ChatToolsDisplay } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatToolsDisplay"
+import { AssistantDisplay } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/AssistantDisplay"
+import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -40,7 +42,8 @@ export default function ChatPage() {
     setChatFileItems,
     setChatFiles,
     setShowFilesDisplay,
-    setUseRetrieval
+    setUseRetrieval,
+    setSelectedTools
   } = useContext(MetadachiContext)
 
   const [loading, setLoading] = useState(true)
@@ -151,6 +154,11 @@ export default function ChatPage() {
 
       if (assistant) {
         setSelectedAssistant(assistant)
+
+        const assistantTools = (
+          await getAssistantToolsByAssistantId(assistant.id)
+        ).tools
+        setSelectedTools(assistantTools)
       }
     }
 
@@ -220,6 +228,8 @@ export default function ChatPage() {
         >
           <ChatToolsDisplay />
           <ChatFilesDisplay />
+          <AssistantDisplay />
+
           <ChatTabs tab={tab} setTab={setTab} />
           <ChatInput />
         </Box>

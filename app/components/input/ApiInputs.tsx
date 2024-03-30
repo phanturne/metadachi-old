@@ -15,6 +15,7 @@ interface ApiInputsProps {
   anthropicAPIKey: string
   googleGeminiAPIKey: string
   mistralAPIKey: string
+  groqAPIKey: string
   perplexityAPIKey: string
   useAzureOpenai: boolean
   openrouterAPIKey: string
@@ -30,6 +31,7 @@ interface ApiInputsProps {
   onAnthropicAPIKeyChange: (value: string) => void
   onGoogleGeminiAPIKeyChange: (value: string) => void
   onMistralAPIKeyChange: (value: string) => void
+  onGroqAPIKeyChange: (value: string) => void
   onPerplexityAPIKeyChange: (value: string) => void
   onUseAzureOpenaiChange: (value: boolean) => void
 }
@@ -46,6 +48,7 @@ export const ApiInputs: FC<ApiInputsProps> = ({
   anthropicAPIKey,
   googleGeminiAPIKey,
   mistralAPIKey,
+  groqAPIKey,
   perplexityAPIKey,
   openrouterAPIKey,
   useAzureOpenai,
@@ -60,6 +63,7 @@ export const ApiInputs: FC<ApiInputsProps> = ({
   onAnthropicAPIKeyChange,
   onGoogleGeminiAPIKeyChange,
   onMistralAPIKeyChange,
+  onGroqAPIKeyChange,
   onPerplexityAPIKeyChange,
   onUseAzureOpenaiChange,
   onOpenrouterAPIKeyChange
@@ -216,6 +220,17 @@ export const ApiInputs: FC<ApiInputsProps> = ({
           type="password"
           value={mistralAPIKey}
           onChange={e => onMistralAPIKeyChange(e.target.value)}
+        />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>Groq API Key</FormLabel>
+
+        <Input
+          placeholder="Groq API Key"
+          type="password"
+          value={groqAPIKey}
+          onChange={e => onGroqAPIKeyChange(e.target.value)}
         />
       </FormControl>
 

@@ -15,11 +15,11 @@ export const FilePicker: FC<FilePickerProps> = ({}) => {
   const {
     files,
     collections,
-    setIsAtPickerOpen,
+    setIsFilePickerOpen,
     newMessageFiles,
     chatFiles,
-    isAtPickerOpen,
-    atCommand,
+    isFilePickerOpen,
+    hashtagCommand,
     focusFile
   } = useContext(MetadachiContext)
 
@@ -41,18 +41,18 @@ export const FilePicker: FC<FilePickerProps> = ({}) => {
 
   const filteredFiles = files.filter(
     file =>
-      file.name.toLowerCase().includes(atCommand.toLowerCase()) &&
+      file.name.toLowerCase().includes(hashtagCommand.toLowerCase()) &&
       !selectedFileIds.includes(file.id)
   )
 
   const filteredCollections = collections.filter(
     collection =>
-      collection.name.toLowerCase().includes(atCommand.toLowerCase()) &&
+      collection.name.toLowerCase().includes(hashtagCommand.toLowerCase()) &&
       !selectedCollectionIds.includes(collection.id)
   )
 
   const handleOpenChange = (isAtPickerOpen: boolean) => {
-    setIsAtPickerOpen(isAtPickerOpen)
+    setIsFilePickerOpen(isAtPickerOpen)
   }
 
   const handleItemSelect = (item: Tables<"files"> | Tables<"collections">) => {
@@ -65,7 +65,7 @@ export const FilePicker: FC<FilePickerProps> = ({}) => {
     handleOpenChange(false)
   }
 
-  if (!isAtPickerOpen) return
+  if (!isFilePickerOpen) return
 
   const getItemContent = (item: Tables<"files"> | Tables<"collections">) => {
     return (
@@ -93,7 +93,7 @@ export const FilePicker: FC<FilePickerProps> = ({}) => {
       commandType="file"
       filteredItems={[...filteredFiles, ...filteredCollections]}
       focusItem={focusFile}
-      setIsPickerOpen={setIsAtPickerOpen}
+      setIsPickerOpen={setIsFilePickerOpen}
       handleItemSelect={handleItemSelect}
       getItemContent={getItemContent}
     />

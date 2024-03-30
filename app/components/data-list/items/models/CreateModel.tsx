@@ -20,6 +20,7 @@ export const CreateModel: FC<CreateModelProps> = ({ isOpen, onOpenChange }) => {
   const [description, setDescription] = useState("")
   const [modelId, setModelId] = useState("")
   const [name, setName] = useState("")
+  const [contextLength, setContextLength] = useState(4096)
 
   if (!profile || !selectedWorkspace) return null
 
@@ -35,6 +36,7 @@ export const CreateModel: FC<CreateModelProps> = ({ isOpen, onOpenChange }) => {
           api_key: apiKey,
           base_url: baseUrl,
           description,
+          context_length: contextLength,
           model_id: modelId,
           name
         } as TablesInsert<"models">
@@ -84,6 +86,18 @@ export const CreateModel: FC<CreateModelProps> = ({ isOpen, onOpenChange }) => {
               placeholder="API Key..."
               value={apiKey}
               onChange={e => setApiKey(e.target.value)}
+            />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Max Context Length</FormLabel>
+
+            <Input
+              type="number"
+              placeholder="4096"
+              value={contextLength}
+              onChange={e => setContextLength(parseInt(e.target.value))}
+              slotProps={{ input: { min: 0 } }}
             />
           </FormControl>
         </>

@@ -1,12 +1,12 @@
 // import { ChatbotUIContext } from "@/context/context"
-// import { getAssistantCollectionsByAssistantId } from "@/app/lib/db/assistant-collections"
-// import { getAssistantFilesByAssistantId } from "@/app/lib/db/assistant-files"
-// import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
-// import { getCollectionFilesByCollectionId } from "@/app/lib/db/collection-files"
-// import useHotkey from "@/app/lib/hooks/use-hotkey"
-// import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
+// import { getAssistantCollectionsByAssistantId } from "@/db/assistant-collections"
+// import { getAssistantFilesByAssistantId } from "@/db/assistant-files"
+// import { getAssistantToolsByAssistantId } from "@/db/assistant-tools"
+// import { getCollectionFilesByCollectionId } from "@/db/collection-files"
+// import useHotkey from "@/lib/hooks/use-hotkey"
+// import { LLM_LIST } from "@/lib/models/llm/llm-list"
 // import { Tables } from "@/supabase/types"
-// import { LLMID } from "@/app/lib/types"
+// import { LLMID } from "@/types"
 // import { IconChevronDown, IconRobotFace } from "@tabler/icons-react"
 // import Image from "next/image"
 // import { FC, useContext, useEffect, useRef, useState } from "react"
@@ -20,6 +20,7 @@
 // } from "../ui/dropdown-menu"
 // import { Input } from "../ui/input"
 // import { QuickSettingOption } from "./quick-setting-option"
+// import { set } from "date-fns"
 //
 // interface QuickSettingsProps {}
 //
@@ -40,7 +41,8 @@
 //     assistantImages,
 //     setChatFiles,
 //     setSelectedTools,
-//     setShowFilesDisplay
+//     setShowFilesDisplay,
+//     selectedWorkspace
 //   } = useContext(ChatbotUIContext)
 //
 //   const inputRef = useRef<HTMLInputElement>(null)
@@ -58,16 +60,14 @@
 //   }, [isOpen])
 //
 //   const handleSelectQuickSetting = async (
-//     item: Tables<"presets"> | Tables<"assistants">,
-//     contentType: "presets" | "assistants"
+//     item: Tables<"presets"> | Tables<"assistants"> | null,
+//     contentType: "presets" | "assistants" | "remove"
 //   ) => {
-//     if (contentType === "assistants") {
+//     console.log({ item, contentType })
+//     if (contentType === "assistants" && item) {
 //       setSelectedAssistant(item as Tables<"assistants">)
-//
 //       setLoading(true)
-//
 //       let allFiles = []
-//
 //       const assistantFiles = (await getAssistantFilesByAssistantId(item.id))
 //         .files
 //       allFiles = [...assistantFiles]
@@ -82,7 +82,6 @@
 //       }
 //       const assistantTools = (await getAssistantToolsByAssistantId(item.id))
 //         .tools
-//
 //       setSelectedTools(assistantTools)
 //       setChatFiles(
 //         allFiles.map(file => ({
@@ -92,15 +91,34 @@
 //           file: null
 //         }))
 //       )
-//
 //       if (allFiles.length > 0) setShowFilesDisplay(true)
-//
 //       setLoading(false)
-//
 //       setSelectedPreset(null)
-//     } else if (contentType === "presets") {
+//     } else if (contentType === "presets" && item) {
 //       setSelectedPreset(item as Tables<"presets">)
 //       setSelectedAssistant(null)
+//       setChatFiles([])
+//       setSelectedTools([])
+//     } else {
+//       setSelectedPreset(null)
+//       setSelectedAssistant(null)
+//       setChatFiles([])
+//       setSelectedTools([])
+//       if (selectedWorkspace) {
+//         setChatSettings({
+//           model: selectedWorkspace.default_model as LLMID,
+//           prompt: selectedWorkspace.default_prompt,
+//           temperature: selectedWorkspace.default_temperature,
+//           contextLength: selectedWorkspace.default_context_length,
+//           includeProfileContext: selectedWorkspace.include_profile_context,
+//           includeWorkspaceInstructions:
+//           selectedWorkspace.include_workspace_instructions,
+//           embeddingsProvider: selectedWorkspace.embeddings_provider as
+//             | "openai"
+//             | "local"
+//         })
+//       }
+//       return
 //     }
 //
 //     setChatSettings({
@@ -118,31 +136,27 @@
 //     if (!chatSettings) return false
 //
 //     if (selectedPreset) {
-//       if (
+//       return (
 //         selectedPreset.include_profile_context !==
-//           chatSettings.includeProfileContext ||
+//         chatSettings?.includeProfileContext ||
 //         selectedPreset.include_workspace_instructions !==
-//           chatSettings.includeWorkspaceInstructions ||
+//         chatSettings.includeWorkspaceInstructions ||
 //         selectedPreset.context_length !== chatSettings.contextLength ||
 //         selectedPreset.model !== chatSettings.model ||
 //         selectedPreset.prompt !== chatSettings.prompt ||
 //         selectedPreset.temperature !== chatSettings.temperature
-//       ) {
-//         return true
-//       }
+//       )
 //     } else if (selectedAssistant) {
-//       if (
+//       return (
 //         selectedAssistant.include_profile_context !==
-//           chatSettings.includeProfileContext ||
+//         chatSettings.includeProfileContext ||
 //         selectedAssistant.include_workspace_instructions !==
-//           chatSettings.includeWorkspaceInstructions ||
+//         chatSettings.includeWorkspaceInstructions ||
 //         selectedAssistant.context_length !== chatSettings.contextLength ||
 //         selectedAssistant.model !== chatSettings.model ||
 //         selectedAssistant.prompt !== chatSettings.prompt ||
 //         selectedAssistant.temperature !== chatSettings.temperature
-//       ) {
-//         return true
-//       }
+//       )
 //     }
 //
 //     return false
@@ -161,8 +175,8 @@
 //   const selectedAssistantImage = selectedPreset
 //     ? ""
 //     : assistantImages.find(
-//         image => image.path === selectedAssistant?.image_path
-//       )?.base64 || ""
+//     image => image.path === selectedAssistant?.image_path
+//   )?.base64 || ""
 //
 //   const modelDetails = LLM_LIST.find(
 //     model => model.modelId === selectedPreset?.model
@@ -250,8 +264,7 @@
 //                     | Tables<"assistants">)
 //                 }
 //                 onSelect={() => {
-//                   setSelectedPreset(null)
-//                   setSelectedAssistant(null)
+//                   handleSelectQuickSetting(null, "remove")
 //                 }}
 //                 image={selectedPreset ? "" : selectedAssistantImage}
 //               />
@@ -279,10 +292,10 @@
 //                   image={
 //                     contentType === "assistants"
 //                       ? assistantImages.find(
-//                           image =>
-//                             image.path ===
-//                             (item as Tables<"assistants">).image_path
-//                         )?.base64 || ""
+//                       image =>
+//                         image.path ===
+//                         (item as Tables<"assistants">).image_path
+//                     )?.base64 || ""
 //                       : ""
 //                   }
 //                 />

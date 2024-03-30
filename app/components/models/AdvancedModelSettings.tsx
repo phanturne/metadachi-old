@@ -57,12 +57,12 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
   onChangeChatSettings,
   showTooltip
 }) => {
-  const {
-    profile,
-    selectedWorkspace,
-    availableOpenRouterModels,
-    selectedAssistant
-  } = useContext(MetadachiContext)
+  const { profile, models, selectedWorkspace, availableOpenRouterModels } =
+    useContext(MetadachiContext)
+
+  const isCustomModel = models.some(
+    model => model.model_id === chatSettings.model
+  )
 
   function findOpenRouterModel(modelId: string) {
     return availableOpenRouterModels.find(model => model.modelId === modelId)
@@ -110,7 +110,12 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
             })
           }
           min={0}
-          max={MODEL_LIMITS.MAX_CONTEXT_LENGTH - 200}
+          max={
+            isCustomModel
+              ? models.find(model => model.model_id === chatSettings.model)
+                  ?.context_length
+              : MODEL_LIMITS.MAX_CONTEXT_LENGTH
+          }
           step={1}
         />
       </Box>

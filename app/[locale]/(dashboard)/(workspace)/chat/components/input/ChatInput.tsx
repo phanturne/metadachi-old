@@ -13,6 +13,7 @@ import { SendRounded, StopRounded } from "@mui/icons-material"
 import { FileInputIconButton } from "@/app/components/input/FileInput"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { toast } from "sonner"
+import { useChatHistoryHandler } from "@/app/lib/hooks/use-chat-history"
 
 interface ChatInputProps {}
 
@@ -29,6 +30,9 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
   const {
     profile,
+    isAssistantPickerOpen,
+    focusAssistant,
+    setFocusAssistant,
     userInput,
     chatMessages,
     isGenerating,
@@ -42,7 +46,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     isToolPickerOpen,
     isPromptPickerOpen,
     setIsPromptPickerOpen,
-    isAtPickerOpen,
+    isFilePickerOpen,
     setFocusFile,
     chatSettings
   } = useContext(MetadachiContext)
@@ -58,6 +62,11 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
   const { filesToAccept, handleSelectDeviceFile } = useSelectFileHandler()
 
+  const {
+    setNewMessageContentToNextUserMessage,
+    setNewMessageContentToPreviousUserMessage
+  } = useChatHistoryHandler()
+
   useEffect(() => {
     setTimeout(() => {
       handleFocusChatInput()
@@ -65,46 +74,62 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   }, [selectedPreset, selectedAssistant])
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (!profile) {
-      openAuthModal()
-      return toast.error("You must be logged in to send messages.")
-    }
-
     if (!isTyping && event.key === "Enter" && !event.shiftKey) {
       event.preventDefault()
       setIsPromptPickerOpen(false)
-
       handleSendMessage(userInput, chatMessages, false)
     }
 
+    // Consolidate conditions to avoid TypeScript error
     if (
-      isPromptPickerOpen &&
-      (event.key === "Tab" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown")
+      isPromptPickerOpen ||
+      isFilePickerOpen ||
+      isToolPickerOpen ||
+      isAssistantPickerOpen
     ) {
+      if (
+        event.key === "Tab" ||
+        event.key === "ArrowUp" ||
+        event.key === "ArrowDown"
+      ) {
+        event.preventDefault()
+        // Toggle focus based on picker type
+        if (isPromptPickerOpen) setFocusPrompt(!focusPrompt)
+        if (isFilePickerOpen) setFocusFile(!focusFile)
+        if (isToolPickerOpen) setFocusTool(!focusTool)
+        if (isAssistantPickerOpen) setFocusAssistant(!focusAssistant)
+      }
+    }
+
+    if (event.key === "ArrowUp" && event.shiftKey && event.ctrlKey) {
       event.preventDefault()
-      setFocusPrompt(!focusPrompt)
+      setNewMessageContentToPreviousUserMessage()
+    }
+
+    if (event.key === "ArrowDown" && event.shiftKey && event.ctrlKey) {
+      event.preventDefault()
+      setNewMessageContentToNextUserMessage()
+    }
+
+    //use shift+ctrl+up and shift+ctrl+down to navigate through chat history
+    if (event.key === "ArrowUp" && event.shiftKey && event.ctrlKey) {
+      event.preventDefault()
+      setNewMessageContentToPreviousUserMessage()
+    }
+
+    if (event.key === "ArrowDown" && event.shiftKey && event.ctrlKey) {
+      event.preventDefault()
+      setNewMessageContentToNextUserMessage()
     }
 
     if (
-      isAtPickerOpen &&
+      isAssistantPickerOpen &&
       (event.key === "Tab" ||
         event.key === "ArrowUp" ||
         event.key === "ArrowDown")
     ) {
       event.preventDefault()
-      setFocusFile(!focusFile)
-    }
-
-    if (
-      isToolPickerOpen &&
-      (event.key === "Tab" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown")
-    ) {
-      event.preventDefault()
-      setFocusTool(!focusTool)
+      setFocusAssistant(!focusAssistant)
     }
   }
 
@@ -117,6 +142,13 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     const items = event.clipboardData.items
     for (const item of items) {
       if (item.type.indexOf("image") === 0) {
+        if (!imagesAllowed) {
+          toast.error(
+            `Images are not supported for this model. Use models like GPT-4 Vision instead.`
+          )
+          return
+        }
+
         const file = item.getAsFile()
         if (!file) return
         handleSelectDeviceFile(file)
@@ -139,7 +171,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
       <Textarea
         slotProps={{ textarea: { ref: chatInputRef } }}
-        placeholder={`Ask anything. Type "/" for prompts, "#" for files, and "!" for tools.`}
+        placeholder={`Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`}
         onChange={e => handleInputChange(e.target.value)}
         value={userInput}
         minRows={1}

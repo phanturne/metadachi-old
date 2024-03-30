@@ -241,7 +241,7 @@ export default function WorkspaceSettingsPage() {
             />
 
             <FormControl>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Workspace Name</FormLabel>
               <Input
                 placeholder="Name..."
                 value={name}

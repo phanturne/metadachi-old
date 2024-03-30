@@ -1,41 +1,43 @@
 // TODO: Update UI
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
-import { IconBolt } from "@tabler/icons-react"
+import { IconRobotFace } from "@tabler/icons-react"
+import Image from "next/image"
 import { FC, useContext, useEffect, useRef } from "react"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 
-interface ToolPickerProps {}
+interface AssistantPickerProps {}
 
-export const ToolPicker: FC<ToolPickerProps> = ({}) => {
+export const AssistantPicker: FC<AssistantPickerProps> = ({}) => {
   const {
-    tools,
-    focusTool,
-    toolCommand,
-    isToolPickerOpen,
-    setIsToolPickerOpen
+    assistants,
+    assistantImages,
+    focusAssistant,
+    hashtagCommand,
+    isAssistantPickerOpen,
+    setIsAssistantPickerOpen
   } = useContext(MetadachiContext)
 
-  const { handleSelectTool } = usePromptAndCommand()
+  const { handleSelectAssistant } = usePromptAndCommand()
 
   const itemsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    if (focusTool && itemsRef.current[0]) {
+    if (focusAssistant && itemsRef.current[0]) {
       itemsRef.current[0].focus()
     }
-  }, [focusTool])
+  }, [focusAssistant])
 
-  const filteredTools = tools.filter(tool =>
-    tool.name.toLowerCase().includes(toolCommand.toLowerCase())
+  const filteredAssistants = assistants.filter(assistant =>
+    assistant.name.toLowerCase().includes(hashtagCommand.toLowerCase())
   )
 
   const handleOpenChange = (isOpen: boolean) => {
-    setIsToolPickerOpen(isOpen)
+    setIsAssistantPickerOpen(isOpen)
   }
 
-  const callSelectTool = (tool: Tables<"tools">) => {
-    handleSelectTool(tool)
+  const callSelectAssistant = (assistant: Tables<"assistants">) => {
+    handleSelectAssistant(assistant)
     handleOpenChange(false)
   }
 
@@ -46,11 +48,11 @@ export const ToolPicker: FC<ToolPickerProps> = ({}) => {
         handleOpenChange(false)
       } else if (e.key === "Enter") {
         e.preventDefault()
-        callSelectTool(filteredTools[index])
+        callSelectAssistant(filteredAssistants[index])
       } else if (
         (e.key === "Tab" || e.key === "ArrowDown") &&
         !e.shiftKey &&
-        index === filteredTools.length - 1
+        index === filteredAssistants.length - 1
       ) {
         e.preventDefault()
         itemsRef.current[0]?.focus()
@@ -72,15 +74,15 @@ export const ToolPicker: FC<ToolPickerProps> = ({}) => {
 
   return (
     <>
-      {isToolPickerOpen && (
+      {isAssistantPickerOpen && (
         <div className="bg-background flex flex-col space-y-1 rounded-xl border-2 p-2 text-sm">
-          {filteredTools.length === 0 ? (
+          {filteredAssistants.length === 0 ? (
             <div className="text-md flex h-14 cursor-pointer items-center justify-center italic hover:opacity-50">
-              No matching tools.
+              No matching assistants.
             </div>
           ) : (
             <>
-              {filteredTools.map((item, index) => (
+              {filteredAssistants.map((item, index) => (
                 <div
                   key={item.id}
                   ref={ref => {
@@ -88,10 +90,26 @@ export const ToolPicker: FC<ToolPickerProps> = ({}) => {
                   }}
                   tabIndex={0}
                   className="hover:bg-accent focus:bg-accent flex cursor-pointer items-center rounded p-2 focus:outline-none"
-                  onClick={() => callSelectTool(item as Tables<"tools">)}
+                  onClick={() =>
+                    callSelectAssistant(item as Tables<"assistants">)
+                  }
                   onKeyDown={getKeyDownHandler(index)}
                 >
-                  <IconBolt size={32} />
+                  {item.image_path ? (
+                    <Image
+                      src={
+                        assistantImages.find(
+                          image => image.path === item.image_path
+                        )?.url || ""
+                      }
+                      alt={item.name}
+                      width={32}
+                      height={32}
+                      className="rounded"
+                    />
+                  ) : (
+                    <IconRobotFace size={32} />
+                  )}
 
                   <div className="ml-3 flex flex-col">
                     <div className="font-bold">{item.name}</div>

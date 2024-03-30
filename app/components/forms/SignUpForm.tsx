@@ -26,6 +26,15 @@ export function SignUpForm({
   const { closeAuthModal } = useAuthModal()
   const router = useRouter()
 
+  const getEnvVarOrEdgeConfigValue = async (name: string) => {
+    // "use server"
+    if (process.env.EDGE_CONFIG) {
+      return await get<string>(name)
+    }
+
+    return process.env[name]
+  }
+
   async function handleSignup(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -34,32 +43,24 @@ export function SignUpForm({
     const email = formJson["email"] as string
     const password = formJson["password"] as string
 
-    if (process.env.EMAIL_DOMAIN_WHITELIST || process.env.EDGE_CONFIG) {
-      let patternsString = process.env.EMAIL_DOMAIN_WHITELIST
+    const emailDomainWhitelistPatternsString = await getEnvVarOrEdgeConfigValue(
+      "EMAIL_DOMAIN_WHITELIST"
+    )
+    const emailDomainWhitelist = emailDomainWhitelistPatternsString?.trim()
+      ? emailDomainWhitelistPatternsString?.split(",")
+      : []
+    const emailWhitelistPatternsString =
+      await getEnvVarOrEdgeConfigValue("EMAIL_WHITELIST")
+    const emailWhitelist = emailWhitelistPatternsString?.trim()
+      ? emailWhitelistPatternsString?.split(",")
+      : []
 
-      if (process.env.EDGE_CONFIG)
-        patternsString = await get<string>("EMAIL_DOMAIN_WHITELIST")
-
-      const emailDomainWhitelist = patternsString?.split(",") ?? []
-
-      if (
-        emailDomainWhitelist.length > 0 &&
-        !emailDomainWhitelist.includes(email.split("@")[1])
-      ) {
+    // If there are whitelist patterns, check if the email is allowed to sign up
+    if (emailDomainWhitelist.length > 0 || emailWhitelist.length > 0) {
+      const domainMatch = emailDomainWhitelist?.includes(email.split("@")[1])
+      const emailMatch = emailWhitelist?.includes(email)
+      if (!domainMatch && !emailMatch) {
         return setError(`Email is not from a whitelisted domain.`)
-      }
-    }
-
-    if (process.env.EMAIL_WHITELIST || process.env.EDGE_CONFIG) {
-      let patternsString = process.env.EMAIL_WHITELIST
-
-      if (process.env.EDGE_CONFIG)
-        patternsString = await get<string>("EMAIL_WHITELIST")
-
-      const emailWhitelist = patternsString?.split(",") ?? []
-
-      if (emailWhitelist.length > 0 && !emailWhitelist.includes(email)) {
-        return setError(`Email is not whitelisted.`)
       }
     }
 

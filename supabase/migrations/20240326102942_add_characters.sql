@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS characters (
 
 ALTER TABLE characters ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Allow full access to own chat_files"
+CREATE POLICY "Allow full access to own characters"
     ON characters
     USING (user_id = auth.uid())
     WITH CHECK (user_id = auth.uid());

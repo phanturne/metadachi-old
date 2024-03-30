@@ -1,6 +1,9 @@
 import { CreateItemModal } from "@/app/components/data-list/shared/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
-import { COLLECTION_NAME_MAX } from "@/app/lib/db/limits"
+import {
+  COLLECTION_DESCRIPTION_MAX,
+  COLLECTION_NAME_MAX
+} from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { CollectionFile } from "@/app/lib/types"
 import { FC, useContext, useState } from "react"
@@ -65,6 +68,17 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
               value={name}
               onChange={e => setName(e.target.value)}
               slotProps={{ input: { maxLength: COLLECTION_NAME_MAX } }}
+            />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Description</FormLabel>
+
+            <Input
+              placeholder="Collection description..."
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              slotProps={{ input: { maxLength: COLLECTION_DESCRIPTION_MAX } }}
             />
           </FormControl>
         </>

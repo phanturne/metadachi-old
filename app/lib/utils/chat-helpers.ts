@@ -85,11 +85,13 @@ export const createTempMessages = (
   chatSettings: ChatSettings,
   b64Images: string[],
   isRegeneration: boolean,
-  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
+  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
+  selectedAssistant: Tables<"assistants"> | null
 ) => {
   let tempUserChatMessage: ChatMessage = {
     message: {
       chat_id: "",
+      assistant_id: null,
       content: messageContent,
       created_at: "",
       id: uuidv4(),
@@ -106,6 +108,7 @@ export const createTempMessages = (
   let tempAssistantChatMessage: ChatMessage = {
     message: {
       chat_id: "",
+      assistant_id: selectedAssistant?.id || null,
       content: "",
       created_at: "",
       id: uuidv4(),
@@ -298,7 +301,19 @@ export const processResponse = async (
         setToolInUse("none")
 
         try {
-          contentToAdd = isHosted ? chunk : JSON.parse(chunk).message.content
+          contentToAdd = isHosted
+            ? chunk
+            : // Ollama's streaming endpoint returns new-line separated JSON
+              // objects. A chunk may have more than one of these objects, so we
+              // need to split the chunk by new-lines and handle each one
+              // separately.
+              chunk
+                .trimEnd()
+                .split("\n")
+                .reduce(
+                  (acc, line) => acc + JSON.parse(line).message.content,
+                  ""
+                )
           fullText += contentToAdd
         } catch (error) {
           console.error("Error parsing JSON:", error)
@@ -386,10 +401,12 @@ export const handleCreateMessages = async (
   setChatFileItems: React.Dispatch<
     React.SetStateAction<Tables<"file_items">[]>
   >,
-  setChatImages: React.Dispatch<React.SetStateAction<MessageImage[]>>
+  setChatImages: React.Dispatch<React.SetStateAction<MessageImage[]>>,
+  selectedAssistant: Tables<"assistants"> | null
 ) => {
   const finalUserMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
+    assistant_id: null,
     user_id: profile.user_id,
     content: messageContent,
     model: modelData.modelId,
@@ -400,6 +417,7 @@ export const handleCreateMessages = async (
 
   const finalAssistantMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
+    assistant_id: selectedAssistant?.id || null,
     user_id: profile.user_id,
     content: generatedText,
     model: modelData.modelId,

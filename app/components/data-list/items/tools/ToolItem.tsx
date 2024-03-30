@@ -2,9 +2,10 @@ import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
 import { FC, useState } from "react"
 import { DataListItem } from "@/app/components/data-list/shared/DataListItem"
-import { FormControl, FormLabel, Input, Switch, Textarea } from "@mui/joy"
-import { BuildRounded, LinkRounded, WebAssetRounded } from "@mui/icons-material"
+import { FormControl, FormLabel, Input, Textarea, Typography } from "@mui/joy"
+import { BuildRounded } from "@mui/icons-material"
 import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
+import { validateOpenAPI } from "@/app/lib/utils/openapi-conversion"
 
 interface ToolItemProps {
   tool: Tables<"tools">
@@ -19,7 +20,7 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
     tool.custom_headers as string
   )
   const [schema, setSchema] = useState(tool.schema as string)
-  const [isRequestInBody, setIsRequestInBody] = useState(tool.request_in_body)
+  const [schemaError, setSchemaError] = useState("")
 
   return (
     <DataListItem
@@ -32,8 +33,7 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
         description,
         url,
         custom_headers: customHeaders,
-        schema,
-        request_in_body: isRequestInBody
+        schema
       }}
       renderInputs={() => (
         <>
@@ -141,34 +141,25 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
                 }
               }`}
               value={schema}
-              onChange={e => setSchema(e.target.value)}
+              onChange={e => {
+                const value = e.target.value
+
+                setSchema(value)
+
+                try {
+                  const parsedSchema = JSON.parse(value)
+                  validateOpenAPI(parsedSchema)
+                    .then(() => setSchemaError("")) // Clear error if validation is successful
+                    .catch(error => setSchemaError(error.message)) // Set specific validation error message
+                } catch (error) {
+                  setSchemaError("Invalid JSON format") // Set error for invalid JSON format
+                }
+              }}
               maxRows={10}
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Request in...</FormLabel>
-
-            <Switch
-              startDecorator={
-                <>
-                  <WebAssetRounded />
-                  Body
-                </>
-              }
-              endDecorator={
-                <>
-                  <LinkRounded />
-                  URL
-                </>
-              }
-              checked={isRequestInBody}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setIsRequestInBody(event.target.checked)
-              }
-              sx={{ alignSelf: "flex-start" }}
-            />
-          </FormControl>
+          <Typography color="danger">{schemaError}</Typography>
         </>
       )}
     />

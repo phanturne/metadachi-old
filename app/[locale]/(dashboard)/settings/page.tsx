@@ -83,6 +83,7 @@ export default function SettingsPage() {
   const [mistralAPIKey, setMistralAPIKey] = useState(
     profile?.mistral_api_key || ""
   )
+  const [groqAPIKey, setGroqAPIKey] = useState(profile?.groq_api_key || "")
   const [perplexityAPIKey, setPerplexityAPIKey] = useState(
     profile?.perplexity_api_key || ""
   )
@@ -305,6 +306,7 @@ export default function SettingsPage() {
             anthropicAPIKey={anthropicAPIKey}
             googleGeminiAPIKey={googleGeminiAPIKey}
             mistralAPIKey={mistralAPIKey}
+            groqAPIKey={groqAPIKey}
             perplexityAPIKey={perplexityAPIKey}
             useAzureOpenai={useAzureOpenai}
             openrouterAPIKey={openrouterAPIKey}
@@ -319,6 +321,7 @@ export default function SettingsPage() {
             onAnthropicAPIKeyChange={setAnthropicAPIKey}
             onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
             onMistralAPIKeyChange={setMistralAPIKey}
+            onGroqAPIKeyChange={setGroqAPIKey}
             onPerplexityAPIKeyChange={setPerplexityAPIKey}
             onUseAzureOpenaiChange={setUseAzureOpenai}
             onOpenrouterAPIKeyChange={setOpenrouterAPIKey}

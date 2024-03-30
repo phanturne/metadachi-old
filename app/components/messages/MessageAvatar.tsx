@@ -19,6 +19,7 @@ export default function MessageAvatar({
 }) {
   const { profile, selectedAssistant, assistantImages } =
     useContext(MetadachiContext)
+
   const selectedAssistantImage = assistantImages.find(
     image => image.path === selectedAssistant?.image_path
   )?.base64

@@ -6,6 +6,8 @@ import { OpenAISVG } from "@/app/components/icons/openai-svg"
 import { AutoAwesomeRounded } from "@mui/icons-material"
 import SvgIcon from "@mui/joy/SvgIcon"
 import MistralIcon from "@/app/components/icons/mistral.svg"
+import Image from "next/image"
+import groq from "@/public/providers/groq.png"
 
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
   provider?: ModelProvider
@@ -34,6 +36,9 @@ export const ModelIcon: FC<ModelIconProps> = ({
           style={{ width: width, height: height }}
         />
       )
+    // TODO: Update Groq icon
+    case "groq":
+      return <Image src={groq.src} alt="Groq" width={width} height={height} />
     case "anthropic":
       return (
         <SvgIcon style={{ width: width, height: height }}>
