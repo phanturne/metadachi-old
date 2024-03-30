@@ -20,8 +20,8 @@ import ThemeToggleButton from "@/app/components/utility/ThemeToggle"
 import { MetadachiContext } from "@/app/lib/context"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { useSnackbar } from "@/app/lib/providers/SnackbarProvider"
 import { Routes } from "@/app/lib/constants"
+import { toast } from "sonner"
 
 export default function ProfileMenu({
   placement = "bottom"
@@ -31,13 +31,14 @@ export default function ProfileMenu({
   const router = useRouter()
   const { profile } = useContext(MetadachiContext)
   const { openAuthModal } = useAuthModal()
-  const { setSnackbar } = useSnackbar()
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut()
-    const message = error?.message ?? "You have been signed out"
-    const color = error ? "danger" : "success"
-    setSnackbar({ message: message, color: color })
+    if (error) {
+      toast.error(error.message)
+    } else {
+      toast.success("Signed out successfully")
+    }
     router.refresh()
   }
 

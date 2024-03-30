@@ -1,5 +1,10 @@
 import { ChatSettings, LLMID } from "@/app/lib/types"
 
+export const APP_NAME = "Metadachi"
+export const APP_DEFAULT_TITLE = "Metadachi"
+export const APP_TITLE_TEMPLATE = "%s - Metadachi"
+export const APP_DESCRIPTION = "Metadachi PWA!"
+
 // Required for redirecting the user after resetting the password
 export const ROOT_URL = "https://metadachi.com"
 

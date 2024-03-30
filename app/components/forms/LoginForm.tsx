@@ -11,10 +11,10 @@ import { useRouter } from "next/navigation"
 import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { useSnackbar } from "@/app/lib/providers/SnackbarProvider"
 import { AuthFormType } from "@/app/components/forms/AuthForm"
 import { EmailInput, PasswordInput } from "@/app/components/input"
 import { Routes } from "@/app/lib/constants"
+import { toast } from "sonner"
 
 export function LoginForm({
   setAuthFormType
@@ -24,7 +24,6 @@ export function LoginForm({
   const [error, setError] = useState<string>("")
   const router = useRouter()
   const { closeAuthModal } = useAuthModal()
-  const { setSnackbar } = useSnackbar()
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -56,7 +55,7 @@ export function LoginForm({
     }
 
     // Handle successful login
-    setSnackbar({ message: "Successfully logged in", color: "success" })
+    toast.success("Successfully logged in")
     closeAuthModal()
 
     // Refresh is required because routing to home won't work if the user is already on the home page
