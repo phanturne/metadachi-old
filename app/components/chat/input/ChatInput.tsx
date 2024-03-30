@@ -1,10 +1,9 @@
 import { MetadachiContext } from "@/app/lib/context"
-import useHotkey from "@/app/lib/hooks/use-hotkey"
+import useHotkey from "../../../lib/hooks/use-hotkey"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
 import * as React from "react"
 import { FC, useContext, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { ChatCommands } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatCommands"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { useSelectFileHandler } from "@/app/lib/hooks/use-select-file-handler"
@@ -14,6 +13,7 @@ import { FileInputIconButton } from "@/app/components/input/FileInput"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { toast } from "sonner"
 import { useChatHistoryHandler } from "@/app/lib/hooks/use-chat-history"
+import { ChatCommands } from "@/app/components/chat/input/ChatCommands"
 
 interface ChatInputProps {}
 

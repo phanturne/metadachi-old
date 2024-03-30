@@ -1,11 +1,11 @@
 import * as React from "react"
 import { FC } from "react"
-import { PromptPicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/PromptPicker"
-import { FilePicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/FilePicker"
+import { PromptPicker } from "@/app/components/chat/input/PromptPicker"
+import { FilePicker } from "@/app/components/chat/input/FilePicker"
 import Sheet from "@mui/joy/Sheet"
 import List from "@mui/joy/List"
-import { AssistantPicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/AssistantPicker"
-import { ToolPicker } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/tool-picker"
+import { AssistantPicker } from "@/app/components/chat/input/AssistantPicker"
+import { ToolPicker } from "@/app/components/chat/input/tool-picker"
 
 interface ChatActionsProps {}
 

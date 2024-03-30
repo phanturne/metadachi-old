@@ -4,7 +4,6 @@ import Sidebar from "@/app/components/sidebar/Sidebar"
 import { Box } from "@mui/joy"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import useHotkey from "@/app/lib/hooks/use-hotkey"
-import ChatSidebar from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatSidebar"
 
 export default function DashboardLayout({
   children

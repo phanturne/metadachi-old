@@ -6,8 +6,8 @@ import { useContext, useEffect } from "react"
 import { Box } from "@mui/joy"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { useScroll } from "@/app/lib/hooks/use-scroll"
-import ChatMessages from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatMessages"
-import { NewChatContent } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/NewChatContent"
+import ChatMessages from "@/app/components/chat/ChatMessages"
+import { NewChatContent } from "@/app/components/chat/NewChatContent"
 
 export default function ChatContent({ chatId }: { chatId: string | null }) {
   const { chatMessages } = useContext(MetadachiContext)

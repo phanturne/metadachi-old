@@ -2,8 +2,8 @@ import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import { useContext, useEffect, useRef, useState } from "react"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
-import { PromptVariableModal } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/PromptVariableModal"
-import { ChatCommandsList } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/input/ChatCommandsList"
+import { PromptVariableModal } from "@/app/components/chat/input/PromptVariableModal"
+import { ChatCommandsList } from "@/app/components/chat/input/ChatCommandsList"
 import { Typography } from "@mui/joy"
 
 export function PromptPicker() {

@@ -1,11 +1,11 @@
 import Header from "@/app/components/ui/Header"
-import { ChatSettingsPopup } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatSettingsPopup"
 import { ScrollButtons } from "@/app/components/buttons/ScrollButtons"
 import { Box, Typography } from "@mui/joy"
-import { ChatInfoButton } from "@/app/[locale]/(dashboard)/(workspace)/chat/components/ChatInfoButton"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { useScroll } from "@/app/lib/hooks/use-scroll"
+import { ChatSettingsPopup } from "@/app/components/chat/ChatSettingsPopup"
+import { ChatInfoButton } from "@/app/components/chat/ChatInfoButton"
 
 export default function ChatHeader({ variant }: { variant: "new" | null }) {
   const { selectedChat } = useContext(MetadachiContext)
