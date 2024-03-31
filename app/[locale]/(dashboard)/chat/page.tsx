@@ -195,7 +195,7 @@ export default function ChatPage() {
       <div className="relative m-6 w-64">
         <div className="fixed">
           <div className="flex">
-            <Button color="primary">New Chat</Button> hi
+            <Button color="primary">New Chat</Button>
           </div>
         </div>
       </div>
