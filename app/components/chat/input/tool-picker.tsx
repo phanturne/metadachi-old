@@ -4,7 +4,6 @@ import { Tables } from "@/supabase/types"
 import { IconBolt } from "@tabler/icons-react"
 import { FC, useContext, useEffect, useRef } from "react"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
-import List from "@mui/joy/List"
 
 interface ToolPickerProps {}
 
@@ -72,7 +71,7 @@ export const ToolPicker: FC<ToolPickerProps> = ({}) => {
     }
 
   return (
-    <List>
+    <>
       {isToolPickerOpen && (
         <div className="flex flex-col space-y-1 rounded-xl border-2 bg-background p-2 text-sm">
           {filteredTools.length === 0 ? (
@@ -107,6 +106,6 @@ export const ToolPicker: FC<ToolPickerProps> = ({}) => {
           )}
         </div>
       )}
-    </List>
+    </>
   )
 }
