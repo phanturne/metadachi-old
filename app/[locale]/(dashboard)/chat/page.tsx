@@ -1,12 +1,8 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { Box } from "@mui/joy"
+import { Button } from "@nextui-org/react"
 import { useContext, useEffect, useState } from "react"
-import AssistantsList from "@/app/components/data-list/items/assistants/AssistantsList"
-import PromptsList from "@/app/components/data-list/items/prompts/PromptsList"
-import FilesList from "@/app/components/data-list/items/files/FilesList"
-import ToolsList from "@/app/components/data-list/items/tools/ToolsList"
 import { MetadachiContext } from "@/app/lib/context"
 import { getMessagesByChatId } from "@/app/lib/db/messages"
 import { LLMID, MessageImage } from "@/app/lib/types"
@@ -16,13 +12,7 @@ import { getMessageFileItemsByMessageId } from "@/app/lib/db/message-file-items"
 import { getChatById } from "@/app/lib/db/chats"
 import Loading from "@/app/[locale]/loading"
 import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
-import { ChatFilesDisplay } from "@/app/components/files/ChatFilesDisplay"
 import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
-import ChatContent from "@/app/components/chat/input/ChatContent"
-import { ChatToolsDisplay } from "@/app/components/chat/ChatToolsDisplay"
-import { AssistantDisplay } from "@/app/components/chat/AssistantDisplay"
-import ChatTabs from "@/app/components/chat/ChatTabs"
-import { ChatInput } from "@/app/components/chat/input/ChatInput"
 import useHotkey from "@/app/lib/hooks/use-hotkey"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 
@@ -185,57 +175,85 @@ export default function ChatPage() {
   const isNewChat = !chatId && chatMessages.length == 0
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        alignItems: "center"
-      }}
-    >
-      {/*<ChatHeader variant={isNewChat ? "new" : null} />*/}
+    // <div className="flex size-full overflow-y-scroll">
+    //   <div className="flex flex-col border bg-gray-800 p-2">
+    //     {Array.from({ length: 100 }, (_, index) => (
+    //       <div key={index}>Content {index + 1}</div>
+    //     ))}
+    //   </div>
+    //   <div className="relative">
+    //     <div className="fixed border p-2">Content X</div>
+    //   </div>
+    // </div>
 
-      {tab === "chat" ? (
-        <ChatContent chatId={chatId} />
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            height: "100%",
-            width: "100%",
-            overflow: "scroll",
-            px: 10
-          }}
-        >
-          {tab === "assistants" && <AssistantsList />}
-          {tab === "prompts" && <PromptsList />}
-          {tab === "files" && <FilesList />}
-          {tab === "tools" && <ToolsList />}
-        </Box>
-      )}
-
-      <Box
-        sx={{
-          position: "relative",
-          width: "300px",
-          paddingBottom: 2,
-          paddingTop: "5px",
-          minWidth: {
-            xs: "300px",
-            sm: "400px",
-            md: "500px",
-            lg: "660px",
-            xl: "800px"
-          }
-        }}
-      >
-        <ChatToolsDisplay />
-        <ChatFilesDisplay />
-        <AssistantDisplay />
-
-        <ChatTabs tab={tab} setTab={setTab} />
-        <ChatInput />
-      </Box>
-    </Box>
+    <div className="flex overflow-y-scroll">
+      <div className="flex grow flex-col border bg-gray-800 p-2">
+        {Array.from({ length: 100 }, (_, index) => (
+          <div key={index}>Content {index + 1}</div>
+        ))}
+      </div>
+      <div className="relative m-6 w-64">
+        <div className="fixed">
+          <div className="flex">
+            <Button color="primary">New Chat</Button> hi
+          </div>
+        </div>
+      </div>
+    </div>
   )
+
+  // return (
+  //   <Box
+  //     sx={{
+  //       display: "flex",
+  //       flexDirection: "column",
+  //       width: "100%",
+  //       alignItems: "center"
+  //     }}
+  //   >
+  //     {/*<ChatHeader variant={isNewChat ? "new" : null} />*/}
+  //
+  //     {tab === "chat" ? (
+  //       <ChatContent chatId={chatId} />
+  //     ) : (
+  //       <Box
+  //         sx={{
+  //           display: "flex",
+  //           height: "100%",
+  //           width: "100%",
+  //           overflow: "scroll",
+  //           px: 10
+  //         }}
+  //       >
+  //         {tab === "assistants" && <AssistantsList />}
+  //         {tab === "prompts" && <PromptsList />}
+  //         {tab === "files" && <FilesList />}
+  //         {tab === "tools" && <ToolsList />}
+  //       </Box>
+  //     )}
+  //
+  //     <Box
+  //       sx={{
+  //         position: "relative",
+  //         width: "300px",
+  //         paddingBottom: 2,
+  //         paddingTop: "5px",
+  //         minWidth: {
+  //           xs: "300px",
+  //           sm: "400px",
+  //           md: "500px",
+  //           lg: "660px",
+  //           xl: "800px"
+  //         }
+  //       }}
+  //     >
+  //       <ChatToolsDisplay />
+  //       <ChatFilesDisplay />
+  //       <AssistantDisplay />
+  //
+  //       <ChatTabs tab={tab} setTab={setTab} />
+  //       <ChatInput />
+  //     </Box>
+  //   </Box>
+  // )
 }
