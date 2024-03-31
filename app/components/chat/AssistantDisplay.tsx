@@ -9,7 +9,7 @@ export function AssistantDisplay() {
   return (
     <>
       {selectedAssistant && (
-        <div className="border-primary mx-auto flex w-fit items-center space-x-2 rounded-lg border p-1.5">
+        <div className="mx-auto flex w-fit items-center space-x-2 rounded-lg border border-primary p-1.5">
           {selectedAssistant.image_path && (
             <Image
               className="rounded"
