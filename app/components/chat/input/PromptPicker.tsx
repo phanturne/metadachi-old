@@ -5,6 +5,7 @@ import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { PromptVariableModal } from "@/app/components/chat/input/PromptVariableModal"
 import { ChatCommandsList } from "@/app/components/chat/input/ChatCommandsList"
 import { Typography } from "@mui/joy"
+import List from "@mui/joy/List"
 
 export function PromptPicker() {
   const {
@@ -99,7 +100,7 @@ export function PromptPicker() {
   if (!isPromptPickerOpen) return
 
   return (
-    <>
+    <List>
       {showPromptVariables ? (
         <PromptVariableModal
           showPromptVariables={showPromptVariables}
@@ -118,6 +119,6 @@ export function PromptPicker() {
           getItemContent={getPromptItemContent}
         />
       )}
-    </>
+    </List>
   )
 }

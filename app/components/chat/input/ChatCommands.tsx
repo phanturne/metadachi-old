@@ -25,12 +25,10 @@ export const ChatCommands: FC<ChatActionsProps> = ({}) => {
         borderRadius: "xl"
       }}
     >
-      <List>
-        <PromptPicker />
-        <FilePicker />
-        <ToolPicker />
-        <AssistantPicker />
-      </List>
+      <PromptPicker />
+      <FilePicker />
+      <ToolPicker />
+      <AssistantPicker />
     </Sheet>
   )
 }

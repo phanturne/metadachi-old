@@ -5,6 +5,7 @@ import { IconRobotFace } from "@tabler/icons-react"
 import Image from "next/image"
 import { FC, useContext, useEffect, useRef } from "react"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
+import List from "@mui/joy/List"
 
 interface AssistantPickerProps {}
 
@@ -73,7 +74,7 @@ export const AssistantPicker: FC<AssistantPickerProps> = ({}) => {
     }
 
   return (
-    <>
+    <List>
       {isAssistantPickerOpen && (
         <div className="flex flex-col space-y-1 rounded-xl border-2 bg-background p-2 text-sm">
           {filteredAssistants.length === 0 ? (
@@ -124,6 +125,6 @@ export const AssistantPicker: FC<AssistantPickerProps> = ({}) => {
           )}
         </div>
       )}
-    </>
+    </List>
   )
 }

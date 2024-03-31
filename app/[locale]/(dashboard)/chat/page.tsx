@@ -1,6 +1,5 @@
 "use client"
 
-import FileDropzoneContainer from "@/app/components/files/FileDropzoneContainer"
 import { useSearchParams } from "next/navigation"
 import { Box } from "@mui/joy"
 import { useContext, useEffect, useState } from "react"
@@ -19,17 +18,22 @@ import Loading from "@/app/[locale]/loading"
 import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
 import { ChatFilesDisplay } from "@/app/components/files/ChatFilesDisplay"
 import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
-import ChatHeader from "@/app/components/chat/ChatHeader"
 import ChatContent from "@/app/components/chat/input/ChatContent"
 import { ChatToolsDisplay } from "@/app/components/chat/ChatToolsDisplay"
 import { AssistantDisplay } from "@/app/components/chat/AssistantDisplay"
 import ChatTabs from "@/app/components/chat/ChatTabs"
 import { ChatInput } from "@/app/components/chat/input/ChatInput"
+import useHotkey from "@/app/lib/hooks/use-hotkey"
+import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
   const chatId = searchParams.get("id")
   const [tab, setTab] = useState(searchParams.get("tab") ?? "chat")
+
+  // Register hotkeys
+  const { handleNewChat } = useChatHandler()
+  useHotkey("o", () => handleNewChat())
 
   const {
     chatMessages,
@@ -181,59 +185,57 @@ export default function ChatPage() {
   const isNewChat = !chatId && chatMessages.length == 0
 
   return (
-    <FileDropzoneContainer>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          alignItems: "center"
-        }}
-      >
-        <ChatHeader variant={isNewChat ? "new" : null} />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        alignItems: "center"
+      }}
+    >
+      {/*<ChatHeader variant={isNewChat ? "new" : null} />*/}
 
-        {tab === "chat" ? (
-          <ChatContent chatId={chatId} />
-        ) : (
-          <Box
-            sx={{
-              display: "flex",
-              height: "100%",
-              width: "100%",
-              overflow: "scroll",
-              px: 10
-            }}
-          >
-            {tab === "assistants" && <AssistantsList />}
-            {tab === "prompts" && <PromptsList />}
-            {tab === "files" && <FilesList />}
-            {tab === "tools" && <ToolsList />}
-          </Box>
-        )}
-
+      {tab === "chat" ? (
+        <ChatContent chatId={chatId} />
+      ) : (
         <Box
           sx={{
-            position: "relative",
-            width: "300px",
-            paddingBottom: 2,
-            paddingTop: "5px",
-            minWidth: {
-              xs: "300px",
-              sm: "400px",
-              md: "500px",
-              lg: "660px",
-              xl: "800px"
-            }
+            display: "flex",
+            height: "100%",
+            width: "100%",
+            overflow: "scroll",
+            px: 10
           }}
         >
-          <ChatToolsDisplay />
-          <ChatFilesDisplay />
-          <AssistantDisplay />
-
-          <ChatTabs tab={tab} setTab={setTab} />
-          <ChatInput />
+          {tab === "assistants" && <AssistantsList />}
+          {tab === "prompts" && <PromptsList />}
+          {tab === "files" && <FilesList />}
+          {tab === "tools" && <ToolsList />}
         </Box>
+      )}
+
+      <Box
+        sx={{
+          position: "relative",
+          width: "300px",
+          paddingBottom: 2,
+          paddingTop: "5px",
+          minWidth: {
+            xs: "300px",
+            sm: "400px",
+            md: "500px",
+            lg: "660px",
+            xl: "800px"
+          }
+        }}
+      >
+        <ChatToolsDisplay />
+        <ChatFilesDisplay />
+        <AssistantDisplay />
+
+        <ChatTabs tab={tab} setTab={setTab} />
+        <ChatInput />
       </Box>
-    </FileDropzoneContainer>
+    </Box>
   )
 }

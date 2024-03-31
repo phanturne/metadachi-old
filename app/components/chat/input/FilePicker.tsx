@@ -8,6 +8,7 @@ import { ChatCommandsList } from "@/app/components/chat/input/ChatCommandsList"
 import { FolderRounded } from "@mui/icons-material"
 import SvgIcon from "@mui/joy/SvgIcon"
 import { FileIcon } from "@/app/components/files/file-icon"
+import List from "@mui/joy/List"
 
 interface FilePickerProps {}
 
@@ -89,13 +90,15 @@ export const FilePicker: FC<FilePickerProps> = ({}) => {
   }
 
   return (
-    <ChatCommandsList
-      commandType="file"
-      filteredItems={[...filteredFiles, ...filteredCollections]}
-      focusItem={focusFile}
-      setIsPickerOpen={setIsFilePickerOpen}
-      handleItemSelect={handleItemSelect}
-      getItemContent={getItemContent}
-    />
+    <List>
+      <ChatCommandsList
+        commandType="file"
+        filteredItems={[...filteredFiles, ...filteredCollections]}
+        focusItem={focusFile}
+        setIsPickerOpen={setIsFilePickerOpen}
+        handleItemSelect={handleItemSelect}
+        getItemContent={getItemContent}
+      />
+    </List>
   )
 }
