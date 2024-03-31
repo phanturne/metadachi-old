@@ -15,6 +15,7 @@ import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
 import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
 import useHotkey from "@/app/lib/hooks/use-hotkey"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
+import { ShareIcon } from "@/app/components/icons/Solar/ShareIcon"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -196,6 +197,9 @@ export default function ChatPage() {
         <div className="fixed">
           <div className="flex">
             <Button color="primary">New Chat</Button>
+            <Button isIconOnly variant="light">
+              <ShareIcon />
+            </Button>
           </div>
         </div>
       </div>

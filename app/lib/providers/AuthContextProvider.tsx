@@ -5,7 +5,6 @@ import AuthModal from "@/app/components/modals/AuthModal"
 
 // Create a context with initial values
 const AuthContext = createContext({
-  isAuthModalOpen: false,
   openAuthModal: () => {},
   closeAuthModal: () => {}
 })
@@ -30,7 +29,6 @@ export const AuthContextProvider = ({
 
   // Pass the context values to the provider
   const contextValue = {
-    isAuthModalOpen,
     openAuthModal,
     closeAuthModal
   }
