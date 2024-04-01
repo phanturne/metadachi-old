@@ -107,11 +107,11 @@ export default function ChatSettingsCard() {
       </CardHeader>
 
       {isChatSettingsOpen && (
-        <CardBody className="flex gap-2 pt-0 text-small font-semibold leading-none text-default-500">
+        <CardBody className="flex gap-2 pt-1 text-small font-semibold leading-none text-default-500">
           <Autocomplete
             size="sm"
             label="Model"
-            placeholder="Search a model"
+            placeholder="Select a model"
             defaultItems={animals}
           >
             {item => (
@@ -121,7 +121,7 @@ export default function ChatSettingsCard() {
           <Autocomplete
             size="sm"
             label="Assistants"
-            placeholder="Search a model"
+            placeholder="Select assistants"
             defaultItems={animals}
           >
             {item => (
@@ -131,7 +131,7 @@ export default function ChatSettingsCard() {
           <Autocomplete
             size="sm"
             label="Files"
-            placeholder="Search a model"
+            placeholder="Select files"
             defaultItems={animals}
           >
             {item => (
@@ -141,7 +141,7 @@ export default function ChatSettingsCard() {
           <Autocomplete
             size="sm"
             label="Tools"
-            placeholder="Search a model"
+            placeholder="Select tools"
             defaultItems={animals}
           >
             {item => (
