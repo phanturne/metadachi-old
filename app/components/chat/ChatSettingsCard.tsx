@@ -86,7 +86,8 @@ export default function ChatSettingsCard() {
 
   return (
     <Card>
-      <CardHeader className="flex justify-between">
+      {/* Dropdown button height > H4 height. Set 38px height to prevent CardHeader height increase. */}
+      <CardHeader className="flex h-[38px] justify-between">
         <h4 className="text-small font-semibold leading-none text-default-600">
           Chat Settings
         </h4>
@@ -95,6 +96,7 @@ export default function ChatSettingsCard() {
           size="sm"
           variant="light"
           onClick={onChatSettingsDropdownClick}
+          radius="full"
         >
           {isChatSettingsOpen ? (
             <Icon icon="solar:alt-arrow-down-linear" fontSize="16px" />
