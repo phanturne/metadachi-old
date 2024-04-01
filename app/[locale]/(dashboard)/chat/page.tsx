@@ -1,7 +1,6 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { Button } from "@nextui-org/react"
 import { useContext, useEffect, useState } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { getMessagesByChatId } from "@/app/lib/db/messages"
@@ -15,7 +14,11 @@ import { getChatFilesByChatId } from "@/app/lib/db/chat-files"
 import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
 import useHotkey from "@/app/lib/hooks/use-hotkey"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
-import { ShareIcon } from "@/app/components/icons/Solar/ShareIcon"
+import ChatActions from "@/app/components/chat/ChatActions"
+import ChatSettingsCard from "@/app/components/chat/ChatSettingsCard"
+import ChatListCard from "@/app/components/chat/ChatListCard"
+import ChatContent from "@/app/components/chat/input/ChatContent"
+import { ChatInput } from "@/app/components/chat/input/ChatInput"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -176,30 +179,26 @@ export default function ChatPage() {
   const isNewChat = !chatId && chatMessages.length == 0
 
   return (
-    // <div className="flex size-full overflow-y-scroll">
-    //   <div className="flex flex-col border bg-gray-800 p-2">
-    //     {Array.from({ length: 100 }, (_, index) => (
-    //       <div key={index}>Content {index + 1}</div>
-    //     ))}
-    //   </div>
-    //   <div className="relative">
-    //     <div className="fixed border p-2">Content X</div>
-    //   </div>
-    // </div>
-
-    <div className="flex overflow-y-scroll">
-      <div className="flex grow flex-col border bg-gray-800 p-2">
-        {Array.from({ length: 100 }, (_, index) => (
-          <div key={index}>Content {index + 1}</div>
-        ))}
+    <div className="flex size-full overflow-y-scroll">
+      {/* Chat Sidebar*/}
+      <div className="relative mx-4 my-2 w-64">
+        <div className="fixed flex w-64 flex-col gap-4">
+          <ChatActions />
+          <ChatSettingsCard />
+          <ChatListCard />
+        </div>
       </div>
-      <div className="relative m-6 w-64">
-        <div className="fixed">
-          <div className="flex">
-            <Button color="primary">New Chat</Button>
-            <Button isIconOnly variant="light">
-              <ShareIcon />
-            </Button>
+
+      <div className="flex grow flex-col border p-2">
+        <ChatContent chatId={chatId} />
+        {/*<ChatInput />*/}
+        {/*{Array.from({ length: 100 }, (_, index) => (*/}
+        {/*  <div key={index}>Content {index + 1}</div>*/}
+        {/*))}*/}
+
+        <div className="relative m-3 h-64">
+          <div className="fixed flex h-64 flex-col gap-4">
+            <ChatInput />
           </div>
         </div>
       </div>
