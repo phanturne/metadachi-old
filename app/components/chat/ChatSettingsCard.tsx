@@ -1,6 +1,6 @@
 "use client"
 
-import { Icon } from "@iconify/react"
+import { Icon } from "@iconify-icon/react"
 import {
   Autocomplete,
   AutocompleteItem,
@@ -99,9 +99,9 @@ export default function ChatSettingsCard() {
           radius="full"
         >
           {isChatSettingsOpen ? (
-            <Icon icon="solar:alt-arrow-down-linear" fontSize="16px" />
+            <Icon icon="solar:alt-arrow-down-linear" className="text-base" />
           ) : (
-            <Icon icon="solar:alt-arrow-left-linear" fontSize="16px" />
+            <Icon icon="solar:alt-arrow-left-linear" className="text-base" />
           )}
         </Button>
       </CardHeader>

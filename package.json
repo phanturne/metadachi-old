@@ -80,7 +80,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@iconify/react": "^4.1.1",
+    "@iconify-icon/react": "^2.0.1",
     "@next/bundle-analyzer": "^14.0.2",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.2.0",

@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/react"
-import { Icon } from "@iconify/react"
+import { Icon } from "@iconify-icon/react"
 
 export default function ChatActions() {
   return (
@@ -8,7 +8,7 @@ export default function ChatActions() {
         size="sm"
         className="grow"
         startContent={
-          <Icon icon="solar:pen-new-square-linear" fontSize="16px" />
+          <Icon icon="solar:pen-new-square-linear" className="text-base" />
         }
       >
         New Chat
@@ -18,7 +18,7 @@ export default function ChatActions() {
         variant="flat"
         className="grow"
         startContent={
-          <Icon icon="solar:square-share-line-linear" fontSize="16px" />
+          <Icon icon="solar:square-share-line-linear" className="text-base" />
         }
       >
         Share
