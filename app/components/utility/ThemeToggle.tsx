@@ -1,97 +1,48 @@
-import { Button, useColorScheme } from "@mui/joy"
-import { useEffect, useState } from "react"
-import { DarkModeRounded, LightModeRounded } from "@mui/icons-material"
+import { useTheme } from "next-themes"
+import { Tab, Tabs } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 export default function ThemeToggleButton() {
-  const { mode, setMode } = useColorScheme()
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-  if (!mounted) {
-    return (
-      <Button size="sm" variant="outlined" color="neutral" disabled>
-        Light
-      </Button>
-    )
-  }
+  const { theme, setTheme } = useTheme()
+
   return (
-    <Button
-      id="theme-toggle"
+    <Tabs
+      variant="bordered"
       size="sm"
-      variant="outlined"
-      color="neutral"
-      startDecorator={
-        mode === "light" ? (
-          <LightModeRounded color="warning" />
-        ) : (
-          <DarkModeRounded color="primary" />
-        )
-      }
-      onClick={() => {
-        setMode(mode === "light" ? "dark" : "light")
-      }}
-      sx={{ flexGrow: 1 }}
+      radius="full"
+      selectedKey={theme}
+      onSelectionChange={key => setTheme(key as string)}
     >
-      {mode === "dark" ? "Dark" : "Light"}{" "}
-      {process.env.BUILD_MODE !== "export" && "Mode"}
-    </Button>
+      <Tab
+        key="light"
+        title={
+          <div className="flex w-1 justify-center">
+            <Icon
+              icon="solar:sun-linear"
+              className="text-base text-yellow-600"
+            />
+          </div>
+        }
+      />
+      <Tab
+        key="system"
+        title={
+          <div className="flex w-1 justify-center">
+            <Icon icon="solar:laptop-linear" className="text-base" />
+          </div>
+        }
+      />
+      <Tab
+        key="dark"
+        title={
+          <div className="flex w-1 justify-center">
+            <Icon
+              icon="solar:moon-linear"
+              className="text-base text-blue-400"
+            />
+          </div>
+        }
+      />
+    </Tabs>
   )
 }
-
-// export function ThemeToggleIconButton() {
-//   const { mode, setMode } = useColorScheme();
-//   const [mounted, setMounted] = useState(false);
-//   useEffect(() => {
-//     setMounted(true);
-//   }, []);
-//   if (!mounted) {
-//     return <IconButton size='sm' variant='outlined' color='neutral' disabled />;
-//   }
-//   return (
-//     <IconButton
-//       id='theme-toggle'
-//       size='sm'
-//       variant='outlined'
-//       color='neutral'
-//       onClick={() => {
-//         setMode(mode === 'light' ? 'dark' : 'light');
-//       }}
-//     >
-//       {mode === 'dark' && <DarkModeRounded color='primary' />}
-//       {mode === 'light' && <LightModeRounded color='warning' />}
-//     </IconButton>
-//   );
-// }
-
-// export function ThemeToggleSwitch() {
-//   const { mode, setMode } = useColorScheme();
-//   const [mounted, setMounted] = useState(false);
-//   useEffect(() => {
-//     setMounted(true);
-//   }, []);
-//   if (!mounted) {
-//     return null;
-//   }
-//
-//   return (
-//     <Switch
-//       color={mode === 'light' ? 'warning' : 'primary'}
-//       size='lg'
-//       checked={mode === 'light'}
-//       onChange={() => {
-//         setMode(mode === 'light' ? 'dark' : 'light');
-//       }}
-//       slotProps={{
-//         thumb: {
-//           children:
-//             mode === 'light' ? (
-//               <LightModeRounded color='warning' />
-//             ) : (
-//               <DarkModeRounded color='primary' />
-//             ),
-//         },
-//       }}
-//     />
-//   );
-// }

@@ -76,7 +76,14 @@ export default function ProfileMenu({
         </Box>
         <Divider sx={{ m: 0.5 }} />
         <Box
-          sx={{ display: "flex", my: 1, mx: 1.5, gap: 1, alignItems: "center" }}
+          sx={{
+            display: "flex",
+            my: 1,
+            mx: 1.5,
+            gap: 1,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
         >
           <ThemeToggleButton />
           {/*{process.env.BUILD_MODE === 'export' && <FloatingWindowToggle />}*/}

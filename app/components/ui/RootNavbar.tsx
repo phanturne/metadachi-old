@@ -5,6 +5,7 @@ import {
   NavbarItem,
   Link
 } from "@nextui-org/react"
+import ProfileMenu from "@/app/components/utility/ProfileMenu"
 
 export default function RootNavbar() {
   return (
@@ -33,6 +34,7 @@ export default function RootNavbar() {
         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
         </NavbarItem>
+        <ProfileMenu />
       </NavbarContent>
     </Navbar>
   )
