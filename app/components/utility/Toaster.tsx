@@ -1,14 +1,19 @@
 "use client"
 
 import { Toaster as Sonner } from "sonner"
-import { useColorScheme } from "@mui/joy"
+import { useTheme } from "next-themes"
 
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { mode = "system" } = useColorScheme()
+  const { theme } = useTheme()
 
-  return <Sonner theme={mode} {...props} />
+  return (
+    <Sonner
+      theme={theme as "dark" | "light" | "system" | undefined}
+      {...props}
+    />
+  )
 }
 
 export { Toaster }
