@@ -28,7 +28,7 @@ export default function ThemeToggleButton() {
         key="system"
         title={
           <div className="flex w-1 justify-center">
-            <Icon icon="solar:laptop-linear" className="text-base" />
+            <Icon icon="solar:monitor-linear" className="text-base" />
           </div>
         }
       />
