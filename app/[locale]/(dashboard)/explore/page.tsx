@@ -1,14 +1,5 @@
-import Header from "@/app/components/ui/Header"
-import { Typography } from "@mui/joy"
-import React from "react"
+import ComingSoonPage from "@/app/components/ui/ComingSoonPage"
 
 export default function ExplorePage() {
-  return (
-    <>
-      <Header
-        startContent={<Typography level="title-lg">Explore</Typography>}
-      />
-      Explore Page
-    </>
-  )
+  return <ComingSoonPage />
 }

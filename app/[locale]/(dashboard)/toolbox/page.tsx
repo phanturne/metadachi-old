@@ -1,10 +1,5 @@
-import Header from "@/app/components/ui/Header"
+import ComingSoonPage from "@/app/components/ui/ComingSoonPage"
 
 export default function ToolboxPage() {
-  return (
-    <>
-      <Header />
-      Toolbox Page
-    </>
-  )
+  return <ComingSoonPage />
 }
