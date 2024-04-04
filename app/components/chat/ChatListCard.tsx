@@ -2,11 +2,8 @@
 import * as React from "react"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
-import { DataListWrapper } from "@/app/components/data-list/shared/DataListWrapper"
-import { Typography } from "@mui/joy"
-import Sheet from "@mui/joy/Sheet"
 import { DataList } from "@/app/components/data-list/DataList"
-import { Card, CardHeader } from "@nextui-org/react"
+import { Card, CardBody, CardHeader } from "@nextui-org/react"
 
 export default function ChatListCard() {
   const { folders, chats } = useContext(MetadachiContext)
@@ -19,12 +16,14 @@ export default function ChatListCard() {
           Chats
         </h4>
       </CardHeader>
-      <DataList
-        contentType="chats"
-        data={chats}
-        folders={chatFolders}
-        variant="list"
-      />
+      <CardBody className="pt-1">
+        <DataList
+          contentType="chats"
+          data={chats}
+          folders={chatFolders}
+          variant="list"
+        />
+      </CardBody>
     </Card>
   )
 }

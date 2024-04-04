@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/joy"
 import { ArrowBackRounded } from "@mui/icons-material"
 import { FC } from "react"
 import { ContentType } from "@/app/lib/types"
-import { DataListContent } from "@/app/components/data-list/DataListContent"
+import { DataListItem } from "@/app/components/data-list/DataListItem"
 
 interface FilesViewProps {
   contentType: ContentType
@@ -59,7 +59,7 @@ export const FilesView: FC<FilesViewProps> = ({
             draggable="true"
             onDragStart={e => handleDragStart(e, item.id)}
           >
-            <DataListContent contentType={contentType} item={item} />
+            <DataListItem contentType={contentType} item={item} />
           </Box>
         )
       })}

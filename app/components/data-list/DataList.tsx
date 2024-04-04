@@ -9,11 +9,10 @@ import { updateTool } from "@/app/lib/db/tools"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataListType } from "@/app/lib/types"
 import { FC, useContext, useEffect, useRef, useState } from "react"
-import { Box, Typography } from "@mui/joy"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { updateModel } from "@/app/lib/db/models"
+import { ChatList } from "@/app/components/data-list/ChatList"
 import { FilesView } from "@/app/components/data-list/items/files/FilesView"
-import { ChatsList } from "@/app/components/data-list/items/chat/ChatsList"
 import { FoldersView } from "@/app/components/data-list/items/folders/FoldersView"
 
 interface DataList {
@@ -160,43 +159,22 @@ export const DataList: FC<DataList> = ({
 
   return (
     <>
-      <Box
+      <div
         ref={divRef}
-        sx={{
-          marginTop: 2,
-          display: "flex",
-          flexDirection: "column",
-          overflowY: "auto",
-          height: "100%"
-        }}
+        className="flex h-full flex-col overflow-y-auto"
         onDrop={handleDrop}
       >
         {data.length === 0 && (
-          <Box
-            sx={{
-              display: "flex",
-              flexGrow: 1,
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Typography fontSize="lg" fontStyle="italic">
-              No {contentType}.
-            </Typography>
-          </Box>
+          <div className="flex grow items-center justify-center">
+            <p className="text-lg italic">No {contentType}.</p>
+          </div>
         )}
 
         {(dataWithFolders.length > 0 || dataWithoutFolders.length > 0) && (
-          <Box
-            sx={{
-              height: "100%",
-              width: isOverflowing ? "calc(100%-8px)" : "100%",
-              mr: isOverflowing ? 2 : 0,
-              "& > :not(style) + :not(style)": {
-                mt: 2
-              }
-            }}
+          <div
+            className={`h-full ${isOverflowing ? "w-[calc(100%-8px)]" : "w-full"} ${isOverflowing ? "mr-2" : ""} space-y-2`}
           >
+            {/* Nested folders are currently unsupported. Render `FoldersView` if no folder is active. */}
             {currentFolder === null && (
               <FoldersView
                 contentType={contentType}
@@ -210,7 +188,7 @@ export const DataList: FC<DataList> = ({
             )}
 
             {contentType === "chats" ? (
-              <ChatsList
+              <ChatList
                 displayedFiles={displayedFiles}
                 handleDrop={handleDrop}
                 handleDragEnter={handleDragEnter}
@@ -232,16 +210,12 @@ export const DataList: FC<DataList> = ({
                 handleDragStart={handleDragStart}
               />
             )}
-          </Box>
+          </div>
         )}
-      </Box>
+      </div>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexGrow: 1,
-          backgroundColor: isDragOver ? "accent" : "inherit"
-        }}
+      <div
+        className={`flex grow ${isDragOver ? "bg-accent" : ""}`}
         onDrop={handleDrop}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}

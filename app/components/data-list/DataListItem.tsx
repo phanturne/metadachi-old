@@ -1,4 +1,3 @@
-import { ChatItem } from "./items/chat/ChatItem"
 import { PresetItem } from "./items/presets/PresetItem"
 import { PromptItem } from "./items/prompts/PromptItem"
 import { FileItem } from "./items/files/FileItem"
@@ -7,8 +6,9 @@ import { ToolItem } from "./items/tools/ToolItem"
 import { ModelItem } from "./items/models/ModelItem"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/app/lib/types"
+import { ChatItem } from "@/app/components/data-list/ChatList"
 
-export function DataListContent({
+export function DataListItem({
   contentType,
   item
 }: {

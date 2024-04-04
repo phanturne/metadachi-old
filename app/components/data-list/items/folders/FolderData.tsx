@@ -1,5 +1,5 @@
 import { FolderItem } from "@/app/components/data-list/items/folders/FolderItem"
-import { DataListContent } from "@/app/components/data-list/DataListContent"
+import { DataListItem } from "@/app/components/data-list/DataListItem"
 import { Tables } from "@/supabase/types"
 import { ContentType } from "@/app/lib/types"
 import { FC } from "react"
@@ -43,7 +43,7 @@ export const FolderData: FC<FolderDataProps> = ({
             draggable={true}
             onDragStart={e => onDragStart(e, item.id)}
           >
-            <DataListContent contentType={contentType} item={item} />
+            <DataListItem contentType={contentType} item={item} />
           </Box>
         ))}
     </FolderItem>
