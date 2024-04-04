@@ -13,7 +13,7 @@ export const Routes = {
   Settings: "/settings",
   WorkspaceSettings: "/workspace-settings",
   Profile: "/profile",
-  Support: "/support",
+  Help: "/help",
   NotFound: "/404"
 }
 

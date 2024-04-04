@@ -1,27 +1,21 @@
 import * as React from "react"
 import { useContext } from "react"
-import Menu from "@mui/joy/Menu"
-import MenuItem from "@mui/joy/MenuItem"
-import ListItemDecorator from "@mui/joy/ListItemDecorator"
-import MenuButton from "@mui/joy/MenuButton"
-import Dropdown from "@mui/joy/Dropdown"
-import Avatar from "@mui/joy/Avatar"
-import { Box, Typography } from "@mui/joy"
-import {
-  CollectionsBookmarkRounded,
-  LoginRounded,
-  LogoutRounded,
-  RoomPreferencesRounded,
-  SettingsRounded
-} from "@mui/icons-material"
 import { useRouter } from "next/navigation"
-import Divider from "@mui/joy/Divider"
-import ThemeToggleButton from "@/app/components/utility/ThemeToggle"
+import ThemeSwitcher from "@/app/components/utility/ThemeSwitcher"
 import { MetadachiContext } from "@/app/lib/context"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { Routes } from "@/app/lib/constants"
 import { toast } from "sonner"
+import {
+  Avatar,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownSection,
+  DropdownTrigger
+} from "@nextui-org/react"
+import { User } from "@nextui-org/user"
 
 export default function ProfileMenu({
   placement = "bottom"
@@ -43,104 +37,120 @@ export default function ProfileMenu({
   }
 
   return (
-    <Dropdown>
-      <MenuButton
-        slots={{ root: Avatar }}
-        slotProps={{
-          root: { variant: "solid", size: "sm" }
+    <Dropdown
+      placement={placement}
+      classNames={{
+        content: "p-0 border-small border-divider bg-background"
+      }}
+    >
+      <DropdownTrigger>
+        <Avatar
+          as="button"
+          size="sm"
+          showFallback
+          name={profile?.display_name ?? profile?.username}
+          src={profile?.image_url}
+        />
+      </DropdownTrigger>
+      <DropdownMenu
+        aria-label="Profile Menu"
+        disabledKeys={["profile"]}
+        className="w-60 p-3"
+        itemClasses={{
+          base: [
+            "rounded-md",
+            "text-default-500",
+            "transition-opacity",
+            "data-[hover=true]:text-foreground",
+            "data-[hover=true]:bg-default-100",
+            "dark:data-[hover=true]:bg-default-50",
+            "data-[selectable=true]:focus:bg-default-50",
+            "data-[pressed=true]:opacity-70",
+            "data-[focus-visible=true]:ring-default-500"
+          ]
         }}
       >
-        <Avatar variant="soft" size="sm" src={profile?.image_url} />
-      </MenuButton>
-
-      <Menu placement={placement} sx={{ width: "250px" }}>
-        <Box sx={{ display: "flex", m: 1, mx: 1.5 }}>
-          <Avatar variant="soft" src={profile?.image_url} />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              pl: 1.5,
-              overflow: "hidden",
-              justifyContent: "center",
-              justifyContentItems: "center"
-            }}
+        <DropdownSection aria-label="Profile & Actions" showDivider>
+          <DropdownItem
+            isReadOnly
+            key="profile"
+            className="h-14 gap-2 opacity-100"
           >
-            <Typography
-              level="body-lg"
-              sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-            >
-              {(profile?.display_name || profile?.username) ?? "Guest"}
-            </Typography>
-          </Box>
-        </Box>
-        <Divider sx={{ m: 0.5 }} />
-        <Box
-          sx={{
-            display: "flex",
-            my: 1,
-            mx: 1.5,
-            gap: 1,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <ThemeToggleButton />
-          {/*{process.env.BUILD_MODE === 'export' && <FloatingWindowToggle />}*/}
-        </Box>
+            <User
+              name={profile?.display_name}
+              description={`@${profile?.username}`}
+              classNames={{
+                name: "text-default-600",
+                description: "text-default-500"
+              }}
+              avatarProps={{
+                size: "sm",
+                src: profile?.image_url,
+                showFallback: true,
+                name: profile?.display_name ?? profile?.username
+              }}
+            />
+          </DropdownItem>
+          <DropdownItem
+            key="collections"
+            onClick={() => router.push(Routes.Collections)}
+          >
+            Collections
+          </DropdownItem>
+          <DropdownItem
+            key="settings"
+            onClick={() => router.push(Routes.Settings)}
+          >
+            Settings
+          </DropdownItem>
+          <DropdownItem
+            key="workspace_settings"
+            onClick={() => router.push(Routes.WorkspaceSettings)}
+          >
+            Workspace Settings
+          </DropdownItem>
+        </DropdownSection>
 
-        <MenuItem
-          disabled
-          onClick={() => {
-            router.push(Routes.Collections)
-          }}
-        >
-          <ListItemDecorator>
-            <CollectionsBookmarkRounded />
-          </ListItemDecorator>
-          Collections
-        </MenuItem>
+        <DropdownSection aria-label="Preferences" showDivider>
+          <DropdownItem
+            key="quick_search"
+            shortcut="⌘K"
+            onClick={() =>
+              toast.message("The Quick Search feature is coming soon!")
+            }
+          >
+            Quick Search
+          </DropdownItem>
+          <DropdownItem
+            isReadOnly
+            key="theme"
+            className="cursor-default"
+            endContent={<ThemeSwitcher />}
+          >
+            Theme
+          </DropdownItem>
+        </DropdownSection>
 
-        <MenuItem
-          onClick={() => {
-            router.push(Routes.Settings)
-          }}
-        >
-          <ListItemDecorator>
-            <SettingsRounded />
-          </ListItemDecorator>
-          User Settings
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => {
-            router.push(Routes.WorkspaceSettings)
-          }}
-        >
-          <ListItemDecorator>
-            <RoomPreferencesRounded />
-          </ListItemDecorator>
-          Workspace Settings
-        </MenuItem>
-
-        <Divider sx={{ m: 0.5 }} />
-        {profile !== null && (
-          <MenuItem onClick={handleSignOut}>
-            <ListItemDecorator>
-              <LogoutRounded />
-            </ListItemDecorator>
-            Logout
-          </MenuItem>
-        )}
-        {profile === null && (
-          <MenuItem onClick={() => openAuthModal()}>
-            <ListItemDecorator>
-              <LoginRounded />
-            </ListItemDecorator>
-            Login / Sign Up
-          </MenuItem>
-        )}
-      </Menu>
+        <DropdownSection aria-label="Help & FAQ">
+          <DropdownItem
+            key="help_and_faq"
+            onClick={() => router.push(Routes.Help)}
+          >
+            Help & FAQ
+          </DropdownItem>
+          <DropdownItem
+            key="feedback"
+            onClick={() =>
+              toast.message("The Feedback feature is coming soon!")
+            }
+          >
+            Feedback
+          </DropdownItem>
+          <DropdownItem key="logout" onClick={handleSignOut}>
+            Log Out
+          </DropdownItem>
+        </DropdownSection>
+      </DropdownMenu>
     </Dropdown>
   )
 }
