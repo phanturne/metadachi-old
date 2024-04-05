@@ -1,29 +1,27 @@
 import * as React from "react"
+import { useState } from "react"
 import { toast } from "sonner"
-import Button from "@mui/joy/Button"
-import { FileUploadRounded } from "@mui/icons-material"
-import { VisuallyHiddenInput } from "@/app/components/input/VisuallyHiddenInput"
-import { Box } from "@mui/joy"
+import { Button } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
-interface ImageInputProps {
-  src: string
-  image: File | null
-  onSrcChange: (src: string) => void
-  onImageChange: (image: File) => void
-  width?: number
-  height?: number
-}
-
-const ImageInput: React.FC<ImageInputProps> = ({
+export default function ImageInput({
   src,
   image,
   onSrcChange,
   onImageChange,
   width = 200,
   height = 200
-}) => {
+}: {
+  src: string
+  image: File | null
+  onSrcChange: (src: string) => void
+  onImageChange: (image: File) => void
+  width?: number
+  height?: number
+}) {
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [previewSrc, setPreviewSrc] = React.useState<string>(src)
-  const [previewImage, setPreviewImage] = React.useState<File | null>(image)
+  const [previewImage, setPreviewImage] = useState<File | null>(image)
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -75,39 +73,32 @@ const ImageInput: React.FC<ImageInputProps> = ({
   }
 
   return (
-    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+    <div className="flex w-full items-center gap-3">
       {previewSrc && (
         <img
-          style={{
-            width: `${width}px`,
-            height: `${height}px`,
-            borderRadius: "0.25rem"
-          }}
           height={height}
           width={width}
           src={previewSrc}
           alt={"Image"}
+          className="rounded-full"
         />
       )}
 
       <Button
         size="sm"
-        component="label"
-        role={undefined}
-        tabIndex={-1}
-        variant="outlined"
-        color="neutral"
-        startDecorator={<FileUploadRounded />}
+        variant="bordered"
+        onClick={() => fileInputRef.current?.click()}
+        startContent={<Icon icon="solar:upload-linear" className="text-base" />}
       >
         Upload an image
-        <VisuallyHiddenInput
+        <input
           type="file"
-          accept="image/png, image/jpeg, image/jpg"
+          accept="image/*"
+          ref={fileInputRef}
+          className="hidden"
           onChange={handleImageSelect}
         />
       </Button>
-    </Box>
+    </div>
   )
 }
-
-export default ImageInput

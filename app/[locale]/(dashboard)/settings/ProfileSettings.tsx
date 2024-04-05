@@ -15,8 +15,10 @@ import {
   Tooltip
 } from "@mui/joy"
 import { BackupRounded, CloudDownloadRounded } from "@mui/icons-material"
-import { UsernameInput } from "@/app/components/input/profile/UsernameInput"
-import { DisplayNameInput } from "@/app/components/input/profile/DisplayNameInput"
+import {
+  DisplayNameInput,
+  UsernameInput
+} from "@/app/components/input/ProfileInputs"
 import Button from "@mui/joy/Button"
 
 interface ProfileSettingsProps {

@@ -9,7 +9,7 @@ import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { useSelectFileHandler } from "@/app/lib/hooks/use-select-file-handler"
 import { Box, IconButton, Textarea } from "@mui/joy"
 import { SendRounded, StopRounded } from "@mui/icons-material"
-import { FileInputIconButton } from "@/app/components/input/FileInput"
+import FileInput from "@/app/components/input/FileInput"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { toast } from "sonner"
 import { useChatHistoryHandler } from "@/app/lib/hooks/use-chat-history"
@@ -199,7 +199,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         }}
         startDecorator={
           <>
-            <FileInputIconButton
+            <FileInput
               handleSelectedFile={e => {
                 if (!e.target.files) return
                 handleSelectDeviceFile(e.target.files[0])
