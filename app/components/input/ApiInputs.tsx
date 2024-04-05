@@ -1,8 +1,7 @@
-import { Box, FormControl, FormLabel, Input, Stack, Typography } from "@mui/joy"
 import { FC } from "react"
-import Button from "@mui/joy/Button"
-import Divider from "@mui/joy/Divider"
+import { Button, Input } from "@nextui-org/react"
 
+// TODO: Use an object w/ reducer or Immer instead of multiple state variables
 interface ApiInputsProps {
   openaiAPIKey: string
   openaiOrgID: string
@@ -69,38 +68,28 @@ export const ApiInputs: FC<ApiInputsProps> = ({
   onOpenrouterAPIKeyChange
 }) => {
   return (
-    <Stack spacing={2}>
-      <Typography>
-        Adding an API Key will override its corresponding system API key (if it
-        exists).
-      </Typography>
-      <Divider />
-      <FormControl>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 1
-          }}
-        >
-          <FormLabel sx={{ alignSelf: "center" }}>
+    <div className="flex flex-col gap-4">
+      <h2 className="mt-2 text-small text-default-500">
+        Note: Adding an API Key will override its corresponding system API key
+        (if it exists).
+      </h2>
+      <div>
+        <div className="flex items-center gap-2">
+          <label className="text-sm">
             {useAzureOpenai ? "Azure OpenAI API Key" : "OpenAI API Key"}
-          </FormLabel>
+          </label>
 
           <Button
             size="sm"
-            color="neutral"
-            variant="outlined"
+            variant="bordered"
             onClick={() => onUseAzureOpenaiChange(!useAzureOpenai)}
-            sx={{ mb: 1 }}
+            className="mb-1"
           >
-            <Typography fontSize="x-small">
-              {useAzureOpenai
-                ? "Switch To Standard OpenAI"
-                : "Switch To Azure OpenAI"}
-            </Typography>
+            {useAzureOpenai
+              ? "Switch To Standard OpenAI"
+              : "Switch To Azure OpenAI"}
           </Button>
-        </Box>
+        </div>
 
         <Input
           placeholder={
@@ -113,147 +102,160 @@ export const ApiInputs: FC<ApiInputsProps> = ({
               ? onAzureOpenaiAPIKeyChange(e.target.value)
               : onOpenaiAPIKeyChange(e.target.value)
           }
+          className="mt-1"
         />
-      </FormControl>
+      </div>
 
-      <Stack sx={{ pl: 3, gap: 2 }}>
+      <div className="flex flex-col gap-4 pl-unit-lg">
         {useAzureOpenai ? (
           <>
-            <FormControl>
-              <FormLabel>Azure OpenAI Endpoint</FormLabel>
+            <div>
+              <label className="text-sm">Azure OpenAI Endpoint</label>
 
               <Input
                 placeholder="https://your-endpoint.openai.azure.com"
                 type="password"
                 value={azureOpenaiEndpoint}
                 onChange={e => onAzureOpenaiEndpointChange(e.target.value)}
+                className="mt-1"
               />
-            </FormControl>
+            </div>
 
-            <FormControl>
-              <FormLabel>Azure OpenAI GPT-3.5 Turbo ID</FormLabel>
+            <div>
+              <label className="text-sm">Azure OpenAI GPT-3.5 Turbo ID</label>
 
               <Input
                 placeholder="Azure OpenAI GPT-3.5 Turbo ID"
                 type="password"
                 value={azureOpenai35TurboID}
                 onChange={e => onAzureOpenai35TurboIDChange(e.target.value)}
+                className="mt-1"
               />
-            </FormControl>
+            </div>
 
-            <FormControl>
-              <FormLabel>Azure OpenAI GPT-4.5 Turbo ID</FormLabel>
+            <div>
+              <label className="text-sm">Azure OpenAI GPT-4.5 Turbo ID</label>
 
               <Input
                 placeholder="Azure OpenAI GPT-4.5 Turbo ID"
                 type="password"
                 value={azureOpenai45TurboID}
                 onChange={e => onAzureOpenai45TurboIDChange(e.target.value)}
+                className="mt-1"
               />
-            </FormControl>
+            </div>
 
-            <FormControl>
-              <FormLabel>Azure OpenAI GPT-4.5 Vision ID</FormLabel>
+            <div>
+              <label className="text-sm">Azure OpenAI GPT-4.5 Vision ID</label>
 
               <Input
                 placeholder="Azure OpenAI GPT-4.5 Vision ID"
                 type="password"
                 value={azureOpenai45VisionID}
                 onChange={e => onAzureOpenai45VisionIDChange(e.target.value)}
+                className="mt-1"
               />
-            </FormControl>
+            </div>
 
-            <FormControl>
-              <FormLabel>Azure OpenAI Embeddings ID</FormLabel>
+            <div>
+              <label className="text-sm">Azure OpenAI Embeddings ID</label>
 
               <Input
                 placeholder="Azure OpenAI Embeddings ID"
                 type="password"
                 value={azureOpenaiEmbeddingsID}
                 onChange={e => onAzureOpenaiEmbeddingsIDChange(e.target.value)}
+                className="mt-1"
               />
-            </FormControl>
+            </div>
           </>
         ) : (
           <>
-            <FormControl>
-              <FormLabel>OpenAI Organization ID</FormLabel>
+            <div>
+              <label className="text-sm">OpenAI Organization ID</label>
 
               <Input
                 placeholder="OpenAI Organization ID (optional)"
                 type="password"
                 value={openaiOrgID}
                 onChange={e => onOpenaiOrgIDChange(e.target.value)}
+                className="mt-1"
               />
-            </FormControl>
+            </div>
           </>
         )}
-      </Stack>
+      </div>
 
-      <FormControl>
-        <FormLabel>Anthropic API Key</FormLabel>
+      <div>
+        <label className="text-sm">Anthropic API Key</label>
 
         <Input
           placeholder="Anthropic API Key"
           type="password"
           value={anthropicAPIKey}
           onChange={e => onAnthropicAPIKeyChange(e.target.value)}
+          className="mt-1"
         />
-      </FormControl>
+      </div>
 
-      <FormControl>
-        <FormLabel>Google Gemini API Key</FormLabel>
+      <div>
+        <label className="text-sm">Google Gemini API Key</label>
 
         <Input
           placeholder="Google Gemini API Key"
           type="password"
           value={googleGeminiAPIKey}
           onChange={e => onGoogleGeminiAPIKeyChange(e.target.value)}
+          className="mt-1"
         />
-      </FormControl>
+      </div>
 
-      <FormControl>
-        <FormLabel>Mistral API Key</FormLabel>
+      <div>
+        <label className="text-sm">Mistral API Key</label>
 
         <Input
           placeholder="Mistral API Key"
           type="password"
           value={mistralAPIKey}
           onChange={e => onMistralAPIKeyChange(e.target.value)}
+          className="mt-1"
         />
-      </FormControl>
+      </div>
 
-      <FormControl>
-        <FormLabel>Groq API Key</FormLabel>
+      <div>
+        <label className="text-sm">Groq API Key</label>
 
         <Input
           placeholder="Groq API Key"
           type="password"
           value={groqAPIKey}
           onChange={e => onGroqAPIKeyChange(e.target.value)}
+          className="mt-1"
         />
-      </FormControl>
+      </div>
 
-      <FormControl>
-        <FormLabel>Perplexity API Key</FormLabel>
+      <div>
+        <label className="text-sm">Perplexity API Key</label>
 
         <Input
           placeholder="Perplexity API Key"
           type="password"
           value={perplexityAPIKey}
           onChange={e => onPerplexityAPIKeyChange(e.target.value)}
+          className="mt-1"
         />
-      </FormControl>
-      <FormControl>
-        <FormLabel>OpenRouter API Key</FormLabel>
+      </div>
+      <div>
+        <label className="text-sm">OpenRouter API Key</label>
 
         <Input
           placeholder="OpenRouter API Key"
           type="password"
           value={openrouterAPIKey}
           onChange={e => onOpenrouterAPIKeyChange(e.target.value)}
+          className="mt-1"
         />
-      </FormControl>
-    </Stack>
+      </div>
+    </div>
   )
 }

@@ -200,6 +200,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         startDecorator={
           <>
             <FileInput
+              isIconOnly
               handleSelectedFile={e => {
                 if (!e.target.files) return
                 handleSelectDeviceFile(e.target.files[0])
