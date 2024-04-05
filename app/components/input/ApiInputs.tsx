@@ -69,193 +69,164 @@ export const ApiInputs: FC<ApiInputsProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="mt-2 text-small text-default-500">
+      <h2 className="mb-8 text-small text-default-500">
         Note: Adding an API Key will override its corresponding system API key
         (if it exists).
       </h2>
-      <div>
-        <div className="flex items-center gap-2">
-          <label className="text-sm">
+
+      <Input
+        label={
+          <>
             {useAzureOpenai ? "Azure OpenAI API Key" : "OpenAI API Key"}
-          </label>
 
-          <Button
-            size="sm"
-            variant="bordered"
-            onClick={() => onUseAzureOpenaiChange(!useAzureOpenai)}
-            className="mb-1"
-          >
-            {useAzureOpenai
-              ? "Switch To Standard OpenAI"
-              : "Switch To Azure OpenAI"}
-          </Button>
-        </div>
-
-        <Input
-          placeholder={
-            useAzureOpenai ? "Azure OpenAI API Key" : "OpenAI API Key"
-          }
-          type="password"
-          value={useAzureOpenai ? azureOpenaiAPIKey : openaiAPIKey}
-          onChange={e =>
-            useAzureOpenai
-              ? onAzureOpenaiAPIKeyChange(e.target.value)
-              : onOpenaiAPIKeyChange(e.target.value)
-          }
-          className="mt-1"
-        />
-      </div>
+            <Button
+              size="sm"
+              variant="bordered"
+              onClick={() => onUseAzureOpenaiChange(!useAzureOpenai)}
+              className="mb-1 ml-4"
+            >
+              {useAzureOpenai
+                ? "Switch To Standard OpenAI"
+                : "Switch To Azure OpenAI"}
+            </Button>
+          </>
+        }
+        labelPlacement="outside"
+        placeholder={useAzureOpenai ? "Azure OpenAI API Key" : "OpenAI API Key"}
+        type="password"
+        value={useAzureOpenai ? azureOpenaiAPIKey : openaiAPIKey}
+        onChange={e =>
+          useAzureOpenai
+            ? onAzureOpenaiAPIKeyChange(e.target.value)
+            : onOpenaiAPIKeyChange(e.target.value)
+        }
+        className="mt-1"
+      />
 
       <div className="flex flex-col gap-4 pl-unit-lg">
         {useAzureOpenai ? (
           <>
-            <div>
-              <label className="text-sm">Azure OpenAI Endpoint</label>
+            <Input
+              label="Azure OpenAI Endpoint"
+              labelPlacement="outside"
+              placeholder="https://your-endpoint.openai.azure.com"
+              type="password"
+              value={azureOpenaiEndpoint}
+              onChange={e => onAzureOpenaiEndpointChange(e.target.value)}
+              className="mt-1"
+            />
 
-              <Input
-                placeholder="https://your-endpoint.openai.azure.com"
-                type="password"
-                value={azureOpenaiEndpoint}
-                onChange={e => onAzureOpenaiEndpointChange(e.target.value)}
-                className="mt-1"
-              />
-            </div>
+            <Input
+              label="Azure OpenAI GPT-3.5 Turbo ID"
+              labelPlacement="outside"
+              placeholder="Azure OpenAI GPT-3.5 Turbo ID"
+              type="password"
+              value={azureOpenai35TurboID}
+              onChange={e => onAzureOpenai35TurboIDChange(e.target.value)}
+              className="mt-1"
+            />
 
-            <div>
-              <label className="text-sm">Azure OpenAI GPT-3.5 Turbo ID</label>
+            <Input
+              label="Azure OpenAI GPT-4.5 Turbo ID"
+              labelPlacement="outside"
+              placeholder="Azure OpenAI GPT-4.5 Turbo ID"
+              type="password"
+              value={azureOpenai45TurboID}
+              onChange={e => onAzureOpenai45TurboIDChange(e.target.value)}
+              className="mt-1"
+            />
 
-              <Input
-                placeholder="Azure OpenAI GPT-3.5 Turbo ID"
-                type="password"
-                value={azureOpenai35TurboID}
-                onChange={e => onAzureOpenai35TurboIDChange(e.target.value)}
-                className="mt-1"
-              />
-            </div>
+            <Input
+              label="Azure OpenAI GPT-4.5 Vision ID"
+              labelPlacement="outside"
+              placeholder="Azure OpenAI GPT-4.5 Vision ID"
+              type="password"
+              value={azureOpenai45VisionID}
+              onChange={e => onAzureOpenai45VisionIDChange(e.target.value)}
+              className="mt-1"
+            />
 
-            <div>
-              <label className="text-sm">Azure OpenAI GPT-4.5 Turbo ID</label>
-
-              <Input
-                placeholder="Azure OpenAI GPT-4.5 Turbo ID"
-                type="password"
-                value={azureOpenai45TurboID}
-                onChange={e => onAzureOpenai45TurboIDChange(e.target.value)}
-                className="mt-1"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm">Azure OpenAI GPT-4.5 Vision ID</label>
-
-              <Input
-                placeholder="Azure OpenAI GPT-4.5 Vision ID"
-                type="password"
-                value={azureOpenai45VisionID}
-                onChange={e => onAzureOpenai45VisionIDChange(e.target.value)}
-                className="mt-1"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm">Azure OpenAI Embeddings ID</label>
-
-              <Input
-                placeholder="Azure OpenAI Embeddings ID"
-                type="password"
-                value={azureOpenaiEmbeddingsID}
-                onChange={e => onAzureOpenaiEmbeddingsIDChange(e.target.value)}
-                className="mt-1"
-              />
-            </div>
+            <Input
+              label="Azure OpenAI Embeddings ID"
+              labelPlacement="outside"
+              placeholder="Azure OpenAI Embeddings ID"
+              type="password"
+              value={azureOpenaiEmbeddingsID}
+              onChange={e => onAzureOpenaiEmbeddingsIDChange(e.target.value)}
+              className="mt-1"
+            />
           </>
         ) : (
-          <>
-            <div>
-              <label className="text-sm">OpenAI Organization ID</label>
-
-              <Input
-                placeholder="OpenAI Organization ID (optional)"
-                type="password"
-                value={openaiOrgID}
-                onChange={e => onOpenaiOrgIDChange(e.target.value)}
-                className="mt-1"
-              />
-            </div>
-          </>
+          <Input
+            label="OpenAI Organization ID"
+            labelPlacement="outside"
+            placeholder="OpenAI Organization ID (optional)"
+            type="password"
+            value={openaiOrgID}
+            onChange={e => onOpenaiOrgIDChange(e.target.value)}
+            className="mt-1"
+          />
         )}
       </div>
 
-      <div>
-        <label className="text-sm">Anthropic API Key</label>
+      <Input
+        label="Anthropic API Key"
+        labelPlacement="outside"
+        placeholder="Anthropic API Key"
+        type="password"
+        value={anthropicAPIKey}
+        onChange={e => onAnthropicAPIKeyChange(e.target.value)}
+      />
 
-        <Input
-          placeholder="Anthropic API Key"
-          type="password"
-          value={anthropicAPIKey}
-          onChange={e => onAnthropicAPIKeyChange(e.target.value)}
-          className="mt-1"
-        />
-      </div>
+      <Input
+        label="Google Gemini API Key"
+        labelPlacement="outside"
+        placeholder="Google Gemini API Key"
+        type="password"
+        value={googleGeminiAPIKey}
+        onChange={e => onGoogleGeminiAPIKeyChange(e.target.value)}
+        className="mt-1"
+      />
 
-      <div>
-        <label className="text-sm">Google Gemini API Key</label>
+      <Input
+        label="Mistral API Key"
+        labelPlacement="outside"
+        placeholder="Mistral API Key"
+        type="password"
+        value={mistralAPIKey}
+        onChange={e => onMistralAPIKeyChange(e.target.value)}
+        className="mt-1"
+      />
 
-        <Input
-          placeholder="Google Gemini API Key"
-          type="password"
-          value={googleGeminiAPIKey}
-          onChange={e => onGoogleGeminiAPIKeyChange(e.target.value)}
-          className="mt-1"
-        />
-      </div>
+      <Input
+        label="Groq API Key"
+        labelPlacement="outside"
+        placeholder="Groq API Key"
+        type="password"
+        value={groqAPIKey}
+        onChange={e => onGroqAPIKeyChange(e.target.value)}
+        className="mt-1"
+      />
 
-      <div>
-        <label className="text-sm">Mistral API Key</label>
+      <Input
+        label="Perplexity API Key"
+        labelPlacement="outside"
+        placeholder="Perplexity API Key"
+        type="password"
+        value={perplexityAPIKey}
+        onChange={e => onPerplexityAPIKeyChange(e.target.value)}
+        className="mt-1"
+      />
 
-        <Input
-          placeholder="Mistral API Key"
-          type="password"
-          value={mistralAPIKey}
-          onChange={e => onMistralAPIKeyChange(e.target.value)}
-          className="mt-1"
-        />
-      </div>
-
-      <div>
-        <label className="text-sm">Groq API Key</label>
-
-        <Input
-          placeholder="Groq API Key"
-          type="password"
-          value={groqAPIKey}
-          onChange={e => onGroqAPIKeyChange(e.target.value)}
-          className="mt-1"
-        />
-      </div>
-
-      <div>
-        <label className="text-sm">Perplexity API Key</label>
-
-        <Input
-          placeholder="Perplexity API Key"
-          type="password"
-          value={perplexityAPIKey}
-          onChange={e => onPerplexityAPIKeyChange(e.target.value)}
-          className="mt-1"
-        />
-      </div>
-      <div>
-        <label className="text-sm">OpenRouter API Key</label>
-
-        <Input
-          placeholder="OpenRouter API Key"
-          type="password"
-          value={openrouterAPIKey}
-          onChange={e => onOpenrouterAPIKeyChange(e.target.value)}
-          className="mt-1"
-        />
-      </div>
+      <Input
+        label="OpenRouter API Key"
+        labelPlacement="outside"
+        placeholder="OpenRouter API Key"
+        type="password"
+        value={openrouterAPIKey}
+        onChange={e => onOpenrouterAPIKeyChange(e.target.value)}
+        className="mt-1"
+      />
     </div>
   )
 }

@@ -4,22 +4,13 @@ import { MetadachiContext } from "@/app/lib/context"
 import { PROFILE_CONTEXT_MAX } from "@/app/lib/db/limits"
 import { exportLocalStorageAsJSON } from "@/app/lib/utils/export-old-data"
 import React, { FC, useContext } from "react"
-import ImageInput from "../../../components/input/ImageInput"
-import {
-  Box,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Stack,
-  Textarea,
-  Tooltip
-} from "@mui/joy"
-import { BackupRounded, CloudDownloadRounded } from "@mui/icons-material"
+import { AvatarImageInput } from "@/app/components/input/ImageInput"
 import {
   DisplayNameInput,
   UsernameInput
 } from "@/app/components/input/ProfileInputs"
-import Button from "@mui/joy/Button"
+import { Button, Card, CardBody, Textarea, Tooltip } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface ProfileSettingsProps {
   profileImageSrc: string
@@ -53,83 +44,82 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({
   const {} = useContext(MetadachiContext)
 
   return (
-    <Stack spacing={2}>
-      <FormControl>
-        <FormLabel>Profile Image</FormLabel>
-        <ImageInput
-          src={profileImageSrc}
-          image={profileImageFile}
-          height={50}
-          width={50}
-          onSrcChange={setProfileImageSrc}
-          onImageChange={setProfileImageFile}
-        />
-      </FormControl>
+    <div className="flex flex-col gap-4">
+      {/* Profile */}
+      <Card className="my-4 bg-default-100" shadow="none">
+        <CardBody>
+          <div className="flex items-center gap-4">
+            <AvatarImageInput
+              src={profileImageSrc}
+              name={displayName ?? username}
+              onSrcChange={setProfileImageSrc}
+              onImageChange={setProfileImageFile}
+            />
+
+            <div>
+              <p className="text-sm font-medium text-default-600">
+                {displayName}
+              </p>
+              <p className="text-xs text-default-400">{username}</p>
+              {/*<p className="mt-1 text-xs text-default-400">kate.moore@acme.com</p>*/}
+            </div>
+          </div>
+        </CardBody>
+      </Card>
 
       <UsernameInput
         username={username}
         usernameAvailable={usernameAvailable}
         onUsernameAvailableChange={onUsernameAvailableChange}
         onUsernameChange={onUsernameChange}
+        labelPlacement="outside"
       />
 
       <DisplayNameInput
         displayName={displayName}
         onDisplayNameChange={onDisplayNameChange}
+        labelPlacement="outside"
       />
 
-      <FormControl>
-        <FormLabel>
-          What would you like the AI to know about you to provide better
-          responses?
-        </FormLabel>
+      <Textarea
+        label="What would you like the AI to know about you to provide better
+          responses?"
+        labelPlacement="outside"
+        value={profileInstructions}
+        onChange={e => setProfileInstructions(e.target.value)}
+        placeholder="Profile context... (optional)"
+        minRows={6}
+        maxRows={10}
+        description={`${profileInstructions.length}/${PROFILE_CONTEXT_MAX}`}
+      />
 
-        <Textarea
-          value={profileInstructions}
-          onChange={e => setProfileInstructions(e.target.value)}
-          placeholder="Profile context... (optional)"
-          minRows={6}
-          maxRows={10}
-        />
-
-        <FormHelperText
-          sx={{ fontStyle: "italic" }}
-        >{`${profileInstructions.length}/${PROFILE_CONTEXT_MAX}`}</FormHelperText>
-      </FormControl>
-      <Box
-        sx={{
-          mt: 6,
-          display: "flex",
-          justifyContent: "space-between"
-        }}
-      >
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          <Tooltip title="Import your data from JSON." variant="outlined">
+      <div className="mt-2 flex justify-between">
+        <div className="flex items-center gap-1">
+          <Tooltip content="Import your data from JSON.">
             <Button
-              disabled
-              variant="soft"
-              color="neutral"
-              startDecorator={<BackupRounded />}
+              isDisabled
+              variant="flat"
+              startContent={
+                <Icon icon="solar:import-linear" className="text-xl" />
+              }
             >
               Import Data
             </Button>
           </Tooltip>
 
-          <Tooltip
-            title="Export your data as JSON. Import coming soon!"
-            variant="outlined"
-          >
+          <Tooltip content="Export your data as JSON. Import coming soon!">
             <Button
-              variant="soft"
-              color="neutral"
-              startDecorator={<CloudDownloadRounded />}
+              variant="flat"
+              startContent={
+                <Icon icon="solar:export-linear" className="text-xl" />
+              }
               onClick={exportLocalStorageAsJSON}
             >
               Export Data
             </Button>
           </Tooltip>
-        </Box>
-      </Box>
-    </Stack>
+        </div>
+      </div>
+    </div>
   )
 }

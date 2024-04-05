@@ -9,15 +9,19 @@ import { Icon } from "@iconify-icon/react"
 
 export const DisplayNameInput = ({
   displayName,
-  onDisplayNameChange
+  onDisplayNameChange,
+  labelPlacement = "inside"
 }: {
   displayName: string
   onDisplayNameChange: (name: string) => void
+  labelPlacement?: "inside" | "outside"
 }) => {
   return (
     <Input
       isRequired
       label="Display Name"
+      labelPlacement={labelPlacement}
+      placeholder="Your Display Name"
       value={displayName}
       onValueChange={onDisplayNameChange}
       maxLength={PROFILE_DISPLAY_NAME_MAX}
@@ -30,12 +34,14 @@ export const UsernameInput = ({
   username,
   usernameAvailable,
   onUsernameAvailableChange,
-  onUsernameChange
+  onUsernameChange,
+  labelPlacement = "inside"
 }: {
   username: string
   usernameAvailable: boolean
   onUsernameAvailableChange: (isAvailable: boolean) => void
   onUsernameChange: (username: string) => void
+  labelPlacement?: "inside" | "outside"
 }) => {
   const [loading, setLoading] = useState(false)
 
@@ -96,7 +102,9 @@ export const UsernameInput = ({
   return (
     <Input
       isRequired
-      label="Username"
+      label="Your Username"
+      labelPlacement={labelPlacement}
+      placeholder="Username"
       value={username}
       onValueChange={val => {
         onUsernameChange(val)
@@ -108,16 +116,19 @@ export const UsernameInput = ({
       endContent={
         <>
           {loading ? (
-            <Spinner className="" />
+            <Spinner
+              size={labelPlacement === "inside" ? "md" : "sm"}
+              className="flex h-full items-center"
+            />
           ) : usernameAvailable ? (
             <Icon
               icon="solar:check-circle-linear"
-              className="flex h-full items-center text-3xl text-green-500"
+              className={`flex h-full items-center text-2xl text-green-500`}
             />
           ) : (
             <Icon
               icon="solar:close-circle-linear"
-              className="flex h-full items-center text-3xl text-red-500"
+              className={`flex h-full items-center text-2xl text-red-500`}
             />
           )}
         </>

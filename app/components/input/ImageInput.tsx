@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { toast } from "sonner"
-import { Button } from "@nextui-org/react"
+import { Avatar, Badge, Button } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
 
 export default function ImageInput({
@@ -100,5 +100,97 @@ export default function ImageInput({
         />
       </Button>
     </div>
+  )
+}
+
+export function AvatarImageInput({
+  src,
+  name,
+  onSrcChange,
+  onImageChange
+}: {
+  src: string
+  name: string
+  onSrcChange: (src: string) => void
+  onImageChange: (image: File) => void
+}) {
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0]
+
+      if (file.size > 6000000) {
+        toast.error("Image must be less than 6MB!")
+        return
+      }
+
+      const url = URL.createObjectURL(file)
+
+      const img = new window.Image()
+      img.src = url
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas")
+        const ctx = canvas.getContext("2d")
+
+        if (!ctx) {
+          toast.error("Unable to create canvas context.")
+          return
+        }
+
+        const size = Math.min(img.width, img.height)
+        canvas.width = size
+        canvas.height = size
+
+        ctx.drawImage(
+          img,
+          (img.width - size) / 2,
+          (img.height - size) / 2,
+          size,
+          size,
+          0,
+          0,
+          size,
+          size
+        )
+
+        const squareUrl = canvas.toDataURL()
+
+        onSrcChange(squareUrl)
+        onImageChange(file)
+      }
+    }
+  }
+
+  return (
+    <Badge
+      className="size-5"
+      showOutline={false}
+      content={
+        <Button
+          isIconOnly
+          radius="full"
+          size="sm"
+          variant="light"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <>
+            <Icon className="size-unit-sm" icon="solar:pen-linear" />
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleImageSelect}
+            />
+          </>
+        </Button>
+      }
+      placement="bottom-right"
+      shape="circle"
+    >
+      <Avatar size="lg" showFallback name={name} src={src} />
+    </Badge>
   )
 }

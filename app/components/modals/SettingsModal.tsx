@@ -8,18 +8,27 @@ import { LLM_LIST_MAP } from "@/app/lib/models/llm/llm-list"
 import { OpenRouterLLM } from "@/app/lib/types"
 import { fetchOpenRouterModels } from "@/app/lib/models/fetch-models"
 import { ApiInputs } from "@/app/components/input/ApiInputs"
-import { useRouter, useSearchParams } from "next/navigation"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { ProfileSettings } from "@/app/[locale]/(dashboard)/settings/ProfileSettings"
-import { Button, Tab, Tabs } from "@nextui-org/react"
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  Tab,
+  Tabs
+} from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
 
-export default function SettingsPage() {
-  const searchParams = useSearchParams()
-  const [tab, setTab] = useState(searchParams.get("tab") ?? "profile")
-
+// TODO: Fix profile data sometimes not loading, leading to an empty form
+export default function SettingsModal({
+  isOpen,
+  onClose
+}: {
+  isOpen: boolean
+  onClose: () => void
+}) {
   const { openAuthModal } = useAuthModal()
-  const router = useRouter()
 
   const {
     profile,
@@ -213,101 +222,102 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center overflow-auto p-4">
-      <div className="w-full max-w-2xl">
-        <Tabs
-          fullWidth
-          classNames={{
-            base: "mt-6",
-            cursor: "bg-content1 dark:bg-content1",
-            panel: "w-full p-0 pt-4"
-          }}
-          selectedKey={tab}
-          onSelectionChange={newTab => {
-            router.push(`/settings?tab=${newTab}`)
-            setTab(newTab as string)
-          }}
-        >
-          <Tab
-            key="profile"
-            title={
-              <div className="flex items-center space-x-2">
-                <Icon icon="solar:user-linear" className="text-base" />
-                <span>Profile</span>
-              </div>
-            }
+    <Modal
+      size="2xl"
+      isOpen={isOpen}
+      onClose={onClose}
+      scrollBehavior="outside"
+    >
+      <ModalContent>
+        <ModalBody>
+          {/*{profile?.username}*/}
+          <Tabs
+            fullWidth
+            classNames={{
+              base: "mt-6"
+            }}
           >
-            <ProfileSettings
-              profileImageSrc={profileImageSrc}
-              setProfileImageSrc={setProfileImageSrc}
-              profileImageFile={profileImageFile}
-              setProfileImageFile={setProfileImageFile}
-              profileInstructions={profileInstructions}
-              setProfileInstructions={setProfileInstructions}
-              username={username}
-              usernameAvailable={usernameAvailable}
-              displayName={displayName}
-              onUsernameAvailableChange={setUsernameAvailable}
-              onUsernameChange={setUsername}
-              onDisplayNameChange={setDisplayName}
-            />
-          </Tab>
-          <Tab
-            key="api-keys"
-            title={
-              <div className="flex items-center space-x-2">
-                <Icon
-                  icon="solar:key-minimalistic-linear"
-                  className="text-base"
-                />
-                <span>API Keys</span>
-              </div>
-            }
-          >
-            <ApiInputs
-              openaiAPIKey={openaiAPIKey}
-              openaiOrgID={openaiOrgID}
-              azureOpenaiAPIKey={azureOpenaiAPIKey}
-              azureOpenaiEndpoint={azureOpenaiEndpoint}
-              azureOpenai35TurboID={azureOpenai35TurboID}
-              azureOpenai45TurboID={azureOpenai45TurboID}
-              azureOpenai45VisionID={azureOpenai45VisionID}
-              azureOpenaiEmbeddingsID={azureEmbeddingsID}
-              anthropicAPIKey={anthropicAPIKey}
-              googleGeminiAPIKey={googleGeminiAPIKey}
-              mistralAPIKey={mistralAPIKey}
-              groqAPIKey={groqAPIKey}
-              perplexityAPIKey={perplexityAPIKey}
-              useAzureOpenai={useAzureOpenai}
-              openrouterAPIKey={openrouterAPIKey}
-              onOpenaiAPIKeyChange={setOpenaiAPIKey}
-              onOpenaiOrgIDChange={setOpenaiOrgID}
-              onAzureOpenaiAPIKeyChange={setAzureOpenaiAPIKey}
-              onAzureOpenaiEndpointChange={setAzureOpenaiEndpoint}
-              onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
-              onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
-              onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
-              onAzureOpenaiEmbeddingsIDChange={setAzureEmbeddingsID}
-              onAnthropicAPIKeyChange={setAnthropicAPIKey}
-              onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
-              onMistralAPIKeyChange={setMistralAPIKey}
-              onGroqAPIKeyChange={setGroqAPIKey}
-              onPerplexityAPIKeyChange={setPerplexityAPIKey}
-              onUseAzureOpenaiChange={setUseAzureOpenai}
-              onOpenrouterAPIKeyChange={setOpenrouterAPIKey}
-            />
-          </Tab>
-        </Tabs>
+            <Tab
+              key="profile"
+              title={
+                <div className="flex items-center space-x-2">
+                  <Icon icon="solar:user-linear" className="text-base" />
+                  <span>Profile</span>
+                </div>
+              }
+            >
+              <ProfileSettings
+                profileImageSrc={profileImageSrc}
+                setProfileImageSrc={setProfileImageSrc}
+                profileImageFile={profileImageFile}
+                setProfileImageFile={setProfileImageFile}
+                profileInstructions={profileInstructions}
+                setProfileInstructions={setProfileInstructions}
+                username={username}
+                usernameAvailable={usernameAvailable}
+                displayName={displayName}
+                onUsernameAvailableChange={setUsernameAvailable}
+                onUsernameChange={setUsername}
+                onDisplayNameChange={setDisplayName}
+              />
+            </Tab>
+            <Tab
+              key="api-keys"
+              title={
+                <div className="flex items-center space-x-2">
+                  <Icon
+                    icon="solar:key-minimalistic-linear"
+                    className="text-base"
+                  />
+                  <span>API Keys</span>
+                </div>
+              }
+            >
+              <ApiInputs
+                openaiAPIKey={openaiAPIKey}
+                openaiOrgID={openaiOrgID}
+                azureOpenaiAPIKey={azureOpenaiAPIKey}
+                azureOpenaiEndpoint={azureOpenaiEndpoint}
+                azureOpenai35TurboID={azureOpenai35TurboID}
+                azureOpenai45TurboID={azureOpenai45TurboID}
+                azureOpenai45VisionID={azureOpenai45VisionID}
+                azureOpenaiEmbeddingsID={azureEmbeddingsID}
+                anthropicAPIKey={anthropicAPIKey}
+                googleGeminiAPIKey={googleGeminiAPIKey}
+                mistralAPIKey={mistralAPIKey}
+                groqAPIKey={groqAPIKey}
+                perplexityAPIKey={perplexityAPIKey}
+                useAzureOpenai={useAzureOpenai}
+                openrouterAPIKey={openrouterAPIKey}
+                onOpenaiAPIKeyChange={setOpenaiAPIKey}
+                onOpenaiOrgIDChange={setOpenaiOrgID}
+                onAzureOpenaiAPIKeyChange={setAzureOpenaiAPIKey}
+                onAzureOpenaiEndpointChange={setAzureOpenaiEndpoint}
+                onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
+                onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
+                onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
+                onAzureOpenaiEmbeddingsIDChange={setAzureEmbeddingsID}
+                onAnthropicAPIKeyChange={setAnthropicAPIKey}
+                onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
+                onMistralAPIKeyChange={setMistralAPIKey}
+                onGroqAPIKeyChange={setGroqAPIKey}
+                onPerplexityAPIKeyChange={setPerplexityAPIKey}
+                onUseAzureOpenaiChange={setUseAzureOpenai}
+                onOpenrouterAPIKeyChange={setOpenrouterAPIKey}
+              />
+            </Tab>
+          </Tabs>
 
-        <div className="flex justify-end gap-2 py-8">
-          <Button variant="light" onClick={handleReset}>
-            Reset
-          </Button>
-          <Button color="primary" onClick={handleSave}>
-            Save
-          </Button>
-        </div>
-      </div>
-    </div>
+          <div className="flex justify-end gap-2 py-8">
+            <Button variant="light" onClick={handleReset}>
+              Reset
+            </Button>
+            <Button color="primary" onClick={handleSave}>
+              Save
+            </Button>
+          </div>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   )
 }
