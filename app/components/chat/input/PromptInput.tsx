@@ -1,10 +1,11 @@
+// Source: https://www.nextui.pro/components/ai/prompt-inputs#component-prompt-input-with-suggestions-above
+
 "use client"
 
 import type { TextAreaProps } from "@nextui-org/react"
 
 import React from "react"
 import { Textarea } from "@nextui-org/react"
-
 import { cn } from "@/app/lib/utils/utils"
 
 const PromptInput = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -20,7 +21,7 @@ const PromptInput = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           input: cn("py-0", classNames?.input)
         }}
         minRows={1}
-        placeholder="Enter a prompt here"
+        placeholder={`Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`}
         radius="lg"
         variant="bordered"
         {...props}

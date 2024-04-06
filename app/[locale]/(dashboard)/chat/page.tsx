@@ -19,16 +19,16 @@ import ChatSettingsCard from "@/app/components/chat/ChatSettingsCard"
 import ChatListCard from "@/app/components/chat/ChatListCard"
 import { Button, ScrollShadow } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
-import PromptInputWithBottomActions from "@/app/components/chat/PromptInputWithBottomActions"
 import { useScroll } from "@/app/lib/hooks/use-scroll"
 import { NewChatContent } from "@/app/components/chat/NewChatContent"
 import ChatMessages from "@/app/components/chat/ChatMessages"
-import { ChatFilesDisplay } from "@/app/components/files/ChatFilesDisplay"
+import { ChatInput } from "@/app/components/chat/input/ChatInput"
+import { ChatFilesDisplay } from "@/app/components/chat/ChatFilesDisplay"
+import PromptSuggestions from "@/app/components/chat/PromptSuggestions"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
   const chatId = searchParams.get("id")
-  const [tab, setTab] = useState(searchParams.get("tab") ?? "chat")
 
   // Register hotkeys
   const { handleNewChat, handleFocusChatInput } = useChatHandler()
@@ -58,7 +58,6 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setTab(searchParams.get("tab") ?? "chat")
     const fetchData = async () => {
       await fetchMessages()
       await fetchChat()
@@ -183,35 +182,24 @@ export default function ChatPage() {
     })
   }
 
+  const isNewChat = !chatId && chatMessages.length == 0
+
   if (loading) {
     return <Loading />
   }
 
   return (
-    <div className="overflow-none flex size-full">
+    <div className="flex size-full overflow-auto">
       {/* Chat Sidebar*/}
       <div className="mx-4 my-2 flex w-64 flex-col gap-4">
         <ChatActions />
         <ChatSettingsCard />
         <ChatListCard />
       </div>
-      {/*<div className="flex grow flex-col border p-2">*/}
-      {/*  <ChatContent chatId={chatId} />*/}
-      {/*  /!*<ChatInput />*!/*/}
-      {/*  /!*{Array.from({ length: 100 }, (_, index) => (*!/*/}
-      {/*  /!*  <div key={index}>Content {index + 1}</div>*!/*/}
-      {/*  /!*))}*!/*/}
-
-      {/*  <div className="relative m-3 h-64">*/}
-      {/*    <div className="fixed flex h-64 w-full flex-col gap-4">*/}
-      {/*      <ChatInput />*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
 
       <div className="flex grow flex-col">
         {/* Chat Body*/}
-        <ScrollShadow className="flex h-full flex-col overflow-scroll pb-8">
+        <ScrollShadow className="flex h-full flex-col overflow-y-scroll px-20">
           {!chatId && chatMessages.length === 0 ? (
             <NewChatContent />
           ) : (
@@ -223,22 +211,17 @@ export default function ChatPage() {
           )}
         </ScrollShadow>
 
-        {/*<div className="m-3 h-64">*/}
-        {/*  <div className="flex h-64 flex-col gap-4">*/}
-        {/*    <ChatInput />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-
-        {/*<PromptInputWithBottomActions />*/}
-        <div className="px-auto mt-auto flex max-w-full flex-col gap-2">
+        <div className="flex w-full flex-col gap-4 px-20 py-4">
           {/*<ChatToolsDisplay />*/}
           <ChatFilesDisplay />
           {/*<AssistantDisplay />*/}
-          {/*<ChatInput />*/}
-          <PromptInputWithBottomActions />
-          {/*<p className="px-2 text-tiny text-default-400">*/}
-          {/*  Acme AI can make mistakes. Consider checking important information.*/}
-          {/*</p>*/}
+
+          {/*<ChatCommands />*/}
+          {isNewChat && <PromptSuggestions />}
+          <form className="flex w-full flex-col items-start rounded-medium bg-default-100 transition-colors hover:bg-default-200/70">
+            {/*{images.length > 0 && <ChatInputFilesList />}*/}
+            <ChatInput />
+          </form>
         </div>
       </div>
     </div>

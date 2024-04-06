@@ -138,6 +138,7 @@ export const Message: FC<MessageProps> = ({
             ref={editInputRef}
             value={editedMessage}
             onChange={e => setEditedMessage(e.target.value)}
+            minRows={1}
             maxRows={20}
           />
         ) : (

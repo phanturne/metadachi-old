@@ -7,13 +7,14 @@ import { useTranslation } from "react-i18next"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { useSelectFileHandler } from "@/app/lib/hooks/use-select-file-handler"
-import { Box, IconButton, Textarea } from "@mui/joy"
-import { SendRounded, StopRounded } from "@mui/icons-material"
 import FileInput from "@/app/components/input/FileInput"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { toast } from "sonner"
 import { useChatHistoryHandler } from "@/app/lib/hooks/use-chat-history"
-import { ChatCommands } from "@/app/components/chat/input/ChatCommands"
+import PromptInput from "@/app/components/chat/input/PromptInput"
+import { Button, Tooltip } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
+import { cn } from "@/app/lib/utils/utils"
 
 interface ChatInputProps {}
 
@@ -23,8 +24,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   useHotkey("l", () => {
     handleFocusChatInput()
   })
-
-  const { openAuthModal } = useAuthModal()
 
   const [isTyping, setIsTyping] = useState<boolean>(false)
 
@@ -157,71 +156,65 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   }
 
   return (
-    <div className="flex w-full items-center justify-center">
-      <ChatCommands />
-
-      <Textarea
-        slotProps={{ textarea: { ref: chatInputRef } }}
-        placeholder={`Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`}
-        onChange={e => handleInputChange(e.target.value)}
-        value={userInput}
-        minRows={1}
-        maxRows={18}
-        onKeyDown={handleKeyDown}
-        onPaste={handlePaste}
-        onCompositionStart={() => setIsTyping(true)}
-        onCompositionEnd={() => setIsTyping(false)}
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          "--Textarea-focusedThickness": "0rem",
-          width: "100%",
-          borderRadius: "xl",
-          "& .MuiTextarea-startDecorator": {
-            my: 0
-          },
-          "& .MuiTextarea-endDecorator": {
-            my: 0
-          },
-          "& .MuiTextarea-textarea": {
-            alignSelf: "center"
-          }
-        }}
-        startDecorator={
-          <>
-            <FileInput
+    <PromptInput
+      ref={chatInputRef}
+      classNames={{
+        inputWrapper: "!bg-transparent shadow-none items-center",
+        innerWrapper: "relative items-center"
+      }}
+      endContent={
+        <div className="flex gap-2">
+          {!userInput && (
+            <Tooltip showArrow content="Speak">
+              <Button isIconOnly radius="full" variant="light">
+                <Icon
+                  className="text-default-500"
+                  icon="solar:microphone-3-linear"
+                  width={20}
+                />
+              </Button>
+            </Tooltip>
+          )}
+          <Tooltip showArrow content="Send message">
+            <Button
               isIconOnly
-              handleSelectedFile={e => {
-                if (!e.target.files) return
-                handleSelectDeviceFile(e.target.files[0])
-              }}
-              accept={filesToAccept}
-            />
-          </>
-        }
-        endDecorator={
-          <>
-            {isGenerating ? (
-              <IconButton onClick={handleStopMessage}>
-                <StopRounded />
-              </IconButton>
-            ) : (
-              <IconButton
-                size="md"
-                disabled={!userInput}
-                onClick={() => {
-                  if (!userInput) return
-
-                  handleSendMessage(userInput, chatMessages, false)
-                }}
-              >
-                <SendRounded />
-              </IconButton>
-            )}
-          </>
-        }
-      />
-    </div>
+              color={!userInput ? "default" : "primary"}
+              isDisabled={!userInput && !isGenerating}
+              radius="full"
+              variant={!userInput ? "flat" : "solid"}
+              onClick={() => handleSendMessage(userInput, chatMessages, false)}
+            >
+              <Icon
+                className={cn(
+                  "[&>path]:stroke-[2px]",
+                  !userInput ? "text-default-500" : "text-primary-foreground"
+                )}
+                icon="solar:arrow-up-linear"
+                width={20}
+              />
+            </Button>
+          </Tooltip>
+        </div>
+      }
+      minRows={1}
+      radius="lg"
+      startContent={
+        <FileInput
+          isIconOnly
+          handleSelectedFile={e => {
+            if (!e.target.files) return
+            handleSelectDeviceFile(e.target.files[0])
+          }}
+          accept={filesToAccept}
+        />
+      }
+      value={userInput}
+      variant="flat"
+      onValueChange={handleInputChange}
+      onKeyDown={handleKeyDown}
+      onPaste={handlePaste}
+      onCompositionStart={() => setIsTyping(true)}
+      onCompositionEnd={() => setIsTyping(false)}
+    />
   )
 }

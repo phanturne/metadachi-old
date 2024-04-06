@@ -185,7 +185,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex size-full flex-col">
+    <div className="flex h-dvh w-dvw flex-col">
       <RootNavbar />
       {loading ? <Loading /> : children}
 
