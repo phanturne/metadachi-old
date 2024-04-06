@@ -6,7 +6,8 @@ const ideas = [
   "Summarize the following text",
   "Create a list of healthy recipes for lunch",
   "Write a poem about nature",
-  "Check this text for grammar errors and typos"
+  "Check this text for grammar errors and typos",
+  "Brainstorm business names for a new company"
 ]
 
 export default function PromptSuggestions() {

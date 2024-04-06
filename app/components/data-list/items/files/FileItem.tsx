@@ -1,4 +1,4 @@
-import { FileIcon } from "@/app/components/files/file-icon"
+import { FileIcons } from "@/app/components/icons/FileIcons"
 import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"
 import { getFileFromStorage } from "@/app/lib/db/storage/files"
 import { Tables } from "@/supabase/types"
@@ -27,7 +27,7 @@ export const FileItem: FC<FileItemProps> = ({ file }) => {
       item={file}
       isTyping={isTyping}
       contentType="files"
-      icon={<FileIcon type={file.type} size={30} />}
+      icon={<FileIcons type={file.type} className="text-4xl" />}
       updateState={{ name, description }}
       renderInputs={() => (
         <>

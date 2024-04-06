@@ -1,15 +1,13 @@
 import {
-  Box,
   Button,
-  DialogContent,
-  FormControl,
-  FormLabel,
   Modal,
-  ModalDialog,
-  Stack,
-  Textarea,
-  Typography
-} from "@mui/joy"
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Textarea
+} from "@nextui-org/react"
+import * as React from "react"
 
 interface PromptVariableModalProps {
   showPromptVariables: boolean
@@ -36,58 +34,64 @@ export function PromptVariableModal({
   setPromptVariables,
   handleSubmitPromptVariables
 }: PromptVariableModalProps) {
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    handleSubmitPromptVariables()
+  }
+
+  // Create a ref for each textarea
+  const textAreaRefs = promptVariables.map(() =>
+    React.createRef<HTMLTextAreaElement>()
+  )
+
+  // Focus on the first textarea when the modal opens
+  React.useEffect(() => {
+    if (showPromptVariables && textAreaRefs[0].current) {
+      textAreaRefs[0].current.focus()
+    }
+  }, [showPromptVariables])
+
   return (
     <Modal
-      open={showPromptVariables}
-      onClose={() => setShowPromptVariables(false)}
+      isOpen={showPromptVariables}
+      onOpenChange={() => setShowPromptVariables(false)}
     >
-      <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
-        <DialogContent>
-          <form onSubmit={handleSubmitPromptVariables}>
-            <Stack spacing={2}>
-              <Typography level="h3" sx={{ alignSelf: "center" }}>
-                Enter Prompt Variables
-              </Typography>
-
-              {promptVariables.map((variable, index) => (
-                <FormControl key={`prompt-var-${variable}`}>
-                  <FormLabel>{variable.name}</FormLabel>
-                  <Textarea
-                    placeholder={`Enter a value for ${variable.name}...`}
-                    value={variable.value}
-                    onChange={e => {
-                      const newPromptVariables = [...promptVariables]
-                      newPromptVariables[index].value = e.target.value
-                      setPromptVariables(newPromptVariables)
-                    }}
-                    minRows={1}
-                    maxRows={5}
-                  />
-                </FormControl>
-              ))}
-
-              <Box
-                sx={{
-                  display: "flex",
-                  flexGrow: 1,
-                  justifyContent: "flex-end",
-                  gap: 2
+      <ModalContent>
+        <ModalHeader>Enter Prompt Variables</ModalHeader>
+        <form onSubmit={handleFormSubmit}>
+          <ModalBody>
+            {promptVariables.map((variable, index) => (
+              <Textarea
+                size="sm"
+                key={`prompt-var-${variable}`}
+                label={variable.name}
+                placeholder={`Enter a value for ${variable.name}...`}
+                value={variable.value}
+                onChange={e => {
+                  const newPromptVariables = [...promptVariables]
+                  newPromptVariables[index].value = e.target.value
+                  setPromptVariables(newPromptVariables)
                 }}
-              >
-                <Button
-                  variant="plain"
-                  color="neutral"
-                  onClick={() => setShowPromptVariables(false)}
-                >
-                  Cancel
-                </Button>
+                minRows={1}
+                maxRows={5}
+                ref={textAreaRefs[index]} // Assign the ref to the textarea
+              />
+            ))}
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="light"
+              onClick={() => setShowPromptVariables(false)}
+            >
+              Cancel
+            </Button>
 
-                <Button onClick={handleSubmitPromptVariables}>Submit</Button>
-              </Box>
-            </Stack>
-          </form>
-        </DialogContent>
-      </ModalDialog>
+            <Button color="primary" type="submit">
+              Submit
+            </Button>
+          </ModalFooter>
+        </form>
+      </ModalContent>
     </Modal>
   )
 }

@@ -1,4 +1,4 @@
-import { FileIcon } from "@/app/components/files/file-icon"
+import { FileIcons } from "@/app/components/icons/FileIcons"
 import { Tables } from "@/supabase/types"
 import { Button } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
@@ -30,7 +30,9 @@ export const FileItemButton: React.FC<FileButtonProps> = ({
       onClick={onClick}
     >
       <div className="rounded-md bg-blue-500 p-1">
-        {fileIcon ?? <FileIcon type={fileExtension ?? ""} size={24} />}
+        {fileIcon ?? (
+          <FileIcons type={fileExtension ?? ""} className="text-2xl" />
+        )}
       </div>
 
       <div className="overflow-hidden text-left">

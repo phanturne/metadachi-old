@@ -3,8 +3,8 @@ import { Tables } from "@/supabase/types"
 import { useContext, useEffect, useRef, useState } from "react"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { PromptVariableModal } from "@/app/components/chat/input/PromptVariableModal"
-import { ChatCommandsList } from "@/app/components/chat/input/ChatCommandsList"
-import { Typography } from "@mui/joy"
+import { Listbox, ListboxItem } from "@nextui-org/react"
+import { usePickerKeyHandler } from "@/app/lib/hooks/use-keydown-handler"
 
 export function PromptPicker() {
   const {
@@ -42,14 +42,14 @@ export function PromptPicker() {
     setIsPromptPickerOpen(isOpen)
   }
 
-  const callSelectPrompt = (prompt: Tables<"prompts">) => {
-    const regex = /\{\{.*?\}\}/g
+  const handleItemSelect = (prompt: Tables<"prompts">) => {
+    const regex = /\{\{.*?}}/g
     const matches = prompt.content.match(regex)
 
     if (matches) {
       const newPromptVariables = matches.map(match => ({
         promptId: prompt.id,
-        name: match.replace(/\{\{|\}\}/g, ""),
+        name: match.replace(/\{\{|}}/g, ""),
         value: ""
       }))
 
@@ -83,17 +83,23 @@ export function PromptPicker() {
     setPromptVariables([])
   }
 
-  const getPromptItemContent = (item: Tables<"prompts">) => {
-    return (
-      <>
-        <Typography level="title-sm" fontWeight="md">
-          {item.name}
-        </Typography>
-        <Typography level="body-sm" noWrap>
-          {item.content}
-        </Typography>
-      </>
-    )
+  useEffect(() => {
+    if (focusPrompt && itemsRef.current[0]) {
+      itemsRef.current[0].focus()
+    }
+  }, [focusPrompt])
+
+  const getKeyDownHandler = usePickerKeyHandler({
+    itemsRef,
+    filteredItems: filteredPrompts,
+    handleItemSelect: handleItemSelect,
+    handleOpenChange
+  })
+
+  const setItemRef = (ref: HTMLDivElement | null, index: number) => {
+    if (ref) {
+      itemsRef.current[index] = ref
+    }
   }
 
   if (!isPromptPickerOpen) return
@@ -109,14 +115,30 @@ export function PromptPicker() {
           handleSubmitPromptVariables={handleSubmitPromptVariables}
         />
       ) : (
-        <ChatCommandsList
-          commandType="prompt"
-          filteredItems={filteredPrompts}
-          focusItem={focusPrompt}
-          setIsPickerOpen={setIsPromptPickerOpen}
-          handleItemSelect={callSelectPrompt}
-          getItemContent={getPromptItemContent}
-        />
+        <Listbox className="p-2">
+          {filteredPrompts.length === 0 ? (
+            <ListboxItem className="pointer-events-none" key="no-matching">
+              No matching prompts.
+            </ListboxItem>
+          ) : (
+            filteredPrompts.map((item: any, index: number) => (
+              <ListboxItem
+                className="pb-2"
+                key={item.id}
+                onClick={() => handleItemSelect(item)}
+                onKeyDown={getKeyDownHandler(index, item)}
+                tabIndex={index}
+                // ref={(ref: HTMLDivElement) => setItemRef(ref, index)}
+              >
+                {/* TODO: Fix refs not working */}
+                <div ref={(ref: HTMLDivElement) => setItemRef(ref, index)}>
+                  <p className="text-sm">{item.name}</p>
+                  <p className="text-xs text-default-500">{item.content}</p>
+                </div>
+              </ListboxItem>
+            ))
+          )}
+        </Listbox>
       )}
     </>
   )

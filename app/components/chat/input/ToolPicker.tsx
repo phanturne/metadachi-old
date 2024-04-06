@@ -1,9 +1,11 @@
 // TODO: Update UI
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
-import { IconBolt } from "@tabler/icons-react"
+import * as React from "react"
 import { FC, useContext, useEffect, useRef } from "react"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
+import { Listbox, ListboxItem } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface ToolPickerProps {}
 
@@ -40,7 +42,7 @@ export const ToolPicker: FC<ToolPickerProps> = ({}) => {
   }
 
   const getKeyDownHandler =
-    (index: number) => (e: React.KeyboardEvent<HTMLDivElement>) => {
+    (index: number) => (e: React.KeyboardEvent<HTMLLIElement>) => {
       if (e.key === "Backspace") {
         e.preventDefault()
         handleOpenChange(false)
@@ -70,42 +72,50 @@ export const ToolPicker: FC<ToolPickerProps> = ({}) => {
       }
     }
 
+  const setItemRef = (ref: HTMLDivElement | null, index: number) => {
+    if (ref) {
+      itemsRef.current[index] = ref
+    }
+  }
+
+  if (!isToolPickerOpen) return
+
   return (
-    <>
-      {isToolPickerOpen && (
-        <div className="flex flex-col space-y-1 rounded-xl border-2 bg-background p-2 text-sm">
-          {filteredTools.length === 0 ? (
-            <div className="text-md flex h-14 cursor-pointer items-center justify-center italic hover:opacity-50">
-              No matching tools.
+    <Listbox className="p-2">
+      {filteredTools.length === 0 ? (
+        <ListboxItem className="pointer-events-none" key="no-matching">
+          No matching assistants.
+        </ListboxItem>
+      ) : (
+        filteredTools.map((item: any, index: number) => (
+          <ListboxItem
+            className="pb-2"
+            key={item.id}
+            onClick={() => callSelectTool(item)}
+            onKeyDown={getKeyDownHandler(index)}
+            tabIndex={index}
+            // ref={(ref: HTMLDivElement) => setItemRef(ref, index)}
+          >
+            {/* TODO: Fix refs not working */}
+            <div
+              ref={(ref: HTMLDivElement) => setItemRef(ref, index)}
+              className="flex gap-4"
+            >
+              <Icon
+                icon="solar:magic-stick-3-bold-duotone"
+                className="text-4xl"
+              />
+
+              <div>
+                <p className="text-sm">{item.name}</p>
+                <p className="text-xs text-default-500">
+                  {item.content || "No description"}
+                </p>
+              </div>
             </div>
-          ) : (
-            <>
-              {filteredTools.map((item, index) => (
-                <div
-                  key={item.id}
-                  ref={ref => {
-                    itemsRef.current[index] = ref
-                  }}
-                  tabIndex={0}
-                  className="hover:bg-accent focus:bg-accent flex cursor-pointer items-center rounded p-2 focus:outline-none"
-                  onClick={() => callSelectTool(item as Tables<"tools">)}
-                  onKeyDown={getKeyDownHandler(index)}
-                >
-                  <IconBolt size={32} />
-
-                  <div className="ml-3 flex flex-col">
-                    <div className="font-bold">{item.name}</div>
-
-                    <div className="truncate text-sm opacity-80">
-                      {item.description || "No description."}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
-        </div>
+          </ListboxItem>
+        ))
       )}
-    </>
+    </Listbox>
   )
 }

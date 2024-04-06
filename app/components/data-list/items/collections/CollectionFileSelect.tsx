@@ -1,7 +1,7 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { CollectionFile } from "@/app/lib/types"
 import { FC, useContext } from "react"
-import { FileIcon } from "@/app/components/files/file-icon"
+import { FileIcons } from "@/app/components/icons/FileIcons"
 import { Autocomplete, AutocompleteOption } from "@mui/joy"
 
 interface CollectionFileSelectProps {
@@ -29,7 +29,7 @@ export const CollectionFileSelect: FC<CollectionFileSelectProps> = ({
       limitTags={1}
       renderOption={(props, option) => (
         <AutocompleteOption {...props}>
-          <FileIcon type={option.type} size={24} />
+          <FileIcons type={option.type} className="text-2xl" />
           {option.name}
         </AutocompleteOption>
       )}

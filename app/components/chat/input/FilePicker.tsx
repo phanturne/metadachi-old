@@ -2,12 +2,11 @@ import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import * as React from "react"
 import { FC, useContext, useEffect, useRef } from "react"
-import { Box, Typography } from "@mui/joy"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
-import { ChatCommandsList } from "@/app/components/chat/input/ChatCommandsList"
-import { FolderRounded } from "@mui/icons-material"
-import SvgIcon from "@mui/joy/SvgIcon"
-import { FileIcon } from "@/app/components/files/file-icon"
+import { FileIcons } from "@/app/components/icons/FileIcons"
+import { usePickerKeyHandler } from "@/app/lib/hooks/use-keydown-handler"
+import { Listbox, ListboxItem } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface FilePickerProps {}
 
@@ -65,37 +64,69 @@ export const FilePicker: FC<FilePickerProps> = ({}) => {
     handleOpenChange(false)
   }
 
-  if (!isFilePickerOpen) return
+  useEffect(() => {
+    if (focusFile && itemsRef.current[0]) {
+      itemsRef.current[0].focus()
+    }
+  }, [focusFile])
 
-  const getItemContent = (item: Tables<"files"> | Tables<"collections">) => {
-    return (
-      <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-        {"type" in item ? (
-          <FileIcon type={(item as Tables<"files">).type} size={32} />
-        ) : (
-          <SvgIcon size="lg">
-            <FolderRounded />
-          </SvgIcon>
-        )}
+  const filteredItems = [...filteredFiles, ...filteredCollections]
+  const getKeyDownHandler = usePickerKeyHandler({
+    itemsRef,
+    filteredItems: filteredItems,
+    handleItemSelect: handleItemSelect,
+    handleOpenChange
+  })
 
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography level="title-sm">{item.name}</Typography>
-          <Typography level="body-sm">
-            {item.description || "No description."}
-          </Typography>
-        </Box>
-      </Box>
-    )
+  const setItemRef = (ref: HTMLDivElement | null, index: number) => {
+    if (ref) {
+      itemsRef.current[index] = ref
+    }
   }
 
+  if (!isFilePickerOpen) return
+
   return (
-    <ChatCommandsList
-      commandType="file"
-      filteredItems={[...filteredFiles, ...filteredCollections]}
-      focusItem={focusFile}
-      setIsPickerOpen={setIsFilePickerOpen}
-      handleItemSelect={handleItemSelect}
-      getItemContent={getItemContent}
-    />
+    <Listbox className="p-2">
+      {filteredItems.length === 0 ? (
+        <ListboxItem className="pointer-events-none" key="no-matching">
+          No matching files.
+        </ListboxItem>
+      ) : (
+        filteredItems.map((item: any, index: number) => (
+          <ListboxItem
+            className="pb-2"
+            key={item.id}
+            onClick={() => handleItemSelect(item)}
+            onKeyDown={getKeyDownHandler(index, item)}
+            tabIndex={index}
+            // ref={(ref: HTMLDivElement) => setItemRef(ref, index)}
+          >
+            {/* TODO: Fix refs not working */}
+            <div
+              ref={(ref: HTMLDivElement) => setItemRef(ref, index)}
+              className="flex gap-4"
+            >
+              {/* Files have a "type" attribute. Folders don't */}
+              {"type" in item ? (
+                <FileIcons
+                  type={(item as Tables<"files">).type}
+                  className="text-4xl"
+                />
+              ) : (
+                <Icon icon="bxs:folder" className="text-4xl" />
+              )}
+
+              <div>
+                <p className="text-sm">{item.name}</p>
+                <p className="text-xs text-default-500">
+                  {item.content || "No description"}
+                </p>
+              </div>
+            </div>
+          </ListboxItem>
+        ))
+      )}
+    </Listbox>
   )
 }
