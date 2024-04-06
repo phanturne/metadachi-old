@@ -25,6 +25,7 @@ import ChatMessages from "@/app/components/chat/ChatMessages"
 import { ChatInput } from "@/app/components/chat/input/ChatInput"
 import { ChatFilesDisplay } from "@/app/components/chat/ChatFilesDisplay"
 import PromptSuggestions from "@/app/components/chat/PromptSuggestions"
+import { ChatCommands } from "@/app/components/chat/input/ChatCommands"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -191,13 +192,13 @@ export default function ChatPage() {
   return (
     <div className="flex size-full overflow-auto">
       {/* Chat Sidebar*/}
-      <div className="mx-4 my-2 flex w-64 flex-col gap-4">
+      <div className="m-4 flex w-64 grow flex-col gap-4">
         <ChatActions />
         <ChatSettingsCard />
         <ChatListCard />
       </div>
 
-      <div className="flex grow flex-col">
+      <div className="flex grow flex-col overflow-auto">
         {/* Chat Body*/}
         <ScrollShadow className="flex h-full flex-col overflow-y-scroll px-20">
           {!chatId && chatMessages.length === 0 ? (
@@ -211,12 +212,12 @@ export default function ChatPage() {
           )}
         </ScrollShadow>
 
-        <div className="flex w-full flex-col gap-4 px-20 py-4">
+        <div className="relative flex w-full flex-col gap-4 px-20 py-4">
           {/*<ChatToolsDisplay />*/}
           <ChatFilesDisplay />
           {/*<AssistantDisplay />*/}
 
-          {/*<ChatCommands />*/}
+          <ChatCommands />
           {isNewChat && <PromptSuggestions />}
           <form className="flex w-full flex-col items-start rounded-medium bg-default-100 transition-colors hover:bg-default-200/70">
             {/*{images.length > 0 && <ChatInputFilesList />}*/}

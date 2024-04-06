@@ -1,29 +1,38 @@
 import * as React from "react"
-import { FC } from "react"
+import { FC, useContext } from "react"
 import { PromptPicker } from "@/app/components/chat/input/PromptPicker"
 import { FilePicker } from "@/app/components/chat/input/FilePicker"
 import Sheet from "@mui/joy/Sheet"
 import List from "@mui/joy/List"
 import { AssistantPicker } from "@/app/components/chat/input/AssistantPicker"
 import { ToolPicker } from "@/app/components/chat/input/tool-picker"
+import { MetadachiContext } from "@/app/lib/context"
+import { Card } from "@nextui-org/react"
+import { ChatInput } from "@/app/components/chat/input/ChatInput"
 
 interface ChatActionsProps {}
 
 export const ChatCommands: FC<ChatActionsProps> = ({}) => {
+  const {
+    isPromptPickerOpen,
+    isToolPickerOpen,
+    isFilePickerOpen,
+    isAssistantPickerOpen
+  } = useContext(MetadachiContext)
+
+  if (
+    !isFilePickerOpen &&
+    !isAssistantPickerOpen &&
+    !isPromptPickerOpen &&
+    !isToolPickerOpen
+  )
+    return
+
   return (
-    <Sheet
-      variant="outlined"
-      sx={{
-        position: "absolute",
-        bottom: "55px",
-        left: 0,
-        maxHeight: "400px",
-        width: "100%",
-        overflow: "scroll",
-        boxShadow: "md",
-        overflowX: "hidden",
-        borderRadius: "xl"
-      }}
+    // The inset-x amount is the same as the padding-x of its parent
+    <Card
+      radius="lg"
+      className="absolute inset-x-20 bottom-20 z-10 max-h-[400px] overflow-x-hidden overflow-y-scroll shadow-md"
     >
       <List>
         <PromptPicker />
@@ -31,6 +40,6 @@ export const ChatCommands: FC<ChatActionsProps> = ({}) => {
         <ToolPicker />
         <AssistantPicker />
       </List>
-    </Sheet>
+    </Card>
   )
 }
