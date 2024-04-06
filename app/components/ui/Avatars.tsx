@@ -1,12 +1,10 @@
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
-import { Box, Tooltip, Typography } from "@mui/joy"
-import { AssistantRounded, CreateRounded } from "@mui/icons-material"
 import { Tables } from "@/supabase/types"
 import { LLM } from "@/app/lib/types"
-import Avatar from "@mui/joy/Avatar"
 import { ModelIcon } from "@/app/components/models/ModelIcon"
-import Image from "next/image"
+import { Icon } from "@iconify-icon/react"
+import { Avatar } from "@nextui-org/react"
 
 const ICON_SIZE = 28
 
@@ -28,7 +26,7 @@ export default function MessageAvatar({
   const isAssistantRole = message.role === "assistant"
   const isUserRole = message.role === "user"
 
-  const title = isSystemRole
+  const name = isSystemRole
     ? "Prompt"
     : isAssistantRole
       ? selectedAssistant
@@ -39,20 +37,21 @@ export default function MessageAvatar({
         : profile?.username
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: 1
-      }}
-    >
+    <div className="flex items-center space-x-1">
       {isSystemRole && (
-        <Avatar size="sm">
-          <CreateRounded />
-        </Avatar>
+        <Avatar
+          size="sm"
+          className="bg-transparent"
+          showFallback
+          fallback={
+            <Icon icon="solar:settings-linear" width="24" height="24" />
+          }
+        />
       )}
 
-      {isUserRole && <UserAvatar image_url={profile?.image_url} />}
+      {isUserRole && (
+        <Avatar size="sm" className="bg-transparent" src={profile?.image_url} />
+      )}
 
       {isAssistantRole && (
         <AssistantAvatar
@@ -62,47 +61,37 @@ export default function MessageAvatar({
         />
       )}
 
-      <Typography fontWeight="bold">{title}</Typography>
-    </Box>
+      <p className="font-semibold">{name}</p>
+    </div>
   )
 }
 
-export const UserAvatar = ({ image_url }: { image_url?: string }) => {
-  return <Avatar src={image_url} size="sm"></Avatar>
-}
-
-interface AssistantAvatarProps {
+export const AssistantAvatar = ({
+  selectedAssistantImage,
+  modelData,
+  size = ICON_SIZE
+}: {
   selectedAssistantId?: string | null
   selectedAssistantImage?: string
   modelData: LLM
   size?: number
-}
-
-export const AssistantAvatar = ({
-  selectedAssistantId: selectedAssistantId,
-  selectedAssistantImage,
-  modelData,
-  size = ICON_SIZE
-}: AssistantAvatarProps) => {
-  if (selectedAssistantId) {
-    return selectedAssistantImage ? (
-      <Image
-        style={{ borderRadius: "0.25rem" }}
-        src={selectedAssistantImage || ""}
-        alt="assistant image"
-        height={size}
-        width={size}
-      />
-    ) : (
-      <Avatar size="sm">
-        <AssistantRounded />
-      </Avatar>
-    )
-  } else {
-    return (
-      <Tooltip variant="outlined" title={modelData?.modelName}>
+}) => {
+  return selectedAssistantImage ? (
+    <Avatar
+      size="sm"
+      className="shrink-0 bg-transparent"
+      showFallback
+      src={selectedAssistantImage}
+      fallback={<Icon icon="solar:atom-bold-duotone" className="text-base" />}
+    />
+  ) : (
+    <Avatar
+      size="sm"
+      className="shrink-0 bg-transparent"
+      showFallback
+      fallback={
         <ModelIcon provider={modelData?.provider} height={size} width={size} />
-      </Tooltip>
-    )
-  }
+      }
+    />
+  )
 }

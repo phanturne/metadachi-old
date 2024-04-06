@@ -7,11 +7,11 @@ import { FC, useContext, useEffect, useRef, useState } from "react"
 import { FilePreview } from "../files/FilePreview"
 import { MessageActions } from "./MessageActions"
 import { MessageMarkdown } from "./MessageMarkdown"
-import { Box, Button, Textarea } from "@mui/joy"
-import MessageAvatar from "@/app/components/messages/MessageAvatar"
+import MessageAvatar from "@/app/components/ui/Avatars"
 import { MessageFiles } from "@/app/components/messages/MessageFiles"
 import MessagePlaceholder from "@/app/components/messages/MessagePlaceholder"
 import { MessageImages } from "@/app/components/messages/MessageImages"
+import { Textarea, Button } from "@nextui-org/react"
 
 interface MessageProps {
   message: Tables<"messages">
@@ -102,60 +102,47 @@ export const Message: FC<MessageProps> = ({
   ].find(llm => llm.modelId === message.model) as LLM
 
   return (
-    <Box
-      sx={{ display: "flex", width: "100%", justifyContent: "center" }}
+    <div
+      className="flex w-full justify-center"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onKeyDown={handleKeyDown}
     >
-      <Box
-        sx={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          width: {
-            xs: "300px",
-            sm: "400px",
-            md: "500px",
-            lg: "600px",
-            xl: "700px"
-          },
-          py: "6"
-        }}
-      >
+      <div className="relative flex grow flex-col">
         {/* TODO: Move MessageActions to end of message? */}
-        <Box sx={{ position: "absolute", right: "0px", top: "7px" }}>
-          <MessageActions
-            onCopy={handleCopy}
-            onEdit={handleStartEdit}
-            isAssistant={message.role === "assistant"}
-            isLast={isLast}
-            isEditing={isEditing}
-            isHovering={isHovering}
-            onRegenerate={handleRegenerate}
-          />
-        </Box>
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3 }}>
+        <div className="relative mb-2 mt-6 flex flex-col">
           <MessageAvatar message={message} modelData={MODEL_DATA} />
-
-          {/* Message Content */}
-          {!firstTokenReceived &&
-          isGenerating &&
-          isLast &&
-          message.role === "assistant" ? (
-            <MessagePlaceholder />
-          ) : isEditing ? (
-            <Textarea
-              slotProps={{ textarea: { ref: editInputRef } }}
-              value={editedMessage}
-              onChange={e => setEditedMessage(e.target.value)}
-              maxRows={20}
+          <div className="absolute right-0 top-0">
+            <MessageActions
+              onCopy={handleCopy}
+              onEdit={handleStartEdit}
+              isAssistant={message.role === "assistant"}
+              isLast={isLast}
+              isEditing={isEditing}
+              isHovering={isHovering}
+              onRegenerate={handleRegenerate}
             />
-          ) : (
-            <MessageMarkdown content={message.content} />
-          )}
-        </Box>
+          </div>
+        </div>
+
+        {/* Message Content */}
+        {!firstTokenReceived &&
+        isGenerating &&
+        isLast &&
+        message.role === "assistant" ? (
+          <MessagePlaceholder />
+        ) : isEditing ? (
+          <Textarea
+            fullWidth
+            ref={editInputRef}
+            value={editedMessage}
+            onChange={e => setEditedMessage(e.target.value)}
+            maxRows={20}
+          />
+        ) : (
+          <MessageMarkdown content={message.content} />
+        )}
 
         <MessageFiles
           fileItems={fileItems}
@@ -173,23 +160,16 @@ export const Message: FC<MessageProps> = ({
 
         {/* Edit User Message Buttons */}
         {isEditing && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: 2
-            }}
-          >
-            <Button size="sm" onClick={handleSendEdit}>
-              Save & Send
-            </Button>
-
-            <Button size="sm" variant="outlined" onClick={onCancelEdit}>
+          <div className="flex justify-center space-x-2">
+            <Button size="sm" variant="light" onClick={onCancelEdit}>
               Cancel
             </Button>
-          </Box>
+            <Button size="sm" color="primary" onClick={handleSendEdit}>
+              Save & Send
+            </Button>
+          </div>
         )}
-      </Box>
+      </div>
 
       {showImagePreview && selectedImage && (
         <FilePreview
@@ -214,6 +194,6 @@ export const Message: FC<MessageProps> = ({
           }}
         />
       )}
-    </Box>
+    </div>
   )
 }

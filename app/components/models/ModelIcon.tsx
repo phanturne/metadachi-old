@@ -8,6 +8,7 @@ import SvgIcon from "@mui/joy/SvgIcon"
 import MistralIcon from "@/app/components/icons/mistral.svg"
 import Image from "next/image"
 import groq from "@/public/providers/groq.png"
+import { Icon } from "@iconify-icon/react"
 
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
   provider?: ModelProvider
@@ -64,6 +65,6 @@ export const ModelIcon: FC<ModelIconProps> = ({
         <AutoAwesomeRounded style={{ width: width, height: height }} />
       )
     default:
-      return <AutoAwesomeRounded style={{ width: width, height: height }} />
+      return <Icon icon="solar:atom-bold-duotone" className="text-2xl" />
   }
 }

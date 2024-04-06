@@ -1,12 +1,7 @@
 import { MetadachiContext } from "@/app/lib/context"
 import React, { FC, useContext, useEffect, useState } from "react"
-import { Box, IconButton, Tooltip } from "@mui/joy"
-import {
-  CheckRounded,
-  ContentCopyRounded,
-  EditRounded,
-  RepeatRounded
-} from "@mui/icons-material"
+import { Button, Tooltip } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface MessageActionsProps {
   isAssistant: boolean
@@ -38,6 +33,7 @@ export const MessageActions: FC<MessageActionsProps> = ({
 
   const handleForkChat = async () => {}
 
+  // TODO: Remove duplicate logic since `use-copy-to-clipboard` already exists
   useEffect(() => {
     if (showCheckmark) {
       const timer = setTimeout(() => {
@@ -49,47 +45,54 @@ export const MessageActions: FC<MessageActionsProps> = ({
   }, [showCheckmark])
 
   return (isLast && isGenerating) || isEditing ? null : (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+    <div className="flex gap-1">
       {/* Edit User Message Button */}
       {!isAssistant && isHovering && (
-        <Tooltip title="Edit" variant="outlined">
-          <IconButton
+        <Tooltip content="Edit">
+          <Button
+            isIconOnly
             onClick={onEdit}
             size="sm"
-            sx={{ "&:hover": { backgroundColor: "transparent" } }}
+            className="bg-transparent"
           >
-            <EditRounded />
-          </IconButton>
+            <Icon icon="solar:pen-linear" className="text-base" />
+          </Button>
         </Tooltip>
       )}
 
       {/* Copy to Clipboard Button */}
       {(isHovering || isLast) && (
-        <Tooltip title="Copy" variant="outlined">
-          <IconButton
+        <Tooltip content="Copy">
+          <Button
+            isIconOnly
             onClick={handleCopy}
             size="sm"
-            sx={{ "&:hover": { backgroundColor: "transparent" } }}
+            className="bg-transparent"
           >
-            {showCheckmark ? <CheckRounded /> : <ContentCopyRounded />}
-          </IconButton>
+            {showCheckmark ? (
+              <Icon icon="solar:check-circle-linear" className="text-base" />
+            ) : (
+              <Icon icon="solar:copy-linear" className="text-base" />
+            )}
+          </Button>
         </Tooltip>
       )}
 
       {/* Regenerate Message Button */}
       {isLast && (
-        <Tooltip title="Regenerate" variant="outlined">
-          <IconButton
+        <Tooltip content="Regenerate">
+          <Button
+            isIconOnly
             onClick={onRegenerate}
             size="sm"
-            sx={{ "&:hover": { backgroundColor: "transparent" } }}
+            className="bg-transparent"
           >
-            <RepeatRounded />
-          </IconButton>
+            <Icon icon="solar:refresh-linear" className="text-base" />
+          </Button>
         </Tooltip>
       )}
 
       {/* {1 > 0 && isAssistant && <MessageReplies />} */}
-    </Box>
+    </div>
   )
 }

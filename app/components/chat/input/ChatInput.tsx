@@ -157,16 +157,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   }
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        mt: 1,
-        display: "flex",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center"
-      }}
-    >
+    <div className="flex w-full items-center justify-center">
       <ChatCommands />
 
       <Textarea
@@ -231,6 +222,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
           </>
         }
       />
-    </Box>
+    </div>
   )
 }

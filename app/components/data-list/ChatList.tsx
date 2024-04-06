@@ -7,7 +7,7 @@ import { Tables } from "@/supabase/types"
 import { MetadachiContext } from "@/app/lib/context"
 import { useParams, useRouter } from "next/navigation"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
-import { AssistantAvatar } from "@/app/components/messages/MessageAvatar"
+import { AssistantAvatar } from "@/app/components/ui/Avatars"
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { deleteChat, updateChat } from "@/app/lib/db/chats"
 import {
@@ -120,7 +120,7 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
       onClick={handleClick}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className="w-full overflow-hidden px-2 text-left"
+      className="w-full overflow-hidden px-2"
       startContent={
         <AssistantAvatar
           selectedAssistantId={chat.assistant_id}
