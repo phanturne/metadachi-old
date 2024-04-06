@@ -85,7 +85,7 @@ export default function ChatSettingsCard() {
   }
 
   return (
-    <Card>
+    <Card className="p-1 py-2">
       {/* Dropdown button height > H4 height. Set 38px height to prevent CardHeader height increase. */}
       <CardHeader className="flex h-[38px] justify-between">
         <h4 className="text-small font-semibold leading-none text-default-600">

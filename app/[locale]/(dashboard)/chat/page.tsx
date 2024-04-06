@@ -26,6 +26,7 @@ import { ChatInput } from "@/app/components/chat/input/ChatInput"
 import { ChatFilesDisplay } from "@/app/components/chat/ChatFilesDisplay"
 import PromptSuggestions from "@/app/components/chat/PromptSuggestions"
 import { ChatCommands } from "@/app/components/chat/input/ChatCommands"
+import { toast } from "sonner"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -232,6 +233,11 @@ export default function ChatPage() {
 function ChatActions() {
   const { handleNewChat } = useChatHandler()
 
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href)
+    toast.success("Link copied to clipboard.")
+  }
+
   return (
     <div className="flex justify-between gap-2">
       <Button
@@ -244,6 +250,7 @@ function ChatActions() {
       >
         New Chat
       </Button>
+
       <Button
         size="sm"
         variant="flat"
@@ -251,6 +258,7 @@ function ChatActions() {
         startContent={
           <Icon icon="solar:square-share-line-linear" className="text-base" />
         }
+        onClick={handleShare}
       >
         Share
       </Button>
