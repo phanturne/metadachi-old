@@ -9,6 +9,7 @@ import { Routes } from "@/app/lib/constants"
 import { toast } from "sonner"
 import {
   Avatar,
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -18,6 +19,7 @@ import {
 } from "@nextui-org/react"
 import { User } from "@nextui-org/user"
 import SettingsModal from "@/app/components/modals/SettingsModal"
+import { Icon } from "@iconify-icon/react"
 
 export default function ProfileMenu({
   placement = "bottom"
@@ -48,13 +50,19 @@ export default function ProfileMenu({
         }}
       >
         <DropdownTrigger>
-          <Avatar
-            as="button"
-            size="sm"
-            showFallback
-            name={profile?.display_name ?? profile?.username}
-            src={profile?.image_url}
-          />
+          {profile ? (
+            <Avatar
+              as="button"
+              size="sm"
+              showFallback
+              name={profile?.display_name ?? profile?.username}
+              src={profile?.image_url}
+            />
+          ) : (
+            <Button isIconOnly variant="light" size="sm">
+              <Icon icon="solar:menu-dots-bold" width="24" height="24" />
+            </Button>
+          )}
         </DropdownTrigger>
         <DropdownMenu
           aria-label="Profile Menu"
@@ -82,7 +90,9 @@ export default function ProfileMenu({
             >
               <User
                 name={profile?.display_name}
-                description={`@${profile?.username}`}
+                description={
+                  profile?.username ? `@${profile.username}` : "Guest User"
+                }
                 classNames={{
                   name: "text-default-600",
                   description: "text-default-500"
@@ -151,9 +161,15 @@ export default function ProfileMenu({
             >
               Feedback
             </DropdownItem>
-            <DropdownItem key="logout" onClick={handleSignOut}>
-              Log Out
-            </DropdownItem>
+            {profile ? (
+              <DropdownItem key="logout" onClick={handleSignOut}>
+                Log Out
+              </DropdownItem>
+            ) : (
+              <DropdownItem key="login" onClick={openAuthModal}>
+                Log In
+              </DropdownItem>
+            )}
           </DropdownSection>
         </DropdownMenu>
       </Dropdown>

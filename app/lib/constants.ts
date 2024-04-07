@@ -7,7 +7,7 @@ export const Routes = {
   Chat: "/chat",
   Images: "/images",
   Collections: "/collections",
-  Toolbox: "/toolbox",
+  Tools: "/tools",
   Games: "/games",
   Explore: "/explore",
   Settings: "/settings",
