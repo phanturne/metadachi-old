@@ -12,7 +12,7 @@ import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { Routes } from "@/app/lib/constants"
-import { AuthFormType } from "@/app/components/forms/AuthForm"
+import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
 import { EmailInput, PasswordInput } from "@/app/components/input"
 import { get } from "@vercel/edge-config"
 import { EMAIL_VERIFICATION, ROOT_URL } from "@/app/lib/config"
@@ -94,41 +94,44 @@ export function SignUpForm({
   }
 
   return (
-    <form onSubmit={handleSignup}>
-      <Stack spacing={2}>
-        <Typography level="h3" sx={{ alignSelf: "center" }}>
-          Join Now
-        </Typography>
-        <FormControl error={error != ""}>
-          <EmailInput />
-        </FormControl>
-        <FormControl error={error != ""}>
-          <PasswordInput />
-          {error && (
-            <FormHelperText>
-              <InfoOutlined />
-              {error}
-            </FormHelperText>
-          )}
-        </FormControl>
-        <Button type="submit">Create account</Button>
-        <Typography
-          endDecorator={
-            <Link
-              component="button"
-              onClick={() => {
-                setAuthFormType(AuthFormType.Login)
-              }}
-            >
-              Login
-            </Link>
-          }
-          fontSize="sm"
-          sx={{ alignSelf: "center" }}
-        >
-          I already have an account!
-        </Typography>
-      </Stack>
-    </form>
+    <>
+      <p className="pb-2 text-center text-2xl font-medium">Join Metadachi!</p>
+      <form className="flex flex-col gap-3" onSubmit={handleSignup}>
+        <Stack spacing={2}>
+          <Typography level="h3" sx={{ alignSelf: "center" }}>
+            Join Now
+          </Typography>
+          <FormControl error={error != ""}>
+            <EmailInput />
+          </FormControl>
+          <FormControl error={error != ""}>
+            <PasswordInput />
+            {error && (
+              <FormHelperText>
+                <InfoOutlined />
+                {error}
+              </FormHelperText>
+            )}
+          </FormControl>
+          <Button type="submit">Create account</Button>
+          <Typography
+            endDecorator={
+              <Link
+                component="button"
+                onClick={() => {
+                  setAuthFormType(AuthFormType.Login)
+                }}
+              >
+                Login
+              </Link>
+            }
+            fontSize="sm"
+            sx={{ alignSelf: "center" }}
+          >
+            I already have an account!
+          </Typography>
+        </Stack>
+      </form>
+    </>
   )
 }

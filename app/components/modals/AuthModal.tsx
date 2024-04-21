@@ -1,30 +1,49 @@
 import { useState } from "react"
-import { DialogContent, Modal, ModalDialog } from "@mui/joy"
-import AuthForm from "@/app/components/forms/AuthForm"
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react"
+import Image from "next/image"
+import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
+import { LoginForm } from "@/app/components/forms/LoginForm"
+import { ForgotPasswordForm } from "@/app/components/forms/ForgotPasswordForm"
+import { ResetPasswordForm } from "@/app/components/forms/ResetPasswordForm"
+import { SignUpForm } from "@/app/components/forms/SignUpForm"
 
 export default function AuthModal({
-  isAuthPage,
-  onClose
+  open,
+  onClose,
+  type
 }: {
-  isAuthPage?: boolean
-  onClose?: () => void
+  open: boolean
+  onClose: () => void
+  type?: AuthFormType
 }) {
-  const [open, setOpen] = useState<boolean>(true)
+  const [formType, setFormType] = useState<AuthFormType>(
+    type ?? AuthFormType.Login
+  )
 
   return (
-    <Modal
-      open={open}
-      disableEscapeKeyDown={isAuthPage}
-      onClose={() => {
-        setOpen(false)
-        onClose?.()
-      }}
-    >
-      <ModalDialog layout={isAuthPage ? "fullscreen" : "center"} sx={{ p: 0 }}>
-        <DialogContent>
-          <AuthForm />
-        </DialogContent>
-      </ModalDialog>
+    <Modal size="sm" isOpen={open} onOpenChange={onClose}>
+      <ModalContent className="p-4">
+        <ModalHeader className="justify-center">
+          <Image
+            src="/apple-touch-icon.png"
+            alt="Metadachi Icon"
+            width={50}
+            height={50}
+          />
+        </ModalHeader>
+        <ModalBody>
+          {formType === AuthFormType.Login && (
+            <LoginForm setAuthFormType={setFormType} />
+          )}
+          {formType === AuthFormType.SignUp && (
+            <SignUpForm setAuthFormType={setFormType} />
+          )}
+          {formType === AuthFormType.ForgotPassword && (
+            <ForgotPasswordForm setAuthFormType={setFormType} />
+          )}
+          {formType === AuthFormType.ResetPassword && <ResetPasswordForm />}
+        </ModalBody>
+      </ModalContent>
     </Modal>
   )
 }

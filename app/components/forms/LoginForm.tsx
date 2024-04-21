@@ -1,20 +1,15 @@
 import React, { FormEvent, useState } from "react"
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  Link,
-  Stack,
-  Typography
-} from "@mui/joy"
 import { useRouter } from "next/navigation"
-import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/app/lib/supabase/browser-client"
-import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { AuthFormType } from "@/app/components/forms/AuthForm"
-import { EmailInput, PasswordInput } from "@/app/components/input"
+import {
+  AuthFormType,
+  useAuthModal
+} from "@/app/lib/providers/AuthContextProvider"
+import { PasswordInput } from "@/app/components/input"
 import { Routes } from "@/app/lib/constants"
 import { toast } from "sonner"
+import { Checkbox, Input, Button, Link, Divider } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 export function LoginForm({
   setAuthFormType
@@ -22,6 +17,7 @@ export function LoginForm({
   setAuthFormType: React.Dispatch<React.SetStateAction<AuthFormType>>
 }) {
   const [error, setError] = useState<string>("")
+  const hasError = error != ""
   const router = useRouter()
   const { closeAuthModal } = useAuthModal()
 
@@ -64,49 +60,71 @@ export function LoginForm({
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <Stack spacing={2}>
-        <Typography level="h3" sx={{ alignSelf: "center" }}>
-          Welcome Back
-        </Typography>
-        <FormControl error={error != ""}>
-          <EmailInput />
-        </FormControl>
-        <FormControl error={error != ""}>
-          <PasswordInput />
-          {error && (
-            <FormHelperText>
-              <InfoOutlined />
-              Invalid Credentials
-            </FormHelperText>
-          )}
-        </FormControl>
-        <Button type="submit">Login</Button>
-        <Typography fontSize="sm" sx={{ alignSelf: "center" }}>
-          {"Forgot your "}
+    <>
+      <p className="pb-2 text-center text-2xl font-medium">Welcome back!</p>
+      <form className="flex flex-col gap-3" onSubmit={handleLogin}>
+        <Input
+          isRequired
+          label="Email Address"
+          name="email"
+          placeholder="Enter your email"
+          type="email"
+          variant="bordered"
+          isInvalid={hasError}
+        />
+        <PasswordInput
+          variant="bordered"
+          isInvalid={hasError}
+          errorMessage={error}
+        />
+        <div className="flex items-center justify-between px-1 py-2">
+          <Checkbox name="remember" size="sm">
+            Remember me
+          </Checkbox>
           <Link
-            component="button"
-            onClick={() => {
-              setAuthFormType(AuthFormType.ForgotPassword)
-            }}
+            className="text-default-500"
+            href="#"
+            size="sm"
+            onClick={() => setAuthFormType(AuthFormType.ForgotPassword)}
           >
-            password
+            Forgot password?
           </Link>
-          {"?"}
-        </Typography>
-
-        <Typography fontSize="sm" sx={{ alignSelf: "center" }}>
-          {`New to Metadachi? `}
-          <Link
-            component="button"
-            onClick={() => {
-              setAuthFormType(AuthFormType.SignUp)
-            }}
-          >
-            Sign up
-          </Link>
-        </Typography>
-      </Stack>
-    </form>
+        </div>
+        <Button color="primary" type="submit">
+          Log In
+        </Button>
+      </form>
+      <div className="flex items-center gap-4 py-2">
+        <Divider className="flex-1" />
+        <p className="shrink-0 text-tiny text-default-500">OR</p>
+        <Divider className="flex-1" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <Button
+          startContent={<Icon icon="flat-color-icons:google" width={24} />}
+          variant="bordered"
+        >
+          Continue with Google
+        </Button>
+        <Button
+          startContent={
+            <Icon className="text-default-500" icon="fe:github" width={24} />
+          }
+          variant="bordered"
+        >
+          Continue with Github
+        </Button>
+      </div>
+      <p className="text-center text-small">
+        New to Metadachi?&nbsp;
+        <Link
+          href="#"
+          size="sm"
+          onClick={() => setAuthFormType(AuthFormType.SignUp)}
+        >
+          Sign Up
+        </Link>
+      </p>
+    </>
   )
 }

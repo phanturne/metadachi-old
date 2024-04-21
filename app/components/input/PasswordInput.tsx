@@ -4,10 +4,27 @@ import { Input } from "@nextui-org/react"
 
 export default function PasswordInput({
   name = "password",
-  placeholder = "Password"
+  label = "Password",
+  placeholder = "Enter your password",
+  variant,
+  color = "default",
+  isInvalid = false,
+  errorMessage
 }: {
   name?: string
+  label?: string
   placeholder?: string
+  variant?: "bordered" | "flat"
+  color?:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger"
+    | undefined
+  isInvalid?: boolean
+  errorMessage?: string
 }) {
   const [isVisible, setIsVisible] = React.useState(false)
   const toggleVisibility = () => setIsVisible(!isVisible)
@@ -16,11 +33,16 @@ export default function PasswordInput({
     <Input
       name={name}
       type={isVisible ? "text" : "password"}
-      placeholder="Password"
+      label={label}
+      placeholder={placeholder}
       isRequired
-      startContent={
-        <Icon icon="solar:lock-password-linear" className="text-xl" />
-      }
+      variant={variant}
+      color={color}
+      isInvalid={isInvalid}
+      errorMessage={errorMessage}
+      // startContent={
+      //   <Icon icon="solar:lock-password-linear" className="text-xl" />
+      // }
       endContent={
         <button
           className="flex focus:outline-none"
