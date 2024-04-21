@@ -1,21 +1,17 @@
 import React, { FormEvent, useState } from "react"
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  Link,
-  Stack,
-  Typography
-} from "@mui/joy"
 import { useRouter } from "next/navigation"
-import { InfoOutlined } from "@mui/icons-material"
 import { supabase } from "@/app/lib/supabase/browser-client"
-import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
+import {
+  AuthFormType,
+  useAuthModal
+} from "@/app/lib/providers/AuthContextProvider"
 import { Routes } from "@/app/lib/constants"
-import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
-import { EmailInput, PasswordInput } from "@/app/components/input"
+import { PasswordInput } from "@/app/components/input"
 import { get } from "@vercel/edge-config"
 import { EMAIL_VERIFICATION, ROOT_URL } from "@/app/lib/config"
+import { Button, Divider, Input, Link } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
+import { toast } from "sonner"
 
 export function SignUpForm({
   setAuthFormType
@@ -23,6 +19,7 @@ export function SignUpForm({
   setAuthFormType: React.Dispatch<React.SetStateAction<AuthFormType>>
 }) {
   const [error, setError] = useState<string>("")
+  const hasError = error != ""
   const { closeAuthModal } = useAuthModal()
   const router = useRouter()
 
@@ -87,9 +84,8 @@ export function SignUpForm({
       window.location.reload()
       router.push(Routes.Setup)
     } else {
-      router.push(
-        `${Routes.Login}?message=Check inbox to verify email address&variant=success`
-      )
+      toast.success("Check inbox to verify email address")
+      router.push(Routes.Login)
     }
   }
 
@@ -97,41 +93,66 @@ export function SignUpForm({
     <>
       <p className="pb-2 text-center text-2xl font-medium">Join Metadachi!</p>
       <form className="flex flex-col gap-3" onSubmit={handleSignup}>
-        <Stack spacing={2}>
-          <Typography level="h3" sx={{ alignSelf: "center" }}>
-            Join Now
-          </Typography>
-          <FormControl error={error != ""}>
-            <EmailInput />
-          </FormControl>
-          <FormControl error={error != ""}>
-            <PasswordInput />
-            {error && (
-              <FormHelperText>
-                <InfoOutlined />
-                {error}
-              </FormHelperText>
-            )}
-          </FormControl>
-          <Button type="submit">Create account</Button>
-          <Typography
-            endDecorator={
-              <Link
-                component="button"
-                onClick={() => {
-                  setAuthFormType(AuthFormType.Login)
-                }}
-              >
-                Login
-              </Link>
-            }
-            fontSize="sm"
-            sx={{ alignSelf: "center" }}
-          >
-            I already have an account!
-          </Typography>
-        </Stack>
+        <Input
+          isRequired
+          label="Email Address"
+          name="email"
+          placeholder="Enter your email"
+          type="email"
+          variant="bordered"
+          isInvalid={hasError}
+        />
+        <PasswordInput
+          variant="bordered"
+          isInvalid={hasError}
+          errorMessage={error}
+        />
+        {/*<Checkbox isRequired className="py-4" size="sm">*/}
+        {/*  I agree with the&nbsp;*/}
+        {/*  <Link href="#" size="sm">*/}
+        {/*    Terms*/}
+        {/*  </Link>*/}
+        {/*  &nbsp; and&nbsp;*/}
+        {/*  <Link href="#" size="sm">*/}
+        {/*    Privacy Policy*/}
+        {/*  </Link>*/}
+        {/*</Checkbox>*/}
+        <Button color="primary" type="submit">
+          Sign Up
+        </Button>
       </form>
+
+      <div className="flex items-center gap-4 py-2">
+        <Divider className="flex-1" />
+        <p className="shrink-0 text-tiny text-default-500">OR</p>
+        <Divider className="flex-1" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <Button
+          startContent={<Icon icon="flat-color-icons:google" width={24} />}
+          variant="bordered"
+        >
+          Continue with Google
+        </Button>
+        <Button
+          startContent={
+            <Icon className="text-default-500" icon="fe:github" width={24} />
+          }
+          variant="bordered"
+        >
+          Continue with Github
+        </Button>
+      </div>
+      <p className="text-center text-small">
+        Already have an account?&nbsp;
+        <Link
+          href=""
+          size="sm"
+          onClick={() => setAuthFormType(AuthFormType.Login)}
+        >
+          Log In
+        </Link>
+      </p>
     </>
   )
 }

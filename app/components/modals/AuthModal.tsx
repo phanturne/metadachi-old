@@ -1,11 +1,7 @@
-import { useState } from "react"
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react"
 import Image from "next/image"
 import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
-import { LoginForm } from "@/app/components/forms/LoginForm"
-import { ForgotPasswordForm } from "@/app/components/forms/ForgotPasswordForm"
-import { ResetPasswordForm } from "@/app/components/forms/ResetPasswordForm"
-import { SignUpForm } from "@/app/components/forms/SignUpForm"
+import AuthForm from "@/app/components/forms/AuthForm"
 
 export default function AuthModal({
   open,
@@ -16,10 +12,6 @@ export default function AuthModal({
   onClose: () => void
   type?: AuthFormType
 }) {
-  const [formType, setFormType] = useState<AuthFormType>(
-    type ?? AuthFormType.Login
-  )
-
   return (
     <Modal size="sm" isOpen={open} onOpenChange={onClose}>
       <ModalContent className="p-4">
@@ -32,16 +24,7 @@ export default function AuthModal({
           />
         </ModalHeader>
         <ModalBody>
-          {formType === AuthFormType.Login && (
-            <LoginForm setAuthFormType={setFormType} />
-          )}
-          {formType === AuthFormType.SignUp && (
-            <SignUpForm setAuthFormType={setFormType} />
-          )}
-          {formType === AuthFormType.ForgotPassword && (
-            <ForgotPasswordForm setAuthFormType={setFormType} />
-          )}
-          {formType === AuthFormType.ResetPassword && <ResetPasswordForm />}
+          <AuthForm type={type} />
         </ModalBody>
       </ModalContent>
     </Modal>

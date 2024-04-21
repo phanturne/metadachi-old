@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import AuthForm, { AuthFormType } from "@/app/components/forms/AuthForm"
-import { Box } from "@mui/joy"
 import { supabase } from "@/app/lib/supabase/browser-client"
+import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
+import AuthForm from "@/app/components/forms/AuthForm"
 
 export default function ChangePasswordPage() {
   const [loading, setLoading] = useState(true)
@@ -28,15 +28,5 @@ export default function ChangePasswordPage() {
     return null
   }
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        height: "100%",
-        alignItems: "center"
-      }}
-    >
-      <AuthForm type={AuthFormType.ResetPassword} />
-    </Box>
-  )
+  return <AuthForm type={AuthFormType.ResetPassword} />
 }

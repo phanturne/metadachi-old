@@ -8,7 +8,7 @@ import {
 import { PasswordInput } from "@/app/components/input"
 import { Routes } from "@/app/lib/constants"
 import { toast } from "sonner"
-import { Checkbox, Input, Button, Link, Divider } from "@nextui-org/react"
+import { Button, Checkbox, Divider, Input, Link } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
 
 export function LoginForm({
@@ -83,7 +83,7 @@ export function LoginForm({
           </Checkbox>
           <Link
             className="text-default-500"
-            href="#"
+            href=""
             size="sm"
             onClick={() => setAuthFormType(AuthFormType.ForgotPassword)}
           >
@@ -118,7 +118,7 @@ export function LoginForm({
       <p className="text-center text-small">
         New to Metadachi?&nbsp;
         <Link
-          href="#"
+          href=""
           size="sm"
           onClick={() => setAuthFormType(AuthFormType.SignUp)}
         >

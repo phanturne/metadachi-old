@@ -105,7 +105,7 @@ export default function Component(props: NavbarProps) {
               }}
               variant="flat"
               onClick={openAuthModal}
-              startContent={
+              endContent={
                 <Icon icon="solar:login-linear" className="text-xl" />
               }
             >
