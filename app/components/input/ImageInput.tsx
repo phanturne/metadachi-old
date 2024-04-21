@@ -110,7 +110,7 @@ export function AvatarImageInput({
   onImageChange
 }: {
   src: string
-  name: string
+  name?: string
   onSrcChange: (src: string) => void
   onImageChange: (image: File) => void
 }) {

@@ -90,6 +90,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({
         placeholder="Profile context... (optional)"
         minRows={6}
         maxRows={10}
+        maxLength={PROFILE_CONTEXT_MAX}
         description={`${profileInstructions.length}/${PROFILE_CONTEXT_MAX}`}
       />
 

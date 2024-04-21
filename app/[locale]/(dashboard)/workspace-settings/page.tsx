@@ -1,25 +1,9 @@
 "use client"
-import Header from "@/app/components/ui/Header"
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-  Stack,
-  Textarea,
-  Typography
-} from "@mui/joy"
 import React, { useContext, useEffect, useState } from "react"
-import Tabs from "@mui/joy/Tabs"
-import TabList from "@mui/joy/TabList"
-import Tab, { tabClasses } from "@mui/joy/Tab"
 import { MetadachiContext } from "@/app/lib/context"
 import { toast } from "sonner"
 import { LLMID } from "@/app/lib/types"
-import { useSearchParams } from "next/navigation"
-import { FULL_WIDTH_PADDING_X } from "@/app/lib/constants"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { WORKSPACE_INSTRUCTIONS_MAX } from "@/app/lib/db/limits"
 import {
@@ -28,15 +12,26 @@ import {
 } from "@/app/lib/db/storage/workspace-images"
 import { updateWorkspace } from "@/app/lib/db/workspaces"
 import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
-import ImageInput from "@/app/components/input/ImageInput"
+import { AvatarImageInput } from "@/app/components/input/ImageInput"
 import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
 import { DeleteWorkspace } from "@/app/components/workspace/DeleteWorkspace"
+import { Icon } from "@iconify-icon/react"
+import {
+  Button,
+  Card,
+  CardBody,
+  Input,
+  Tab,
+  Tabs,
+  Textarea
+} from "@nextui-org/react"
 
 export default function WorkspaceSettingsPage() {
   const searchParams = useSearchParams()
   const [tab, setTab] = useState(searchParams.get("tab") ?? "main")
 
   const { openAuthModal } = useAuthModal()
+  const router = useRouter()
 
   const {
     profile,
@@ -166,158 +161,147 @@ export default function WorkspaceSettingsPage() {
   }
 
   const handleReset = () => {
-    return
+    setName(selectedWorkspace?.name || "")
+    setDescription(selectedWorkspace?.description || "")
+    setInstructions(selectedWorkspace?.instructions || "")
+    setImageLink("")
+    setSelectedImage(null)
+    setDefaultChatSettings({
+      model: selectedWorkspace?.default_model,
+      prompt: selectedWorkspace?.default_prompt,
+      temperature: selectedWorkspace?.default_temperature,
+      contextLength: selectedWorkspace?.default_context_length,
+      includeProfileContext: selectedWorkspace?.include_profile_context,
+      includeWorkspaceInstructions:
+        selectedWorkspace?.include_workspace_instructions,
+      embeddingsProvider: selectedWorkspace?.embeddings_provider
+    })
   }
 
   // if (!selectedWorkspace || !profile) return null
 
   return (
-    <>
-      <Header
-        startContent={
-          <Typography level="title-lg">Workspace Settings</Typography>
-        }
-        middleContent={
-          <Tabs
-            value={tab}
-            onChange={(event, value) => {
-              setTab((value as string) ?? "main")
-            }}
-            size="sm"
-            aria-label="tabs"
-            defaultValue={0}
-            sx={{
-              bgcolor: "transparent",
-              alignItems: "center",
-              display: "flex",
-              width: "100%",
-              height: "100%",
-              overflow: "scroll",
-              mt: 1
-            }}
+    <div className="flex w-full flex-col items-center overflow-auto p-4">
+      <div className="w-full max-w-2xl">
+        <h1 className="text-3xl font-bold leading-9 text-default-foreground">
+          Workspace Settings
+        </h1>
+        <h2 className="mt-2 text-small text-default-500">
+          Customize workspace settings and chat defaults.
+        </h2>
+        <Tabs
+          fullWidth
+          classNames={{
+            base: "mt-6",
+            cursor: "bg-content1 dark:bg-content1",
+            panel: "w-full p-0 pt-4"
+          }}
+          selectedKey={tab}
+          onSelectionChange={newTab => {
+            router.push(`/workspace-settings?tab=${newTab}`)
+            setTab(newTab as string)
+          }}
+        >
+          <Tab
+            key="main"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon icon="ic:round-workspaces" className="text-base" />
+                <span>Main</span>
+              </div>
+            }
           >
-            <TabList
-              disableUnderline
-              sx={{
-                p: 0.5,
-                gap: 0.5,
-                borderRadius: "xl",
-                bgcolor: "background.level1",
-                [`& .${tabClasses.root}[aria-selected="true"]`]: {
-                  boxShadow: "sm",
-                  bgcolor: "background.surface"
-                }
-              }}
-            >
-              <Tab disableIndicator value="main">
-                Main
-              </Tab>
-              <Tab disableIndicator value="default">
-                Default
-              </Tab>
-            </TabList>
-          </Tabs>
-        }
-      />
+            <div className="flex flex-col gap-4">
+              <Card className="my-4 bg-default-100" shadow="none">
+                <CardBody>
+                  <div className="flex items-center gap-4">
+                    <AvatarImageInput
+                      src={imageLink}
+                      name={name}
+                      onSrcChange={setImageLink}
+                      onImageChange={setSelectedImage}
+                    />
 
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          overflow: "scroll",
-          mt: 2,
-          px: FULL_WIDTH_PADDING_X
-        }}
-      >
-        {tab === "main" && (
-          <Stack spacing={2}>
-            <ImageInput
-              src={imageLink}
-              image={selectedImage}
-              onSrcChange={setImageLink}
-              onImageChange={setSelectedImage}
-              width={50}
-              height={50}
-            />
+                    <p className="text-sm font-medium text-default-600">
+                      {name}
+                    </p>
+                  </div>
+                </CardBody>
+              </Card>
 
-            <FormControl>
-              <FormLabel>Workspace Name</FormLabel>
               <Input
-                placeholder="Name..."
+                isRequired
+                label="Workspace Name"
+                labelPlacement="outside"
+                placeholder="Workspace Name..."
                 value={name}
-                onChange={e => setName(e.target.value)}
+                onValueChange={setName}
               />
-            </FormControl>
-
-            {/* <div className="space-y-1">
-              <Label>Description</Label>
-
-              <Input
-                placeholder="Description... (optional)"
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-              />
-            </div> */}
-
-            <FormControl>
-              <FormLabel>
-                How would you like the AI to respond in this workspace?
-              </FormLabel>
 
               <Textarea
-                placeholder="Instructions... (optional)"
-                value={instructions}
-                onChange={e => setInstructions(e.target.value)}
-                minRows={5}
+                label="Workspace Description"
+                labelPlacement="outside"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+                placeholder="Workspace Description... (optional)"
+                minRows={4}
                 maxRows={10}
               />
 
-              <FormHelperText
-                sx={{ fontStyle: "italic" }}
-              >{`${instructions.length}/${WORKSPACE_INSTRUCTIONS_MAX}`}</FormHelperText>
-            </FormControl>
-          </Stack>
-        )}
+              <Textarea
+                label=" How would you like the AI to respond in this workspace?"
+                labelPlacement="outside"
+                value={instructions}
+                onChange={e => setInstructions(e.target.value)}
+                placeholder="Instructions... (optional)"
+                minRows={4}
+                maxRows={10}
+                maxLength={WORKSPACE_INSTRUCTIONS_MAX}
+                description={`${instructions.length}/${WORKSPACE_INSTRUCTIONS_MAX}`}
+              />
+            </div>
+          </Tab>
+          <Tab
+            key="chat-defaults"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon
+                  icon="solar:chat-round-line-linear"
+                  className="text-base"
+                />
+                <span>Chat Defaults</span>
+              </div>
+            }
+          >
+            <div className="flex flex-col gap-4">
+              <p>
+                These are the settings your workspace begins with when selected.
+              </p>
+              <ChatSettingsForm
+                chatSettings={defaultChatSettings as any}
+                onChangeChatSettings={setDefaultChatSettings}
+              />
+            </div>
+          </Tab>
+        </Tabs>
 
-        {tab === "default" && (
-          <FormControl>
-            <FormLabel>
-              These are the settings your workspace begins with when selected.
-            </FormLabel>
+        <div className="flex justify-between gap-2 py-8">
+          <div>
+            {selectedWorkspace && !selectedWorkspace.is_home && (
+              <DeleteWorkspace workspace={selectedWorkspace} />
+            )}
+          </div>
 
-            <ChatSettingsForm
-              chatSettings={defaultChatSettings as any}
-              onChangeChatSettings={setDefaultChatSettings}
-            />
-          </FormControl>
-        )}
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-          py: 2,
-          px: FULL_WIDTH_PADDING_X
-        }}
-      >
-        {selectedWorkspace && !selectedWorkspace.is_home && (
-          <DeleteWorkspace workspace={selectedWorkspace} />
-        )}
-
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2
-          }}
-        >
-          <Button variant="outlined" color="neutral" onClick={handleReset}>
-            Reset
-          </Button>
-          <Button onClick={handleSave}>Save</Button>
-        </Box>
-      </Box>
-    </>
+          <div className="flex gap-2">
+            <Button variant="light" onClick={handleReset}>
+              Reset
+            </Button>
+            <Button color="primary" onClick={handleSave}>
+              Save
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

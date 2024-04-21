@@ -3,20 +3,16 @@ import { MetadachiContext } from "@/app/lib/context"
 import { deleteWorkspace } from "@/app/lib/db/workspaces"
 import { Tables } from "@/supabase/types"
 import React, { FC, useContext, useState } from "react"
-import { DeleteRounded } from "@mui/icons-material"
 import {
-  Box,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  FormHelperText,
+  Button,
   Input,
   Modal,
-  ModalDialog,
-  Stack,
-  Typography
-} from "@mui/joy"
-import Button from "@mui/joy/Button"
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader
+} from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface DeleteWorkspaceProps {
   workspace: Tables<"workspaces">
@@ -34,7 +30,18 @@ export const DeleteWorkspace: FC<DeleteWorkspaceProps> = ({
   const [hasError, setHasError] = useState(false)
   const [name, setName] = useState("")
 
-  const handleDeleteWorkspace = async () => {
+  const handleModalClose = () => {
+    // Clear the inputs
+    setName("")
+    setHasError(false)
+
+    // Close the modal
+    setOpen(false)
+  }
+
+  const handleDeleteWorkspace = async (event: React.FormEvent) => {
+    event.preventDefault()
+
     if (name !== workspace.name) {
       setHasError(true)
       return
@@ -61,58 +68,50 @@ export const DeleteWorkspace: FC<DeleteWorkspaceProps> = ({
   return (
     <>
       <Button
-        variant="plain"
+        variant="flat"
         color="danger"
         onClick={() => setOpen(true)}
-        startDecorator={<DeleteRounded />}
+        startContent={
+          <Icon icon="solar:trash-bin-2-linear" className="text-base" />
+        }
       >
         Delete Workspace
       </Button>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
-          <DialogTitle>{`Delete "${workspace.name}"`}</DialogTitle>
-          <DialogContent>
-            <Typography color="warning">
-              WARNING: Deleting a workspace will delete all of its data.
-            </Typography>
-          </DialogContent>
+      <Modal isOpen={open} onOpenChange={handleModalClose}>
+        <ModalContent>
+          <ModalHeader>{`Delete "${workspace.name}"`}</ModalHeader>
 
-          <FormControl error={hasError}>
-            <Input
-              className="mt-4"
-              placeholder="Type the name of this workspace to confirm"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            {hasError && (
-              <FormHelperText>
-                The name you entered does not match the workspace name.
-              </FormHelperText>
-            )}
-          </FormControl>
-
-          <Stack spacing={2}>
-            <Box
-              sx={{
-                display: "flex",
-                flexGrow: 1,
-                justifyContent: "flex-end",
-                gap: 2
-              }}
-            >
-              <Button
-                variant="plain"
-                color="neutral"
-                onClick={() => setOpen(false)}
-              >
+          <form onSubmit={handleDeleteWorkspace}>
+            <ModalBody>
+              <p className="text-sm text-warning">
+                WARNING: Deleting a workspace will delete all of its data.
+              </p>
+              <Input
+                isRequired
+                label="Workspace Name"
+                labelPlacement="outside"
+                placeholder="Type the name of this workspace to confirm"
+                value={name}
+                onValueChange={setName}
+                isInvalid={hasError}
+                errorMessage={
+                  hasError
+                    ? "The name you entered does not match the workspace name."
+                    : undefined
+                }
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="light" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button color="danger" onClick={handleDeleteWorkspace}>
+
+              <Button color="danger" type="submit">
                 Delete
               </Button>
-            </Box>
-          </Stack>
-        </ModalDialog>
+            </ModalFooter>
+          </form>
+        </ModalContent>
       </Modal>
     </>
   )

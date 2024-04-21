@@ -215,6 +215,12 @@ export default function SettingsPage() {
   return (
     <div className="flex w-full flex-col items-center overflow-auto p-4">
       <div className="w-full max-w-2xl">
+        <h1 className="text-3xl font-bold leading-9 text-default-foreground">
+          Settings
+        </h1>
+        <h2 className="mt-2 text-small text-default-500">
+          Customize settings, email preferences, and web appearance.
+        </h2>
         <Tabs
           fullWidth
           classNames={{
