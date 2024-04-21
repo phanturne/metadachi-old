@@ -1,21 +1,17 @@
-import { FC, useContext } from "react"
+import React, { FC, useContext } from "react"
 import { ChatSettings } from "@/app/lib/types"
 import { MetadachiContext } from "@/app/lib/context"
 import { CHAT_SETTING_LIMITS } from "@/app/lib/utils/chat-setting-limits"
 import {
   Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
+  AccordionItem,
   Checkbox,
-  IconButton,
-  Option,
-  Select,
   Slider,
-  Tooltip,
-  Typography
-} from "@mui/joy"
-import { InfoRounded } from "@mui/icons-material"
+  Tab,
+  Tabs,
+  Tooltip
+} from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface AdvancedModelSettingsProps {
   chatSettings: ChatSettings
@@ -29,19 +25,14 @@ export const AdvancedModelSettings: FC<AdvancedModelSettingsProps> = ({
   showTooltip
 }) => {
   return (
-    <Accordion sx={{ ml: -1.5 }}>
-      <AccordionSummary>
-        <Typography level="title-sm" fontWeight="bold">
-          Advanced Settings
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
+    <Accordion itemClasses={{ title: "text-sm" }} variant="shadow">
+      <AccordionItem title="Advanced Settings">
         <AdvancedContent
           chatSettings={chatSettings}
           onChangeChatSettings={onChangeChatSettings}
           showTooltip={showTooltip}
         />
-      </AccordionDetails>
+      </AccordionItem>
     </Accordion>
   )
 }
@@ -76,128 +67,116 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Box sx={{ display: "flex", flexDirection: "column", mt: 2 }}>
-        <Typography level="title-sm" fontWeight="bold">
-          {`Temperature: ${chatSettings.temperature}`}
-        </Typography>
+    <div className="flex flex-col gap-4">
+      <Slider
+        label="Temperature"
+        value={chatSettings.temperature}
+        onChange={value =>
+          onChangeChatSettings({
+            ...chatSettings,
+            temperature: value as number
+          })
+        }
+        minValue={MODEL_LIMITS.MIN_TEMPERATURE}
+        maxValue={MODEL_LIMITS.MAX_TEMPERATURE}
+        step={0.01}
+      />
 
-        <Slider
-          value={[chatSettings.temperature]}
-          onChange={(event, newValue) =>
-            onChangeChatSettings({
-              ...chatSettings,
-              temperature: newValue as number
-            })
-          }
-          min={MODEL_LIMITS.MIN_TEMPERATURE}
-          max={MODEL_LIMITS.MAX_TEMPERATURE}
-          step={0.01}
-        />
-      </Box>
+      <Slider
+        label="Context Length"
+        value={chatSettings.contextLength}
+        onChange={value =>
+          onChangeChatSettings({
+            ...chatSettings,
+            contextLength: value as number
+          })
+        }
+        minValue={0}
+        maxValue={
+          isCustomModel
+            ? models.find(model => model.model_id === chatSettings.model)
+                ?.context_length
+            : MODEL_LIMITS.MAX_CONTEXT_LENGTH
+        }
+        step={1}
+      />
 
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography level="title-sm" fontWeight="bold">
-          {`Context Length: ${chatSettings.contextLength}`}
-        </Typography>
-
-        <Slider
-          value={[chatSettings.contextLength]}
-          onChange={(event, newValue) =>
-            onChangeChatSettings({
-              ...chatSettings,
-              contextLength: newValue as number
-            })
-          }
-          min={0}
-          max={
-            isCustomModel
-              ? models.find(model => model.model_id === chatSettings.model)
-                  ?.context_length
-              : MODEL_LIMITS.MAX_CONTEXT_LENGTH
-          }
-          step={1}
-        />
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <div className="flex items-center space-x-1">
         <Checkbox
           size="sm"
           checked={chatSettings.includeProfileContext}
-          onChange={event =>
+          onChange={e =>
             onChangeChatSettings({
               ...chatSettings,
-              includeProfileContext: event.target.checked
-            })
-          }
-        />
-
-        <Typography level="title-sm" fontWeight="bold">
-          Chats Include Profile Context
-        </Typography>
-
-        {showTooltip && (
-          <Tooltip title={profile?.profile_context || "No profile context."}>
-            <IconButton size="sm">
-              <InfoRounded />
-            </IconButton>
-          </Tooltip>
-        )}
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Checkbox
-          size="sm"
-          checked={chatSettings.includeWorkspaceInstructions}
-          onChange={event =>
-            onChangeChatSettings({
-              ...chatSettings,
-              includeWorkspaceInstructions: event.target.checked
-            })
-          }
-        />
-
-        <Typography level="title-sm" fontWeight="bold">
-          Chats Include Workspace Instructions
-        </Typography>
-
-        {showTooltip && (
-          <Tooltip
-            title={
-              selectedWorkspace?.instructions || "No workspace instructions."
-            }
-          >
-            <Tooltip title={profile?.profile_context || "No profile context."}>
-              <IconButton size="sm">
-                <InfoRounded />
-              </IconButton>
-            </Tooltip>
-          </Tooltip>
-        )}
-      </Box>
-
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 2 }}>
-        <Typography level="title-sm" fontWeight="bold">
-          Embeddings Provider
-        </Typography>
-
-        <Select
-          value={chatSettings.embeddingsProvider}
-          onChange={(_, v) =>
-            onChangeChatSettings({
-              ...chatSettings,
-              embeddingsProvider: v ?? "openai"
+              includeProfileContext: e.target.checked
             })
           }
         >
-          <Option value="openai">
-            {profile?.use_azure_openai ? "Azure OpenAI" : "OpenAI"}
-          </Option>
-          {window.location.hostname === "localhost" && (
-            <Option value="local">Local</Option>
-          )}
-        </Select>
-      </Box>
-    </Box>
+          Chats Include Profile Context
+        </Checkbox>
+
+        {showTooltip && (
+          <Tooltip content={profile?.profile_context || "No profile context."}>
+            <Icon icon="solar:info-circle-linear" className="text-base" />
+          </Tooltip>
+        )}
+      </div>
+
+      <div className="flex items-center space-x-1">
+        <Checkbox
+          size="sm"
+          checked={chatSettings.includeWorkspaceInstructions}
+          onChange={e =>
+            onChangeChatSettings({
+              ...chatSettings,
+              includeWorkspaceInstructions: e.target.checked
+            })
+          }
+        >
+          {" "}
+          Chats Include Workspace Instructions
+        </Checkbox>
+
+        {showTooltip && (
+          <Tooltip
+            content={
+              selectedWorkspace?.instructions || "No workspace instructions."
+            }
+          >
+            <Icon icon="solar:info-circle-linear" className="text-base" />
+          </Tooltip>
+        )}
+      </div>
+
+      <div className="mt-2 flex flex-col space-x-1">
+        <p className="text-base">Embeddings Provider</p>
+
+        <Tabs
+          fullWidth
+          classNames={{
+            base: "mt-3 !ml-0",
+            cursor: "bg-content1 dark:bg-content1"
+          }}
+          selectedKey={chatSettings.embeddingsProvider}
+          onSelectionChange={newTab => {
+            if (newTab !== "openai" && newTab !== "local") return
+
+            onChangeChatSettings({
+              ...chatSettings,
+              embeddingsProvider: newTab
+            })
+          }}
+          disabledKeys={
+            window.location.hostname === "localhost" ? [] : ["local"]
+          }
+        >
+          <Tab
+            key="openai"
+            title={profile?.use_azure_openai ? "Azure OpenAI" : "OpenAI"}
+          />
+          <Tab key="local" title="Local" />
+        </Tabs>
+      </div>
+    </div>
   )
 }
