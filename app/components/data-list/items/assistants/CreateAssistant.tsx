@@ -8,7 +8,7 @@ import { Tables, TablesInsert } from "@/supabase/types"
 import { FC, useContext, useEffect, useState } from "react"
 import { AssistantRetrievalSelect } from "./AssistantRetrievalSelect"
 import { AssistantToolSelect } from "./AssistantToolSelect"
-import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
+import { ChatSettingsFormWrapper } from "@/app/components/forms/ChatSettingsForm"
 import { FormControl, FormLabel, Input } from "@mui/joy"
 import ImageInput from "@/app/components/input/ImageInput"
 
@@ -148,7 +148,7 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
             />
           </FormControl>
 
-          <ChatSettingsForm
+          <ChatSettingsFormWrapper
             chatSettings={assistantChatSettings as any}
             onChangeChatSettings={setAssistantChatSettings}
           />

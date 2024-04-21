@@ -1,11 +1,9 @@
 "use client"
 
 import { ChatSettings } from "@/app/lib/types"
-import { FC } from "react"
 import { ModelSelect } from "../models/ModelSelect"
 import { AdvancedModelSettings } from "../models/AdvancedModelSettings"
-import { Box, Textarea, Typography } from "@mui/joy"
-import Sheet from "@mui/joy/Sheet"
+import { Textarea } from "@nextui-org/react"
 
 interface ChatSettingsFormProps {
   chatSettings: ChatSettings
@@ -13,64 +11,53 @@ interface ChatSettingsFormProps {
   showTooltip?: boolean
 }
 
-export const ChatSettingsForm: FC<ChatSettingsFormProps> = ({
+export const ChatSettingsForm = ({
   chatSettings,
   onChangeChatSettings,
   showTooltip = true
-}) => {
+}: ChatSettingsFormProps) => {
   return (
-    <Sheet
-      variant="outlined"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 1.5,
-        p: 3,
-        borderRadius: "sm"
-      }}
-    >
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        <Typography
-          level="title-sm"
-          fontWeight="bold"
-          sx={{ alignSelf: "flex-start" }}
-        >
-          Model
-        </Typography>
+    <>
+      <ModelSelect
+        selectedModelId={chatSettings.model}
+        onSelectModel={model => {
+          onChangeChatSettings({ ...chatSettings, model })
+        }}
+      />
 
-        <ModelSelect
-          selectedModelId={chatSettings.model}
-          onSelectModel={model => {
-            onChangeChatSettings({ ...chatSettings, model })
-          }}
-        />
-      </Box>
-
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        <Typography
-          level="title-sm"
-          fontWeight="bold"
-          sx={{ alignSelf: "flex-start" }}
-        >
-          Prompt
-        </Typography>
-
-        <Textarea
-          placeholder="You are a helpful AI assistant."
-          onChange={e => {
-            onChangeChatSettings({ ...chatSettings, prompt: e.target.value })
-          }}
-          value={chatSettings.prompt}
-          minRows={3}
-          maxRows={6}
-        />
-      </Box>
+      <Textarea
+        label="Prompt"
+        labelPlacement="outside"
+        placeholder="You are a helpful AI assistant."
+        onChange={e => {
+          onChangeChatSettings({ ...chatSettings, prompt: e.target.value })
+        }}
+        value={chatSettings.prompt}
+        minRows={3}
+        maxRows={6}
+      />
 
       <AdvancedModelSettings
         chatSettings={chatSettings}
         onChangeChatSettings={onChangeChatSettings}
         showTooltip={showTooltip}
       />
-    </Sheet>
+    </>
+  )
+}
+
+export const ChatSettingsFormWrapper = ({
+  chatSettings,
+  onChangeChatSettings,
+  showTooltip = true
+}: ChatSettingsFormProps) => {
+  return (
+    <div className="flex flex-col space-y-6 rounded-md border border-gray-300 p-3">
+      <ChatSettingsForm
+        chatSettings={chatSettings}
+        onChangeChatSettings={onChangeChatSettings}
+        showTooltip={showTooltip}
+      />{" "}
+    </div>
   )
 }

@@ -1,6 +1,6 @@
-import { Option, Select } from "@mui/joy"
 import React from "react"
-import { MODEL_FILTER_LIST } from "@/app/components/models/ModelSelect"
+import { MODEL_PROVIDERS } from "@/app/components/models/ModelSelect"
+import { Select, SelectItem } from "@nextui-org/react"
 
 export function ModelFilterDropdown({
   modelFilter,
@@ -13,19 +13,20 @@ export function ModelFilterDropdown({
 }) {
   return (
     <Select
+      variant="faded"
       disabled={disabled}
-      defaultValue={MODEL_FILTER_LIST[0]}
+      defaultSelectedKeys={[MODEL_PROVIDERS[0]]}
       value={modelFilter}
-      onChange={(_, v) => {
-        setModelFilter(v ?? MODEL_FILTER_LIST[0])
+      onChange={e => {
+        setModelFilter(e.target.value ?? MODEL_PROVIDERS[0])
       }}
       onClick={e => e.stopPropagation()}
-      sx={{ width: "150px" }}
+      className="w-36"
     >
-      {MODEL_FILTER_LIST.map(filter => (
-        <Option value={filter} key={`model-filter-${filter}`}>
+      {MODEL_PROVIDERS.map(filter => (
+        <SelectItem value={filter} key={filter}>
           {filter}
-        </Option>
+        </SelectItem>
       ))}
     </Select>
   )

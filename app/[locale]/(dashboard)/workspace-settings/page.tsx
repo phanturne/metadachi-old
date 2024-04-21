@@ -274,9 +274,10 @@ export default function WorkspaceSettingsPage() {
             }
           >
             <div className="flex flex-col gap-4">
-              <p>
-                These are the settings your workspace begins with when selected.
-              </p>
+              {/*<h2 className="mb-4 text-small text-default-500">*/}
+              {/*  Note: Adding an API Key will override its corresponding system*/}
+              {/*  API key (if it exists).*/}
+              {/*</h2>*/}
               <ChatSettingsForm
                 chatSettings={defaultChatSettings as any}
                 onChangeChatSettings={setDefaultChatSettings}
