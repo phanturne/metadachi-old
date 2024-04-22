@@ -8,7 +8,6 @@ import {
   RadioGroup,
   Typography
 } from "@mui/joy"
-import Header from "@/app/components/ui/Header"
 import * as React from "react"
 import { useState } from "react"
 import Sheet from "@mui/joy/Sheet"
@@ -29,13 +28,9 @@ export default function HeartsSymphonyGamePage() {
 
   return (
     <>
-      <Header
-        startContent={
-          <Typography level="title-lg">
-            {"Heart's Symphony (Work In Progress)"}
-          </Typography>
-        }
-      />
+      <h1 className="self-start text-3xl font-bold leading-9 text-default-foreground">
+        {"Heart's Symphony"}
+      </h1>
 
       <Box
         sx={{

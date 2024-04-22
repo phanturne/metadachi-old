@@ -1,13 +1,11 @@
 "use client"
 
 import { Box, Typography } from "@mui/joy"
-import Header from "@/app/components/ui/Header"
 import GameCard from "@/app/[locale]/(dashboard)/games/GameCard"
-import { SportsEsportsRounded } from "@mui/icons-material"
+import * as React from "react"
 import { useEffect, useState } from "react"
 import { Tables } from "@/supabase/types"
 import { supabase } from "@/app/lib/supabase/browser-client"
-import * as React from "react"
 import ComingSoonPage from "@/app/components/ui/ComingSoonPage"
 
 export default function GamesPage() {
@@ -25,17 +23,10 @@ export default function GamesPage() {
 
   return (
     <>
-      {/* TODO: Add search bar to middleContent */}
-      <Header
-        startContent={
-          <Typography
-            level="title-lg"
-            startDecorator={<SportsEsportsRounded />}
-          >
-            Games
-          </Typography>
-        }
-      />
+      <h1 className="self-start text-3xl font-bold leading-9 text-default-foreground">
+        Games
+      </h1>
+
       <Box
         sx={{
           display: "flex",
