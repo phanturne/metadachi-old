@@ -117,7 +117,6 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
         <>
           <Button
             variant="bordered"
-            className="flex items-center"
             onClick={getCreateFunction()}
             startContent={<Icon icon="ic:round-plus" className="text-base" />}
           >

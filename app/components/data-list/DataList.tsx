@@ -165,7 +165,7 @@ export const DataList: FC<DataList> = ({
       >
         {data.length === 0 && (
           <div className="flex grow items-center justify-center">
-            <p className="text-lg italic">No {contentType}.</p>
+            <p className="mt-8 text-lg italic">No matching {contentType}.</p>
           </div>
         )}
 

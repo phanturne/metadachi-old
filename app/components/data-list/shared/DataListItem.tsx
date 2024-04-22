@@ -3,11 +3,12 @@ import { createChat } from "@/app/lib/db/chats"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/app/lib/types"
 import { useRouter } from "next/navigation"
+import * as React from "react"
 import { FC, useContext, useState } from "react"
 import { UpdateItemModal } from "./UpdateItemModal"
-import { Button, Typography } from "@mui/joy"
+import { Button } from "@nextui-org/react"
 
-interface SidebarItemProps {
+interface DataListItem {
   item: DataItemType
   isTyping: boolean
   contentType: ContentType
@@ -16,7 +17,7 @@ interface SidebarItemProps {
   renderInputs: (renderState: any) => JSX.Element
 }
 
-export const DataListItem: FC<SidebarItemProps> = ({
+export const DataListItem: FC<DataListItem> = ({
   item,
   contentType,
   updateState,
@@ -77,29 +78,14 @@ export const DataListItem: FC<SidebarItemProps> = ({
   return (
     <>
       <Button
-        variant="plain"
-        color="neutral"
-        sx={{
-          p: 1,
-          overflow: "hidden",
-          "&:hover": {
-            bgcolor: "transparent",
-            opacity: 0.5
-          }
-        }}
-        startDecorator={icon}
+        variant="light"
+        className="w-full overflow-hidden px-2"
+        startContent={icon}
         onClick={() => setOpen(true)}
       >
-        <Typography
-          noWrap
-          sx={{
-            pl: 1,
-            overflow: "hidden",
-            textOverflow: "ellipsis"
-          }}
-        >
+        <p className="grow overflow-hidden text-ellipsis text-left">
           {item.name}
-        </Typography>
+        </p>
 
         {/* TODO */}
         {/* {isHovering && (
