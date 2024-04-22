@@ -70,19 +70,19 @@ import {
 import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { Tables, TablesUpdate } from "@/supabase/types"
 import { CollectionFile, ContentType, DataItemType } from "@/app/lib/types"
-import { FC, useContext, useEffect, useRef, useState } from "react"
+import * as React from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { toast } from "sonner"
 import { DeleteItemButton } from "./DeleteItemButton"
 import {
-  Box,
   Button,
-  DialogTitle,
   Modal,
-  ModalDialog,
-  Stack,
-  Typography
-} from "@mui/joy"
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader
+} from "@nextui-org/react"
 
 interface SidebarUpdateItemProps {
   open: boolean
@@ -116,9 +116,6 @@ export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
     setModels,
     setAssistantImages
   } = useContext(MetadachiContext)
-
-  const buttonRef = useRef<HTMLButtonElement>(null)
-
   const [startingWorkspaces, setStartingWorkspaces] = useState<
     Tables<"workspaces">[]
   >([])
@@ -607,52 +604,28 @@ export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
   }
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
-      <ModalDialog sx={{ minWidth: "450px" }}>
-        <DialogTitle>{`Edit ${contentType.slice(0, -1)}`}</DialogTitle>
-        <form
-          onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault()
-            handleUpdate()
-          }}
-        >
-          <Stack spacing={2}>
-            {workspaces.length > 1 && (
-              <Box sx={{ gap: 1 }}>
-                <Typography>Assigned Workspaces</Typography>
-
-                <AssignWorkspaces
-                  selectedWorkspaces={selectedWorkspaces}
-                  setSelectedWorkspaces={setSelectedWorkspaces}
-                />
-              </Box>
-            )}
-            {renderInputs(renderState[contentType])}
-            <Box
-              sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}
-            >
-              <DeleteItemButton item={item} contentType={contentType} />
-
-              <Box
-                sx={{
-                  display: "flex",
-                  flexGrow: 1,
-                  justifyContent: "flex-end",
-                  gap: 2
-                }}
-              >
-                <Button variant="outlined" onClick={() => setOpen(false)}>
-                  Cancel
-                </Button>
-
-                <Button ref={buttonRef} onClick={handleUpdate}>
-                  Save
-                </Button>
-              </Box>
-            </Box>
-          </Stack>
-        </form>
-      </ModalDialog>
+    <Modal isOpen={open} onOpenChange={setOpen}>
+      <ModalContent>
+        <ModalHeader>{`Edit ${contentType.slice(0, -1)}`}</ModalHeader>
+        <ModalBody>
+          <AssignWorkspaces
+            selectedWorkspaces={selectedWorkspaces}
+            setSelectedWorkspaces={setSelectedWorkspaces}
+          />
+          {renderInputs(renderState[contentType])}
+        </ModalBody>
+        <ModalFooter className="flex justify-between">
+          <DeleteItemButton item={item} contentType={contentType} />
+          <div className="flex gap-2">
+            <Button variant="light" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button color="primary" onClick={handleUpdate}>
+              Save
+            </Button>
+          </div>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   )
 }

@@ -6,15 +6,14 @@ import {
 } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
 import Image from "next/image"
-import { FC, useContext, useEffect, useState } from "react"
+import React, { FC, useContext, useEffect, useState } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { DataListItem } from "@/app/components/data-list/shared/DataListItem"
 import { AssistantRetrievalSelect } from "./AssistantRetrievalSelect"
 import { AssistantToolSelect } from "./AssistantToolSelect"
-import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
-import { AssistantRounded } from "@mui/icons-material"
-import { FormControl, FormLabel, Input } from "@mui/joy"
-import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
+import { ChatSettingsFormWrapper } from "@/app/components/forms/ChatSettingsForm"
+import { Icon } from "@iconify-icon/react"
+import { Input, Textarea } from "@nextui-org/react"
 
 interface AssistantItemProps {
   assistant: Tables<"assistants">
@@ -55,18 +54,14 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
       icon={
         imageLink ? (
           <Image
-            style={{ width: "30px", height: "30px", borderRadius: "0.25rem" }}
+            className="size-7 rounded-full"
             src={imageLink}
             alt={assistant.name}
             width={30}
             height={30}
           />
         ) : (
-          <AssistantRounded style={DATA_LIST_ITEM_ICON_STYLE} />
-          // <IconRobotFace
-          //   className="bg-primary text-secondary border-primary rounded border-[1px] p-1"
-          //   size={30}
-          // />
+          <Icon icon="ic:round-assistant" className="text-3xl" />
         )
       }
       updateState={{
@@ -110,132 +105,124 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
         >
       }) => (
         <>
-          <FormControl>
-            <FormLabel>Name</FormLabel>
+          <Input
+            isRequired
+            label="Name"
+            labelPlacement="outside"
+            placeholder="Assistant name..."
+            value={name}
+            onValueChange={setName}
+            maxLength={ASSISTANT_NAME_MAX}
+            description={`${name.length}/${ASSISTANT_NAME_MAX}`}
+          />
 
-            <Input
-              placeholder="Assistant name..."
-              value={name}
-              onChange={e => setName(e.target.value)}
-              slotProps={{ input: { maxLength: ASSISTANT_NAME_MAX } }}
-            />
-          </FormControl>
+          <p>Image</p>
+          <ImageInput
+            src={imageLink}
+            image={selectedImage}
+            onSrcChange={setImageLink}
+            onImageChange={setSelectedImage}
+            width={100}
+            height={100}
+          />
 
-          <FormControl>
-            <FormLabel>Description</FormLabel>
+          <Textarea
+            label="Assistant Description"
+            labelPlacement="outside"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            placeholder="Assistant Description... (optional)"
+            minRows={1}
+            maxRows={3}
+            maxLength={ASSISTANT_DESCRIPTION_MAX}
+            description={`${description.length}/${ASSISTANT_DESCRIPTION_MAX}`}
+          />
 
-            <Input
-              placeholder="Assistant description..."
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              slotProps={{ input: { maxLength: ASSISTANT_DESCRIPTION_MAX } }}
-            />
-          </FormControl>
+          <p>Files & Collections</p>
+          <AssistantRetrievalSelect
+            selectedAssistantRetrievalItems={
+              [
+                ...renderState.selectedAssistantFiles,
+                ...renderState.selectedAssistantCollections
+              ].length === 0
+                ? [
+                    ...renderState.startingAssistantFiles,
+                    ...renderState.startingAssistantCollections
+                  ]
+                : [
+                    ...renderState.startingAssistantFiles.filter(
+                      startingFile =>
+                        ![
+                          ...renderState.selectedAssistantFiles,
+                          ...renderState.selectedAssistantCollections
+                        ].some(
+                          selectedFile => selectedFile.id === startingFile.id
+                        )
+                    ),
+                    ...renderState.selectedAssistantFiles.filter(
+                      selectedFile =>
+                        !renderState.startingAssistantFiles.some(
+                          startingFile => startingFile.id === selectedFile.id
+                        )
+                    ),
+                    ...renderState.startingAssistantCollections.filter(
+                      startingCollection =>
+                        ![
+                          ...renderState.selectedAssistantFiles,
+                          ...renderState.selectedAssistantCollections
+                        ].some(
+                          selectedCollection =>
+                            selectedCollection.id === startingCollection.id
+                        )
+                    ),
+                    ...renderState.selectedAssistantCollections.filter(
+                      selectedCollection =>
+                        !renderState.startingAssistantCollections.some(
+                          startingCollection =>
+                            startingCollection.id === selectedCollection.id
+                        )
+                    )
+                  ]
+            }
+            setSelectedAssistantRetrievalItems={items => {
+              const files = items.filter(
+                item => "type" in item
+              ) as Tables<"files">[]
+              const collections = items.filter(
+                item => !("type" in item)
+              ) as Tables<"collections">[]
+              renderState.setSelectedAssistantFiles(files)
+              renderState.setSelectedAssistantCollections(collections)
+            }}
+          />
 
-          <FormControl>
-            <FormLabel>Image</FormLabel>
+          <p>Tools</p>
+          <AssistantToolSelect
+            selectedAssistantTools={
+              renderState.selectedAssistantTools.length === 0
+                ? renderState.startingAssistantTools
+                : [
+                    ...renderState.startingAssistantTools.filter(
+                      startingTool =>
+                        !renderState.selectedAssistantTools.some(
+                          selectedTool => selectedTool.id === startingTool.id
+                        )
+                    ),
+                    ...renderState.selectedAssistantTools.filter(
+                      selectedTool =>
+                        !renderState.startingAssistantTools.some(
+                          startingTool => startingTool.id === selectedTool.id
+                        )
+                    )
+                  ]
+            }
+            setSelectedAssistantTools={renderState.setSelectedAssistantTools}
+          />
 
-            <ImageInput
-              src={imageLink}
-              image={selectedImage}
-              onSrcChange={setImageLink}
-              onImageChange={setSelectedImage}
-              width={100}
-              height={100}
-            />
-          </FormControl>
-
-          <ChatSettingsForm
+          <ChatSettingsFormWrapper
             chatSettings={assistantChatSettings as any}
             onChangeChatSettings={setAssistantChatSettings}
           />
-
-          <FormControl>
-            <FormLabel>Files & Collections</FormLabel>
-
-            <AssistantRetrievalSelect
-              selectedAssistantRetrievalItems={
-                [
-                  ...renderState.selectedAssistantFiles,
-                  ...renderState.selectedAssistantCollections
-                ].length === 0
-                  ? [
-                      ...renderState.startingAssistantFiles,
-                      ...renderState.startingAssistantCollections
-                    ]
-                  : [
-                      ...renderState.startingAssistantFiles.filter(
-                        startingFile =>
-                          ![
-                            ...renderState.selectedAssistantFiles,
-                            ...renderState.selectedAssistantCollections
-                          ].some(
-                            selectedFile => selectedFile.id === startingFile.id
-                          )
-                      ),
-                      ...renderState.selectedAssistantFiles.filter(
-                        selectedFile =>
-                          !renderState.startingAssistantFiles.some(
-                            startingFile => startingFile.id === selectedFile.id
-                          )
-                      ),
-                      ...renderState.startingAssistantCollections.filter(
-                        startingCollection =>
-                          ![
-                            ...renderState.selectedAssistantFiles,
-                            ...renderState.selectedAssistantCollections
-                          ].some(
-                            selectedCollection =>
-                              selectedCollection.id === startingCollection.id
-                          )
-                      ),
-                      ...renderState.selectedAssistantCollections.filter(
-                        selectedCollection =>
-                          !renderState.startingAssistantCollections.some(
-                            startingCollection =>
-                              startingCollection.id === selectedCollection.id
-                          )
-                      )
-                    ]
-              }
-              setSelectedAssistantRetrievalItems={items => {
-                const files = items.filter(
-                  item => "type" in item
-                ) as Tables<"files">[]
-                const collections = items.filter(
-                  item => !("type" in item)
-                ) as Tables<"collections">[]
-                renderState.setSelectedAssistantFiles(files)
-                renderState.setSelectedAssistantCollections(collections)
-              }}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Tools</FormLabel>
-
-            <AssistantToolSelect
-              selectedAssistantTools={
-                renderState.selectedAssistantTools.length === 0
-                  ? renderState.startingAssistantTools
-                  : [
-                      ...renderState.startingAssistantTools.filter(
-                        startingTool =>
-                          !renderState.selectedAssistantTools.some(
-                            selectedTool => selectedTool.id === startingTool.id
-                          )
-                      ),
-                      ...renderState.selectedAssistantTools.filter(
-                        selectedTool =>
-                          !renderState.startingAssistantTools.some(
-                            startingTool => startingTool.id === selectedTool.id
-                          )
-                      )
-                    ]
-              }
-              setSelectedAssistantTools={renderState.setSelectedAssistantTools}
-            />
-          </FormControl>
         </>
       )}
     />

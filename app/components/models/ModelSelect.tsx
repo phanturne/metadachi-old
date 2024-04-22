@@ -104,7 +104,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   // if (!selectedModel) return null
 
   const filteredModels = ALL_MODELS.filter(model => {
-    console.log(modelFilter)
     const filter = modelFilter.toLowerCase()
     if (filter === MODEL_FILTERS.All.toLowerCase()) {
       return true
