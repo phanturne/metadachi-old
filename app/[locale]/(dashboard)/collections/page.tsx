@@ -1,13 +1,18 @@
 "use client"
 import * as React from "react"
-import { useContext } from "react"
-import { Tab, tabClasses, TabList, TabPanel, Tabs, Typography } from "@mui/joy"
+import { useContext, useState } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { DataListWrapper } from "@/app/components/data-list/shared/DataListWrapper"
 import { ContentType } from "@/app/lib/types"
-import Header from "@/app/components/ui/Header"
+import { Tab, Tabs } from "@nextui-org/react"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function CollectionsPage() {
+  const searchParams = useSearchParams()
+  const [tab, setTab] = useState(searchParams.get("tab") ?? "chats")
+
+  const router = useRouter()
+
   const {
     folders,
     chats,
@@ -50,51 +55,33 @@ export default function CollectionsPage() {
   }
 
   return (
-    <>
-      <Header
-        startContent={<Typography level="title-lg">Collections</Typography>}
-      />
+    <div className="flex w-full flex-col items-center overflow-auto px-8 py-4">
+      <h1 className="self-start text-3xl font-bold leading-9 text-default-foreground">
+        Collections
+      </h1>
       <Tabs
-        aria-label="tabs"
-        defaultValue="prompts"
-        sx={{
-          width: "100%",
-          height: "100%",
-          bgColor: "transparent",
-          overflowY: "scroll",
-          p: 3
+        fullWidth
+        classNames={{
+          base: "mt-6",
+          cursor: "bg-content1 dark:bg-content1",
+          panel: "w-full p-0 pt-8"
+        }}
+        selectedKey={tab}
+        onSelectionChange={newTab => {
+          router.push(`/collections?tab=${newTab}`)
+          setTab(newTab as string)
         }}
       >
-        <TabList
-          disableUnderline
-          sx={{
-            p: 0.5,
-            gap: 0.5,
-            borderRadius: "xl",
-            bgColor: "background.level1",
-            [`& .${tabClasses.root}[aria-selected="true"]`]: {
-              boxShadow: "sm",
-              bgColor: "background.surface"
-            }
-          }}
-        >
-          {Object.entries(CollectionTabs).map(([key, value]) => (
-            <Tab key={`${key}-collection`} value={key}>
-              {value.label}
-            </Tab>
-          ))}
-        </TabList>
-
         {Object.entries(CollectionTabs).map(([key, value]) => (
-          <TabPanel value={key} key={`${key}-collections-tab-panel`}>
+          <Tab key={key} title={value.label}>
             <DataListWrapper
               contentType={key as ContentType}
               data={value.data}
               folders={value.folders}
             />
-          </TabPanel>
+          </Tab>
         ))}
       </Tabs>
-    </>
+    </div>
   )
 }

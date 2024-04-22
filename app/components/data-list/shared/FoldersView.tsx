@@ -1,9 +1,9 @@
 import { FC } from "react"
-import { Grid } from "@mui/joy"
-import { FolderData } from "@/app/components/data-list/items/folders/FolderData"
 import { Tables } from "@/supabase/types"
 import { ContentType } from "@/app/lib/types"
-import Divider from "@mui/joy/Divider"
+import { FolderItem } from "@/app/components/data-list/shared/FolderItem"
+import { DataListItem } from "@/app/components/data-list/DataListItem"
+import { Divider } from "@nextui-org/react"
 
 interface FoldersViewProps {
   contentType: ContentType
@@ -41,14 +41,10 @@ export const FoldersView: FC<FoldersViewProps> = ({
             />
           ))
         ) : (
-          <Grid container columns={12}>
+          <div className="flex flex-wrap">
             {folders.map(folder => (
-              <Grid
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                xl={2}
+              <div
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6"
                 key={`grid-folder-${folder.id}`}
               >
                 <FolderData
@@ -61,11 +57,56 @@ export const FoldersView: FC<FoldersViewProps> = ({
                   dataWithFolders={dataWithFolders}
                   onDragStart={handleDragStart}
                 />
-              </Grid>
+              </div>
             ))}
-          </Grid>
+          </div>
         ))}
-      <Divider />
+      <Divider className="mb-4 mt-2" />
     </>
+  )
+}
+
+interface FolderDataProps {
+  key: string
+  folder: Tables<"folders">
+  contentType: ContentType
+  onUpdateFolder: (itemId: string, folderId: string | null) => void
+  variant: "grid" | "list"
+  onClick: (folderId: string | null) => void
+  dataWithFolders: any[]
+  onDragStart: (e: React.DragEvent<HTMLDivElement>, id: string) => void
+}
+
+const FolderData: FC<FolderDataProps> = ({
+  key,
+  folder,
+  contentType,
+  onUpdateFolder,
+  variant,
+  onClick,
+  dataWithFolders,
+  onDragStart
+}) => {
+  return (
+    <FolderItem
+      key={key}
+      folder={folder}
+      contentType={contentType}
+      onUpdateFolder={onUpdateFolder}
+      variant={variant === "list" ? "expandable" : "basic"}
+      onClick={variant === "grid" ? () => onClick(folder.id) : undefined}
+    >
+      {dataWithFolders
+        .filter(item => item.folder_id === folder.id)
+        .map(item => (
+          <div
+            key={item.id}
+            draggable={true}
+            onDragStart={e => onDragStart(e, item.id)}
+          >
+            <DataListItem contentType={contentType} item={item} />
+          </div>
+        ))}
+    </FolderItem>
   )
 }

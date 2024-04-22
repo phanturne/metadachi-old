@@ -13,7 +13,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { updateModel } from "@/app/lib/db/models"
 import { ChatList } from "@/app/components/data-list/ChatList"
 import { FilesView } from "@/app/components/data-list/items/files/FilesView"
-import { FoldersView } from "@/app/components/data-list/items/folders/FoldersView"
+import { FoldersView } from "@/app/components/data-list/shared/FoldersView"
 
 interface DataList {
   contentType: ContentType
@@ -137,7 +137,6 @@ export const DataList: FC<DataList> = ({
 
   const dataWithFolders = data.filter(item => item.folder_id)
   const dataWithoutFolders = data.filter(item => item.folder_id === null)
-  // TODO: Fix bug where selecting a folder from ChatTabContent will collapse the folders in SidebarChats
   const [currentFolder, setCurrentFolder] = useState<string | null>(
     searchParams.get(`${contentType}-folders`)
   )
@@ -172,7 +171,7 @@ export const DataList: FC<DataList> = ({
 
         {(dataWithFolders.length > 0 || dataWithoutFolders.length > 0) && (
           <div
-            className={`h-full ${isOverflowing ? "w-[calc(100%-8px)]" : "w-full"} ${isOverflowing ? "mr-2" : ""} space-y-2`}
+            className={`h-full ${isOverflowing ? "w-[calc(100%-8px)]" : "w-full"} ${isOverflowing ? "mr-2" : ""} my-4`}
           >
             {/* Nested folders are currently unsupported. Render `FoldersView` if no folder is active. */}
             {currentFolder === null && (

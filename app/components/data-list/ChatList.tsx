@@ -150,7 +150,7 @@ interface DeleteChatProps {
   chat: Tables<"chats">
 }
 
-export const DeleteChat: FC<DeleteChatProps> = ({ chat }) => {
+const DeleteChat: FC<DeleteChatProps> = ({ chat }) => {
   const { setChats } = useContext(MetadachiContext)
   const { handleNewChat } = useChatHandler()
 
@@ -198,7 +198,7 @@ interface UpdateChatProps {
   chat: Tables<"chats">
 }
 
-export const UpdateChat: FC<UpdateChatProps> = ({ chat }) => {
+const UpdateChat: FC<UpdateChatProps> = ({ chat }) => {
   const { setChats } = useContext(MetadachiContext)
 
   const [open, setOpen] = useState(false)

@@ -1,7 +1,8 @@
 import { ContentType } from "@/app/lib/types"
-import { FC } from "react"
-import { Input } from "@mui/joy"
+import React, { FC } from "react"
 import { SearchRounded } from "@mui/icons-material"
+import { Input } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface SidebarSearchProps {
   contentType: ContentType
@@ -19,8 +20,7 @@ export const DataItemSearch: FC<SidebarSearchProps> = ({
       placeholder={`Search ${contentType}...`}
       value={searchTerm}
       onChange={e => setSearchTerm(e.target.value)}
-      startDecorator={<SearchRounded />}
-      sx={{ width: "100%" }}
+      startContent={<Icon icon="ic:round-search" className="text-base" />}
     />
   )
 }

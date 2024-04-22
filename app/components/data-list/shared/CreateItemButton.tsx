@@ -2,18 +2,18 @@ import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { MetadachiContext } from "@/app/lib/context"
 import { createFolder } from "@/app/lib/db/folders"
 import { ContentType } from "@/app/lib/types"
-import { FC, useContext, useState } from "react"
+import React, { FC, useContext, useState } from "react"
 import { CreateFile } from "@/app/components/data-list/items/files/CreateFile"
 import { CreatePreset } from "@/app/components/data-list/items/presets/CreatePreset"
 import { CreatePrompt } from "@/app/components/data-list/items/prompts/CreatePrompt"
 import { CreateTool } from "@/app/components/data-list/items/tools/CreateTool"
 import { CreateModel } from "@/app/components/data-list/items/models/CreateModel"
-import { Box, Button, IconButton } from "@mui/joy"
-import { AddRounded, CreateNewFolderRounded } from "@mui/icons-material"
 import { CreateAssistant } from "@/app/components/data-list/items/assistants/CreateAssistant"
 import { CreateCollection } from "@/app/components/data-list/items/collections/CreateCollection"
 import { toast } from "sonner"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
+import { Button } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface SidebarCreateButtonsProps {
   contentType: ContentType
@@ -112,34 +112,35 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
   }
 
   return (
-    <Box sx={{ display: "flex", flexShrink: 0, gap: 1 }}>
+    <>
       {variant === "grid" ? (
         <>
           <Button
-            variant="outlined"
-            color="neutral"
+            variant="bordered"
+            className="flex items-center"
             onClick={getCreateFunction()}
-            startDecorator={<AddRounded />}
+            startContent={<Icon icon="ic:round-plus" className="text-base" />}
           >
             {`New ${contentTypeString}`}
           </Button>
         </>
       ) : (
         <>
-          <IconButton variant="outlined" onClick={getCreateFunction()}>
-            <AddRounded />
-          </IconButton>
+          <Button className="flex items-center" onClick={getCreateFunction()}>
+            <Icon icon="solar:add-folder-linear" className="text-base" />
+          </Button>
         </>
       )}
 
       {hasData && (
-        <IconButton
-          variant="outlined"
-          color="neutral"
+        <Button
+          isIconOnly
+          variant="bordered"
+          className="flex items-center"
           onClick={handleCreateFolder}
         >
-          <CreateNewFolderRounded />
-        </IconButton>
+          <Icon icon="streamline:folder-add-solid" className="text-base" />
+        </Button>
       )}
 
       {isCreatingPrompt && (
@@ -184,6 +185,6 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
           onOpenChange={setIsCreatingModel}
         />
       )}
-    </Box>
+    </>
   )
 }

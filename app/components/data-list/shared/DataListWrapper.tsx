@@ -3,7 +3,6 @@ import { ContentType, DataListType } from "@/app/lib/types"
 import { FC, useState } from "react"
 import { CreateItemButton } from "./CreateItemButton"
 import { DataItemSearch } from "./DataItemSearch"
-import { Box } from "@mui/joy"
 import { DataList } from "@/app/components/data-list/DataList"
 
 interface SidebarContentProps {
@@ -26,16 +25,8 @@ export const DataListWrapper: FC<SidebarContentProps> = ({
   )
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: variant === "grid" ? "100%" : 250,
-        flexDirection: "column",
-        flexGrow: 1,
-        mt: variant === "grid" ? 5 : 2
-      }}
-    >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexGrow: 0 }}>
+    <div className={`flex flex-col ${variant === "grid" ? "w-full" : "w-64"}`}>
+      <div className="flex items-center gap-2">
         <DataItemSearch
           contentType={contentType}
           searchTerm={searchTerm}
@@ -46,7 +37,7 @@ export const DataListWrapper: FC<SidebarContentProps> = ({
           hasData={data.length > 0}
           variant={variant}
         />
-      </Box>
+      </div>
 
       <DataList
         contentType={contentType}
@@ -54,6 +45,6 @@ export const DataListWrapper: FC<SidebarContentProps> = ({
         folders={folders}
         variant={variant}
       />
-    </Box>
+    </div>
   )
 }
