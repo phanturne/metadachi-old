@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { Tables } from "@/supabase/types"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import * as React from "react"
+import ComingSoonPage from "@/app/components/ui/ComingSoonPage"
 
 export default function GamesPage() {
   const [games, setGames] = useState([] as Tables<"games">[])
@@ -19,6 +20,8 @@ export default function GamesPage() {
     }
     fetchGames()
   })
+
+  return <ComingSoonPage />
 
   return (
     <>
