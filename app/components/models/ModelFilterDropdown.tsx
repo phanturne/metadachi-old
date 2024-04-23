@@ -20,7 +20,6 @@ export function ModelFilterDropdown({
       onChange={e => {
         setModelFilter(e.target.value ?? MODEL_PROVIDERS[0])
       }}
-      onClick={e => e.stopPropagation()}
       className="w-36"
     >
       {MODEL_PROVIDERS.map(filter => (

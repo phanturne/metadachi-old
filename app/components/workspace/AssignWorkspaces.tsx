@@ -1,63 +1,51 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import React, { FC, useContext } from "react"
-import { Autocomplete, AutocompleteItem } from "@nextui-org/react"
+import { Select, SelectItem } from "@nextui-org/react"
+import { toast } from "sonner"
 
 interface AssignWorkspaces {
   selectedWorkspaces: Tables<"workspaces">[]
   setSelectedWorkspaces: (workspace: Tables<"workspaces">[]) => void
 }
 
-// TODO: Setting the workspace seems to be broken
 export const AssignWorkspaces: FC<AssignWorkspaces> = ({
   selectedWorkspaces,
   setSelectedWorkspaces
 }) => {
   const { workspaces } = useContext(MetadachiContext)
 
-  // const selectedWorkspaces = workspaces.filter(workspace =>
-  //   selectedWorkspaces.map(w => w.id).includes(workspace.id)
-  // )
-
-  const selectedWorkspaceIds = selectedWorkspaces.map(workspace => workspace.id)
-
-  // NextUI's Autocomplete component doesn't support multiple selection
+  const selectedWorkspaceIds = workspaces
+    .filter(workspace =>
+      selectedWorkspaces.map(w => w.id).includes(workspace.id)
+    )
+    .map(workspace => workspace.id)
 
   return (
-    <Autocomplete
-      required
+    <Select
+      isRequired
+      selectionMode="multiple"
       label="Workspaces"
       labelPlacement="outside"
       placeholder={`Search workspaces...`}
-      defaultSelectedKey={workspaces.length > 0 ? workspaces[0]?.id : ""}
-      defaultItems={selectedWorkspaces}
-      value={workspaces.length > 0 ? workspaces[0]?.id : ""}
-      onSelectionChange={id => {
-        console.log(selectedWorkspaces)
-        const selectedWorkspace = workspaces.find(
-          workspace => workspace.id === id
+      selectedKeys={selectedWorkspaceIds}
+      onSelectionChange={ids => {
+        const selected = workspaces.filter(workspace =>
+          Array.from(ids).includes(workspace.id)
         )
 
-        if (selectedWorkspace) {
-          setSelectedWorkspaces([selectedWorkspace])
-          console.log("set", selectedWorkspace)
+        if (selected.length === 0) {
+          toast.warning("You must select at least one workspace")
         } else {
-          console.log("not set")
-          setSelectedWorkspaces([])
+          setSelectedWorkspaces(selected)
         }
-
-        // if (newValue.length === 0) {
-        //   toast.warning("You must select at least one workspace")
-        // } else {
-        //   setSelectedWorkspaces(newValue)
-        // }
       }}
     >
       {workspaces.map(workspace => (
-        <AutocompleteItem key={workspace.id} textValue={workspace.name}>
+        <SelectItem key={workspace.id} value={workspace.name}>
           {workspace.name}
-        </AutocompleteItem>
+        </SelectItem>
       ))}
-    </Autocomplete>
+    </Select>
   )
 }

@@ -10,7 +10,8 @@ export default function ImageInput({
   onSrcChange,
   onImageChange,
   width = 200,
-  height = 200
+  height = 200,
+  label = ""
 }: {
   src: string
   image: File | null
@@ -18,6 +19,7 @@ export default function ImageInput({
   onImageChange: (image: File) => void
   width?: number
   height?: number
+  label?: string
 }) {
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [previewSrc, setPreviewSrc] = React.useState<string>(src)
@@ -73,32 +75,37 @@ export default function ImageInput({
   }
 
   return (
-    <div className="flex w-full items-center gap-3">
-      {previewSrc && (
-        <img
-          height={height}
-          width={width}
-          src={previewSrc}
-          alt={"Image"}
-          className="rounded-full"
-        />
-      )}
+    <div className="flex flex-col gap-1">
+      {label && <label className="text-sm">{label}</label>}
+      <div className="flex w-full items-center gap-3">
+        {previewSrc && (
+          <img
+            height={height}
+            width={width}
+            src={previewSrc}
+            alt={"Image"}
+            className="rounded-full"
+          />
+        )}
 
-      <Button
-        size="sm"
-        variant="bordered"
-        onClick={() => fileInputRef.current?.click()}
-        startContent={<Icon icon="solar:upload-linear" className="text-base" />}
-      >
-        Upload an image
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          className="hidden"
-          onChange={handleImageSelect}
-        />
-      </Button>
+        <Button
+          size="sm"
+          variant="bordered"
+          onClick={() => fileInputRef.current?.click()}
+          startContent={
+            <Icon icon="solar:upload-linear" className="text-base" />
+          }
+        >
+          Upload an image
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleImageSelect}
+          />
+        </Button>
+      </div>
     </div>
   )
 }

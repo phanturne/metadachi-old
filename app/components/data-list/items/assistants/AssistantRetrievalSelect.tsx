@@ -1,8 +1,8 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
-import { FC, useContext } from "react"
-import { Autocomplete, AutocompleteOption } from "@mui/joy"
-import { ArticleRounded, LibraryBooksRounded } from "@mui/icons-material"
+import React, { FC, useContext } from "react"
+import { Select, SelectItem } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface AssistantRetrievalSelectProps {
   selectedAssistantRetrievalItems: Tables<"files">[] | Tables<"collections">[]
@@ -17,29 +17,50 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
 }) => {
   const { files, collections } = useContext(MetadachiContext)
 
+  const allItems = [...files, ...collections]
+
+  const selectedItemIds = (
+    allItems.filter(item =>
+      selectedAssistantRetrievalItems.map(i => i.id).includes(item.id)
+    ) as (Tables<"files"> | Tables<"collections">)[]
+  ).map(item => item.id)
+
   return (
-    <Autocomplete
-      multiple
-      disableCloseOnSelect
+    <Select
+      selectionMode="multiple"
+      label="Files & Collections"
+      labelPlacement="outside"
       placeholder={`Search collections/files...`}
-      value={
-        (files || collections)?.filter(item =>
-          selectedAssistantRetrievalItems.map(i => i.id).includes(item.id)
-        ) as (Tables<"files"> | Tables<"collections">)[]
-      }
-      onChange={(_, newValue) => {
-        setSelectedAssistantRetrievalItems(newValue)
+      selectedKeys={selectedItemIds}
+      onSelectionChange={ids => {
+        const selected = allItems.filter(item =>
+          Array.from(ids).includes(item.id)
+        )
+
+        setSelectedAssistantRetrievalItems(selected)
       }}
-      options={files || collections}
-      getOptionLabel={item => item.name}
-      limitTags={1}
-      groupBy={option => ("type" in option ? "Files" : "Collections")}
-      renderOption={(props, option) => (
-        <AutocompleteOption {...props}>
-          {"type" in option ? <ArticleRounded /> : <LibraryBooksRounded />}
-          {option.name}
-        </AutocompleteOption>
-      )}
-    />
+      startContent={
+        <Icon
+          icon="solar:folder-with-files-bold-duotone"
+          className="text-2xl"
+        />
+      }
+    >
+      {allItems.map(item => (
+        <SelectItem key={item.id} value={item.name} textValue={item.name}>
+          <div className="flex items-center gap-2">
+            {"type" in item ? (
+              <Icon icon="solar:file-text-bold-duotone" className="text-2xl" />
+            ) : (
+              <Icon
+                icon="solar:folder-with-files-bold-duotone"
+                className="text-2xl"
+              />
+            )}
+            {item.name}
+          </div>
+        </SelectItem>
+      ))}
+    </Select>
   )
 }

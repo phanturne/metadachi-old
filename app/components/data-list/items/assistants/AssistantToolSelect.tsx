@@ -1,8 +1,8 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
-import { FC, useContext } from "react"
-import { Autocomplete, AutocompleteOption } from "@mui/joy"
-import { BuildRounded } from "@mui/icons-material"
+import React, { FC, useContext } from "react"
+import { Select, SelectItem } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface AssistantToolSelectProps {
   disabled?: boolean
@@ -17,27 +17,34 @@ export const AssistantToolSelect: FC<AssistantToolSelectProps> = ({
 }) => {
   const { tools } = useContext(MetadachiContext)
 
+  const selectedToolIds = tools
+    .filter(tool => selectedAssistantTools.map(t => t.id).includes(tool.id))
+    .map(tool => tool.id)
+
   return (
-    <Autocomplete
-      disabled={disabled}
-      multiple
-      disableCloseOnSelect
+    <Select
+      selectionMode="multiple"
+      label="Tools"
+      labelPlacement="outside"
       placeholder={`Search tools...`}
-      value={tools.filter(tool =>
-        selectedAssistantTools.map(t => t.id).includes(tool.id)
-      )}
-      onChange={(_, newValue) => {
-        setSelectedAssistantTools(newValue)
+      selectedKeys={selectedToolIds}
+      onSelectionChange={ids => {
+        const selected = tools.filter(item => Array.from(ids).includes(item.id))
+
+        setSelectedAssistantTools(selected)
       }}
-      options={tools}
-      getOptionLabel={item => item.name}
-      limitTags={1}
-      renderOption={(props, option) => (
-        <AutocompleteOption {...props}>
-          <BuildRounded />
-          {option.name}
-        </AutocompleteOption>
-      )}
-    />
+      startContent={
+        <Icon icon="solar:sledgehammer-bold-duotone" className="text-2xl" />
+      }
+    >
+      {tools.map(item => (
+        <SelectItem key={item.id} value={item.name} textValue={item.name}>
+          <div className="flex items-center gap-2">
+            <Icon icon="solar:sledgehammer-bold-duotone" className="text-2xl" />
+            {item.name}
+          </div>
+        </SelectItem>
+      ))}
+    </Select>
   )
 }

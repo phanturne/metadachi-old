@@ -104,7 +104,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
           React.SetStateAction<Tables<"tools">[]>
         >
       }) => (
-        <>
+        <div className="flex flex-col gap-4">
           <Input
             isRequired
             label="Name"
@@ -116,7 +116,6 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             description={`${name.length}/${ASSISTANT_NAME_MAX}`}
           />
 
-          <p>Image</p>
           <ImageInput
             src={imageLink}
             image={selectedImage}
@@ -124,6 +123,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             onImageChange={setSelectedImage}
             width={100}
             height={100}
+            label="Assistant Image"
           />
 
           <Textarea
@@ -138,7 +138,6 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             description={`${description.length}/${ASSISTANT_DESCRIPTION_MAX}`}
           />
 
-          <p>Files & Collections</p>
           <AssistantRetrievalSelect
             selectedAssistantRetrievalItems={
               [
@@ -196,7 +195,6 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             }}
           />
 
-          <p>Tools</p>
           <AssistantToolSelect
             selectedAssistantTools={
               renderState.selectedAssistantTools.length === 0
@@ -223,7 +221,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             chatSettings={assistantChatSettings as any}
             onChangeChatSettings={setAssistantChatSettings}
           />
-        </>
+        </div>
       )}
     />
   )
