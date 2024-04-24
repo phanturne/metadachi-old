@@ -74,7 +74,7 @@ import * as React from "react"
 import { FC, useContext, useEffect, useState } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { toast } from "sonner"
-import { DeleteItemButton } from "./DeleteItemButton"
+import { DeleteDataListItemButton } from "./DeleteDataListItemButton"
 import {
   Button,
   Modal,
@@ -612,10 +612,12 @@ export const UpdateItemModal: FC<SidebarUpdateItemProps> = ({
             selectedWorkspaces={selectedWorkspaces}
             setSelectedWorkspaces={setSelectedWorkspaces}
           />
-          {renderInputs(renderState[contentType])}
+          <div className="flex flex-col gap-4">
+            {renderInputs(renderState[contentType])}
+          </div>
         </ModalBody>
         <ModalFooter className="flex justify-between">
-          <DeleteItemButton item={item} contentType={contentType} />
+          <DeleteDataListItemButton item={item} contentType={contentType} />
           <div className="flex gap-2">
             <Button variant="light" onClick={() => setOpen(false)}>
               Cancel

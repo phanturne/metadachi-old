@@ -52,7 +52,7 @@ export const ChatSettingsFormWrapper = ({
   showTooltip = true
 }: ChatSettingsFormProps) => {
   return (
-    <div className="flex flex-col space-y-6 rounded-md border-1 border-gray-300 p-3 shadow-sm dark:border-gray-700">
+    <div className="flex flex-col space-y-6 rounded-md border-1 border-gray-300 p-4 shadow-sm dark:border-gray-700">
       <ChatSettingsForm
         chatSettings={chatSettings}
         onChangeChatSettings={onChangeChatSettings}

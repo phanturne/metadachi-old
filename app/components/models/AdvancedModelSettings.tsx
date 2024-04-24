@@ -25,7 +25,15 @@ export const AdvancedModelSettings: FC<AdvancedModelSettingsProps> = ({
   showTooltip
 }) => {
   return (
-    <Accordion itemClasses={{ title: "text-sm" }} variant="shadow">
+    <Accordion
+      itemClasses={{
+        trigger: "p-0",
+        content: "pt-4",
+        title: "text-sm"
+      }}
+      variant="light"
+      className="p-0"
+    >
       <AccordionItem title="Advanced Settings">
         <AdvancedContent
           chatSettings={chatSettings}

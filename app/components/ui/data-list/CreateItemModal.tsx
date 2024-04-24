@@ -18,21 +18,21 @@ import { createTool } from "@/app/lib/db/tools"
 import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { Tables, TablesInsert } from "@/supabase/types"
 import { ContentType } from "@/app/lib/types"
-import { FC, useContext, useState } from "react"
+import { FC, ReactNode, useContext, useState } from "react"
 import { toast } from "sonner"
 import {
-  Box,
   Button,
-  DialogContent,
-  DialogTitle,
   Modal,
-  ModalDialog,
-  Stack
-} from "@mui/joy"
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader
+} from "@nextui-org/react"
+import * as React from "react"
 
 interface CreateItemModalProps {
   isOpen: boolean
-  isTyping: boolean // TODO: Remove?
+  isTyping: boolean
   onOpenChange: (isOpen: boolean) => void
   contentType: ContentType
   renderInputs: () => JSX.Element
@@ -214,42 +214,38 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
   }`
 
   return (
-    <Modal open={isOpen} onClose={() => onOpenChange(false)}>
-      <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
-        <DialogTitle>{modalTitle}</DialogTitle>
-        {subtitle && <DialogContent>{subtitle}</DialogContent>}
-        <form
-          onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault()
-            handleCreate()
-          }}
-        >
-          <Stack spacing={2}>
-            {renderInputs()}
-            <Box
-              sx={{
-                display: "flex",
-                flexGrow: 1,
-                justifyContent: "flex-end",
-                gap: 2
-              }}
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <ModalContent>
+        <ModalHeader>
+          <div>
+            {modalTitle} {subtitle && <h2 className="text-sm">{subtitle}</h2>}
+          </div>
+        </ModalHeader>
+        <ModalBody>
+          <form
+            onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+              event.preventDefault()
+              handleCreate()
+            }}
+          >
+            <div className="flex flex-col gap-4">{renderInputs()}</div>
+          </form>
+        </ModalBody>
+        <ModalFooter>
+          <div className="flex gap-2">
+            <Button
+              disabled={creating}
+              variant="light"
+              onClick={() => onOpenChange(false)}
             >
-              <Button
-                disabled={creating}
-                variant="plain"
-                color="neutral"
-                onClick={() => onOpenChange(false)}
-              >
-                Cancel
-              </Button>
-
-              <Button disabled={creating} onClick={handleCreate}>
-                {creating ? "Creating..." : "Create"}
-              </Button>
-            </Box>
-          </Stack>
-        </form>
-      </ModalDialog>
+              Cancel
+            </Button>
+            <Button disabled={creating} color="primary" onClick={handleCreate}>
+              {creating ? "Creating..." : "Create"}
+            </Button>
+          </div>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   )
 }

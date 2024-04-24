@@ -10,22 +10,24 @@ import { deleteFileFromStorage } from "@/app/lib/db/storage/files"
 import { deleteTool } from "@/app/lib/db/tools"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/app/lib/types"
+import * as React from "react"
 import { FC, useContext, useState } from "react"
 import {
-  Box,
   Button,
-  DialogContent,
-  DialogTitle,
   Modal,
-  ModalDialog
-} from "@mui/joy"
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader
+} from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
-interface SidebarDeleteItemProps {
+interface DeleteDataListItemButton {
   item: DataItemType
   contentType: ContentType
 }
 
-export const DeleteItemButton: FC<SidebarDeleteItemProps> = ({
+export const DeleteDataListItemButton: FC<DeleteDataListItemButton> = ({
   item,
   contentType
 }) => {
@@ -101,35 +103,32 @@ export const DeleteItemButton: FC<SidebarDeleteItemProps> = ({
 
   return (
     <>
-      <Button color="danger" onClick={() => setOpen(true)} variant="plain">
+      <Button
+        color="danger"
+        variant="light"
+        onClick={() => setOpen(true)}
+        startContent={
+          <Icon icon="solar:trash-bin-trash-linear" className="text-2xl" />
+        }
+      >
         Delete
       </Button>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <ModalDialog sx={{ minWidth: "450px", overflow: "scroll" }}>
-          <DialogTitle>Delete {contentType.slice(0, -1)}</DialogTitle>
-          <DialogContent>
-            Are you sure you want to delete {item.name}?
-          </DialogContent>
-          <Box
-            sx={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "space-between"
-            }}
-          >
-            <Button
-              variant="plain"
-              color="neutral"
-              onClick={() => setOpen(false)}
-            >
+      <Modal isOpen={open} onOpenChange={setOpen}>
+        <ModalContent>
+          <ModalHeader>Delete {contentType.slice(0, -1)}</ModalHeader>
+          <ModalBody>
+            <p> Are you sure you want to delete {item.name}?</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="light" onClick={() => setOpen(false)}>
               Cancel
             </Button>
 
             <Button color="danger" onClick={handleDelete}>
               Delete
             </Button>
-          </Box>
-        </ModalDialog>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </>
   )

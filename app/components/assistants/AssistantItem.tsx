@@ -102,7 +102,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
           React.SetStateAction<Tables<"tools">[]>
         >
       }) => (
-        <div className="flex flex-col gap-4">
+        <>
           <Input
             isRequired
             label="Name"
@@ -219,7 +219,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             chatSettings={assistantChatSettings as any}
             onChangeChatSettings={setAssistantChatSettings}
           />
-        </div>
+        </>
       )}
     />
   )
