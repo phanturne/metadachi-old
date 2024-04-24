@@ -2,7 +2,7 @@
 import * as React from "react"
 import { useContext, useState } from "react"
 import { MetadachiContext } from "@/app/lib/context"
-import { DataListWrapper } from "@/app/components/data-list/shared/DataListWrapper"
+import { DataListWrapper } from "@/app/components/ui/data-list/DataListWrapper"
 import { ContentType } from "@/app/lib/types"
 import { Tab, Tabs } from "@nextui-org/react"
 import { useRouter, useSearchParams } from "next/navigation"

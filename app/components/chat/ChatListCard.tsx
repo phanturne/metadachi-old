@@ -2,7 +2,7 @@
 import * as React from "react"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
-import { DataList } from "@/app/components/data-list/DataList"
+import { DataList } from "@/app/components/ui/data-list/DataList"
 import { Card, CardBody, CardHeader } from "@nextui-org/react"
 
 export default function ChatListCard() {
