@@ -3,16 +3,22 @@ import { Icon } from "@iconify-icon/react"
 import { Input } from "@nextui-org/react"
 
 export default function PasswordInput({
+  value,
+  onValueChange,
   name = "password",
   label = "Password",
+  labelPlacement = "inside",
   placeholder = "Enter your password",
   variant,
   color = "default",
   isInvalid = false,
   errorMessage
 }: {
+  value?: string
+  onValueChange?: React.Dispatch<React.SetStateAction<string>>
   name?: string
   label?: string
+  labelPlacement?: "outside" | "inside"
   placeholder?: string
   variant?: "bordered" | "flat"
   color?:
@@ -31,9 +37,12 @@ export default function PasswordInput({
 
   return (
     <Input
+      value={value}
+      onValueChange={onValueChange}
       name={name}
       type={isVisible ? "text" : "password"}
       label={label}
+      labelPlacement={labelPlacement}
       placeholder={placeholder}
       isRequired
       variant={variant}
