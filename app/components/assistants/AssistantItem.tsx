@@ -10,7 +10,7 @@ import React, { FC, useContext, useEffect, useState } from "react"
 import { DataListItem } from "@/app/components/ui/data-list/DataListItem"
 import { AssistantRetrievalSelect } from "./AssistantRetrievalSelect"
 import { AssistantToolSelect } from "./AssistantToolSelect"
-import { ChatSettingsFormWrapper } from "@/app/components/forms/ChatSettingsForm"
+import { ChatSettingsFormWrapper } from "@/app/components/chat/ChatSettingsForm"
 import { Icon } from "@iconify-icon/react"
 import { Input, Textarea } from "@nextui-org/react"
 

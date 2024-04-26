@@ -13,7 +13,7 @@ import {
 import { updateWorkspace } from "@/app/lib/db/workspaces"
 import { convertBlobToBase64 } from "@/app/lib/utils/blob-to-b64"
 import { AvatarImageInput } from "@/app/components/input/ImageInput"
-import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
+import { ChatSettingsForm } from "@/app/components/chat/ChatSettingsForm"
 import { DeleteWorkspace } from "@/app/components/workspace/DeleteWorkspace"
 import { Icon } from "@iconify-icon/react"
 import {

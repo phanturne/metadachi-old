@@ -1,5 +1,5 @@
 import { CreateItemModal } from "@/app/components/ui/data-list/CreateItemModal"
-import { ChatSettingsForm } from "@/app/components/forms/ChatSettingsForm"
+import { ChatSettingsForm } from "@/app/components/chat/ChatSettingsForm"
 import { MetadachiContext } from "@/app/lib/context"
 import { PRESET_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"

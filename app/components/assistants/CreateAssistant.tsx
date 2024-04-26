@@ -8,7 +8,7 @@ import { Tables, TablesInsert } from "@/supabase/types"
 import React, { FC, useContext, useEffect, useState } from "react"
 import { AssistantRetrievalSelect } from "./AssistantRetrievalSelect"
 import { AssistantToolSelect } from "./AssistantToolSelect"
-import { ChatSettingsFormWrapper } from "@/app/components/forms/ChatSettingsForm"
+import { ChatSettingsFormWrapper } from "@/app/components/chat/ChatSettingsForm"
 import ImageInput from "@/app/components/input/ImageInput"
 import { Input, Textarea } from "@nextui-org/react"
 
