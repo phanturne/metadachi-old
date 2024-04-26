@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
-import AuthForm from "@/app/components/forms/AuthForm"
+import AuthForm from "@/app/components/auth/AuthForm"
 
 export default function ChangePasswordPage() {
   const [loading, setLoading] = useState(true)

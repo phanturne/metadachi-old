@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { ForgotPasswordForm } from "@/app/components/forms/ForgotPasswordForm"
-import { ResetPasswordForm } from "@/app/components/forms/ResetPasswordForm"
+import { ForgotPasswordForm } from "@/app/components/auth/ForgotPasswordForm"
+import { ResetPasswordForm } from "@/app/components/auth/ResetPasswordForm"
 import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
-import { LoginForm } from "@/app/components/forms/LoginForm"
-import { SignUpForm } from "@/app/components/forms/SignUpForm"
+import { LoginForm } from "@/app/components/auth/LoginForm"
+import { SignUpForm } from "@/app/components/auth/SignUpForm"
 
 export default function AuthForm({ type }: { type?: AuthFormType }) {
   const [formType, setFormType] = useState<AuthFormType>(

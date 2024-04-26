@@ -1,7 +1,7 @@
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react"
 import Image from "next/image"
 import { AuthFormType } from "@/app/lib/providers/AuthContextProvider"
-import AuthForm from "@/app/components/forms/AuthForm"
+import AuthForm from "@/app/components/auth/AuthForm"
 
 export default function AuthModal({
   open,
