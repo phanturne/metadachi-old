@@ -113,7 +113,7 @@ export const FolderItem: FC<FolderProps> = ({
           variant === "expandable" ? (
             <ExpandFolderButton />
           ) : (
-            <Icon icon="solar:folder-bold" className="text-lg" />
+            <Icon icon="solar:folder-bold" className="text-2xl" />
           )
         }
         endContent={

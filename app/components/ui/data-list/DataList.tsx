@@ -12,7 +12,7 @@ import { FC, useContext, useEffect, useRef, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { updateModel } from "@/app/lib/db/models"
 import { ChatList } from "@/app/components/chat/ChatList"
-import { FilesView } from "@/app/components/ui/data-list/items/files/FilesView"
+import { ItemsView } from "@/app/components/ui/data-list/ItemsView"
 import { FoldersView } from "@/app/components/ui/data-list/FoldersView"
 
 interface DataList {
@@ -197,7 +197,7 @@ export const DataList: FC<DataList> = ({
                 contentType={contentType}
               />
             ) : (
-              <FilesView
+              <ItemsView
                 contentType={contentType}
                 handleDrop={handleDrop}
                 handleDragEnter={handleDragEnter}

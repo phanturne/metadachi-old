@@ -1,11 +1,16 @@
 import { ACCEPTED_FILE_TYPES } from "@/app/lib/hooks/use-select-file-handler"
 import { CreateItemModal } from "@/app/components/ui/data-list/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
-import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"
+import {
+  ASSISTANT_DESCRIPTION_MAX,
+  ASSISTANT_NAME_MAX,
+  FILE_DESCRIPTION_MAX,
+  FILE_NAME_MAX
+} from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
-import { FC, useContext, useState } from "react"
-import { FormControl, FormLabel, Input } from "@mui/joy"
+import React, { FC, useContext, useState } from "react"
 import FileInput from "@/app/components/input/FileInput"
+import { Input, Textarea } from "@nextui-org/react"
 
 interface CreateFileProps {
   isOpen: boolean
@@ -55,37 +60,34 @@ export const CreateFile: FC<CreateFileProps> = ({ isOpen, onOpenChange }) => {
       onOpenChange={onOpenChange}
       renderInputs={() => (
         <>
-          <FormControl>
-            <FormLabel>File</FormLabel>
-            <FileInput
-              handleSelectedFile={handleSelectedFile}
-              required={true}
-              accept={ACCEPTED_FILE_TYPES}
-            />
-          </FormControl>
+          <FileInput
+            handleSelectedFile={handleSelectedFile}
+            required={true}
+            accept={ACCEPTED_FILE_TYPES}
+          />
 
-          <FormControl>
-            <FormLabel>Name</FormLabel>
+          <Input
+            isRequired
+            label="Name"
+            labelPlacement="outside"
+            placeholder="File name..."
+            value={name}
+            onValueChange={setName}
+            maxLength={FILE_NAME_MAX}
+            description={`${name.length}/${FILE_NAME_MAX}`}
+          />
 
-            <Input
-              required
-              placeholder="File name..."
-              value={name}
-              onChange={e => setName(e.target.value)}
-              slotProps={{ input: { maxLength: FILE_NAME_MAX } }}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Description</FormLabel>
-
-            <Input
-              placeholder="File description..."
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              slotProps={{ input: { maxLength: FILE_DESCRIPTION_MAX } }}
-            />
-          </FormControl>
+          <Textarea
+            label="Description"
+            labelPlacement="outside"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            placeholder="File Description..."
+            minRows={1}
+            maxRows={3}
+            maxLength={FILE_DESCRIPTION_MAX}
+            description={`${description.length}/${FILE_DESCRIPTION_MAX}`}
+          />
         </>
       )}
     />

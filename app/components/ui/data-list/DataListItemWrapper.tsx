@@ -1,6 +1,6 @@
 import { PresetItem } from "./items/presets/PresetItem"
 import { PromptItem } from "./items/prompts/PromptItem"
-import { FileItem } from "./items/files/FileItem"
+import { FileItem } from "../../files/FileItem"
 import { AssistantItem } from "@/app/components/assistants/AssistantItem"
 import { ToolItem } from "./items/tools/ToolItem"
 import { ModelItem } from "./items/models/ModelItem"

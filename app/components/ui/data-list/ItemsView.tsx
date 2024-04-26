@@ -1,10 +1,10 @@
-import { Box, Button } from "@mui/joy"
-import { ArrowBackRounded } from "@mui/icons-material"
 import { FC } from "react"
 import { ContentType } from "@/app/lib/types"
 import { DataListItemWrapper } from "@/app/components/ui/data-list/DataListItemWrapper"
+import { Button } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
-interface FilesViewProps {
+interface ItemsViewProps {
   contentType: ContentType
   handleDrop: (e: React.DragEvent<HTMLDivElement>) => void
   handleDragEnter: (e: React.DragEvent<HTMLDivElement>) => void
@@ -16,7 +16,7 @@ interface FilesViewProps {
   handleDragStart: (e: React.DragEvent<HTMLDivElement>, id: string) => void
 }
 
-export const FilesView: FC<FilesViewProps> = ({
+export const ItemsView: FC<ItemsViewProps> = ({
   contentType,
   handleDrop,
   handleDragEnter,
@@ -28,14 +28,8 @@ export const FilesView: FC<FilesViewProps> = ({
   handleDragStart
 }) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexGrow: 1,
-        flexDirection: "column",
-        width: "100%",
-        overflow: "auto"
-      }}
+    <div
+      className="flex w-full grow flex-col overflow-auto"
       onDrop={handleDrop}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
@@ -43,26 +37,27 @@ export const FilesView: FC<FilesViewProps> = ({
     >
       {currentFolder && (
         <Button
-          variant="outlined"
-          color="neutral"
-          startDecorator={<ArrowBackRounded />}
+          variant="bordered"
+          startContent={
+            <Icon icon="solar:arrow-left-linear" className="text-2xl" />
+          }
           onClick={() => handleFolderClick(null)}
-          sx={{ mb: 1, width: 100 }}
+          className="mb-2 w-24"
         >
           Back
         </Button>
       )}
       {displayedFiles.map(item => {
         return (
-          <Box
+          <div
             key={item.id}
             draggable="true"
             onDragStart={e => handleDragStart(e, item.id)}
           >
             <DataListItemWrapper contentType={contentType} item={item} />
-          </Box>
+          </div>
         )
       })}
-    </Box>
+    </div>
   )
 }

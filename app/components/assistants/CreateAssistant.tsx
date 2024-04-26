@@ -139,7 +139,7 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
             labelPlacement="outside"
             value={description}
             onChange={e => setDescription(e.target.value)}
-            placeholder="Assistant Description... (optional)"
+            placeholder="Assistant Description..."
             minRows={1}
             maxRows={3}
             maxLength={ASSISTANT_DESCRIPTION_MAX}
