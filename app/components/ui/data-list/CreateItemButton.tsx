@@ -9,7 +9,7 @@ import { CreatePrompt } from "@/app/components/ui/data-list/items/prompts/Create
 import { CreateTool } from "@/app/components/ui/data-list/items/tools/CreateTool"
 import { CreateModel } from "@/app/components/models/CreateModel"
 import { CreateAssistant } from "@/app/components/assistants/CreateAssistant"
-import { CreateCollection } from "@/app/components/ui/data-list/items/collections/CreateCollection"
+import { CreateCollection } from "@/app/components/collections/CreateCollection"
 import { toast } from "sonner"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { Button } from "@nextui-org/react"

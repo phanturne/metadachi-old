@@ -6,9 +6,9 @@ import {
 } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import { CollectionFile } from "@/app/lib/types"
-import { FC, useContext, useState } from "react"
+import React, { FC, useContext, useState } from "react"
 import { CollectionFileSelect } from "./CollectionFileSelect"
-import { FormControl, FormLabel, Input } from "@mui/joy"
+import { Input, Textarea } from "@nextui-org/react"
 
 interface CreateCollectionProps {
   isOpen: boolean
@@ -51,36 +51,33 @@ export const CreateCollection: FC<CreateCollectionProps> = ({
       onOpenChange={onOpenChange}
       renderInputs={() => (
         <>
-          <FormControl>
-            <FormLabel>Files</FormLabel>
+          <CollectionFileSelect
+            selectedCollectionFiles={selectedCollectionFiles}
+            setSelectedCollectionFiles={setSelectedCollectionFiles}
+          />
 
-            <CollectionFileSelect
-              selectedCollectionFiles={selectedCollectionFiles}
-              setSelectedCollectionFiles={setSelectedCollectionFiles}
-            />
-          </FormControl>
+          <Input
+            isRequired
+            label="Name"
+            labelPlacement="outside"
+            placeholder="Collection name..."
+            value={name}
+            onValueChange={setName}
+            maxLength={COLLECTION_NAME_MAX}
+            description={`${name.length}/${COLLECTION_NAME_MAX}`}
+          />
 
-          <FormControl>
-            <FormLabel>Name</FormLabel>
-
-            <Input
-              placeholder="Collection name..."
-              value={name}
-              onChange={e => setName(e.target.value)}
-              slotProps={{ input: { maxLength: COLLECTION_NAME_MAX } }}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Description</FormLabel>
-
-            <Input
-              placeholder="Collection description..."
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              slotProps={{ input: { maxLength: COLLECTION_DESCRIPTION_MAX } }}
-            />
-          </FormControl>
+          <Textarea
+            label="Description"
+            labelPlacement="outside"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            placeholder="Collection Description..."
+            minRows={1}
+            maxRows={3}
+            maxLength={COLLECTION_DESCRIPTION_MAX}
+            description={`${description.length}/${COLLECTION_DESCRIPTION_MAX}`}
+          />
         </>
       )}
     />
