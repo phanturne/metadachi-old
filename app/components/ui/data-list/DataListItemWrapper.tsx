@@ -1,5 +1,5 @@
 import { PresetItem } from "@/app/components/presets/PresetItem"
-import { PromptItem } from "./items/prompts/PromptItem"
+import { PromptItem } from "@/app/components/prompts/PromptItem"
 import { FileItem } from "../../files/FileItem"
 import { AssistantItem } from "@/app/components/assistants/AssistantItem"
 import { ToolItem } from "./items/tools/ToolItem"
