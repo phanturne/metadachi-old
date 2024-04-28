@@ -10,7 +10,7 @@ export default function ChatListCard() {
   const chatFolders = folders.filter(folder => folder.type === "chats")
 
   return (
-    <Card className="grow p-1 py-2">
+    <Card className="grow p-1">
       <CardHeader>
         <h4 className="text-small font-semibold leading-none text-default-600">
           Chats

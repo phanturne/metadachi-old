@@ -18,7 +18,6 @@ import {
   useDisclosure
 } from "@nextui-org/react"
 import { User } from "@nextui-org/user"
-import SettingsModal from "@/app/components/settings/SettingsModal"
 import { Icon } from "@iconify-icon/react"
 
 export default function ProfileMenu({
@@ -60,7 +59,7 @@ export default function ProfileMenu({
             />
           ) : (
             <Button isIconOnly variant="light" size="sm">
-              <Icon icon="solar:menu-dots-bold" width="24" height="24" />
+              <Icon icon="solar:menu-dots-bold" className="text-xl" />
             </Button>
           )}
         </DropdownTrigger>

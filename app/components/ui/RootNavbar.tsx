@@ -1,6 +1,5 @@
 "use client"
 
-import { Button, NavbarProps } from "@nextui-org/react"
 import {
   Link,
   Navbar,
@@ -9,7 +8,8 @@ import {
   NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
-  NavbarMenuToggle
+  NavbarMenuToggle,
+  NavbarProps
 } from "@nextui-org/react"
 
 import React, { useContext } from "react"
@@ -20,7 +20,7 @@ import ProfileMenu from "@/app/components/utility/ProfileMenu"
 import { usePathname } from "next/navigation"
 import { MetadachiContext } from "@/app/lib/context"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { Icon } from "@iconify-icon/react"
+import BorderMagicButton from "@/app/components/ui/BorderMagicButton"
 
 const routes = [
   { route: Routes.Chat, label: "Chats" },
@@ -96,21 +96,7 @@ export default function Component(props: NavbarProps) {
         <NavbarItem>
           {/* TODO: Display LoginButton + DotMenu if user is logged in and ProfileMenu otherwise*/}
           {!profile && (
-            <Button
-              className="hidden border-small border-secondary-500/20 bg-secondary-500/10 text-secondary-800 sm:flex"
-              color="secondary"
-              radius="full"
-              style={{
-                boxShadow: "inset 0 0 4px #bf97ff70"
-              }}
-              variant="flat"
-              onClick={openAuthModal}
-              endContent={
-                <Icon icon="solar:login-linear" className="text-xl" />
-              }
-            >
-              Login
-            </Button>
+            <BorderMagicButton onClick={openAuthModal} text="Get Started" />
           )}
         </NavbarItem>
         <NavbarItem>

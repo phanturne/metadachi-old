@@ -1,6 +1,6 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { LLMID, ModelProvider } from "@/app/lib/types"
-import React, { FC, useContext, useEffect, useState } from "react"
+import React, { FC, useContext, useState } from "react"
 import { ModelIcon } from "./ModelIcon"
 import { ModelFilterDropdown } from "@/app/components/models/ModelFilterDropdown"
 import {
@@ -25,7 +25,7 @@ const MODEL_FILTERS = {
 interface ModelSelectProps {
   isDisabled?: boolean
   selectedModelId?: string
-  onSelectModel: (modelId: LLMID) => void
+  onSelectModel?: (modelId: LLMID) => void
   showModelFilter?: boolean
   size?: "sm" | "md" | "lg"
   label?: string
@@ -133,7 +133,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       defaultSelectedKey={selectedModel?.modelId}
       defaultItems={filteredModels}
       value={selectedModel?.modelId}
-      onSelectionChange={id => onSelectModel(id as LLMID)}
+      onSelectionChange={id => onSelectModel?.(id as LLMID)}
       startContent={
         labelPlacement === "outside" && (
           <div className="flex flex-row items-center space-x-2">

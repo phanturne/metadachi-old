@@ -9,7 +9,7 @@ import {
   CardBody,
   CardHeader
 } from "@nextui-org/react"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { ModelSelect } from "@/app/components/models/ModelSelect"
 import FileSelect from "@/app/components/files/FileSelect"
@@ -76,7 +76,8 @@ export const animals = [
 ]
 
 export default function ChatSettingsCard() {
-  const { selectedChat } = useContext(MetadachiContext)
+  const { selectedChat, chatSettings, setChatSettings } =
+    useContext(MetadachiContext)
 
   const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(() => {
     const localStorageVal = localStorage.getItem("isChatSettingsOpen")
@@ -90,7 +91,7 @@ export default function ChatSettingsCard() {
   }
 
   return (
-    <Card className="p-1 py-2" key={selectedChat?.id}>
+    <Card className="p-1" key={selectedChat?.id}>
       {/* Dropdown button height > H4 height. Set 38px height to prevent CardHeader height increase. */}
       <CardHeader className="flex h-[38px] justify-between">
         <h4 className="text-small font-semibold leading-none text-default-600">
@@ -115,11 +116,27 @@ export default function ChatSettingsCard() {
         // TODO: add logic for disabling some of the settings
         <CardBody className="flex gap-2 pt-1 text-small font-semibold leading-none text-default-500">
           {/* TODO: Model Select is not taking effect*/}
-          <ModelSelect
-            label=""
-            selectedModelId={selectedChat?.model}
-            onSelectModel={() => {}}
-          />
+          {selectedChat ? (
+            // ModelSelect for existing chats
+            <ModelSelect
+              label=""
+              isDisabled
+              selectedModelId={selectedChat?.model}
+              onSelectModel={() => {}}
+            />
+          ) : chatSettings ? (
+            // ModelSelect for new chats
+            <ModelSelect
+              label=""
+              selectedModelId={chatSettings.model}
+              onSelectModel={model =>
+                setChatSettings({ ...chatSettings, model })
+              }
+            />
+          ) : (
+            // Placeholder ModelSelect
+            <ModelSelect label="" />
+          )}
           <Autocomplete
             label="Assistants"
             placeholder="Select assistants"
