@@ -1,11 +1,11 @@
 import { ModelIcon } from "@/app/components/models/ModelIcon"
 import { ChatSettingsForm } from "@/app/components/chat/ChatSettingsForm"
-import { PRESET_NAME_MAX } from "@/app/lib/db/limits"
+import { ASSISTANT_NAME_MAX, PRESET_NAME_MAX } from "@/app/lib/db/limits"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
 import { Tables } from "@/supabase/types"
-import { FC, useState } from "react"
+import React, { FC, useState } from "react"
 import { DataListItem } from "@/app/components/ui/data-list/DataListItem"
-import { FormControl, FormLabel, Input } from "@mui/joy"
+import { Input } from "@nextui-org/react"
 
 interface PresetItemProps {
   preset: Tables<"presets">
@@ -51,16 +51,16 @@ export const PresetItem: FC<PresetItemProps> = ({ preset }) => {
       }}
       renderInputs={() => (
         <>
-          <FormControl>
-            <FormLabel>Name</FormLabel>
-
-            <Input
-              placeholder="Preset name..."
-              value={name}
-              onChange={e => setName(e.target.value)}
-              slotProps={{ input: { maxLength: PRESET_NAME_MAX } }}
-            />
-          </FormControl>
+          <Input
+            isRequired
+            label="Name"
+            labelPlacement="outside"
+            placeholder="Preset name..."
+            value={name}
+            onValueChange={setName}
+            maxLength={PRESET_NAME_MAX}
+            description={`${name.length}/${PRESET_NAME_MAX}`}
+          />
 
           <ChatSettingsForm
             chatSettings={presetChatSettings as any}

@@ -3,8 +3,8 @@ import { ChatSettingsForm } from "@/app/components/chat/ChatSettingsForm"
 import { MetadachiContext } from "@/app/lib/context"
 import { PRESET_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
-import { FC, useContext, useState } from "react"
-import { FormControl, FormLabel, Input } from "@mui/joy"
+import React, { FC, useContext, useState } from "react"
+import { Input } from "@nextui-org/react"
 
 interface CreatePresetProps {
   isOpen: boolean
@@ -57,16 +57,16 @@ export const CreatePreset: FC<CreatePresetProps> = ({
       }
       renderInputs={() => (
         <>
-          <FormControl>
-            <FormLabel>Name</FormLabel>
-
-            <Input
-              placeholder="Preset name..."
-              value={name}
-              onChange={e => setName(e.target.value)}
-              slotProps={{ input: { maxLength: PRESET_NAME_MAX } }}
-            />
-          </FormControl>
+          <Input
+            isRequired
+            label="Name"
+            labelPlacement="outside"
+            placeholder="Preset name..."
+            value={name}
+            onValueChange={setName}
+            maxLength={PRESET_NAME_MAX}
+            description={`${name.length}/${PRESET_NAME_MAX}`}
+          />
 
           <ChatSettingsForm
             chatSettings={presetChatSettings as any}
