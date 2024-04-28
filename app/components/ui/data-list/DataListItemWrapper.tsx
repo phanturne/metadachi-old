@@ -2,13 +2,12 @@ import { PresetItem } from "@/app/components/presets/PresetItem"
 import { PromptItem } from "@/app/components/prompts/PromptItem"
 import { FileItem } from "../../files/FileItem"
 import { AssistantItem } from "@/app/components/assistants/AssistantItem"
-import { ToolItem } from "./items/tools/ToolItem"
+import { ToolItem } from "@/app/components/tools/ToolItem"
 import { ModelItem } from "../../models/ModelItem"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/app/lib/types"
 import { ChatItem } from "@/app/components/chat/ChatList"
 
-// TODO: This component might be unnecessary
 export function DataListItemWrapper({
   contentType,
   item

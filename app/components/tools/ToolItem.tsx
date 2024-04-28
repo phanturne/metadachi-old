@@ -1,11 +1,11 @@
 import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
-import { FC, useState } from "react"
+import React, { FC, useState } from "react"
 import { DataListItem } from "@/app/components/ui/data-list/DataListItem"
-import { FormControl, FormLabel, Input, Textarea, Typography } from "@mui/joy"
 import { BuildRounded } from "@mui/icons-material"
 import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
 import { validateOpenAPI } from "@/app/lib/utils/openapi-conversion"
+import { Input, Textarea } from "@nextui-org/react"
 
 interface ToolItemProps {
   tool: Tables<"tools">
@@ -37,27 +37,28 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
       }}
       renderInputs={() => (
         <>
-          <FormControl>
-            <FormLabel>Name</FormLabel>
+          <Input
+            isRequired
+            label="Name"
+            labelPlacement="outside"
+            placeholder="Tool name..."
+            value={name}
+            onValueChange={setName}
+            maxLength={TOOL_NAME_MAX}
+            description={`${name.length}/${TOOL_NAME_MAX}`}
+          />
 
-            <Input
-              placeholder="Tool name..."
-              value={name}
-              onChange={e => setName(e.target.value)}
-              slotProps={{ input: { maxLength: TOOL_NAME_MAX } }}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Description</FormLabel>
-
-            <Input
-              placeholder="Tool description..."
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              slotProps={{ input: { maxLength: TOOL_DESCRIPTION_MAX } }}
-            />
-          </FormControl>
+          <Textarea
+            label="Description"
+            labelPlacement="outside"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            placeholder="Tool Description..."
+            minRows={1}
+            maxRows={3}
+            maxLength={TOOL_DESCRIPTION_MAX}
+            description={`${description.length}/${TOOL_DESCRIPTION_MAX}`}
+          />
 
           {/* <div className="space-y-1">
             <Label>URL</Label>
@@ -89,22 +90,35 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
             </div>
           </div> */}
 
-          <FormControl>
-            <FormLabel>Custom Headers</FormLabel>
+          <Textarea
+            label="Custom Headers"
+            labelPlacement="outside"
+            value={customHeaders}
+            onChange={e => setCustomHeaders(e.target.value)}
+            placeholder={`{"X-api-key": "1234567890"}`}
+            minRows={1}
+            maxRows={3}
+          />
 
-            <Textarea
-              placeholder={`{"X-api-key": "1234567890"}`}
-              value={customHeaders}
-              onChange={e => setCustomHeaders(e.target.value)}
-              minRows={1}
-            />
-          </FormControl>
+          <Textarea
+            label="Schema"
+            labelPlacement="outside"
+            value={schema}
+            onChange={e => {
+              const value = e.target.value
 
-          <FormControl>
-            <FormLabel>Schema</FormLabel>
+              setSchema(value)
 
-            <Textarea
-              placeholder={`{
+              try {
+                const parsedSchema = JSON.parse(value)
+                validateOpenAPI(parsedSchema)
+                  .then(() => setSchemaError("")) // Clear error if validation is successful
+                  .catch(error => setSchemaError(error.message)) // Set specific validation error message
+              } catch (error) {
+                setSchemaError("Invalid JSON format") // Set error for invalid JSON format
+              }
+            }}
+            placeholder={`{
                 "openapi": "3.1.0",
                 "info": {
                   "title": "Get weather data",
@@ -140,26 +154,11 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
                   "schemas": {}
                 }
               }`}
-              value={schema}
-              onChange={e => {
-                const value = e.target.value
-
-                setSchema(value)
-
-                try {
-                  const parsedSchema = JSON.parse(value)
-                  validateOpenAPI(parsedSchema)
-                    .then(() => setSchemaError("")) // Clear error if validation is successful
-                    .catch(error => setSchemaError(error.message)) // Set specific validation error message
-                } catch (error) {
-                  setSchemaError("Invalid JSON format") // Set error for invalid JSON format
-                }
-              }}
-              maxRows={10}
-            />
-          </FormControl>
-
-          <Typography color="danger">{schemaError}</Typography>
+            minRows={5}
+            maxRows={15}
+            isInvalid={schemaError !== ""}
+            errorMessage={schemaError}
+          />
         </>
       )}
     />

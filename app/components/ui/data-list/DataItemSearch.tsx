@@ -1,6 +1,5 @@
 import { ContentType } from "@/app/lib/types"
 import React, { FC } from "react"
-import { SearchRounded } from "@mui/icons-material"
 import { Input } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
 

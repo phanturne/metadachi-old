@@ -43,8 +43,7 @@ export const PromptItem: FC<PromptItemProps> = ({ prompt }) => {
             value={content}
             onChange={e => setContent(e.target.value)}
             placeholder="Prompt content..."
-            minRows={5}
-            maxRows={25}
+            maxRows={20}
             onCompositionStart={() => setIsTyping(true)}
             onCompositionEnd={() => setIsTyping(false)}
           />

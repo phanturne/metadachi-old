@@ -57,8 +57,7 @@ export const CreatePrompt: FC<CreatePromptProps> = ({
             value={content}
             onChange={e => setContent(e.target.value)}
             placeholder="Prompt content..."
-            minRows={5}
-            maxRows={25}
+            maxRows={20}
             onCompositionStart={() => setIsTyping(true)}
             onCompositionEnd={() => setIsTyping(false)}
           />
