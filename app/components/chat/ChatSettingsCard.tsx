@@ -9,7 +9,10 @@ import {
   CardBody,
   CardHeader
 } from "@nextui-org/react"
-import { useState } from "react"
+import React, { useContext, useState } from "react"
+import { MetadachiContext } from "@/app/lib/context"
+import { ModelSelect } from "@/app/components/models/ModelSelect"
+import FileSelect from "@/app/components/files/FileSelect"
 
 export const animals = [
   {
@@ -73,6 +76,8 @@ export const animals = [
 ]
 
 export default function ChatSettingsCard() {
+  const { selectedChat } = useContext(MetadachiContext)
+
   const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(() => {
     const localStorageVal = localStorage.getItem("isChatSettingsOpen")
     return localStorageVal === "true"
@@ -85,7 +90,7 @@ export default function ChatSettingsCard() {
   }
 
   return (
-    <Card className="p-1 py-2">
+    <Card className="p-1 py-2" key={selectedChat?.id}>
       {/* Dropdown button height > H4 height. Set 38px height to prevent CardHeader height increase. */}
       <CardHeader className="flex h-[38px] justify-between">
         <h4 className="text-small font-semibold leading-none text-default-600">
@@ -107,19 +112,15 @@ export default function ChatSettingsCard() {
       </CardHeader>
 
       {isChatSettingsOpen && (
+        // TODO: add logic for disabling some of the settings
         <CardBody className="flex gap-2 pt-1 text-small font-semibold leading-none text-default-500">
+          {/* TODO: Model Select is not taking effect*/}
+          <ModelSelect
+            label=""
+            selectedModelId={selectedChat?.model}
+            onSelectModel={() => {}}
+          />
           <Autocomplete
-            size="sm"
-            label="Model"
-            placeholder="Select a model"
-            defaultItems={animals}
-          >
-            {item => (
-              <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
-            )}
-          </Autocomplete>
-          <Autocomplete
-            size="sm"
             label="Assistants"
             placeholder="Select assistants"
             defaultItems={animals}
@@ -128,10 +129,12 @@ export default function ChatSettingsCard() {
               <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
             )}
           </Autocomplete>
+
+          <FileSelect label="" />
+
           <Autocomplete
-            size="sm"
-            label="Files"
-            placeholder="Select files"
+            label="Files & Collections"
+            placeholder="Select files & collections"
             defaultItems={animals}
           >
             {item => (
@@ -139,7 +142,6 @@ export default function ChatSettingsCard() {
             )}
           </Autocomplete>
           <Autocomplete
-            size="sm"
             label="Tools"
             placeholder="Select tools"
             defaultItems={animals}

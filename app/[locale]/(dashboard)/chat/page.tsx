@@ -193,7 +193,7 @@ export default function ChatPage() {
   return (
     <div className="flex size-full overflow-auto">
       {/* Chat Sidebar*/}
-      <div className="m-4 flex w-64 grow flex-col gap-4">
+      <div className="m-4 flex w-72 flex-col gap-4">
         <ChatActions />
         <ChatSettingsCard />
         <ChatListCard />

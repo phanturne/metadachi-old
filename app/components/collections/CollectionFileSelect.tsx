@@ -26,7 +26,7 @@ export const CollectionFileSelect: FC<CollectionFileSelectProps> = ({
   return (
     <Select
       selectionMode="multiple"
-      label="Files & Collections"
+      label="Files"
       labelPlacement="outside"
       placeholder={`Search files...`}
       selectedKeys={selectedFileIds}

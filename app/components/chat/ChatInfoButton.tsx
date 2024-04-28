@@ -44,7 +44,7 @@ export const ChatInfoButton: FC<ChatSecondaryButtonsProps> = ({}) => {
             </Typography>
 
             <ModelSelect
-              disabled
+              isDisabled
               selectedModelId={selectedChat?.model}
               onSelectModel={() => {}}
             />

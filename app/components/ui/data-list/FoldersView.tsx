@@ -61,7 +61,7 @@ export const FoldersView: FC<FoldersViewProps> = ({
             ))}
           </div>
         ))}
-      <Divider className="mb-4 mt-2" />
+      {folders.length > 0 && <Divider className="mb-4 mt-2" />}
     </>
   )
 }

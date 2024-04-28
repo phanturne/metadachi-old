@@ -19,6 +19,7 @@ export const ChatSettingsForm = ({
   return (
     <>
       <ModelSelect
+        showModelFilter
         selectedModelId={chatSettings.model}
         onSelectModel={model => {
           onChangeChatSettings({ ...chatSettings, model })

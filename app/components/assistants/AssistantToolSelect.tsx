@@ -5,13 +5,13 @@ import { Select, SelectItem } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
 
 interface AssistantToolSelectProps {
-  disabled?: boolean
+  isDisabled?: boolean
   selectedAssistantTools: Tables<"tools">[]
   setSelectedAssistantTools: (tool: Tables<"tools">[]) => void
 }
 
 export const AssistantToolSelect: FC<AssistantToolSelectProps> = ({
-  disabled,
+  isDisabled,
   selectedAssistantTools,
   setSelectedAssistantTools
 }) => {

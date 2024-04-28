@@ -9,11 +9,17 @@ interface AssistantRetrievalSelectProps {
   setSelectedAssistantRetrievalItems: (
     _: (Tables<"files"> | Tables<"collections">)[]
   ) => void
+  size?: "sm" | "md" | "lg"
+  label?: string
+  labelPlacement?: "outside" | "inside"
 }
 
 export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
   selectedAssistantRetrievalItems,
-  setSelectedAssistantRetrievalItems
+  setSelectedAssistantRetrievalItems,
+  size,
+  label,
+  labelPlacement = "outside"
 }) => {
   const { files, collections } = useContext(MetadachiContext)
 
@@ -27,9 +33,10 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
 
   return (
     <Select
+      size={size}
       selectionMode="multiple"
-      label="Files & Collections"
-      labelPlacement="outside"
+      label={label ?? "Files & Collections"}
+      labelPlacement={labelPlacement}
       placeholder={`Search collections/files...`}
       selectedKeys={selectedItemIds}
       onSelectionChange={ids => {

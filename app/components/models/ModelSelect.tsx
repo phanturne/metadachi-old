@@ -1,6 +1,6 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { LLMID, ModelProvider } from "@/app/lib/types"
-import React, { FC, useContext, useState } from "react"
+import React, { FC, useContext, useEffect, useState } from "react"
 import { ModelIcon } from "./ModelIcon"
 import { ModelFilterDropdown } from "@/app/components/models/ModelFilterDropdown"
 import {
@@ -8,12 +8,6 @@ import {
   AutocompleteItem,
   AutocompleteSection
 } from "@nextui-org/react"
-
-interface ModelSelectProps {
-  disabled?: boolean
-  selectedModelId: string
-  onSelectModel: (modelId: LLMID) => void
-}
 
 const MODEL_FILTERS = {
   All: "All",
@@ -28,13 +22,27 @@ const MODEL_FILTERS = {
   Ollama: "Ollama"
 } as const
 
+interface ModelSelectProps {
+  isDisabled?: boolean
+  selectedModelId?: string
+  onSelectModel: (modelId: LLMID) => void
+  showModelFilter?: boolean
+  size?: "sm" | "md" | "lg"
+  label?: string
+  labelPlacement?: "outside" | "inside"
+}
+
 type ModelFilter = (typeof MODEL_FILTERS)[keyof typeof MODEL_FILTERS]
 export const MODEL_PROVIDERS = Object.keys(MODEL_FILTERS) as ModelFilter[]
 
 export const ModelSelect: FC<ModelSelectProps> = ({
-  disabled,
+  isDisabled,
   selectedModelId,
-  onSelectModel
+  onSelectModel,
+  showModelFilter,
+  size,
+  label,
+  labelPlacement = "outside"
 }) => {
   const {
     profile,
@@ -101,8 +109,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     model => model.modelId === selectedModelId
   )
 
-  // if (!selectedModel) return null
-
   const filteredModels = ALL_MODELS.filter(model => {
     const filter = modelFilter.toLowerCase()
     if (filter === MODEL_FILTERS.All.toLowerCase()) {
@@ -119,27 +125,33 @@ export const ModelSelect: FC<ModelSelectProps> = ({
 
   return (
     <Autocomplete
-      disabled={disabled}
-      label="Model"
-      labelPlacement="outside"
+      isDisabled={isDisabled}
+      label={label ?? "Model"}
+      labelPlacement={labelPlacement}
+      size={size}
       placeholder="Select a model"
       defaultSelectedKey={selectedModel?.modelId}
       defaultItems={filteredModels}
       value={selectedModel?.modelId}
       onSelectionChange={id => onSelectModel(id as LLMID)}
       startContent={
-        <div className="-ml-3 flex flex-row items-center space-x-2">
-          <ModelFilterDropdown
-            disabled={disabled}
-            modelFilter={modelFilter}
-            setModelFilter={setModelFilter}
-          />
-          <ModelIcon
-            provider={selectedModel?.provider}
-            width={26}
-            height={26}
-          />
-        </div>
+        labelPlacement === "outside" && (
+          <div className="flex flex-row items-center space-x-2">
+            {showModelFilter && (
+              <ModelFilterDropdown
+                isDisabled={isDisabled}
+                modelFilter={modelFilter}
+                setModelFilter={setModelFilter}
+                className="-ml-3"
+              />
+            )}
+            <ModelIcon
+              provider={selectedModel?.provider}
+              width={28}
+              height={28}
+            />
+          </div>
+        )
       }
     >
       {MODEL_PROVIDERS.map(provider => (

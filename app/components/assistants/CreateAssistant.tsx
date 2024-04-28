@@ -154,7 +154,7 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
           />
 
           <AssistantToolSelect
-            disabled={!checkIfModelIsToolCompatible()}
+            isDisabled={!checkIfModelIsToolCompatible()}
             selectedAssistantTools={selectedAssistantToolItems}
             setSelectedAssistantTools={setSelectedAssistantToolItems}
           />

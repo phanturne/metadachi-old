@@ -235,13 +235,17 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
         <ModalFooter>
           <div className="flex gap-2">
             <Button
-              disabled={creating}
+              isDisabled={creating}
               variant="light"
               onClick={() => onOpenChange(false)}
             >
               Cancel
             </Button>
-            <Button disabled={creating} color="primary" onClick={handleCreate}>
+            <Button
+              isDisabled={creating}
+              color="primary"
+              onClick={handleCreate}
+            >
               {creating ? "Creating..." : "Create"}
             </Button>
           </div>

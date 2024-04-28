@@ -5,22 +5,24 @@ import { Select, SelectItem } from "@nextui-org/react"
 export function ModelFilterDropdown({
   modelFilter,
   setModelFilter,
-  disabled
+  isDisabled,
+  className
 }: {
   modelFilter: string
   setModelFilter: (v: string) => void
-  disabled?: boolean
+  isDisabled?: boolean
+  className?: string
 }) {
   return (
     <Select
       variant="faded"
-      disabled={disabled}
+      isDisabled={isDisabled}
       defaultSelectedKeys={[MODEL_PROVIDERS[0]]}
       value={modelFilter}
       onChange={e => {
         setModelFilter(e.target.value ?? MODEL_PROVIDERS[0])
       }}
-      className="w-36"
+      className={`w-36 ${className}`}
     >
       {MODEL_PROVIDERS.map(filter => (
         <SelectItem value={filter} key={filter}>

@@ -16,7 +16,7 @@ export default function ChatListCard() {
           Chats
         </h4>
       </CardHeader>
-      <CardBody className="pt-1">
+      <CardBody className="-mt-4 pt-0">
         <DataList
           contentType="chats"
           data={chats}
