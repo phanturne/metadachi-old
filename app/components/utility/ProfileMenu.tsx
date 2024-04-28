@@ -18,7 +18,7 @@ import {
   useDisclosure
 } from "@nextui-org/react"
 import { User } from "@nextui-org/user"
-import SettingsModal from "@/app/components/modals/SettingsModal"
+import SettingsModal from "@/app/components/settings/SettingsModal"
 import { Icon } from "@iconify-icon/react"
 
 export default function ProfileMenu({

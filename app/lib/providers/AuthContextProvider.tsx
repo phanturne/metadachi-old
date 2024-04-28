@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState } from "react"
-import AuthModal from "@/app/components/modals/AuthModal"
+import AuthModal from "@/app/components/auth/AuthModal"
 
 export const enum AuthFormType {
   Login,

@@ -10,7 +10,7 @@ import { fetchOpenRouterModels } from "@/app/lib/models/fetch-models"
 import { ApiInputs } from "@/app/components/input/ApiInputs"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { ProfileSettings } from "@/app/[locale]/(dashboard)/settings/ProfileSettings"
+import { ProfileSettings } from "@/app/components/settings/ProfileSettings"
 import { Button, Tab, Tabs } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
 

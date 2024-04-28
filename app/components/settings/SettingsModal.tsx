@@ -9,7 +9,7 @@ import { OpenRouterLLM } from "@/app/lib/types"
 import { fetchOpenRouterModels } from "@/app/lib/models/fetch-models"
 import { ApiInputs } from "@/app/components/input/ApiInputs"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { ProfileSettings } from "@/app/[locale]/(dashboard)/settings/ProfileSettings"
+import { ProfileSettings } from "@/app/components/settings/ProfileSettings"
 import {
   Button,
   Modal,
