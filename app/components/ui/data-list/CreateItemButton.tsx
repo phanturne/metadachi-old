@@ -119,13 +119,17 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
             variant="bordered"
             onClick={getCreateFunction()}
             startContent={<Icon icon="ic:round-plus" className="text-base" />}
+            className="shrink-0"
           >
             {`New ${contentTypeString}`}
           </Button>
         </>
       ) : (
         <>
-          <Button className="flex items-center" onClick={getCreateFunction()}>
+          <Button
+            className="flex shrink-0 items-center"
+            onClick={getCreateFunction()}
+          >
             <Icon icon="solar:add-folder-linear" className="text-base" />
           </Button>
         </>
@@ -135,7 +139,7 @@ export const CreateItemButton: FC<SidebarCreateButtonsProps> = ({
         <Button
           isIconOnly
           variant="bordered"
-          className="flex items-center"
+          className="flex shrink-0 items-center"
           onClick={handleCreateFolder}
         >
           <Icon icon="streamline:folder-add-solid" className="text-base" />

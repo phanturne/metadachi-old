@@ -2,8 +2,8 @@ import { CreateItemModal } from "@/app/components/ui/data-list/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
 import { PROMPT_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
-import { FC, useContext, useState } from "react"
-import { FormControl, FormLabel, Input, Textarea } from "@mui/joy"
+import React, { FC, useContext, useState } from "react"
+import { Input, Textarea } from "@nextui-org/react"
 
 interface CreatePromptProps {
   isOpen: boolean
@@ -38,33 +38,30 @@ export const CreatePrompt: FC<CreatePromptProps> = ({
       }
       renderInputs={() => (
         <>
-          <FormControl>
-            <FormLabel>Name</FormLabel>
+          <Input
+            isRequired
+            label="Name"
+            labelPlacement="outside"
+            placeholder="Prompt name..."
+            value={name}
+            onValueChange={setName}
+            maxLength={PROMPT_NAME_MAX}
+            description={`${name.length}/${PROMPT_NAME_MAX}`}
+            onCompositionStart={() => setIsTyping(true)}
+            onCompositionEnd={() => setIsTyping(false)}
+          />
 
-            <Input
-              required
-              placeholder="Prompt name..."
-              value={name}
-              onChange={e => setName(e.target.value)}
-              slotProps={{ input: { maxLength: PROMPT_NAME_MAX } }}
-              onCompositionStart={() => setIsTyping(true)}
-              onCompositionEnd={() => setIsTyping(false)}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Prompt</FormLabel>
-
-            <Textarea
-              placeholder="Prompt content..."
-              value={content}
-              onChange={e => setContent(e.target.value)}
-              minRows={6}
-              maxRows={20}
-              onCompositionStart={() => setIsTyping(true)}
-              onCompositionEnd={() => setIsTyping(false)}
-            />
-          </FormControl>
+          <Textarea
+            label="Prompt"
+            labelPlacement="outside"
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            placeholder="Prompt content..."
+            minRows={5}
+            maxRows={25}
+            onCompositionStart={() => setIsTyping(true)}
+            onCompositionEnd={() => setIsTyping(false)}
+          />
         </>
       )}
     />

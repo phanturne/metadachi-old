@@ -218,7 +218,8 @@ export const CreateItemModal: FC<CreateItemModalProps> = ({
       <ModalContent>
         <ModalHeader>
           <div>
-            {modalTitle} {subtitle && <h2 className="text-sm">{subtitle}</h2>}
+            {modalTitle}{" "}
+            {subtitle && <p className="mt-1 text-sm font-light">{subtitle}</p>}
           </div>
         </ModalHeader>
         <ModalBody>
