@@ -1,4 +1,4 @@
-import { FileIcons } from "@/app/components/icons/FileIcons"
+import { FileIcons } from "@/app/components/files/FileIcons"
 import { Tables } from "@/supabase/types"
 import { Button } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"

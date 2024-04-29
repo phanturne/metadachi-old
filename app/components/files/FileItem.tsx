@@ -1,4 +1,4 @@
-import { FileIcons } from "../icons/FileIcons"
+import { FileIcons } from "./FileIcons"
 import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"
 import { getFileFromStorage } from "@/app/lib/db/storage/files"
 import { Tables } from "@/supabase/types"

@@ -8,12 +8,16 @@ interface AssistantToolSelectProps {
   isDisabled?: boolean
   selectedAssistantTools: Tables<"tools">[]
   setSelectedAssistantTools: (tool: Tables<"tools">[]) => void
+  label?: string
+  labelPlacement?: "outside" | "inside"
 }
 
 export const AssistantToolSelect: FC<AssistantToolSelectProps> = ({
   isDisabled,
   selectedAssistantTools,
-  setSelectedAssistantTools
+  setSelectedAssistantTools,
+  label,
+  labelPlacement
 }) => {
   const { tools } = useContext(MetadachiContext)
 
@@ -23,9 +27,10 @@ export const AssistantToolSelect: FC<AssistantToolSelectProps> = ({
 
   return (
     <Select
+      isDisabled={isDisabled}
       selectionMode="multiple"
-      label="Tools"
-      labelPlacement="outside"
+      label={label ?? "Tools"}
+      labelPlacement={labelPlacement}
       placeholder={`Search tools...`}
       selectedKeys={selectedToolIds}
       onSelectionChange={ids => {

@@ -1,7 +1,7 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { CollectionFile } from "@/app/lib/types"
 import React, { FC, useContext } from "react"
-import { FileIcons } from "@/app/components/icons/FileIcons"
+import { FileIcons } from "@/app/components/files/FileIcons"
 import { Select, SelectItem } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
 import { Tables } from "@/supabase/types"

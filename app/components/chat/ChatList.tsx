@@ -128,7 +128,7 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
         <AssistantAvatar
           selectedAssistantId={chat.assistant_id}
           selectedAssistantImage={assistantImage}
-          modelData={MODEL_DATA}
+          modelProvider={MODEL_DATA}
         />
       }
       endContent={

@@ -1,12 +1,10 @@
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
-import { LLM } from "@/app/lib/types"
+import { LLM, ModelProvider } from "@/app/lib/types"
 import { ModelIcon } from "@/app/components/models/ModelIcon"
 import { Icon } from "@iconify-icon/react"
 import { Avatar } from "@nextui-org/react"
-
-const ICON_SIZE = 28
 
 export default function MessageAvatar({
   message,
@@ -57,7 +55,7 @@ export default function MessageAvatar({
         <AssistantAvatar
           selectedAssistantId={selectedAssistant?.id}
           selectedAssistantImage={selectedAssistantImage}
-          modelData={modelData}
+          modelProvider={modelData.provider}
         />
       )}
 
@@ -68,30 +66,38 @@ export default function MessageAvatar({
 
 export const AssistantAvatar = ({
   selectedAssistantImage,
-  modelData,
-  size = ICON_SIZE
+  modelProvider,
+  size = "sm"
 }: {
   selectedAssistantId?: string | null
   selectedAssistantImage?: string
-  modelData: LLM
-  size?: number
+  modelProvider?: ModelProvider
+  size?: "sm" | "md"
 }) => {
+  let fontSize = "text-2xl"
+  switch (size) {
+    case "sm":
+      fontSize = "text-2xl"
+      break
+    case "md":
+      fontSize = "text-3xl"
+      break
+  }
+
   return selectedAssistantImage ? (
     <Avatar
       size="sm"
       className="shrink-0 bg-transparent"
       showFallback
       src={selectedAssistantImage}
-      fallback={<Icon icon="solar:atom-bold-duotone" className="text-base" />}
+      fallback={<Icon icon="solar:atom-bold-duotone" className={fontSize} />}
     />
   ) : (
     <Avatar
       size="sm"
       className="shrink-0 bg-transparent"
       showFallback
-      fallback={
-        <ModelIcon provider={modelData?.provider} height={size} width={size} />
-      }
+      fallback={<ModelIcon provider={modelProvider} size={size} />}
     />
   )
 }

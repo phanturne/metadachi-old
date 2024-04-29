@@ -1,12 +1,10 @@
-// TODO: Update UI
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import * as React from "react"
 import { FC, useContext, useEffect, useRef } from "react"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { Listbox, ListboxItem } from "@nextui-org/react"
-import { Icon } from "@iconify-icon/react"
-import Image from "next/image"
+import { AssistantAvatar } from "@/app/components/ui/Avatars"
 
 interface AssistantPickerProps {}
 
@@ -103,22 +101,13 @@ export const AssistantPicker: FC<AssistantPickerProps> = ({}) => {
               ref={(ref: HTMLDivElement) => setItemRef(ref, index)}
               className="flex gap-4"
             >
-              {item.image_path ? (
-                <Image
-                  src={
-                    assistantImages.find(
-                      image => image.path === item.image_path
-                    )?.url || ""
-                  }
-                  alt={item.name}
-                  width={32}
-                  height={32}
-                  className="rounded"
-                />
-              ) : (
-                <Icon icon="fluent-emoji:robot" className="text-4xl" />
-              )}
-
+              <AssistantAvatar
+                size="md"
+                selectedAssistantImage={
+                  assistantImages.find(image => image.path === item.image_path)
+                    ?.url || ""
+                }
+              />
               <div>
                 <p className="text-sm">{item.name}</p>
                 <p className="text-xs text-default-500">
