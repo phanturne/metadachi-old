@@ -65,7 +65,7 @@ export default function AssistantSelect({
       size={size}
       label={label ?? "Assistants"}
       labelPlacement={labelPlacement}
-      placeholder={`Search assistants...`}
+      placeholder={`Select assistants...`}
       selectedKeys={selectedAssistantIds}
       onSelectionChange={ids => {
         const selected = assistants.filter(item =>

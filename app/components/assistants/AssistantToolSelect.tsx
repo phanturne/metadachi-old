@@ -31,7 +31,7 @@ export const AssistantToolSelect: FC<AssistantToolSelectProps> = ({
       selectionMode="multiple"
       label={label ?? "Tools"}
       labelPlacement={labelPlacement}
-      placeholder={`Search tools...`}
+      placeholder={`Select tools...`}
       selectedKeys={selectedToolIds}
       onSelectionChange={ids => {
         const selected = tools.filter(item => Array.from(ids).includes(item.id))

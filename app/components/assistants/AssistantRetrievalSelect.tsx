@@ -37,7 +37,7 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
       selectionMode="multiple"
       label={label ?? "Files & Collections"}
       labelPlacement={labelPlacement}
-      placeholder={`Search collections/files...`}
+      placeholder={`Select collections/files...`}
       selectedKeys={selectedItemIds}
       onSelectionChange={ids => {
         const selected = allItems.filter(item =>
