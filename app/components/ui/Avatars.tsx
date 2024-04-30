@@ -35,7 +35,7 @@ export default function MessageAvatar({
         : profile?.username
 
   return (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center gap-2">
       {isSystemRole && (
         <Avatar
           size="sm"
@@ -67,27 +67,37 @@ export default function MessageAvatar({
 export const AssistantAvatar = ({
   selectedAssistantImage,
   modelProvider,
-  size = "sm"
+  size = "sm",
+  className
 }: {
   selectedAssistantId?: string | null
   selectedAssistantImage?: string
   modelProvider?: ModelProvider
-  size?: "sm" | "md"
+  size?: "xs" | "sm" | "md"
+  className?: string
 }) => {
   let fontSize = "text-2xl"
+  let imageSize: string | undefined = "h-7 w-7"
   switch (size) {
+    case "xs":
+      fontSize = "text-xl"
+      imageSize = "h-7 w-7"
+      break
     case "sm":
       fontSize = "text-2xl"
+      imageSize = undefined
       break
     case "md":
       fontSize = "text-3xl"
+      imageSize = "h-9 w-9"
       break
   }
 
   return selectedAssistantImage ? (
     <Avatar
       size="sm"
-      className="shrink-0 bg-transparent"
+      className={`shrink-0 bg-transparent ${className}`}
+      classNames={{ base: imageSize }}
       showFallback
       src={selectedAssistantImage}
       fallback={<Icon icon="solar:atom-bold-duotone" className={fontSize} />}
@@ -95,7 +105,7 @@ export const AssistantAvatar = ({
   ) : (
     <Avatar
       size="sm"
-      className="shrink-0 bg-transparent"
+      className={`shrink-0 bg-transparent ${className}`}
       showFallback
       fallback={<ModelIcon provider={modelProvider} size={size} />}
     />

@@ -4,7 +4,7 @@ import { Icon } from "@iconify-icon/react"
 
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
   provider?: ModelProvider
-  size?: "sm" | "md"
+  size?: "xs" | "sm" | "md"
 }
 
 export const ModelIcon: FC<ModelIconProps> = ({
@@ -12,17 +12,21 @@ export const ModelIcon: FC<ModelIconProps> = ({
   size
   // ...props
 }) => {
-  // Some icons are inherently big, so use a smaller font for them
+  // Some icons are inherently big, so we use a smaller font size
   let bigIconFontSize = "text-xl"
   let fontSize = "text-2xl"
   switch (size) {
-    case "sm":
+    case "xs":
       bigIconFontSize = "text-xl"
       fontSize = "text-2xl"
       break
-    case "md":
+    case "sm":
       bigIconFontSize = "text-2xl"
       fontSize = "text-3xl"
+      break
+    case "md":
+      bigIconFontSize = "text-3xl"
+      fontSize = "text-4xl"
       break
   }
 

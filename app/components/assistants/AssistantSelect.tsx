@@ -4,6 +4,11 @@ import { Tables } from "@/supabase/types"
 import { Icon } from "@iconify-icon/react"
 import { Select, SelectItem } from "@nextui-org/react"
 import { AssistantAvatar } from "@/app/components/ui/Avatars"
+import { LLMID } from "@/app/lib/types"
+import { getAssistantFilesByAssistantId } from "@/app/lib/db/assistant-files"
+import { getAssistantCollectionsByAssistantId } from "@/app/lib/db/assistant-collections"
+import { getCollectionFilesByCollectionId } from "@/app/lib/db/collection-files"
+import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
 
 export default function AssistantSelect({
   size,
@@ -14,50 +19,67 @@ export default function AssistantSelect({
   label?: string
   labelPlacement?: "outside" | "inside"
 }) {
-  const { assistants, setSelectedAssistant, assistantImages } =
-    useContext(MetadachiContext)
+  const {
+    assistants,
+    selectedAssistant,
+    setSelectedAssistant,
+    assistantImages,
+    setChatSettings,
+    setSelectedTools,
+    setChatFiles
+  } = useContext(MetadachiContext)
 
-  const selectedAssistants: Tables<"assistants">[] = []
-  const selectedAssistantIds: string[] = []
+  // const selectedAssistants: Tables<"assistants">[] = selectedAssistant
+  //   ? [selectedAssistant]
+  //   : []
 
-  // TODO: Refactor duplicate logic
+  const selctedAssistantIds = selectedAssistant ? [selectedAssistant.id] : []
+
+  // TODO: Handle multiple assistant selection
   const handleAssistantSelect = async (items: Tables<"assistants">[]) => {
-    console.log(items)
-    // let newFiles = []
-    //
-    // for (const item of items) {
-    //   if ("type" in item) {
-    //     const file = item as Tables<"files">
-    //     newFiles.push({
-    //       id: file.id,
-    //       name: file.name,
-    //       type: file.type,
-    //       file: null
-    //     })
-    //   } else {
-    //     const collection = item as Tables<"collections">
-    //     const collectionFiles = await getCollectionFilesByCollectionId(
-    //       collection.id
-    //     )
-    //
-    //     const collectionNewFiles = collectionFiles.files
-    //       .filter(
-    //         file =>
-    //           !newMessageFiles.some(prevFile => prevFile.id === file.id) &&
-    //           !chatFiles.some(chatFile => chatFile.id === file.id)
-    //       )
-    //       .map(file => ({
-    //         id: file.id,
-    //         name: file.name,
-    //         type: file.type,
-    //         file: null
-    //       }))
-    //
-    //     newFiles.push(...collectionNewFiles)
-    //   }
-    // }
-    //
-    // setNewMessageFiles(newFiles)
+    if (items.length === 0) {
+      return
+    }
+
+    const assistant = items[0]
+    setSelectedAssistant(assistant)
+
+    setChatSettings({
+      model: assistant.model as LLMID,
+      prompt: assistant.prompt,
+      temperature: assistant.temperature,
+      contextLength: assistant.context_length,
+      includeProfileContext: assistant.include_profile_context,
+      includeWorkspaceInstructions: assistant.include_workspace_instructions,
+      embeddingsProvider: assistant.embeddings_provider as "openai" | "local"
+    })
+
+    let allFiles = []
+
+    const assistantFiles = (await getAssistantFilesByAssistantId(assistant.id))
+      .files
+    allFiles = [...assistantFiles]
+    const assistantCollections = (
+      await getAssistantCollectionsByAssistantId(assistant.id)
+    ).collections
+    for (const collection of assistantCollections) {
+      const collectionFiles = (
+        await getCollectionFilesByCollectionId(collection.id)
+      ).files
+      allFiles = [...allFiles, ...collectionFiles]
+    }
+    const assistantTools = (await getAssistantToolsByAssistantId(assistant.id))
+      .tools
+
+    setSelectedTools(assistantTools)
+    setChatFiles(
+      allFiles.map(file => ({
+        id: file.id,
+        name: file.name,
+        type: file.type,
+        file: null
+      }))
+    )
   }
 
   return (
@@ -66,24 +88,24 @@ export default function AssistantSelect({
       label={label ?? "Assistants"}
       labelPlacement={labelPlacement}
       placeholder={`Select assistants...`}
-      selectedKeys={selectedAssistantIds}
+      selectedKeys={selctedAssistantIds}
       onSelectionChange={ids => {
         const selected = assistants.filter(item =>
           Array.from(ids).includes(item.id)
         )
 
-        console.log(ids, selected)
-        // setSelectedAssistant(selected)
+        handleAssistantSelect(selected)
       }}
       startContent={
-        selectedAssistants.length > 0 ? (
+        selectedAssistant ? (
           <AssistantAvatar
-            size="md"
+            size="xs"
             selectedAssistantImage={
               assistantImages.find(
-                image => image.path === selectedAssistants[0].image_path
+                image => image.path === selectedAssistant.image_path
               )?.url || ""
             }
+            className="-ml-1"
           />
         ) : (
           <Icon icon="solar:stars-bold-duotone" className="text-2xl" />
@@ -94,7 +116,7 @@ export default function AssistantSelect({
         <SelectItem key={item.id} value={item.name} textValue={item.name}>
           <div className="flex items-center gap-2">
             <AssistantAvatar
-              size="sm"
+              size="xs"
               selectedAssistantImage={
                 assistantImages.find(image => image.path === item.image_path)
                   ?.url || ""

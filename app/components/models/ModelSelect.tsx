@@ -145,7 +145,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
                 className="-ml-3"
               />
             )}
-            <ModelIcon provider={selectedModel?.provider} size="sm" />
+            <ModelIcon provider={selectedModel?.provider} size="xs" />
           </div>
         )
       }
@@ -157,7 +157,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
             .map(model => (
               <AutocompleteItem key={model.modelId} textValue={model.modelName}>
                 <div className="flex items-center gap-2">
-                  <ModelIcon provider={model.provider} size="sm" />
+                  <ModelIcon provider={model.provider} size="xs" />
                   {model.modelName}
                 </div>
               </AutocompleteItem>

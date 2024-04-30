@@ -28,11 +28,11 @@ export const AdvancedModelSettings: FC<AdvancedModelSettingsProps> = ({
     <Accordion
       itemClasses={{
         trigger: "p-0",
-        content: "pt-4",
+        content: "pt-4 overflow-x-hidden",
         title: "text-sm"
       }}
       variant="light"
-      className="p-0"
+      className=" p-0"
     >
       <AccordionItem title="Advanced Settings">
         <AdvancedContent
@@ -77,6 +77,7 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
   return (
     <div className="flex flex-col gap-4">
       <Slider
+        size="sm"
         label="Temperature"
         value={chatSettings.temperature}
         onChange={value =>
@@ -91,6 +92,7 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
       />
 
       <Slider
+        size="sm"
         label="Context Length"
         value={chatSettings.contextLength}
         onChange={value =>
