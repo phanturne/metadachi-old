@@ -11,10 +11,12 @@ import { getCollectionFilesByCollectionId } from "@/app/lib/db/collection-files"
 import { getAssistantToolsByAssistantId } from "@/app/lib/db/assistant-tools"
 
 export default function AssistantSelect({
+  isDisabled,
   size,
   label,
   labelPlacement
 }: {
+  isDisabled?: boolean
   size?: "sm" | "md" | "lg"
   label?: string
   labelPlacement?: "outside" | "inside"
@@ -84,6 +86,7 @@ export default function AssistantSelect({
 
   return (
     <Select
+      isDisabled={isDisabled}
       size={size}
       label={label ?? "Assistants"}
       labelPlacement={labelPlacement}

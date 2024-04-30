@@ -8,10 +8,16 @@ import { ModelSelect } from "@/app/components/models/ModelSelect"
 import FileSelect from "@/app/components/files/FileSelect"
 import AssistantSelect from "@/app/components/assistants/AssistantSelect"
 import { AssistantToolSelect } from "@/app/components/assistants/AssistantToolSelect"
+import AdvancedChatSettingsButton from "@/app/components/chat/AdvancedChatSettingsButton"
 
 export default function ChatSettingsCard() {
-  const { selectedChat, chatSettings, setChatSettings } =
-    useContext(MetadachiContext)
+  const {
+    selectedChat,
+    chatSettings,
+    setChatSettings,
+    selectedTools,
+    setSelectedTools
+  } = useContext(MetadachiContext)
 
   const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(() => {
     const localStorageVal = localStorage.getItem("isChatSettingsOpen")
@@ -23,6 +29,8 @@ export default function ChatSettingsCard() {
     setIsChatSettingsOpen(newValue)
     localStorage.setItem("isChatSettingsOpen", String(newValue))
   }
+
+  const isDisabled = selectedChat !== null
 
   return (
     <Card className="p-1" key={selectedChat?.id}>
@@ -50,19 +58,12 @@ export default function ChatSettingsCard() {
         // TODO: add logic for disabling some of the settings
         <CardBody className="flex gap-2 pt-1 text-small font-semibold leading-none text-default-500">
           {/* TODO: Model Select is not taking effect*/}
-          {selectedChat ? (
-            // ModelSelect for existing chats
-            <ModelSelect
-              label=""
-              isDisabled
-              selectedModelId={selectedChat?.model}
-              onSelectModel={() => {}}
-            />
-          ) : chatSettings ? (
+          {chatSettings ? (
             // ModelSelect for new chats
             <ModelSelect
               label=""
-              selectedModelId={chatSettings.model}
+              isDisabled={isDisabled}
+              selectedModelId={chatSettings?.model}
               onSelectModel={model =>
                 setChatSettings({ ...chatSettings, model })
               }
@@ -78,13 +79,11 @@ export default function ChatSettingsCard() {
 
           <AssistantToolSelect
             label=""
-            selectedAssistantTools={[]}
-            setSelectedAssistantTools={() => {}}
+            selectedAssistantTools={selectedTools}
+            setSelectedAssistantTools={setSelectedTools}
           />
 
-          <Button size="sm" variant="flat">
-            Advanced Settings
-          </Button>
+          <AdvancedChatSettingsButton />
         </CardBody>
       )}
     </Card>
