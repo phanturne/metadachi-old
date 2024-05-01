@@ -16,7 +16,9 @@ Metadachi is built with community collaboration at its core, fostering a space f
 
 > This project builds on the outstanding work by McKay Wrigley and the contributors of [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui).
 
-![Website](public/docs/images/website-screenshot.png)
+![Website](public/docs/images/website-screenshot1.png)
+![Website](public/docs/images/website-screenshot2.png)
+![Website](public/docs/images/website-screenshot3.png)
 
 </div>
 
