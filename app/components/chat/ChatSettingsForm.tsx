@@ -2,7 +2,7 @@
 
 import { ChatSettings } from "@/app/lib/types"
 import { ModelSelect } from "../models/ModelSelect"
-import { AdvancedModelSettings } from "../models/AdvancedModelSettings"
+import { AdvancedModelSettingsAccordion } from "../models/AdvancedModelSettings"
 import { Textarea } from "@nextui-org/react"
 
 interface ChatSettingsFormProps {
@@ -38,7 +38,7 @@ export const ChatSettingsForm = ({
         maxRows={6}
       />
 
-      <AdvancedModelSettings
+      <AdvancedModelSettingsAccordion
         chatSettings={chatSettings}
         onChangeChatSettings={onChangeChatSettings}
         showTooltip={showTooltip}

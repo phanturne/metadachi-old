@@ -23,7 +23,6 @@ import { useScroll } from "@/app/lib/hooks/use-scroll"
 import { NewChatContent } from "@/app/components/chat/NewChatContent"
 import ChatMessages from "@/app/components/chat/ChatMessages"
 import { ChatInput } from "@/app/components/chat/input/ChatInput"
-import { ChatFilesDisplay } from "@/app/components/chat/ChatFilesDisplay"
 import PromptSuggestions from "@/app/components/chat/PromptSuggestions"
 import { ChatCommands } from "@/app/components/chat/input/ChatCommands"
 import { toast } from "sonner"
@@ -214,10 +213,6 @@ export default function ChatPage() {
         </ScrollShadow>
 
         <div className="relative flex w-full flex-col gap-4 px-20 py-4">
-          {/*<ChatToolsDisplay />*/}
-          <ChatFilesDisplay />
-          {/*<AssistantDisplay />*/}
-
           <ChatCommands />
           {isNewChat && <PromptSuggestions />}
           <form className="flex w-full flex-col items-start rounded-medium bg-default-100 transition-colors hover:bg-default-200/70">

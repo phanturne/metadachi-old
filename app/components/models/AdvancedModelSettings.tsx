@@ -19,7 +19,7 @@ interface AdvancedModelSettingsProps {
   showTooltip: boolean
 }
 
-export const AdvancedModelSettings: FC<AdvancedModelSettingsProps> = ({
+export const AdvancedModelSettingsAccordion: FC<AdvancedModelSettingsProps> = ({
   chatSettings,
   onChangeChatSettings,
   showTooltip
@@ -35,7 +35,7 @@ export const AdvancedModelSettings: FC<AdvancedModelSettingsProps> = ({
       className=" p-0"
     >
       <AccordionItem title="Advanced Settings">
-        <AdvancedContent
+        <AdvancedModelSettings
           chatSettings={chatSettings}
           onChangeChatSettings={onChangeChatSettings}
           showTooltip={showTooltip}
@@ -51,7 +51,7 @@ interface AdvancedContentProps {
   showTooltip: boolean
 }
 
-const AdvancedContent: FC<AdvancedContentProps> = ({
+export const AdvancedModelSettings: FC<AdvancedContentProps> = ({
   chatSettings,
   onChangeChatSettings,
   showTooltip
@@ -126,7 +126,12 @@ const AdvancedContent: FC<AdvancedContentProps> = ({
         </Checkbox>
 
         {showTooltip && (
-          <Tooltip content={profile?.profile_context || "No profile context."}>
+          <Tooltip
+            content={
+              `Profile Context: ${profile?.profile_context}` ||
+              "No profile context."
+            }
+          >
             <Icon icon="solar:info-circle-linear" className="text-base" />
           </Tooltip>
         )}
