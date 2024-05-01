@@ -1,8 +1,9 @@
 import { DescriptionRounded } from "@mui/icons-material"
+import * as React from "react"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
-import { AnimatedPulseIcon } from "@/app/components/icons/AnimatedPulseIcon"
 import { Box } from "@mui/joy"
+import { Icon } from "@iconify-icon/react"
 
 export default function MessagePlaceholder() {
   const { toolInUse } = useContext(MetadachiContext)
@@ -12,20 +13,17 @@ export default function MessagePlaceholder() {
       {(() => {
         switch (toolInUse) {
           case "none":
-            return <AnimatedPulseIcon />
+            return (
+              <div className="animate-pulse">
+                <Icon icon="solar:record-bold" className="text-base" />
+              </div>
+            )
           case "retrieval":
             return (
-              <Box
-                sx={{
-                  display: "flex",
-                  animation: "pulse", // TODO: Fix animation
-                  alignItems: "center",
-                  gap: 2
-                }}
-              >
-                <DescriptionRounded />
-                Searching files...
-              </Box>
+              <div className="flex animate-pulse items-center space-x-2">
+                <Icon icon="solar:record-bold" className="text-base" />
+                <span>Searching files...</span>
+              </div>
             )
           default:
             return null

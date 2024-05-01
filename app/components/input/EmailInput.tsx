@@ -1,6 +1,6 @@
-import { EmailRounded } from "@mui/icons-material"
-import { Input } from "@mui/joy"
 import React from "react"
+import { Icon } from "@iconify-icon/react"
+import { Input } from "@nextui-org/react"
 
 export default function EmailInput() {
   return (
@@ -8,9 +8,8 @@ export default function EmailInput() {
       name="email"
       type="email"
       placeholder="Email"
-      autoFocus
-      required
-      startDecorator={<EmailRounded />}
+      isRequired
+      startContent={<Icon icon="solar:letter-linear" className="text-xl" />}
     />
   )
 }

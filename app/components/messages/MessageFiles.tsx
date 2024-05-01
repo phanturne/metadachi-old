@@ -1,10 +1,9 @@
 import { Tables } from "@/supabase/types"
 import { MetadachiContext } from "@/app/lib/context"
 import { useContext } from "react"
-import { Box, Grid, Link } from "@mui/joy"
-import { ArrowDropDownRounded, ArrowRightRounded } from "@mui/icons-material"
-import SvgIcon from "@mui/joy/SvgIcon"
 import { FileItemButton } from "@/app/components/files/FileItemButton"
+import { Button } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 export function MessageFiles({
   fileItems,
@@ -23,50 +22,41 @@ export function MessageFiles({
   return (
     <>
       {fileItems.length > 0 && (
-        <Box sx={{ mt: 1 }}>
+        <div className="mt-4">
           {!viewSources ? (
-            <Link
-              component="button"
-              level="body-sm"
-              underline="none"
-              color="neutral"
+            <Button
+              size="sm"
+              variant="flat"
+              className="font-semibold"
               onClick={() => setViewSources(true)}
-              sx={{ fontWeight: "bold" }}
+              endContent={<Icon icon="solar:alt-arrow-right-linear" />}
             >
               {`View ${fileItems.length} Source${
                 fileItems.length == 1 ? "" : "s"
               }`}
-              <SvgIcon size="lg">
-                <ArrowRightRounded />
-              </SvgIcon>
-            </Link>
+            </Button>
           ) : (
             <>
-              <Link
-                component="button"
-                level="body-sm"
-                underline="none"
-                color="neutral"
+              <Button
+                size="sm"
+                variant="flat"
+                className="font-semibold"
                 onClick={() => setViewSources(false)}
-                sx={{ fontWeight: "bold" }}
+                endContent={<Icon icon="solar:alt-arrow-down-linear" />}
               >
                 Sources
-                <SvgIcon size="lg">
-                  <ArrowDropDownRounded />
-                </SvgIcon>
-              </Link>
-              <Grid
-                container
-                spacing={{ xs: 1 }}
-                columns={{ xs: 4, md: 8, xl: 12 }}
-              >
+              </Button>
+              <div className="mt-2 flex flex-wrap gap-2">
                 {fileItems.map((fileItem, index) => {
                   const parentFile = files.find(
                     file => file.id === fileItem.file_id
                   )
 
                   return (
-                    <Grid xs={4} key={index}>
+                    <div
+                      className="w-full md:w-1/2 lg:w-1/3"
+                      key={fileItem.file_id}
+                    >
                       <FileItemButton
                         parentFile={parentFile}
                         subtitle={fileItem.content.substring(0, 60)}
@@ -75,13 +65,13 @@ export function MessageFiles({
                           setShowFileItemPreview(true)
                         }}
                       />
-                    </Grid>
+                    </div>
                   )
                 })}
-              </Grid>
+              </div>
             </>
           )}
-        </Box>
+        </div>
       )}
     </>
   )

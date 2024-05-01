@@ -2,15 +2,12 @@ import { MetadachiContext } from "@/app/lib/context"
 import { LLMID, ModelProvider } from "@/app/lib/types"
 import React, { FC, useContext, useState } from "react"
 import { ModelIcon } from "./ModelIcon"
-import { Autocomplete, Box } from "@mui/joy"
-import { ModelOption } from "@/app/components/models/ModelOption"
 import { ModelFilterDropdown } from "@/app/components/models/ModelFilterDropdown"
-
-interface ModelSelectProps {
-  disabled?: boolean
-  selectedModelId: string
-  onSelectModel: (modelId: LLMID) => void
-}
+import {
+  Autocomplete,
+  AutocompleteItem,
+  AutocompleteSection
+} from "@nextui-org/react"
 
 const MODEL_FILTERS = {
   All: "All",
@@ -25,13 +22,27 @@ const MODEL_FILTERS = {
   Ollama: "Ollama"
 } as const
 
+interface ModelSelectProps {
+  isDisabled?: boolean
+  selectedModelId?: string
+  onSelectModel?: (modelId: LLMID) => void
+  showModelFilter?: boolean
+  size?: "sm" | "md" | "lg"
+  label?: string
+  labelPlacement?: "outside" | "inside"
+}
+
 type ModelFilter = (typeof MODEL_FILTERS)[keyof typeof MODEL_FILTERS]
-export const MODEL_FILTER_LIST = Object.keys(MODEL_FILTERS) as ModelFilter[]
+export const MODEL_PROVIDERS = Object.keys(MODEL_FILTERS) as ModelFilter[]
 
 export const ModelSelect: FC<ModelSelectProps> = ({
-  disabled,
+  isDisabled,
   selectedModelId,
-  onSelectModel
+  onSelectModel,
+  showModelFilter,
+  size,
+  label,
+  labelPlacement = "outside"
 }) => {
   const {
     profile,
@@ -41,7 +52,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     availableOpenRouterModels
   } = useContext(MetadachiContext)
 
-  const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTER_LIST[0])
+  const [modelFilter, setModelFilter] = useState<string>(MODEL_PROVIDERS[0])
   // const [filteredModels, setFilteredModels] = useState<LLM[]>([])
   // const [isLocked, setIsLocked] = useState<boolean>(true)
   // const [lockedModels, setLockedModels] = useState<LLMID[]>([])
@@ -98,8 +109,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     model => model.modelId === selectedModelId
   )
 
-  // if (!selectedModel) return null
-
   const filteredModels = ALL_MODELS.filter(model => {
     const filter = modelFilter.toLowerCase()
     if (filter === MODEL_FILTERS.All.toLowerCase()) {
@@ -116,41 +125,45 @@ export const ModelSelect: FC<ModelSelectProps> = ({
 
   return (
     <Autocomplete
-      disabled={disabled}
-      placeholder={"Select a model"}
-      defaultValue={selectedModel}
-      value={selectedModel}
-      onChange={(_, value) => onSelectModel(value?.modelId as LLMID)}
-      options={filteredModels}
-      groupBy={option => option.provider}
-      startDecorator={
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 1,
-            alignItems: "center",
-            ml: "-12px"
-          }}
-        >
-          <ModelFilterDropdown
-            disabled={disabled}
-            modelFilter={modelFilter}
-            setModelFilter={setModelFilter}
-          />
-          <ModelIcon
-            provider={selectedModel?.provider}
-            width={26}
-            height={26}
-          />
-        </Box>
+      isDisabled={isDisabled}
+      label={label ?? "Model"}
+      labelPlacement={labelPlacement}
+      size={size}
+      placeholder="Select a model"
+      defaultSelectedKey={selectedModel?.modelId}
+      defaultItems={filteredModels}
+      value={selectedModel?.modelId}
+      onSelectionChange={id => onSelectModel?.(id as LLMID)}
+      startContent={
+        labelPlacement === "outside" && (
+          <div className="flex flex-row items-center space-x-2">
+            {showModelFilter && (
+              <ModelFilterDropdown
+                isDisabled={isDisabled}
+                modelFilter={modelFilter}
+                setModelFilter={setModelFilter}
+                className="-ml-3"
+              />
+            )}
+            <ModelIcon provider={selectedModel?.provider} size="xs" />
+          </div>
+        )
       }
-      autoHighlight
-      getOptionLabel={model => model.modelName}
-      // getOptionDisabled={model => lockedModels.includes(model.modelId)}
-      renderOption={(props, model) => (
-        <ModelOption model={model} props={props} />
-      )}
-    />
+    >
+      {MODEL_PROVIDERS.map(provider => (
+        <AutocompleteSection key={provider} title={provider}>
+          {filteredModels
+            .filter(model => model.provider === provider.toLowerCase())
+            .map(model => (
+              <AutocompleteItem key={model.modelId} textValue={model.modelName}>
+                <div className="flex items-center gap-2">
+                  <ModelIcon provider={model.provider} size="xs" />
+                  {model.modelName}
+                </div>
+              </AutocompleteItem>
+            ))}
+        </AutocompleteSection>
+      ))}
+    </Autocomplete>
   )
 }

@@ -1,7 +1,7 @@
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
-import { FC, useContext } from "react"
-import { Autocomplete } from "@mui/joy"
+import React, { FC, useContext } from "react"
+import { Select, SelectItem } from "@nextui-org/react"
 import { toast } from "sonner"
 
 interface AssignWorkspaces {
@@ -15,24 +15,37 @@ export const AssignWorkspaces: FC<AssignWorkspaces> = ({
 }) => {
   const { workspaces } = useContext(MetadachiContext)
 
+  const selectedWorkspaceIds = workspaces
+    .filter(workspace =>
+      selectedWorkspaces.map(w => w.id).includes(workspace.id)
+    )
+    .map(workspace => workspace.id)
+
   return (
-    <Autocomplete
-      multiple
-      disableCloseOnSelect
+    <Select
+      isRequired
+      selectionMode="multiple"
+      label="Workspaces"
+      labelPlacement="outside"
       placeholder={`Search workspaces...`}
-      value={workspaces.filter(workspace =>
-        selectedWorkspaces.map(w => w.id).includes(workspace.id)
-      )}
-      onChange={(_, newValue) => {
-        if (newValue.length === 0) {
+      selectedKeys={selectedWorkspaceIds}
+      onSelectionChange={ids => {
+        const selected = workspaces.filter(workspace =>
+          Array.from(ids).includes(workspace.id)
+        )
+
+        if (selected.length === 0) {
           toast.warning("You must select at least one workspace")
         } else {
-          setSelectedWorkspaces(newValue)
+          setSelectedWorkspaces(selected)
         }
       }}
-      options={workspaces}
-      getOptionLabel={workspace => workspace.name}
-      limitTags={1}
-    />
+    >
+      {workspaces.map(workspace => (
+        <SelectItem key={workspace.id} value={workspace.name}>
+          {workspace.name}
+        </SelectItem>
+      ))}
+    </Select>
   )
 }

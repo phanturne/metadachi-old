@@ -1,13 +1,12 @@
-import { styled } from "@mui/joy"
+import { JSX, ClassAttributes, InputHTMLAttributes } from "react"
 
-export const VisuallyHiddenInput = styled("input")`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`
+export const VisuallyHiddenInput = (
+  props: JSX.IntrinsicAttributes &
+    ClassAttributes<HTMLInputElement> &
+    InputHTMLAttributes<HTMLInputElement>
+) => (
+  <input
+    className="clip-[rect(0, 0, 0)] clip-path-[inset(50%)] absolute bottom-0 left-0 size-1 overflow-hidden whitespace-nowrap"
+    {...props}
+  />
+)

@@ -60,6 +60,8 @@ export const useChatHandler = () => {
     sourceCount,
     setIsPromptPickerOpen,
     setIsFilePickerOpen,
+    setIsToolPickerOpen,
+    setIsAssistantPickerOpen,
     selectedTools,
     selectedPreset,
     setChatSettings,
@@ -95,6 +97,8 @@ export const useChatHandler = () => {
     setShowFilesDisplay(false)
     setIsPromptPickerOpen(false)
     setIsFilePickerOpen(false)
+    setIsToolPickerOpen(false)
+    setIsAssistantPickerOpen(false)
 
     setSelectedTools([])
     setToolInUse("none")
@@ -199,6 +203,8 @@ export const useChatHandler = () => {
       setIsGenerating(true)
       setIsPromptPickerOpen(false)
       setIsFilePickerOpen(false)
+      setIsToolPickerOpen(false)
+      setIsAssistantPickerOpen(false)
       setNewMessageImages([])
 
       const newAbortController = new AbortController()

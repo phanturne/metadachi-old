@@ -1,69 +1,66 @@
 import { ModelProvider } from "@/app/lib/types"
 import { FC, HTMLAttributes } from "react"
-import { AnthropicSVG } from "@/app/components/icons/anthropic-svg"
-import { GoogleSVG } from "@/app/components/icons/google-svg"
-import { OpenAISVG } from "@/app/components/icons/openai-svg"
-import { AutoAwesomeRounded } from "@mui/icons-material"
-import SvgIcon from "@mui/joy/SvgIcon"
-import MistralIcon from "@/app/components/icons/mistral.svg"
-import Image from "next/image"
-import groq from "@/public/providers/groq.png"
+import { Icon } from "@iconify-icon/react"
 
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
   provider?: ModelProvider
-  height: number
-  width: number
+  size?: "xs" | "sm" | "md"
 }
 
 export const ModelIcon: FC<ModelIconProps> = ({
   provider,
-  height,
-  width
+  size
   // ...props
 }) => {
+  // Some icons are inherently big, so we use a smaller font size
+  let bigIconFontSize = "text-xl"
+  let fontSize = "text-2xl"
+  switch (size) {
+    case "xs":
+      bigIconFontSize = "text-xl"
+      fontSize = "text-2xl"
+      break
+    case "sm":
+      bigIconFontSize = "text-2xl"
+      fontSize = "text-3xl"
+      break
+    case "md":
+      bigIconFontSize = "text-3xl"
+      fontSize = "text-4xl"
+      break
+  }
+
   switch (provider as ModelProvider) {
     case "openai":
       return (
-        <SvgIcon style={{ width: width, height: height }}>
-          <OpenAISVG />
-        </SvgIcon>
-      )
-    case "mistral":
-      return (
-        <SvgIcon
-          component={MistralIcon}
-          viewBox="0 0 314 296"
-          style={{ width: width, height: height }}
+        <Icon
+          icon="logos:openai-icon"
+          className={`${bigIconFontSize} dark:invert`}
         />
       )
-    // TODO: Update Groq icon
+    case "mistral":
+      return <Icon icon="logos:mistral-ai-icon" className={bigIconFontSize} />
     case "groq":
-      return <Image src={groq.src} alt="Groq" width={width} height={height} />
+      return (
+        <Icon icon="solar:stars-bold-duotone" className={bigIconFontSize} />
+      )
     case "anthropic":
       return (
-        <SvgIcon style={{ width: width, height: height }}>
-          <AnthropicSVG />
-        </SvgIcon>
+        <Icon
+          icon="simple-icons:anthropic"
+          className={`${bigIconFontSize} light:invert`}
+        />
       )
     case "google":
-      return (
-        <SvgIcon style={{ width: width, height: height }}>
-          <GoogleSVG />
-        </SvgIcon>
-      )
+      return <Icon icon="logos:google-icon" className={bigIconFontSize} />
     case "perplexity":
       return (
-        // <SvgIcon
-        //   component={PerplexityIcon}
-        //   viewBox="0 0 344 345"
-        //   style={{ width: width, height: height, fill: "white" }}
-        // />
-        // <SvgIcon style={{ width: width, height: height, color: "white" }}>
-        //   <PerplexityIcon />
-        // </SvgIcon>
-        <AutoAwesomeRounded style={{ width: width, height: height }} />
+        <Icon
+          icon="simple-icons:perplexity"
+          className={`${bigIconFontSize} light:invert`}
+        />
       )
     default:
-      return <AutoAwesomeRounded style={{ width: width, height: height }} />
+      return <Icon icon="solar:planet-bold-duotone" className={fontSize} />
   }
 }

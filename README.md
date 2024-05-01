@@ -16,7 +16,9 @@ Metadachi is built with community collaboration at its core, fostering a space f
 
 > This project builds on the outstanding work by McKay Wrigley and the contributors of [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui).
 
-![Website](public/docs/images/website-screenshot.png)
+![Website](public/docs/images/website-screenshot1.png)
+![Website](public/docs/images/website-screenshot2.png)
+![Website](public/docs/images/website-screenshot3.png)
 
 </div>
 
@@ -43,13 +45,14 @@ Metadachi is built with community collaboration at its core, fostering a space f
 | Desktop App (Tauri)               |                                               |
 
 ## Technology Stack
-| Technology     | Description                                                                                                            |
-|----------------|------------------------------------------------------------------------------------------------------------------------|
-| Next.js v14    | React framework for server-rendered, statically-generated, & hybrid sites, delivering optimal performance & SEO.       |
-| Tauri          | Build native desktop apps with web technologies, offering speed, platform-specific features, & offline capabilities.   |
-| Vercel         | Streamlined deployment & scaling platform for Next.js apps, optimizing performance & simplifying infrastructure.       |
-| Supabase       | Real-time database & authentication with instant updates, eliminating backend setup & enabling rich user experiences.  |
-| JoyUI          | Extensive UI component library for React, accelerating development with pre-built & customizable components.           |
+| Technology  | Description                                                                                                          |
+|-------------|----------------------------------------------------------------------------------------------------------------------|
+| Next.js v14 | React framework for server-rendered, statically-generated, & hybrid sites, delivering optimal performance & SEO.     |
+| Tauri       | Build native desktop apps with web technologies, offering speed, platform-specific features, & offline capabilities. |
+| Vercel      | Streamlined deployment & scaling platform for Next.js apps, optimizing performance & simplifying infrastructure.     |
+| Supabase    | Open source Firebase alternative.                                                                                    |
+| NextUI      | Beautiful, fast and modern React UI Library                                                                          |
+| Aceternity UI | Beautiful Tailwind CSS and Framer Motion Components, built with Next.js and TypeScript.                              |
 
 
 ## Getting Started

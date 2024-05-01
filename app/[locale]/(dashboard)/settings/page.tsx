@@ -1,10 +1,5 @@
 "use client"
-import Header from "@/app/components/ui/Header"
-import { Box, Button, Typography } from "@mui/joy"
-import React, { useContext, useRef, useState } from "react"
-import Tabs from "@mui/joy/Tabs"
-import TabList from "@mui/joy/TabList"
-import Tab, { tabClasses } from "@mui/joy/Tab"
+import React, { useContext, useState } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { uploadProfileImage } from "@/app/lib/db/storage/profile-images"
 import { updateProfile } from "@/app/lib/db/profile"
@@ -13,17 +8,18 @@ import { LLM_LIST_MAP } from "@/app/lib/models/llm/llm-list"
 import { OpenRouterLLM } from "@/app/lib/types"
 import { fetchOpenRouterModels } from "@/app/lib/models/fetch-models"
 import { ApiInputs } from "@/app/components/input/ApiInputs"
-import { KeyRounded, SettingsRounded } from "@mui/icons-material"
-import { useSearchParams } from "next/navigation"
-import { FULL_WIDTH_PADDING_X } from "@/app/lib/constants"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
-import { ProfileSettings } from "@/app/[locale]/(dashboard)/settings/ProfileSettings"
+import { ProfileSettings } from "@/app/components/settings/ProfileSettings"
+import { Button, Tab, Tabs } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 export default function SettingsPage() {
   const searchParams = useSearchParams()
-  const [tab, setTab] = useState(searchParams.get("tab") ?? "general")
+  const [tab, setTab] = useState(searchParams.get("tab") ?? "profile")
 
   const { openAuthModal } = useAuthModal()
+  const router = useRouter()
 
   const {
     profile,
@@ -33,8 +29,6 @@ export default function SettingsPage() {
     setAvailableOpenRouterModels,
     availableOpenRouterModels
   } = useContext(MetadachiContext)
-
-  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const [displayName, setDisplayName] = useState(profile?.display_name || "")
   const [username, setUsername] = useState(profile?.username || "")
@@ -219,132 +213,107 @@ export default function SettingsPage() {
   }
 
   return (
-    <>
-      <Header
-        startContent={<Typography level="title-lg">User Settings</Typography>}
-        middleContent={
-          <Tabs
-            value={tab}
-            onChange={(event, value) => {
-              setTab((value as string) ?? "general")
-            }}
-            size="sm"
-            aria-label="tabs"
-            defaultValue={0}
-            sx={{
-              bgcolor: "transparent",
-              alignItems: "center",
-              display: "flex",
-              width: "100%",
-              height: "100%",
-              overflow: "scroll",
-              mt: 1
-            }}
+    <div className="flex w-full flex-col items-center overflow-auto p-4">
+      <div className="w-full max-w-2xl">
+        <h1 className="text-3xl font-bold leading-9 text-default-foreground">
+          Settings
+        </h1>
+        <h2 className="mt-2 text-small text-default-500">
+          Customize settings, email preferences, and web appearance.
+        </h2>
+        <Tabs
+          fullWidth
+          classNames={{
+            base: "mt-6",
+            cursor: "bg-content1 dark:bg-content1",
+            panel: "w-full p-0 pt-4"
+          }}
+          selectedKey={tab}
+          onSelectionChange={newTab => {
+            router.push(`/settings?tab=${newTab}`)
+            setTab(newTab as string)
+          }}
+        >
+          <Tab
+            key="profile"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon icon="solar:user-linear" className="text-base" />
+                <span>Profile</span>
+              </div>
+            }
           >
-            <TabList
-              disableUnderline
-              sx={{
-                p: 0.5,
-                gap: 0.5,
-                borderRadius: "xl",
-                bgcolor: "background.level1",
-                [`& .${tabClasses.root}[aria-selected="true"]`]: {
-                  boxShadow: "sm",
-                  bgcolor: "background.surface"
-                }
-              }}
-            >
-              <Tab disableIndicator value="general">
-                <SettingsRounded />
-                General
-              </Tab>
-              <Tab disableIndicator value="api">
-                <KeyRounded />
-                API Keys
-              </Tab>
-            </TabList>
-          </Tabs>
-        }
-      />
+            <ProfileSettings
+              profileImageSrc={profileImageSrc}
+              setProfileImageSrc={setProfileImageSrc}
+              profileImageFile={profileImageFile}
+              setProfileImageFile={setProfileImageFile}
+              profileInstructions={profileInstructions}
+              setProfileInstructions={setProfileInstructions}
+              username={username}
+              usernameAvailable={usernameAvailable}
+              displayName={displayName}
+              onUsernameAvailableChange={setUsernameAvailable}
+              onUsernameChange={setUsername}
+              onDisplayNameChange={setDisplayName}
+            />
+          </Tab>
+          <Tab
+            key="api-keys"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon
+                  icon="solar:key-minimalistic-linear"
+                  className="text-base"
+                />
+                <span>API Keys</span>
+              </div>
+            }
+          >
+            <ApiInputs
+              openaiAPIKey={openaiAPIKey}
+              openaiOrgID={openaiOrgID}
+              azureOpenaiAPIKey={azureOpenaiAPIKey}
+              azureOpenaiEndpoint={azureOpenaiEndpoint}
+              azureOpenai35TurboID={azureOpenai35TurboID}
+              azureOpenai45TurboID={azureOpenai45TurboID}
+              azureOpenai45VisionID={azureOpenai45VisionID}
+              azureOpenaiEmbeddingsID={azureEmbeddingsID}
+              anthropicAPIKey={anthropicAPIKey}
+              googleGeminiAPIKey={googleGeminiAPIKey}
+              mistralAPIKey={mistralAPIKey}
+              groqAPIKey={groqAPIKey}
+              perplexityAPIKey={perplexityAPIKey}
+              useAzureOpenai={useAzureOpenai}
+              openrouterAPIKey={openrouterAPIKey}
+              onOpenaiAPIKeyChange={setOpenaiAPIKey}
+              onOpenaiOrgIDChange={setOpenaiOrgID}
+              onAzureOpenaiAPIKeyChange={setAzureOpenaiAPIKey}
+              onAzureOpenaiEndpointChange={setAzureOpenaiEndpoint}
+              onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
+              onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
+              onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
+              onAzureOpenaiEmbeddingsIDChange={setAzureEmbeddingsID}
+              onAnthropicAPIKeyChange={setAnthropicAPIKey}
+              onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
+              onMistralAPIKeyChange={setMistralAPIKey}
+              onGroqAPIKeyChange={setGroqAPIKey}
+              onPerplexityAPIKeyChange={setPerplexityAPIKey}
+              onUseAzureOpenaiChange={setUseAzureOpenai}
+              onOpenrouterAPIKeyChange={setOpenrouterAPIKey}
+            />
+          </Tab>
+        </Tabs>
 
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          overflow: "scroll",
-          mt: 2,
-          px: FULL_WIDTH_PADDING_X
-        }}
-      >
-        {tab === "general" && (
-          <ProfileSettings
-            profileImageSrc={profileImageSrc}
-            setProfileImageSrc={setProfileImageSrc}
-            profileImageFile={profileImageFile}
-            setProfileImageFile={setProfileImageFile}
-            profileInstructions={profileInstructions}
-            setProfileInstructions={setProfileInstructions}
-            username={username}
-            usernameAvailable={usernameAvailable}
-            displayName={displayName}
-            onUsernameAvailableChange={setUsernameAvailable}
-            onUsernameChange={setUsername}
-            onDisplayNameChange={setDisplayName}
-          />
-        )}
-
-        {tab === "api" && (
-          <ApiInputs
-            openaiAPIKey={openaiAPIKey}
-            openaiOrgID={openaiOrgID}
-            azureOpenaiAPIKey={azureOpenaiAPIKey}
-            azureOpenaiEndpoint={azureOpenaiEndpoint}
-            azureOpenai35TurboID={azureOpenai35TurboID}
-            azureOpenai45TurboID={azureOpenai45TurboID}
-            azureOpenai45VisionID={azureOpenai45VisionID}
-            azureOpenaiEmbeddingsID={azureEmbeddingsID}
-            anthropicAPIKey={anthropicAPIKey}
-            googleGeminiAPIKey={googleGeminiAPIKey}
-            mistralAPIKey={mistralAPIKey}
-            groqAPIKey={groqAPIKey}
-            perplexityAPIKey={perplexityAPIKey}
-            useAzureOpenai={useAzureOpenai}
-            openrouterAPIKey={openrouterAPIKey}
-            onOpenaiAPIKeyChange={setOpenaiAPIKey}
-            onOpenaiOrgIDChange={setOpenaiOrgID}
-            onAzureOpenaiAPIKeyChange={setAzureOpenaiAPIKey}
-            onAzureOpenaiEndpointChange={setAzureOpenaiEndpoint}
-            onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
-            onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
-            onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
-            onAzureOpenaiEmbeddingsIDChange={setAzureEmbeddingsID}
-            onAnthropicAPIKeyChange={setAnthropicAPIKey}
-            onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
-            onMistralAPIKeyChange={setMistralAPIKey}
-            onGroqAPIKeyChange={setGroqAPIKey}
-            onPerplexityAPIKeyChange={setPerplexityAPIKey}
-            onUseAzureOpenaiChange={setUseAzureOpenai}
-            onOpenrouterAPIKeyChange={setOpenrouterAPIKey}
-          />
-        )}
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          alignSelf: "flex-end",
-          gap: 2,
-          py: 2,
-          px: FULL_WIDTH_PADDING_X
-        }}
-      >
-        <Button variant="outlined" color="neutral" onClick={handleReset}>
-          Reset
-        </Button>
-        <Button ref={buttonRef} onClick={handleSave}>
-          Save
-        </Button>
-      </Box>
-    </>
+        <div className="flex justify-end gap-2 py-8">
+          <Button variant="light" onClick={handleReset}>
+            Reset
+          </Button>
+          <Button color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+      </div>
+    </div>
   )
 }

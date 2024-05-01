@@ -1,7 +1,7 @@
-import { Box, Button, IconButton, Typography } from "@mui/joy"
-import { FileIcon } from "@/app/components/files/file-icon"
+import { FileIcons } from "@/app/components/files/FileIcons"
 import { Tables } from "@/supabase/types"
-import { CloseRounded } from "@mui/icons-material"
+import { Button } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface FileButtonProps {
   parentFile: Tables<"files"> | undefined
@@ -24,65 +24,36 @@ export const FileItemButton: React.FC<FileButtonProps> = ({
 
   return (
     <Button
-      variant="outlined"
-      color="neutral"
-      sx={{
-        width: "100%",
-        gap: 2,
-        borderRadius: "md",
-        p: 1.5
-      }}
+      variant="bordered"
+      radius="md"
+      className="w-full space-x-2 p-6"
       onClick={onClick}
     >
-      <Box
-        sx={{
-          borderRadius: "md",
-          backgroundColor: "rgb(59 130 246)", // Tailwind bg-blue-500
-          p: 1
-        }}
-      >
-        {fileIcon ?? <FileIcon type={fileExtension ?? ""} size={24} />}
-      </Box>
+      <div className="rounded-md bg-blue-500 p-1">
+        {fileIcon ?? (
+          <FileIcons type={fileExtension ?? ""} className="text-2xl" />
+        )}
+      </div>
 
-      <Box
-        sx={{
-          overflow: "hidden",
-          textAlign: "start"
-        }}
-      >
-        <Typography level="title-sm" noWrap>
-          {parentFile?.name}
-        </Typography>
+      <div className="overflow-hidden text-left">
+        <p className="truncate text-sm">{parentFile?.name}</p>
 
         {subtitle && (
-          <Typography level="body-sm" fontWeight="normal" noWrap>
-            {subtitle}
-          </Typography>
+          <p className="truncate text-xs text-default-500">{subtitle}</p>
         )}
-      </Box>
+      </div>
 
       {onClose && (
-        <IconButton
+        <Button
+          isIconOnly
           size="sm"
-          variant="solid"
-          sx={{
-            position: "absolute",
-            right: -8,
-            top: -8,
-            borderRadius: "xl",
-            minWidth: "20px",
-            minHeight: "20px",
-            p: 0
-          }}
+          variant="light"
+          radius="full"
+          className="absolute right-0 top-0"
           onClick={onClose}
         >
-          <CloseRounded
-            sx={{
-              width: "15px",
-              height: "auto"
-            }}
-          />
-        </IconButton>
+          <Icon icon="solar:close-circle-linear" className="text-xl" />
+        </Button>
       )}
     </Button>
   )
