@@ -1,10 +1,11 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/messages/message-codeblock.tsx
+
 import { useCopyToClipboard } from "@/app/lib/hooks/use-copy-to-clipboard"
 import { FC, memo } from "react"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
-import { Box, IconButton, Typography } from "@mui/joy"
-import Sheet from "@mui/joy/Sheet"
-import { CheckRounded, ContentCopy, DownloadRounded } from "@mui/icons-material"
+import { Icon } from "@iconify-icon/react"
+import { Button } from "@nextui-org/react"
 
 interface MessageCodeBlockProps {
   language: string
@@ -50,7 +51,7 @@ export const generateRandomString = (length: number, lowercase = false) => {
   return lowercase ? result.toLowerCase() : result
 }
 
-export const MessageCodeblock: FC<MessageCodeBlockProps> = memo(
+export const MessageCodeBlock: FC<MessageCodeBlockProps> = memo(
   ({ language, value }) => {
     const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 })
 
@@ -87,36 +88,26 @@ export const MessageCodeblock: FC<MessageCodeBlockProps> = memo(
     }
 
     return (
-      <Sheet
-        variant="outlined"
-        color="neutral"
-        sx={{ position: "relative", width: "100%", borderRadius: "md" }}
-      >
-        <Sheet
-          variant="soft"
-          sx={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "space-between",
-            px: 2,
-            borderRadius: "md"
-          }}
-        >
-          <Typography fontSize="small" sx={{ textTransform: "lowercase" }}>
-            {language}
-          </Typography>
-          <Box sx={{ py: 0.25 }}>
-            <IconButton variant="plain" size="sm" onClick={downloadAsFile}>
-              <DownloadRounded />
-            </IconButton>
+      <div className="codeblock relative w-full rounded-xl bg-content1 font-sans">
+        <div className="flex items-center justify-between rounded-t-xl bg-content2">
+          <span className="text-xs lowercase">{language}</span>
+          <div className="flex items-center space-x-1">
+            <Button isIconOnly variant="light" onClick={downloadAsFile}>
+              <Icon
+                icon="solar:download-minimalistic-linear"
+                className="text-base"
+              />
+            </Button>
 
-            <IconButton variant="plain" size="sm" onClick={onCopy}>
-              {isCopied ? <CheckRounded /> : <ContentCopy />}
-            </IconButton>
-          </Box>
-        </Sheet>
-
+            <Button isIconOnly variant="light" onClick={onCopy}>
+              {isCopied ? (
+                <Icon icon="solar:check-read-linear" className="text-base" />
+              ) : (
+                <Icon icon="solar:copy-linear" className="text-base" />
+              )}
+            </Button>
+          </div>
+        </div>
         <SyntaxHighlighter
           language={language}
           style={oneDark}
@@ -135,9 +126,9 @@ export const MessageCodeblock: FC<MessageCodeBlockProps> = memo(
         >
           {value}
         </SyntaxHighlighter>
-      </Sheet>
+      </div>
     )
   }
 )
 
-MessageCodeblock.displayName = "MessageCodeBlock"
+MessageCodeBlock.displayName = "MessageCodeBlock"

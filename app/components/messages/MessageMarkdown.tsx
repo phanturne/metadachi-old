@@ -2,7 +2,7 @@ import React, { FC, memo } from "react"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import ReactMarkdown, { Options } from "react-markdown"
-import { MessageCodeblock } from "@/app/components/messages/MessageCodeblock"
+import { MessageCodeBlock } from "@/app/components/messages/MessageCodeBlock"
 
 interface MessageMarkdownProps {
   content: string
@@ -49,7 +49,7 @@ export const MessageMarkdown: FC<MessageMarkdownProps> = ({ content }) => {
           }
 
           return (
-            <MessageCodeblock
+            <MessageCodeBlock
               key={Math.random()}
               language={(match && match[1]) || ""}
               value={String(childArray).replace(/\n$/, "")}
