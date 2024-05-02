@@ -92,7 +92,7 @@ export const DrawingCanvas: FC<DrawingCanvasProps> = ({ imageItem }) => {
   return (
     <canvas
       ref={canvasRef}
-      // className="cursor-crosshair rounded"
+      className="cursor-crosshair rounded"
       width={2000}
       height={2000}
       onMouseDown={startDrawing}
