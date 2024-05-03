@@ -7,9 +7,8 @@ import { CollectionFile } from "@/app/lib/types"
 import React, { FC, useState } from "react"
 import { CollectionFileSelect } from "./CollectionFileSelect"
 import { DataListItem } from "@/app/components/ui/data-list/DataListItem"
-import { LibraryBooksRounded } from "@mui/icons-material"
-import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
 import { Input, Textarea } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface CollectionItemProps {
   collection: Tables<"collections">
@@ -44,7 +43,12 @@ export const CollectionItem: FC<CollectionItemProps> = ({ collection }) => {
       item={collection}
       isTyping={isTyping}
       contentType="collections"
-      icon={<LibraryBooksRounded style={DATA_LIST_ITEM_ICON_STYLE} />}
+      icon={
+        <Icon
+          icon="solar:folder-with-files-bold-duotone"
+          className="text-2xl"
+        />
+      }
       updateState={{
         name,
         description

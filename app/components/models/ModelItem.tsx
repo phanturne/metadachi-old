@@ -2,10 +2,9 @@ import { MODEL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables, TablesUpdate } from "@/supabase/types"
 import React, { FC, useState } from "react"
 import { DataListItem } from "@/app/components/ui/data-list/DataListItem"
-import { AutoAwesomeRounded } from "@mui/icons-material"
-import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
 import { Input } from "@nextui-org/react"
 import { PasswordInput } from "@/app/components/input"
+import { Icon } from "@iconify-icon/react"
 
 interface ModelItemProps {
   model: Tables<"models">
@@ -26,7 +25,7 @@ export const ModelItem: FC<ModelItemProps> = ({ model }) => {
       item={model}
       isTyping={isTyping}
       contentType="models"
-      icon={<AutoAwesomeRounded sx={DATA_LIST_ITEM_ICON_STYLE} />}
+      icon={<Icon icon="solar:planet-bold-duotone" className="text-2xl" />}
       updateState={
         {
           api_key: apiKey,
