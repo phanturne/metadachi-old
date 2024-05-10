@@ -19,6 +19,7 @@ import {
 } from "@nextui-org/react"
 import { User } from "@nextui-org/user"
 import { Icon } from "@iconify-icon/react"
+import { WorkspaceSwitcher } from "@/app/components/workspace/WorkspaceSwitcher"
 
 export default function ProfileMenu({
   placement = "bottom"
@@ -103,6 +104,9 @@ export default function ProfileMenu({
                   name: profile?.display_name ?? profile?.username
                 }}
               />
+            </DropdownItem>
+            <DropdownItem isReadOnly key="workspace-select">
+              <WorkspaceSwitcher />
             </DropdownItem>
             <DropdownItem
               key="collections"
