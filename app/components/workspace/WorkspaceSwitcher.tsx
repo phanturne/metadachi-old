@@ -2,13 +2,18 @@
 
 "use client"
 
-import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { MetadachiContext } from "@/app/lib/context"
-import { createWorkspace } from "@/app/lib/db/workspaces"
 import { useRouter } from "next/navigation"
 import React, { FC, useContext } from "react"
-import { Avatar, Select, SelectItem } from "@nextui-org/react"
+import {
+  Avatar,
+  Divider,
+  Select,
+  SelectItem,
+  SelectSection
+} from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
+import { CreateWorkspaceButton } from "@/app/components/workspace/CreateWorkspaceButton"
 
 interface WorkspaceSwitcherProps {}
 
@@ -17,38 +22,10 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
     workspaces,
     workspaceImages,
     selectedWorkspace,
-    setSelectedWorkspace,
-    setWorkspaces
+    setSelectedWorkspace
   } = useContext(MetadachiContext)
 
-  const { handleNewChat } = useChatHandler()
-
   const router = useRouter()
-
-  const handleCreateWorkspace = async () => {
-    if (!selectedWorkspace) return
-
-    const createdWorkspace = await createWorkspace({
-      user_id: selectedWorkspace.user_id,
-      default_context_length: selectedWorkspace.default_context_length,
-      default_model: selectedWorkspace.default_model,
-      default_prompt: selectedWorkspace.default_prompt,
-      default_temperature: selectedWorkspace.default_temperature,
-      description: "",
-      embeddings_provider: "openai",
-      include_profile_context: selectedWorkspace.include_profile_context,
-      include_workspace_instructions:
-        selectedWorkspace.include_workspace_instructions,
-      instructions: selectedWorkspace.instructions,
-      is_home: false,
-      name: "New Workspace"
-    })
-
-    setWorkspaces([...workspaces, createdWorkspace])
-    setSelectedWorkspace(createdWorkspace)
-
-    return router.push(`/chat`)
-  }
 
   const handleSelect = (workspaceId: string) => {
     const workspace = workspaces.find(workspace => workspace.id === workspaceId)
@@ -88,42 +65,55 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
             <Icon icon="solar:home-2-bold-duotone" className="text-2xl" />
           ) : (
             <Icon
-              icon="solar:box-minimalistic-bold-duotone"
+              icon="solar:notes-minimalistic-bold-duotone"
               className="text-2xl"
             />
           )}
         </>
       }
     >
-      {workspaces.map(item => {
-        const image =
-          workspaceImages.find(image => image.path === item.image_path)
-            ?.base64 || ""
+      <SelectSection showDivider>
+        <SelectItem
+          key="create-workspace"
+          value="Create Workspace"
+          textValue="Create Workspace"
+          onClick={e => e.stopPropagation()}
+        >
+          <CreateWorkspaceButton />
+        </SelectItem>
+      </SelectSection>
 
-        return (
-          <SelectItem key={item.id} value={item.name} textValue={item.name}>
-            <div className="flex items-center gap-2">
-              {image ? (
-                <Avatar
-                  size="sm"
-                  classNames={{ base: "h-7 w-7 shrink-0" }}
-                  showFallback
-                  name={item.name}
-                  src={image}
-                />
-              ) : item?.is_home ? (
-                <Icon icon="solar:home-2-bold-duotone" className="text-2xl" />
-              ) : (
-                <Icon
-                  icon="solar:box-minimalistic-bold-duotone"
-                  className="text-2xl"
-                />
-              )}
-              {item.name}
-            </div>
-          </SelectItem>
-        )
-      })}
+      {
+        workspaces.map(item => {
+          const image =
+            workspaceImages.find(image => image.path === item.image_path)
+              ?.base64 || ""
+
+          return (
+            <SelectItem key={item.id} value={item.name} textValue={item.name}>
+              <div className="flex items-center gap-2">
+                {image ? (
+                  <Avatar
+                    size="sm"
+                    classNames={{ base: "h-7 w-7 shrink-0" }}
+                    showFallback
+                    name={item.name}
+                    src={image}
+                  />
+                ) : item?.is_home ? (
+                  <Icon icon="solar:home-2-bold-duotone" className="text-2xl" />
+                ) : (
+                  <Icon
+                    icon="solar:notes-minimalistic-bold-duotone"
+                    className="text-2xl"
+                  />
+                )}
+                {item.name}
+              </div>
+            </SelectItem>
+          )
+        }) as any
+      }
     </Select>
   )
 }

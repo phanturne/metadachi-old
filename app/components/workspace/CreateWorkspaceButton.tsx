@@ -4,10 +4,10 @@ import { MetadachiContext } from "@/app/lib/context"
 import { createWorkspace } from "@/app/lib/db/workspaces"
 import * as React from "react"
 import { useContext } from "react"
-import { IconButton, Tooltip } from "@mui/joy"
-import { AddCircleOutlineRounded } from "@mui/icons-material"
 import { toast } from "sonner"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
+import { Button } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 export const CreateWorkspaceButton = () => {
   const {
@@ -51,18 +51,14 @@ export const CreateWorkspaceButton = () => {
   }
 
   return (
-    <Tooltip
-      placement="right"
-      variant="outlined"
-      title="Create a new workspace"
+    <Button
+      variant="light"
+      size="sm"
+      onClick={handleCreateWorkspace}
+      startContent={<Icon icon="solar:add-circle-linear" className="text-xl" />}
+      // disabled={!profile && !selectedWorkspace}
     >
-      <IconButton
-        size="sm"
-        onClick={handleCreateWorkspace}
-        // disabled={!profile && !selectedWorkspace}
-      >
-        <AddCircleOutlineRounded />
-      </IconButton>
-    </Tooltip>
+      Create Workspace
+    </Button>
   )
 }
