@@ -26,6 +26,7 @@ import { ChatInput } from "@/app/components/chat/input/ChatInput"
 import PromptSuggestions from "@/app/components/chat/PromptSuggestions"
 import { ChatCommands } from "@/app/components/chat/input/ChatCommands"
 import { toast } from "sonner"
+import FileDropzoneContainer from "@/app/components/files/FileDropzoneContainer"
 
 export default function ChatPage() {
   const searchParams = useSearchParams()
@@ -190,7 +191,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex size-full overflow-auto">
+    <FileDropzoneContainer>
       {/* Chat Sidebar*/}
       <div className="m-4 flex w-72 flex-col gap-4">
         <ChatActions />
@@ -221,7 +222,7 @@ export default function ChatPage() {
           </form>
         </div>
       </div>
-    </div>
+    </FileDropzoneContainer>
   )
 }
 

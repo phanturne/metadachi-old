@@ -1,12 +1,11 @@
-import Card from "@mui/joy/Card"
-import CardActions from "@mui/joy/CardActions"
-import CardContent from "@mui/joy/CardContent"
-import Divider from "@mui/joy/Divider"
-import Typography from "@mui/joy/Typography"
-import Button from "@mui/joy/Button"
-
 import { FC } from "react"
-import { Box } from "@mui/joy"
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader
+} from "@nextui-org/react"
 
 interface StepContainerProps {
   stepCount: number
@@ -30,57 +29,34 @@ export const StepContainer: FC<StepContainerProps> = ({
   showNextButton = true
 }) => {
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        maxHeight: "100%",
-        maxWidth: "100%",
-        width: 500,
-        mx: "auto",
-        overflow: "scroll"
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between"
-        }}
-      >
-        <Typography level="title-lg">{stepTitle}</Typography>
-        <Typography level="title-sm">{`${stepNum} / ${stepCount}`}</Typography>
-      </Box>
-      <Typography>{stepDescription}</Typography>
-      <Divider inset="none" />
-      <CardContent
-        sx={{
-          gap: 1.5
-        }}
-      >
-        {children}
-
-        <CardActions
-          sx={{
-            display: "flex",
-            justifyContent: "space-between"
-          }}
-        >
+    <Card className="max-h-full w-[500px] p-4">
+      <CardHeader className="flex flex-col items-start">
+        <div className="flex w-full justify-between">
+          <h1 className="text-2xl font-semibold">{stepTitle}</h1>
+          <p>{`${stepNum} / ${stepCount}`}</p>
+        </div>
+        <p>{stepDescription}</p>
+      </CardHeader>
+      <CardBody className="overflow-y-scroll">{children}</CardBody>
+      <CardFooter className="flex justify-between">
+        <div>
           {showBackButton && (
             <Button
-              color="neutral"
-              variant="outlined"
+              // color="neutral"
+              // variant="outlined"
               onClick={() => onShouldProceed(false)}
             >
               Back
             </Button>
           )}
+        </div>
 
-          {showNextButton && (
-            <Button onClick={() => onShouldProceed(true)}>Next</Button>
-          )}
-        </CardActions>
-      </CardContent>
+        {showNextButton && (
+          <Button color="primary" onClick={() => onShouldProceed(true)}>
+            Next
+          </Button>
+        )}
+      </CardFooter>
     </Card>
   )
 }

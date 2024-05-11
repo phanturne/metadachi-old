@@ -21,7 +21,7 @@ export default function ChatSettingsCard() {
 
   const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(() => {
     const localStorageVal = localStorage.getItem("isChatSettingsOpen")
-    return localStorageVal === "true"
+    return localStorageVal !== "false"
   })
 
   const onChatSettingsDropdownClick = () => {
@@ -33,7 +33,7 @@ export default function ChatSettingsCard() {
   const isDisabled = selectedChat !== null
 
   return (
-    <Card className="p-1" key={selectedChat?.id}>
+    <Card className="shrink-0 p-1" key={selectedChat?.id}>
       {/* Dropdown button height > H4 height. Set 38px height to prevent CardHeader height increase. */}
       <CardHeader className="flex h-[38px] justify-between">
         <h4 className="text-small font-semibold leading-none text-default-600">

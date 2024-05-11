@@ -1,8 +1,6 @@
-import { DescriptionRounded } from "@mui/icons-material"
 import * as React from "react"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
-import { Box } from "@mui/joy"
 import { Icon } from "@iconify-icon/react"
 
 export default function MessagePlaceholder() {

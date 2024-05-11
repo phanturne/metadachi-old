@@ -1,9 +1,9 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/605f8e4daf445fa945ea4374e88e9fab8d287439/components/ui/dashboard.tsx#L40
+
 "use client"
 
 import { ReactNode, useState } from "react"
-import { Box, Typography } from "@mui/joy"
 import { useSelectFileHandler } from "@/app/lib/hooks/use-select-file-handler"
-import Sheet from "@mui/joy/Sheet"
 
 interface ChatLayoutProps {
   children: ReactNode
@@ -31,6 +31,7 @@ export default function FileDropzoneContainer({ children }: ChatLayoutProps) {
 
   const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
+    console.log("drag leave", event)
     setIsDragging(false)
   }
 
@@ -39,32 +40,20 @@ export default function FileDropzoneContainer({ children }: ChatLayoutProps) {
   }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        height: "100%",
-        width: "100%"
-      }}
+    <div
+      className="flex size-full"
       onDrop={onFileDrop}
       onDragOver={onDragOver}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
       {isDragging ? (
-        <Sheet
-          sx={{
-            display: "flex",
-            height: "100%",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Typography level="h1">Drop File Here</Typography>
-        </Sheet>
+        <div className="flex size-full items-center justify-center">
+          <h1 className="text-4xl font-bold">Drop File Here</h1>
+        </div>
       ) : (
         children
       )}
-    </Box>
+    </div>
   )
 }

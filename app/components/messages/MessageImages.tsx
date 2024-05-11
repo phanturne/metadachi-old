@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useContext } from "react"
 import { MessageImage } from "@/app/lib/types"
 import { MetadachiContext } from "@/app/lib/context"
 import Image from "next/image"
-import { Box } from "@mui/joy"
 
 export function MessageImages({
   message,
@@ -17,14 +16,7 @@ export function MessageImages({
   const { chatImages } = useContext(MetadachiContext)
 
   return (
-    <Box
-      sx={{
-        mt: 2,
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 1
-      }}
-    >
+    <div className="mt-2 flex flex-wrap gap-1">
       {message.image_paths.map((path, index) => {
         const item = chatImages.find(image => image.messageId === message.id)
 
@@ -56,6 +48,6 @@ export function MessageImages({
           />
         )
       })}
-    </Box>
+    </div>
   )
 }

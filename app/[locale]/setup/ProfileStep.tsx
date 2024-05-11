@@ -1,5 +1,4 @@
 import { FC } from "react"
-import { Stack } from "@mui/joy"
 import {
   DisplayNameInput,
   UsernameInput
@@ -39,7 +38,7 @@ export const ProfileStep: FC<ProfileStepProps> = ({
       showNextButton={!!(username && usernameAvailable)}
       showBackButton={false}
     >
-      <Stack spacing={2}>
+      <div className="flex flex-col gap-4">
         <UsernameInput
           username={username}
           usernameAvailable={usernameAvailable}
@@ -51,7 +50,7 @@ export const ProfileStep: FC<ProfileStepProps> = ({
           displayName={displayName}
           onDisplayNameChange={onDisplayNameChange}
         />
-      </Stack>
+      </div>
     </StepContainer>
   )
 }

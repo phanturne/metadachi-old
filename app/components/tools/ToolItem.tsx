@@ -2,10 +2,9 @@ import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
 import React, { FC, useState } from "react"
 import { DataListItem } from "@/app/components/ui/data-list/DataListItem"
-import { BuildRounded } from "@mui/icons-material"
-import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
 import { validateOpenAPI } from "@/app/lib/utils/openapi-conversion"
 import { Input, Textarea } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface ToolItemProps {
   tool: Tables<"tools">
@@ -27,7 +26,9 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
       item={tool}
       isTyping={isTyping}
       contentType="tools"
-      icon={<BuildRounded sx={DATA_LIST_ITEM_ICON_STYLE} />}
+      icon={
+        <Icon icon="solar:sledgehammer-bold-duotone" className="text-2xl" />
+      }
       updateState={{
         name,
         description,

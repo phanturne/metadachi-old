@@ -2,9 +2,8 @@ import { PROMPT_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
 import React, { FC, useState } from "react"
 import { DataListItem } from "@/app/components/ui/data-list/DataListItem"
-import { DATA_LIST_ITEM_ICON_STYLE } from "@/app/lib/constants"
-import { EditRounded } from "@mui/icons-material"
 import { Input, Textarea } from "@nextui-org/react"
+import { Icon } from "@iconify-icon/react"
 
 interface PromptItemProps {
   prompt: Tables<"prompts">
@@ -20,7 +19,7 @@ export const PromptItem: FC<PromptItemProps> = ({ prompt }) => {
       item={prompt}
       isTyping={isTyping}
       contentType="prompts"
-      icon={<EditRounded sx={DATA_LIST_ITEM_ICON_STYLE} />}
+      icon={<Icon icon="solar:pen-bold-duotone" className="text-2xl" />}
       updateState={{ name, content }}
       renderInputs={() => (
         <>
