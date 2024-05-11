@@ -7,6 +7,10 @@ import { ChatSettings } from "@/app/lib/types"
 import Anthropic from "@anthropic-ai/sdk"
 import { AnthropicStream, StreamingTextResponse } from "ai"
 import { NextRequest, NextResponse } from "next/server"
+import {
+  getBase64FromDataURL,
+  getMediaTypeFromDataURL
+} from "@/app/lib/utils/utils"
 
 export const runtime = "edge"
 
@@ -19,8 +23,43 @@ export async function POST(request: NextRequest) {
 
   try {
     const profile = await getServerProfile()
+
     checkApiKey(profile.anthropic_api_key, "Anthropic")
+
     let ANTHROPIC_FORMATTED_MESSAGES: any = messages.slice(1)
+
+    ANTHROPIC_FORMATTED_MESSAGES = ANTHROPIC_FORMATTED_MESSAGES?.map(
+      (message: any) => {
+        const messageContent =
+          typeof message?.content === "string"
+            ? [message.content]
+            : message?.content
+
+        return {
+          ...message,
+          content: messageContent.map((content: any) => {
+            if (typeof content === "string") {
+              // Handle the case where content is a string
+              return { type: "text", text: content }
+            } else if (
+              content?.type === "image_url" &&
+              content?.image_url?.length
+            ) {
+              return {
+                type: "image",
+                source: {
+                  type: "base64",
+                  media_type: getMediaTypeFromDataURL(content.image_url),
+                  data: getBase64FromDataURL(content.image_url)
+                }
+              }
+            } else {
+              return content
+            }
+          })
+        }
+      }
+    )
 
     const anthropic = new Anthropic({
       apiKey: profile.anthropic_api_key || ""
@@ -62,6 +101,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     let errorMessage = error.message || "An unexpected error occurred"
     const errorCode = error.status || 500
+
     if (errorMessage.toLowerCase().includes("api key not found")) {
       errorMessage =
         "Anthropic API Key not found. Please set it in your profile settings."
@@ -69,6 +109,7 @@ export async function POST(request: NextRequest) {
       errorMessage =
         "Anthropic API Key is incorrect. Please fix it in your profile settings."
     }
+
     return new NextResponse(JSON.stringify({ message: errorMessage }), {
       status: errorCode
     })
