@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 import { ApiStep } from "@/app/[locale]/setup/ApiStep"
 import { ProfileStep } from "@/app/[locale]/setup/ProfileStep"
-import { Box } from "@mui/joy"
 
 const STEP_COUNT = 2
 
@@ -156,14 +155,15 @@ export default function SetupPage() {
   }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        height: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        p: 5
-      }}
+    <div
+      className="flex h-dvh w-dvw items-center justify-center"
+      // sx={{
+      //   display: "flex",
+      //   height: "100%",
+      //   alignItems: "center",
+      //   justifyContent: "center",
+      //   p: 5
+      // }}
     >
       {currentStep === 1 && (
         <ProfileStep
@@ -215,6 +215,6 @@ export default function SetupPage() {
           onOpenrouterAPIKeyChange={setOpenrouterAPIKey}
         />
       )}
-    </Box>
+    </div>
   )
 }
