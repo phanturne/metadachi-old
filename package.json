@@ -35,8 +35,6 @@
     "@google/generative-ai": "^0.1.3",
     "@hookform/resolvers": "^3.3.2",
     "@mistralai/mistralai": "^0.0.8",
-    "@mui/icons-material": "^5.15.5",
-    "@mui/joy": "^5.0.0-beta.22",
     "@nextui-org/react": "^2.2.10",
     "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.38.4",
