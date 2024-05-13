@@ -1,13 +1,15 @@
 import { MetadachiContext } from "@/app/lib/context"
-import { LLMID, ModelProvider } from "@/app/lib/types"
+import { LLM, LLMID, ModelProvider } from "@/app/lib/types"
 import React, { FC, useContext, useState } from "react"
 import { ModelIcon } from "./ModelIcon"
 import { ModelFilterDropdown } from "@/app/components/models/ModelFilterDropdown"
 import {
   Autocomplete,
   AutocompleteItem,
-  AutocompleteSection
+  AutocompleteSection,
+  Tooltip
 } from "@nextui-org/react"
+import { SHOW_MODEL_COST } from "@/app/lib/config"
 
 const MODEL_FILTERS = {
   All: "All",
@@ -45,7 +47,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   labelPlacement = "outside"
 }) => {
   const {
-    profile,
     models,
     availableHostedModels,
     availableLocalModels,
@@ -57,7 +58,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   // const [isLocked, setIsLocked] = useState<boolean>(true)
   // const [lockedModels, setLockedModels] = useState<LLMID[]>([])
 
-  const ALL_MODELS = [
+  const ALL_MODELS: LLM[] = [
     ...models.map(model => ({
       modelId: model.model_id as LLMID,
       modelName: model.name,
@@ -123,6 +124,20 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     return model.provider === filter
   })
 
+  const getModelPricingTooltipText = (model: LLM) => {
+    let result = ""
+    if (model.provider !== "ollama" && model.pricing) {
+      result += `Input: ${model.pricing.inputCost} ${model.pricing.currency} / ${model.pricing.unit}`
+      if (model.pricing.inputCost && model.pricing.outputCost) {
+        result += "; "
+      }
+      if (model.pricing.outputCost) {
+        result += `Output: ${model.pricing.outputCost} ${model.pricing.currency} / ${model.pricing.unit}`
+      }
+    }
+    return result
+  }
+
   return (
     <Autocomplete
       isDisabled={isDisabled}
@@ -156,10 +171,20 @@ export const ModelSelect: FC<ModelSelectProps> = ({
             .filter(model => model.provider === provider.toLowerCase())
             .map(model => (
               <AutocompleteItem key={model.modelId} textValue={model.modelName}>
-                <div className="flex items-center gap-2">
-                  <ModelIcon provider={model.provider} size="xs" />
-                  {model.modelName}
-                </div>
+                {" "}
+                {SHOW_MODEL_COST && model.pricing ? (
+                  <Tooltip content={getModelPricingTooltipText(model)}>
+                    <div className="flex items-center gap-2">
+                      <ModelIcon provider={model.provider} size="xs" />
+                      {model.modelName}
+                    </div>
+                  </Tooltip>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <ModelIcon provider={model.provider} size="xs" />
+                    {model.modelName}
+                  </div>
+                )}
               </AutocompleteItem>
             ))}
         </AutocompleteSection>

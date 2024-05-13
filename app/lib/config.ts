@@ -25,3 +25,5 @@ export const DEFAULT_CHAT_SETTINGS: ChatSettings = {
   includeWorkspaceInstructions: true,
   embeddingsProvider: "openai"
 }
+
+export const SHOW_MODEL_COST = true
