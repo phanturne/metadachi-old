@@ -13,8 +13,10 @@
 [MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
 [Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
 
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fmetadachi.com&label=Hosted%20Site)](https://metadachi.com)
 [![Discord](https://img.shields.io/discord/1142672787820007454?logo=discord&label=Discord)](https://t.co/Wwdk6CoGxq)
-[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/metadachi?style=flat&logo=x&label=X)](https://twitter.com/metadachi)
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/metadachi)](https://twitter.com/metadachi)
+
 
 Metadachi is built with community collaboration at its core, fostering a space for knowledge sharing, innovation, and joint development. Whether you're an AI enthusiast, developer, or just curious about the potential of intelligent assistants, we welcome you to contribute, learn, and shape the future of AI together. Join the movement and bring the power of AI to your fingertips!
 
