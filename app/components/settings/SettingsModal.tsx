@@ -19,6 +19,7 @@ import {
   Tabs
 } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
+import { TablesUpdate } from "@/supabase/types"
 
 // TODO: Fix profile data sometimes not loading, leading to an empty form
 export default function SettingsModal({
@@ -74,7 +75,7 @@ export default function SettingsModal({
   const [azureOpenai45VisionID, setAzureOpenai45VisionID] = useState(
     profile?.azure_openai_45_vision_id || ""
   )
-  const [azureEmbeddingsID, setAzureEmbeddingsID] = useState(
+  const [azureOpenaiEmbeddingsID, setAzureOpenaiEmbeddingsID] = useState(
     profile?.azure_openai_embeddings_id || ""
   )
   const [anthropicAPIKey, setAnthropicAPIKey] = useState(
@@ -111,29 +112,29 @@ export default function SettingsModal({
       profileImagePath = path
     }
 
-    const updatedProfile = await updateProfile(profile.id, {
+    const updateProfilePayload: TablesUpdate<"profiles"> = {
       ...profile,
+      has_onboarded: true,
       display_name: displayName,
       username,
-      profile_context: profileInstructions,
-      image_url: profileImageUrl,
-      image_path: profileImagePath,
       openai_api_key: openaiAPIKey,
       openai_organization_id: openaiOrgID,
       anthropic_api_key: anthropicAPIKey,
       google_gemini_api_key: googleGeminiAPIKey,
       mistral_api_key: mistralAPIKey,
+      groq_api_key: groqAPIKey,
       perplexity_api_key: perplexityAPIKey,
+      openrouter_api_key: openrouterAPIKey,
       use_azure_openai: useAzureOpenai,
       azure_openai_api_key: azureOpenaiAPIKey,
       azure_openai_endpoint: azureOpenaiEndpoint,
       azure_openai_35_turbo_id: azureOpenai35TurboID,
       azure_openai_45_turbo_id: azureOpenai45TurboID,
       azure_openai_45_vision_id: azureOpenai45VisionID,
-      azure_openai_embeddings_id: azureEmbeddingsID,
-      openrouter_api_key: openrouterAPIKey
-    })
+      azure_openai_embeddings_id: azureOpenaiEmbeddingsID
+    }
 
+    const updatedProfile = await updateProfile(profile.id, updateProfilePayload)
     setProfile(updatedProfile)
 
     toast.success("Profile updated!")
@@ -213,7 +214,7 @@ export default function SettingsModal({
     setAzureOpenai35TurboID(profile?.azure_openai_35_turbo_id || "")
     setAzureOpenai45TurboID(profile?.azure_openai_45_turbo_id || "")
     setAzureOpenai45VisionID(profile?.azure_openai_45_vision_id || "")
-    setAzureEmbeddingsID(profile?.azure_openai_embeddings_id || "")
+    setAzureOpenaiEmbeddingsID(profile?.azure_openai_embeddings_id || "")
     setAnthropicAPIKey(profile?.anthropic_api_key || "")
     setGoogleGeminiAPIKey(profile?.google_gemini_api_key || "")
     setMistralAPIKey(profile?.mistral_api_key || "")
@@ -281,7 +282,7 @@ export default function SettingsModal({
                 azureOpenai35TurboID={azureOpenai35TurboID}
                 azureOpenai45TurboID={azureOpenai45TurboID}
                 azureOpenai45VisionID={azureOpenai45VisionID}
-                azureOpenaiEmbeddingsID={azureEmbeddingsID}
+                azureOpenaiEmbeddingsID={azureOpenaiEmbeddingsID}
                 anthropicAPIKey={anthropicAPIKey}
                 googleGeminiAPIKey={googleGeminiAPIKey}
                 mistralAPIKey={mistralAPIKey}
@@ -296,7 +297,7 @@ export default function SettingsModal({
                 onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
                 onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
                 onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
-                onAzureOpenaiEmbeddingsIDChange={setAzureEmbeddingsID}
+                onAzureOpenaiEmbeddingsIDChange={setAzureOpenaiEmbeddingsID}
                 onAnthropicAPIKeyChange={setAnthropicAPIKey}
                 onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
                 onMistralAPIKeyChange={setMistralAPIKey}
