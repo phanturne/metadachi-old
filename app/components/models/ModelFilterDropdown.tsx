@@ -9,8 +9,6 @@ export const MODEL_PROVIDERS = {
   Perplexity: "Perplexity",
   Anthropic: "Anthropic",
   OpenRouter: "OpenRouter",
-  Local: "Local",
-  Hosted: "Hosted",
   Ollama: "Ollama"
 }
 
