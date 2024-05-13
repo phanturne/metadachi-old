@@ -2,8 +2,6 @@ import React from "react"
 import { Select, SelectItem } from "@nextui-org/react"
 
 export const MODEL_PROVIDERS = {
-  Local: "Local",
-  Hosted: "Hosted",
   OpenAI: "OpenAI",
   Google: "Google",
   Groq: "Groq",
@@ -12,12 +10,14 @@ export const MODEL_PROVIDERS = {
   Anthropic: "Anthropic",
   OpenRouter: "OpenRouter",
   Ollama: "Ollama"
-} as const
+}
 
 export const MODEL_FILTERS = {
-  ...MODEL_PROVIDERS,
-  All: "All"
-} as const
+  All: "All",
+  Local: "Local",
+  Hosted: "Hosted",
+  ...MODEL_PROVIDERS
+}
 
 export function ModelFilterDropdown({
   modelFilter,
