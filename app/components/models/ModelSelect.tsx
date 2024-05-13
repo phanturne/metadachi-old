@@ -2,7 +2,11 @@ import { MetadachiContext } from "@/app/lib/context"
 import { LLM, LLMID, ModelProvider } from "@/app/lib/types"
 import React, { FC, useContext, useState } from "react"
 import { ModelIcon } from "./ModelIcon"
-import { ModelFilterDropdown } from "@/app/components/models/ModelFilterDropdown"
+import {
+  MODEL_FILTERS,
+  MODEL_PROVIDERS,
+  ModelFilterDropdown
+} from "@/app/components/models/ModelFilterDropdown"
 import {
   Autocomplete,
   AutocompleteItem,
@@ -10,19 +14,6 @@ import {
   Tooltip
 } from "@nextui-org/react"
 import { SHOW_MODEL_COST } from "@/app/lib/config"
-
-const MODEL_FILTERS = {
-  All: "All",
-  Local: "Local",
-  Hosted: "Hosted",
-  OpenAI: "OpenAI",
-  Google: "Google",
-  Mistral: "Mistral",
-  Perplexity: "Perplexity",
-  Anthropic: "Anthropic",
-  OpenRouter: "OpenRouter",
-  Ollama: "Ollama"
-} as const
 
 interface ModelSelectProps {
   isDisabled?: boolean
@@ -33,9 +24,6 @@ interface ModelSelectProps {
   label?: string
   labelPlacement?: "outside" | "inside"
 }
-
-type ModelFilter = (typeof MODEL_FILTERS)[keyof typeof MODEL_FILTERS]
-export const MODEL_PROVIDERS = Object.keys(MODEL_FILTERS) as ModelFilter[]
 
 export const ModelSelect: FC<ModelSelectProps> = ({
   isDisabled,
@@ -53,7 +41,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     availableOpenRouterModels
   } = useContext(MetadachiContext)
 
-  const [modelFilter, setModelFilter] = useState<string>(MODEL_PROVIDERS[0])
+  const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTERS.All)
   // const [filteredModels, setFilteredModels] = useState<LLM[]>([])
   // const [isLocked, setIsLocked] = useState<boolean>(true)
   // const [lockedModels, setLockedModels] = useState<LLMID[]>([])
@@ -165,7 +153,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
         )
       }
     >
-      {MODEL_PROVIDERS.map(provider => (
+      {Object.keys(MODEL_PROVIDERS).map(provider => (
         <AutocompleteSection key={provider} title={provider}>
           {filteredModels
             .filter(model => model.provider === provider.toLowerCase())

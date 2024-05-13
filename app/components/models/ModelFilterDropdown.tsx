@@ -1,6 +1,23 @@
 import React from "react"
-import { MODEL_PROVIDERS } from "@/app/components/models/ModelSelect"
 import { Select, SelectItem } from "@nextui-org/react"
+
+export const MODEL_PROVIDERS = {
+  OpenAI: "OpenAI",
+  Google: "Google",
+  Groq: "Groq",
+  Mistral: "Mistral",
+  Perplexity: "Perplexity",
+  Anthropic: "Anthropic",
+  OpenRouter: "OpenRouter",
+  Ollama: "Ollama"
+}
+
+export const MODEL_FILTERS = {
+  All: "All",
+  Local: "Local",
+  Hosted: "Hosted",
+  ...MODEL_PROVIDERS
+}
 
 export function ModelFilterDropdown({
   modelFilter,
@@ -17,14 +34,14 @@ export function ModelFilterDropdown({
     <Select
       variant="faded"
       isDisabled={isDisabled}
-      defaultSelectedKeys={[MODEL_PROVIDERS[0]]}
+      defaultSelectedKeys={[MODEL_FILTERS.All]}
       value={modelFilter}
       onChange={e => {
-        setModelFilter(e.target.value ?? MODEL_PROVIDERS[0])
+        setModelFilter(e.target.value ?? MODEL_FILTERS.All)
       }}
       className={`w-36 ${className}`}
     >
-      {MODEL_PROVIDERS.map(filter => (
+      {Object.keys(MODEL_FILTERS).map(filter => (
         <SelectItem value={filter} key={filter}>
           {filter}
         </SelectItem>

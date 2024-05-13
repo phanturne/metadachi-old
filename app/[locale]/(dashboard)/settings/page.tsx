@@ -13,6 +13,7 @@ import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { ProfileSettings } from "@/app/components/settings/ProfileSettings"
 import { Button, Tab, Tabs } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
+import { TablesUpdate } from "@/supabase/types"
 
 export default function SettingsPage() {
   const searchParams = useSearchParams()
@@ -65,7 +66,7 @@ export default function SettingsPage() {
   const [azureOpenai45VisionID, setAzureOpenai45VisionID] = useState(
     profile?.azure_openai_45_vision_id || ""
   )
-  const [azureEmbeddingsID, setAzureEmbeddingsID] = useState(
+  const [azureOpenaiEmbeddingsID, setAzureOpenaiEmbeddingsID] = useState(
     profile?.azure_openai_embeddings_id || ""
   )
   const [anthropicAPIKey, setAnthropicAPIKey] = useState(
@@ -93,6 +94,7 @@ export default function SettingsPage() {
       return
     }
 
+    // TODO: Check if `profileImageURL` or `profileImagePath` is used correctly
     let profileImageUrl = profile.image_url
     let profileImagePath = ""
 
@@ -102,29 +104,29 @@ export default function SettingsPage() {
       profileImagePath = path
     }
 
-    const updatedProfile = await updateProfile(profile.id, {
+    const updateProfilePayload: TablesUpdate<"profiles"> = {
       ...profile,
+      has_onboarded: true,
       display_name: displayName,
       username,
-      profile_context: profileInstructions,
-      image_url: profileImageUrl,
-      image_path: profileImagePath,
       openai_api_key: openaiAPIKey,
       openai_organization_id: openaiOrgID,
       anthropic_api_key: anthropicAPIKey,
       google_gemini_api_key: googleGeminiAPIKey,
       mistral_api_key: mistralAPIKey,
+      groq_api_key: groqAPIKey,
       perplexity_api_key: perplexityAPIKey,
+      openrouter_api_key: openrouterAPIKey,
       use_azure_openai: useAzureOpenai,
       azure_openai_api_key: azureOpenaiAPIKey,
       azure_openai_endpoint: azureOpenaiEndpoint,
       azure_openai_35_turbo_id: azureOpenai35TurboID,
       azure_openai_45_turbo_id: azureOpenai45TurboID,
       azure_openai_45_vision_id: azureOpenai45VisionID,
-      azure_openai_embeddings_id: azureEmbeddingsID,
-      openrouter_api_key: openrouterAPIKey
-    })
+      azure_openai_embeddings_id: azureOpenaiEmbeddingsID
+    }
 
+    const updatedProfile = await updateProfile(profile.id, updateProfilePayload)
     setProfile(updatedProfile)
 
     toast.success("Profile updated!")
@@ -204,7 +206,7 @@ export default function SettingsPage() {
     setAzureOpenai35TurboID(profile?.azure_openai_35_turbo_id || "")
     setAzureOpenai45TurboID(profile?.azure_openai_45_turbo_id || "")
     setAzureOpenai45VisionID(profile?.azure_openai_45_vision_id || "")
-    setAzureEmbeddingsID(profile?.azure_openai_embeddings_id || "")
+    setAzureOpenaiEmbeddingsID(profile?.azure_openai_embeddings_id || "")
     setAnthropicAPIKey(profile?.anthropic_api_key || "")
     setGoogleGeminiAPIKey(profile?.google_gemini_api_key || "")
     setMistralAPIKey(profile?.mistral_api_key || "")
@@ -278,7 +280,7 @@ export default function SettingsPage() {
               azureOpenai35TurboID={azureOpenai35TurboID}
               azureOpenai45TurboID={azureOpenai45TurboID}
               azureOpenai45VisionID={azureOpenai45VisionID}
-              azureOpenaiEmbeddingsID={azureEmbeddingsID}
+              azureOpenaiEmbeddingsID={azureOpenaiEmbeddingsID}
               anthropicAPIKey={anthropicAPIKey}
               googleGeminiAPIKey={googleGeminiAPIKey}
               mistralAPIKey={mistralAPIKey}
@@ -293,7 +295,7 @@ export default function SettingsPage() {
               onAzureOpenai35TurboIDChange={setAzureOpenai35TurboID}
               onAzureOpenai45TurboIDChange={setAzureOpenai45TurboID}
               onAzureOpenai45VisionIDChange={setAzureOpenai45VisionID}
-              onAzureOpenaiEmbeddingsIDChange={setAzureEmbeddingsID}
+              onAzureOpenaiEmbeddingsIDChange={setAzureOpenaiEmbeddingsID}
               onAnthropicAPIKeyChange={setAnthropicAPIKey}
               onGoogleGeminiAPIKeyChange={setGoogleGeminiAPIKey}
               onMistralAPIKeyChange={setMistralAPIKey}
