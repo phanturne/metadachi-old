@@ -2,8 +2,6 @@ import React from "react"
 import { Select, SelectItem } from "@nextui-org/react"
 
 export const MODEL_PROVIDERS = {
-  Local: "Local",
-  Hosted: "Hosted",
   OpenAI: "OpenAI",
   Google: "Google",
   Groq: "Groq",
@@ -11,6 +9,8 @@ export const MODEL_PROVIDERS = {
   Perplexity: "Perplexity",
   Anthropic: "Anthropic",
   OpenRouter: "OpenRouter",
+  Local: "Local",
+  Hosted: "Hosted",
   Ollama: "Ollama"
 } as const
 
