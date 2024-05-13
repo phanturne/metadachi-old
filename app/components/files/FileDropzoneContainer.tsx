@@ -41,7 +41,7 @@ export default function FileDropzoneContainer({ children }: ChatLayoutProps) {
 
   return (
     <div
-      className="flex size-full"
+      className="flex size-full overflow-auto"
       onDrop={onFileDrop}
       onDragOver={onDragOver}
       onDragEnter={handleDragEnter}
