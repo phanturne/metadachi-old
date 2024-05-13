@@ -8,7 +8,6 @@ import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { usePromptAndCommand } from "@/app/lib/hooks/use-prompt-and-command"
 import { useSelectFileHandler } from "@/app/lib/hooks/use-select-file-handler"
 import FileInput from "@/app/components/input/FileInput"
-import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import { toast } from "sonner"
 import { useChatHistoryHandler } from "@/app/lib/hooks/use-chat-history"
 import PromptInput from "@/app/components/chat/input/PromptInput"
@@ -28,7 +27,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   const [isTyping, setIsTyping] = useState<boolean>(false)
 
   const {
-    profile,
     isAssistantPickerOpen,
     focusAssistant,
     setFocusAssistant,

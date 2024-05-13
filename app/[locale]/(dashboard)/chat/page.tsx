@@ -213,7 +213,7 @@ export default function ChatPage() {
           )}
         </ScrollShadow>
 
-        <div className="relative flex w-full flex-col gap-4 px-20 py-4">
+        <div className="relative flex w-full flex-col gap-4 py-4 sm:px-5 md:px-10 lg:px-20">
           <ChatCommands />
           {isNewChat && <PromptSuggestions />}
           <form className="flex w-full flex-col items-start rounded-medium bg-default-100 transition-colors hover:bg-default-200/70">

@@ -7,6 +7,7 @@ import type { TextAreaProps } from "@nextui-org/react"
 import React from "react"
 import { Textarea } from "@nextui-org/react"
 import { cn } from "@/app/lib/utils/utils"
+import { t } from "i18next"
 
 const PromptInput = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ classNames = {}, ...props }, ref) => {
@@ -21,7 +22,10 @@ const PromptInput = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           input: cn("py-0", classNames?.input)
         }}
         minRows={1}
-        placeholder={`Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`}
+        placeholder={t(
+          // `Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`
+          `Ask anything. Type @  /  #  !`
+        )}
         radius="lg"
         variant="bordered"
         {...props}
