@@ -3,11 +3,10 @@
 "use client"
 
 import type { TextAreaProps } from "@nextui-org/react"
+import { Textarea } from "@nextui-org/react"
 
 import React from "react"
-import { Textarea } from "@nextui-org/react"
 import { cn } from "@/app/lib/utils/utils"
-import { t } from "i18next"
 import { useWindowSize } from "usehooks-ts"
 
 const PromptInput = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
