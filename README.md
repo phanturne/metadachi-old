@@ -38,17 +38,22 @@ Metadachi is built with community collaboration at its core, fostering a space f
 - 🌐 **Cross Platform**: Sync sessions across Windows, macOS, and the web
 - 🚀 **Easy Self-Hosting**: Deploy effortlessly to Vercel or run locally
 
-## Upcoming Features
-| Planned                           | In Progress                                   |
-|-----------------------------------|-----------------------------------------------|
-| More UI Customization Options     | 🤝 Community Features                         |
-| 🐶 Interactive Desktop Companion  | Heart's Symphony (Multiplayer AI Chat Game)   |
-| Multi-Agent Chats                 |                                               |
-| 🎨 Visual Alchemy                 |                                               |
-| AI Toolbox                        |                                               |
-| Backend Alternatives              |                                               |
-| Mobile App (Capacitor)            |                                               |
-| Desktop App (Tauri)               |                                               |
+## Roadmap
+View [Detailed GitHub Roadmap](https://github.com/users/phanturne/projects/2/)
+
+- [ ] 🤝 Community Features
+- [ ] AI Toolbox
+- [ ] 🎨 Visual Alchemy
+- [ ] Performance Optimizations
+- [ ] Mobile Optimizations
+- [ ] More UI Customization Options
+- [ ] Heart's Symphony (Multiplayer AI Chat Game)
+- [ ] Multi-User & Multi-Assistant Chats
+
+### Stretch Goals
+- [ ] Mobile App (Capacitor)
+- [ ] Desktop App (Tauri)
+- [ ] 🐶 Interactive Desktop Companion
 
 ## Technology Stack
 | Technology  | Description                                                                                                          |
