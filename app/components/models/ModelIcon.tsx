@@ -5,13 +5,10 @@ import { Icon } from "@iconify-icon/react"
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
   provider?: ModelProvider
   size?: "xs" | "sm" | "md"
+  isLocked?: boolean
 }
 
-export const ModelIcon: FC<ModelIconProps> = ({
-  provider,
-  size
-  // ...props
-}) => {
+export const ModelIcon: FC<ModelIconProps> = ({ provider, size, isLocked }) => {
   // Some icons are inherently big, so we use a smaller font size
   let bigIconFontSize = "text-xl"
   let fontSize = "text-2xl"
@@ -29,6 +26,15 @@ export const ModelIcon: FC<ModelIconProps> = ({
       fontSize = "text-4xl"
       break
   }
+
+  // if (isLocked) {
+  //   return (
+  //     <Icon
+  //       icon="solar:lock-keyhole-bold-duotone"
+  //       className={fontSize}
+  //     />
+  //   )
+  // }
 
   switch (provider as ModelProvider) {
     case "openai":
