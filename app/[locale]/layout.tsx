@@ -17,6 +17,7 @@ import {
   APP_TITLE_TEMPLATE
 } from "@/app/lib/config"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -108,6 +109,7 @@ export default async function RootLayout({
         </Providers>
       </body>
       <Analytics />
+      <SpeedInsights />
     </html>
   )
 }
