@@ -69,9 +69,10 @@ export const ApiInputs: FC<ApiInputsProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="mb-8 text-small text-default-500">
-        Note: Adding an API Key will override its corresponding system API key
-        (if it exists).
+      <h2 className="mb-8 text-default-500">
+        Enjoy free access to select AI models. As we secure more funding,
+        we&apos;ll unlock exciting new models and increase your usage limits.
+        Optionally, use your API keys for unlimited access.
       </h2>
 
       <Input

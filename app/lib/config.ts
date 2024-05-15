@@ -14,7 +14,7 @@ export const EMAIL_VERIFICATION = false
 // Configure the default available models available for all users
 // Set it to an empty list to enable all models available from providers w/ API keys
 // Note: There should be a corresponding API key for each provider
-export const SYSTEM_LLM_ID_LIST: LLMID[] = ["gpt-3.5-turbo"]
+export const SYSTEM_LLM_ID_LIST: LLMID[] = ["gpt-3.5-turbo", "llama3-70b-8192"]
 
 export const DEFAULT_CHAT_SETTINGS: ChatSettings = {
   model: "gpt-3.5-turbo",

@@ -13,7 +13,7 @@
 [MacOS-image]: https://img.shields.io/badge/-MacOS-black?logo=apple
 [Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
 
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fmetadachi.com&label=Hosted%20Site)](https://metadachi.com)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fmetadachi.com&label=Live%20Version)](https://metadachi.com)
 [![Discord](https://img.shields.io/discord/1142672787820007454?logo=discord&label=Discord)](https://t.co/Wwdk6CoGxq)
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/metadachi)](https://twitter.com/metadachi)
 
@@ -22,11 +22,18 @@ Metadachi is built with community collaboration at its core, fostering a space f
 
 > This project builds on the outstanding work by McKay Wrigley and the contributors of [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui).
 
-![Website](public/docs/images/website-screenshot1.png)
-![Website](public/docs/images/website-screenshot2.png)
-![Website](public/docs/images/website-screenshot3.png)
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2em;">
+  <img src="public/docs/images/website-screenshot1.png" alt="Website Screenshot 1" style="width: 98%;"/>
+  <img src="public/docs/images/website-screenshot2.png" alt="Website Screenshot 2" style="width: 49%;"/>
+  <img src="public/docs/images/website-screenshot3.png" alt="Website Screenshot 3" style="width: 49%;" />
+</div>
 
 </div>
+
+## Getting Started
+Welcome to our community! 🎉
+
+Get started with our official live version [here](https://metadachi.com) hassle-free! Enjoy free access to select AI models. As we secure more funding, we'll unlock exciting new models and increase your usage limits. For unlimited access, you also have the option to utilize your API keys.
 
 ## Features
 - 🎭 **Custom Prompts & Personas**: Create custom prompts and chat personas for tailored AI interactions
@@ -64,10 +71,6 @@ View [Detailed GitHub Roadmap](https://github.com/users/phanturne/projects/2/)
 | Supabase    | Open source Firebase alternative.                                                                                    |
 | NextUI      | Beautiful, fast and modern React UI Library                                                                          |
 | Aceternity UI | Beautiful Tailwind CSS and Framer Motion Components, built with Next.js and TypeScript.                              |
-
-
-## Getting Started
-Feel free to use our [official hosted version](https://metadachi.com) or follow the guide below to deploy your own.
 
 ## Deploy Your Own
 * Deploy Locally: [Local Quickstart](public/docs/local-quickstart.md)

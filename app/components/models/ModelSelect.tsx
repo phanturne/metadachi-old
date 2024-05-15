@@ -1,6 +1,5 @@
-import { MetadachiContext } from "@/app/lib/context"
-import { LLM, LLMID, ModelProvider } from "@/app/lib/types"
-import React, { FC, useContext, useState } from "react"
+import { LLM, LLMID } from "@/app/lib/types"
+import React, { FC, useState } from "react"
 import { ModelIcon } from "./ModelIcon"
 import {
   MODEL_FILTERS,
@@ -14,6 +13,7 @@ import {
   Tooltip
 } from "@nextui-org/react"
 import { SHOW_MODEL_COST } from "@/app/lib/config"
+import useModels from "@/app/lib/hooks/use-models"
 
 interface ModelSelectProps {
   isDisabled?: boolean
@@ -34,71 +34,15 @@ export const ModelSelect: FC<ModelSelectProps> = ({
   label,
   labelPlacement = "outside"
 }) => {
-  const {
-    models,
-    availableHostedModels,
-    availableLocalModels,
-    availableOpenRouterModels
-  } = useContext(MetadachiContext)
+  const { allModels, lockedModels } = useModels()
 
   const [modelFilter, setModelFilter] = useState<string>(MODEL_FILTERS.All)
-  // const [filteredModels, setFilteredModels] = useState<LLM[]>([])
-  // const [isLocked, setIsLocked] = useState<boolean>(true)
-  // const [lockedModels, setLockedModels] = useState<LLMID[]>([])
 
-  const ALL_MODELS: LLM[] = [
-    ...models.map(model => ({
-      modelId: model.model_id as LLMID,
-      modelName: model.name,
-      provider: "custom" as ModelProvider,
-      hostedId: model.id,
-      platformLink: "",
-      imageInput: false
-    })),
-    ...availableHostedModels,
-    ...availableLocalModels,
-    ...availableOpenRouterModels
-  ]
-
-  // const ALL_MODEL_IDS = ALL_MODELS.map(model => model.modelId)
-  // useEffect(() => {
-  //   const checkModelLock = async () => {
-  //     const isUsingAzure = profile?.use_azure_openai
-  //
-  //     // If the user is not logged in, lock all models except the guest models
-  //     if (!profile) {
-  //       setLockedModels(
-  //         ALL_MODEL_IDS.filter(id => !GUEST_LLM_LIST.includes(id))
-  //       )
-  //       return null
-  //     }
-  //
-  //     // Set which autocomplete options are locked
-  //     const tempLockedModels: string[] = []
-  //     for (const model of ALL_MODELS) {
-  //       const locked = await isModelLocked(
-  //         model.provider === "openai" && isUsingAzure
-  //           ? "azure"
-  //           : model.provider,
-  //         profile
-  //       )
-  //       if (locked) tempLockedModels.push(model.modelId)
-  //     }
-  //     setLockedModels(tempLockedModels as LLMID[])
-  //
-  //     // if (SELECTED_MODEL) {
-  //     //   setIsLocked(tempLockedModels.includes(SELECTED_MODEL.modelId))
-  //     // }
-  //   }
-  //
-  //   checkModelLock()
-  // }, [profile, ALL_MODELS])
-
-  const selectedModel = ALL_MODELS.find(
+  const selectedModel = allModels.find(
     model => model.modelId === selectedModelId
   )
 
-  const filteredModels = ALL_MODELS.filter(model => {
+  const filteredModels = allModels.filter(model => {
     const filter = modelFilter.toLowerCase()
     if (filter === MODEL_FILTERS.All.toLowerCase()) {
       return true
@@ -126,6 +70,10 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     return result
   }
 
+  const isLocked = (model: LLM) => {
+    return lockedModels.includes(model.modelId)
+  }
+
   return (
     <Autocomplete
       isDisabled={isDisabled}
@@ -137,6 +85,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       defaultItems={filteredModels}
       value={selectedModel?.modelId}
       onSelectionChange={id => onSelectModel?.(id as LLMID)}
+      disabledKeys={lockedModels}
       startContent={
         labelPlacement === "outside" && (
           <div className="flex flex-row items-center space-x-2">
@@ -159,17 +108,24 @@ export const ModelSelect: FC<ModelSelectProps> = ({
             .filter(model => model.provider === provider.toLowerCase())
             .map(model => (
               <AutocompleteItem key={model.modelId} textValue={model.modelName}>
-                {" "}
                 {SHOW_MODEL_COST && model.pricing ? (
                   <Tooltip content={getModelPricingTooltipText(model)}>
                     <div className="flex items-center gap-2">
-                      <ModelIcon provider={model.provider} size="xs" />
+                      <ModelIcon
+                        provider={model.provider}
+                        size="xs"
+                        isLocked={isLocked(model)}
+                      />
                       {model.modelName}
                     </div>
                   </Tooltip>
                 ) : (
                   <div className="flex items-center gap-2">
-                    <ModelIcon provider={model.provider} size="xs" />
+                    <ModelIcon
+                      provider={model.provider}
+                      size="xs"
+                      isLocked={isLocked(model)}
+                    />
                     {model.modelName}
                   </div>
                 )}

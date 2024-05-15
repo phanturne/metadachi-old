@@ -24,7 +24,6 @@ export const fetchHostedModels = async (profile: Tables<"profiles">) => {
 
     let modelsToAdd: LLM[] = []
 
-    const systemKeysHaveFullAccess = SYSTEM_LLM_ID_LIST.length === 0
     for (const provider of providers) {
       let providerKey: keyof typeof profile
 
@@ -36,24 +35,11 @@ export const fetchHostedModels = async (profile: Tables<"profiles">) => {
         providerKey = `${provider}_api_key` as keyof typeof profile
       }
 
-      if (
-        profile?.[providerKey] ||
-        (data.isUsingEnvKeyMap[provider] && systemKeysHaveFullAccess)
-      ) {
+      if (profile?.[providerKey] || data.isUsingEnvKeyMap[provider]) {
         const models = LLM_LIST_MAP[provider]
 
         if (Array.isArray(models)) {
           modelsToAdd.push(...models)
-        }
-      }
-    }
-
-    // Add system models
-    if (!systemKeysHaveFullAccess) {
-      for (const id of SYSTEM_LLM_ID_LIST) {
-        const llm = LLM_LIST.find(llm => llm.modelId === id)
-        if (llm) {
-          modelsToAdd.push(llm)
         }
       }
     }
