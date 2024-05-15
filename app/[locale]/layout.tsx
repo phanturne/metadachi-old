@@ -16,6 +16,7 @@ import {
   APP_NAME,
   APP_TITLE_TEMPLATE
 } from "@/app/lib/config"
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -106,6 +107,7 @@ export default async function RootLayout({
           </TranslationsProvider>
         </Providers>
       </body>
+      <Analytics />
     </html>
   )
 }
