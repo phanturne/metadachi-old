@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-hooks/use-prompt-and-command.tsx
+
 import React, { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"

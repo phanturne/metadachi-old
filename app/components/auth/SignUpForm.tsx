@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/d60e1f3ee9d2caf8c9aab659791b841690183b2d/app/%5Blocale%5D/login/page.tsx#L145
+
 import React, { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/app/lib/supabase/browser-client"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/chat-setting-limits.ts
+
 import { LLMID } from "@/app/lib/types"
 
 type ChatSettingLimits = {

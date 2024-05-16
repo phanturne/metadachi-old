@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/server/server-chat-helpers.ts
+
 import { Database, Tables } from "@/supabase/types"
 import { VALID_ENV_KEYS } from "@/app/lib/types/valid-keys"
 import { createServerClient } from "@supabase/ssr"

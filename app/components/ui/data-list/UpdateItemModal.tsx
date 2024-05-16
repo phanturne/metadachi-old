@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/all/sidebar-update-item.tsx
+
 import { AssignWorkspaces } from "@/app/components/workspace/AssignWorkspaces"
 import { MetadachiContext } from "@/app/lib/context"
 import {

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/sidebar-data-list.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { updateAssistant } from "@/app/lib/db/assistants"
 import { updateChat } from "@/app/lib/db/chats"

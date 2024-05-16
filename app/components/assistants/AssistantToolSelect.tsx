@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/assistants/assistant-tool-select.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import React, { FC, useContext } from "react"

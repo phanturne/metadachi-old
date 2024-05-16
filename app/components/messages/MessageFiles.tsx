@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/messages/message.tsx
+
 import { Tables } from "@/supabase/types"
 import { MetadachiContext } from "@/app/lib/context"
 import { useContext } from "react"

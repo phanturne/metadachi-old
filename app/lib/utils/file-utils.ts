@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/files/file-item.tsx
+
 export const formatFileSize = (sizeInBytes: number): string => {
   let size = sizeInBytes
   let unit = "bytes"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/db
+
 import { supabase } from "../../supabase/browser-client"
 
 export const uploadMessageImage = async (path: string, image: File) => {

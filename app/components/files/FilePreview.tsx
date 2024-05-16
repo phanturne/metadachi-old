@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/d60e1f3ee9d2caf8c9aab659791b841690183b2d/components/ui/file-preview.tsx
+
 import { ChatFile, MessageImage } from "@/app/lib/types"
 import { Tables } from "@/supabase/types"
 import { FC } from "react"

@@ -1,4 +1,5 @@
 // Source: https://www.nextui.pro/components/ai/prompt-inputs#component-prompt-input-with-suggestions-above
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-input.tsx
 
 "use client"
 

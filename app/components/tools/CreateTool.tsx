@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/tools/create-tool.tsx
+
 import { CreateItemModal } from "@/app/components/ui/data-list/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
 import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/.github
+
 export const getSortedData = (
   data: any,
   dateCategory: "Today" | "Yesterday" | "Previous Week" | "Older"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/lib/models
+
 import { Tables } from "@/supabase/types"
 import { LLM, LLMID, OpenRouterLLM } from "@/app/lib/types"
 import { toast } from "sonner"

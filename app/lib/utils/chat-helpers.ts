@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-helpers/index.ts
+
 // Only used in use-chat-handler.tsx to keep it clean
 
 import { createChatFiles } from "@/app/lib/db/chat-files"

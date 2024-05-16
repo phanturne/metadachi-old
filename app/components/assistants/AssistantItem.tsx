@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/assistants/assistant-item.tsx
+
 import ImageInput from "@/app/components/input/ImageInput"
 import { MetadachiContext } from "@/app/lib/context"
 import {

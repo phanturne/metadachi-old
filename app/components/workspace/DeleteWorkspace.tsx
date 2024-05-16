@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/workspace/delete-workspace.tsx
+
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { MetadachiContext } from "@/app/lib/context"
 import { deleteWorkspace } from "@/app/lib/db/workspaces"

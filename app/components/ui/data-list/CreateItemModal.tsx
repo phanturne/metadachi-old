@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/all/sidebar-create-item.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { createAssistantCollections } from "@/app/lib/db/assistant-collections"
 import { createAssistantFiles } from "@/app/lib/db/assistant-files"

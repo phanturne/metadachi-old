@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-hooks/use-select-file-handler.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { createDocXFile, createFile } from "@/app/lib/db/files"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"

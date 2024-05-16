@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/d60e1f3ee9d2caf8c9aab659791b841690183b2d/components/chat/chat-files-display.tsx#L183
+
 import { FileIcons } from "@/app/components/files/FileIcons"
 import { Tables } from "@/supabase/types"
 import { Button } from "@nextui-org/react"

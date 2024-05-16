@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/quick-settings.tsx
+
 // import { ChatbotUIContext } from "@/context/context"
 // import { getAssistantCollectionsByAssistantId } from "@/db/assistant-collections"
 // import { getAssistantFilesByAssistantId } from "@/db/assistant-files"

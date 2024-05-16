@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/assistants/create-assistant.tsx
+
 import { CreateItemModal } from "@/app/components/ui/data-list/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
 import {

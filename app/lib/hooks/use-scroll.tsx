@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-hooks/use-scroll.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import {
   type UIEventHandler,

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-hooks/use-prompt-and-command.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { getCollectionFilesByCollectionId } from "@/app/lib/db/collection-files"
 import { Tables } from "@/supabase/types"

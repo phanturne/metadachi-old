@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/generate-local-embedding.ts
+
 import i18nConfig from "@/i18nConfig"
 import { createInstance } from "i18next"
 import resourcesToBackend from "i18next-resources-to-backend"

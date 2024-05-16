@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/workspace/assign-workspaces.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import React, { FC, useContext } from "react"

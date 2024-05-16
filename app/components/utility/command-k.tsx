@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/command-k.tsx
+
 // import { MetadachiContext } from "@/app/lib/context"
 // import useHotkey from "@/app/lib/hooks/use-hotkey"
 // import { IconLoader2, IconSend } from "@tabler/icons-react"

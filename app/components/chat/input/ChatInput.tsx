@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-input.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import useHotkey from "../../../lib/hooks/use-hotkey"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"

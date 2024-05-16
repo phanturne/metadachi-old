@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/collections/collection-file-select.tsx
+
 import React, { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"
 import { getCollectionFilesByCollectionId } from "@/app/lib/db/collection-files"

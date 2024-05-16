@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/sidebar-search.tsx
+
 import { ContentType } from "@/app/lib/types"
 import React, { FC } from "react"
 import { Input } from "@nextui-org/react"

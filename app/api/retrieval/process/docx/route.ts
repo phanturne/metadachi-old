@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/api/retrieval/process/docx/route.ts
+
 import { generateLocalEmbedding } from "@/app/lib/utils/generate-local-embedding"
 import { processDocX } from "@/app/lib/retrieval/processing"
 import {

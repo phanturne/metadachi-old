@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/chat/delete-chat.tsx
+
 import { RefObject } from "react"
 
 export function usePickerKeyHandler({

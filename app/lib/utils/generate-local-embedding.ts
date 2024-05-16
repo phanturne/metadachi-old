@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/generate-local-embedding.ts
+
 import { pipeline } from "@xenova/transformers"
 
 export async function generateLocalEmbedding(content: string) {

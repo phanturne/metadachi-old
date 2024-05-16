@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/db
+
 // Profiles
 export const PROFILE_BIO_MAX = 500
 export const PROFILE_DISPLAY_NAME_MAX = 100

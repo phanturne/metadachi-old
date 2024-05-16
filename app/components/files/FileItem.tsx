@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/files/file-item.tsx
+
 import { FileIcons } from "./FileIcons"
 import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"
 import { getFileFromStorage } from "@/app/lib/db/storage/files"

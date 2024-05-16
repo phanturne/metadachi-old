@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/quick-setting-option.tsx
+
 // import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
 // import { Tables } from "@/supabase/types"
 // import { IconCircleCheckFilled, IconRobotFace } from "@tabler/icons-react"

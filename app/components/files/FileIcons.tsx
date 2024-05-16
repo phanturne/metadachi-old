@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/ui/file-icon.tsx
+
 import * as React from "react"
 import { FC } from "react"
 import { Icon } from "@iconify-icon/react"

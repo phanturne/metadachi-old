@@ -1,12 +1,9 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/files/create-file.tsx
+
 import { ACCEPTED_FILE_TYPES } from "@/app/lib/hooks/use-select-file-handler"
 import { CreateItemModal } from "@/app/components/ui/data-list/CreateItemModal"
 import { MetadachiContext } from "@/app/lib/context"
-import {
-  ASSISTANT_DESCRIPTION_MAX,
-  ASSISTANT_NAME_MAX,
-  FILE_DESCRIPTION_MAX,
-  FILE_NAME_MAX
-} from "@/app/lib/db/limits"
+import { FILE_DESCRIPTION_MAX, FILE_NAME_MAX } from "@/app/lib/db/limits"
 import { TablesInsert } from "@/supabase/types"
 import React, { FC, useContext, useState } from "react"
 import FileInput from "@/app/components/input/FileInput"

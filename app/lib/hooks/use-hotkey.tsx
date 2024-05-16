@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/hooks/use-copy-to-clipboard.tsx
+
 import { useEffect } from "react"
 
 const useHotkey = (key: string, callback: (e?: any) => void): void => {

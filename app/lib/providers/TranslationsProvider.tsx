@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/translations-provider.tsx
+
 "use client"
 
 import initTranslations from "@/app/lib/utils/i18n"

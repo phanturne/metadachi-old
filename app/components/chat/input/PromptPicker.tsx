@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/prompt-picker.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import { useContext, useEffect, useRef, useState } from "react"

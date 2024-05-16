@@ -1,4 +1,5 @@
-// TODO: Update UI
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/tool-picker.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"
 import * as React from "react"

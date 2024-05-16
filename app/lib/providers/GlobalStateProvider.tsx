@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/global-state.tsx
+
 // TODO: Separate into multiple contexts, keeping simple for now
 
 "use client"

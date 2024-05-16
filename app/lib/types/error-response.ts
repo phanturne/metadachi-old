@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/types
+
 import { z } from "zod"
 
 export type ErrorResponse = {

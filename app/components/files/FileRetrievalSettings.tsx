@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/d60e1f3ee9d2caf8c9aab659791b841690183b2d/components/chat/chat-retrieval-settings.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import React, { FC, useContext, useState } from "react"
 import { Checkbox, Slider, Tooltip } from "@nextui-org/react"

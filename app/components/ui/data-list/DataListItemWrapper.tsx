@@ -7,6 +7,7 @@ import { ModelItem } from "../../models/ModelItem"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/app/lib/types"
 import { ChatItem } from "@/app/components/chat/ChatList"
+import { CollectionItem } from "@/app/components/collections/CollectionItem"
 
 export function DataListItemWrapper({
   contentType,
@@ -24,13 +25,13 @@ export function DataListItemWrapper({
       return <PromptItem key={item.id} prompt={item as Tables<"prompts">} />
     case "files":
       return <FileItem key={item.id} file={item as Tables<"files">} />
-    // case "collections":
-    //   return (
-    //     <CollectionItem
-    //       key={item.id}
-    //       collection={item as Tables<"collections">}
-    //     />
-    //   )
+    case "collections":
+      return (
+        <CollectionItem
+          key={item.id}
+          collection={item as Tables<"collections">}
+        />
+      )
     case "assistants":
       return (
         <AssistantItem key={item.id} assistant={item as Tables<"assistants">} />

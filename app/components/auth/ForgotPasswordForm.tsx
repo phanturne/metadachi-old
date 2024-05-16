@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/d60e1f3ee9d2caf8c9aab659791b841690183b2d/app/%5Blocale%5D/login/page.tsx#L145
+
 import React, { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/app/lib/supabase/browser-client"
@@ -78,46 +80,6 @@ export function ForgotPasswordForm({
             Sign Up
           </Link>
         </p>
-        {/*<Stack spacing={2}>*/}
-        {/*  <Typography level="h3" sx={{ alignSelf: "center" }}>*/}
-        {/*    Reset Your Password*/}
-        {/*  </Typography>*/}
-        {/*  <FormControl error={error != ""}>*/}
-        {/*    <EmailInput />*/}
-        {/*    {error && (*/}
-        {/*      <FormHelperText>*/}
-        {/*        <InfoOutlined />*/}
-        {/*        {error}*/}
-        {/*      </FormHelperText>*/}
-        {/*    )}*/}
-        {/*  </FormControl>*/}
-        {/*  <Button type="submit">Forgot Your Password?</Button>*/}
-        {/*  <Box*/}
-        {/*    sx={{*/}
-        {/*      display: "flex",*/}
-        {/*      justifyContent: "center",*/}
-        {/*      gap: 1*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    <Link*/}
-        {/*      component="button"*/}
-        {/*      onClick={() => {*/}
-        {/*        setAuthFormType(AuthFormType.Login)*/}
-        {/*      }}*/}
-        {/*    >*/}
-        {/*      Login*/}
-        {/*    </Link>*/}
-        {/*    {"·"}*/}
-        {/*    <Link*/}
-        {/*      component="button"*/}
-        {/*      onClick={() => {*/}
-        {/*        setAuthFormType(AuthFormType.SignUp)*/}
-        {/*      }}*/}
-        {/*    >*/}
-        {/*      Sign Up*/}
-        {/*    </Link>*/}
-        {/*  </Box>*/}
-        {/*</Stack>*/}
       </form>
     </>
   )

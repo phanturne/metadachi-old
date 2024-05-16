@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/messages/message.tsx
+
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { MetadachiContext } from "@/app/lib/context"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
