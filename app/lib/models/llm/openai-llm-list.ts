@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/lib/models
+
 import { LLM } from "@/app/lib/types"
 
 const OPENAI_PLATORM_LINK = "https://platform.openai.com/docs/overview"

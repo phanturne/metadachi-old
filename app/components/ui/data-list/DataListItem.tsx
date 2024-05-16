@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/all/sidebar-display-item.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { createChat } from "@/app/lib/db/chats"
 import { Tables } from "@/supabase/types"

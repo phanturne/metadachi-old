@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/tools/tool-item.tsx
+
 import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables } from "@/supabase/types"
 import React, { FC, useState } from "react"

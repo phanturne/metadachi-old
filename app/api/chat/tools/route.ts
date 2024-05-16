@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/api/chat/tools/route.ts
+
 import { openapiToFunctions } from "@/app/lib/utils/openapi-conversion"
 import {
   checkApiKey,

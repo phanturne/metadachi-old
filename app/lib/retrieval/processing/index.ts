@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/lib/retrieval/processing
+
 export * from "./csv"
 export * from "./docx"
 export * from "./json"

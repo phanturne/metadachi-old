@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/openapi-conversion.ts
+
 import $RefParser from "@apidevtools/json-schema-ref-parser"
 
 interface OpenAPIData {

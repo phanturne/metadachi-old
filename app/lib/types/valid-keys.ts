@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/types
+
 export enum VALID_ENV_KEYS {
   OPENAI_API_KEY = "OPENAI_API_KEY",
   ANTHROPIC_API_KEY = "ANTHROPIC_API_KEY",

@@ -1,6 +1,8 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/presets/preset-item.tsx
+
 import { ModelIcon } from "@/app/components/models/ModelIcon"
 import { ChatSettingsForm } from "@/app/components/chat/ChatSettingsForm"
-import { ASSISTANT_NAME_MAX, PRESET_NAME_MAX } from "@/app/lib/db/limits"
+import { PRESET_NAME_MAX } from "@/app/lib/db/limits"
 import { LLM_LIST } from "@/app/lib/models/llm/llm-list"
 import { Tables } from "@/supabase/types"
 import React, { FC, useState } from "react"

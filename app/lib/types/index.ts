@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/types
+
 export * from "./announcement"
 export * from "./assistant-retrieval-item"
 export * from "./chat"
@@ -12,5 +14,5 @@ export * from "./images/workspace-image"
 export * from "./llms"
 export * from "./models"
 export * from "./sharing"
-export * from "./sidebar-data"
+export * from "./data-list"
 export { DEFAULT_CHAT_SETTINGS } from "@/app/lib/config"

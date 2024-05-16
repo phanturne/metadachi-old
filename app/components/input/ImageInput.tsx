@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/ui/image-picker.tsx
+
 import * as React from "react"
 import { useState } from "react"
 import { toast } from "sonner"

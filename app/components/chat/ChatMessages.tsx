@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-messages.tsx
+
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { MetadachiContext } from "@/app/lib/context"
 import { Tables } from "@/supabase/types"

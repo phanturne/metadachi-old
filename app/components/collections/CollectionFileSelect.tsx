@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/collections/collection-file-select.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { CollectionFile } from "@/app/lib/types"
 import React, { FC, useContext } from "react"

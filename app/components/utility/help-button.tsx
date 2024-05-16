@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-help.tsx
+
 // import useHotkey from "@/app/lib/hooks/use-hotkey"
 // import {
 //   IconBrandGithub,

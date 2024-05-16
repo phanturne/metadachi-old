@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/lib/models
+
 import { LLM } from "@/app/lib/types"
 
 const GOOGLE_PLATORM_LINK = "https://ai.google.dev/"

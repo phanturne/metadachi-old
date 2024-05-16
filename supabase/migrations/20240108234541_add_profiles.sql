@@ -1,3 +1,5 @@
+-- Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/supabase/migrations
+
 --------------- PROFILES ---------------
 
 -- TABLE --

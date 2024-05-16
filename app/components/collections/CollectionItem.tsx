@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/collections/collection-item.tsx
+
 import {
   COLLECTION_DESCRIPTION_MAX,
   COLLECTION_NAME_MAX

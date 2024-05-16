@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/api/keys/route.ts
+
 import { isUsingEnvironmentKey } from "@/app/lib/utils/envs"
 import { createResponse } from "@/app/lib/server/server-utils"
 import { EnvKey } from "@/app/lib/types/key-type"

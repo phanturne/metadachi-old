@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/ui/chat-settings-form.tsx
+
 import React, { FC, useContext } from "react"
 import { ChatSettings } from "@/app/lib/types"
 import { MetadachiContext } from "@/app/lib/context"

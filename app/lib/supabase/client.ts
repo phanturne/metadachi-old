@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/supabase/client.ts
+
 import { createBrowserClient } from "@supabase/ssr"
 
 export const createClient = () =>

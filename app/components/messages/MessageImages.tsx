@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/messages/message.tsx
+
 import { Tables } from "@/supabase/types"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { MessageImage } from "@/app/lib/types"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/lib/retrieval/processing
+
 import { FileItemChunk } from "@/app/lib/types"
 import { encode } from "gpt-tokenizer"
 import { PDFLoader } from "langchain/document_loaders/fs/pdf"

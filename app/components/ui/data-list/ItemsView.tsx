@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/folders/folder-item.tsx
+
 import { FC } from "react"
 import { ContentType } from "@/app/lib/types"
 import { DataListItemWrapper } from "@/app/components/ui/data-list/DataListItemWrapper"

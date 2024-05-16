@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/setup/profile-step.tsx
+
 import {
   PROFILE_DISPLAY_NAME_MAX,
   PROFILE_USERNAME_MAX,

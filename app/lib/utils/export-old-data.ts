@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/export-old-data.ts
+
 export function exportLocalStorageAsJSON() {
   const data: { [key: string]: string | null } = {}
   for (let i = 0; i < localStorage.length; i++) {

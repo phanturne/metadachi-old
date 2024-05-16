@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/jest.config.ts
+
 import type { Config } from "jest"
 import nextJest from "next/jest.js"
 

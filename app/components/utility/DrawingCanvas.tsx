@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/drawing-canvas.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { MessageImage } from "@/app/lib/types"
 import { FC, MouseEvent, useContext, useEffect, useRef, useState } from "react"

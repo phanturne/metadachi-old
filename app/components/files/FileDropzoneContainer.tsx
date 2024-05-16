@@ -1,4 +1,4 @@
-// Source: https://github.com/mckaywrigley/chatbot-ui/blob/605f8e4daf445fa945ea4374e88e9fab8d287439/components/ui/dashboard.tsx#L40
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/ui/dashboard.tsx
 
 "use client"
 

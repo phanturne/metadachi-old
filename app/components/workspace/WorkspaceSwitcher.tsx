@@ -1,4 +1,4 @@
-// Source: https://github.com/mckaywrigley/chatbot-ui/blob/605f8e4daf445fa945ea4374e88e9fab8d287439/components/utility/workspace-switcher.tsx#L4
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/workspace-switcher.tsx
 
 "use client"
 

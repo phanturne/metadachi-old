@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/prompt-picker.tsx
+
 import {
   Button,
   Modal,

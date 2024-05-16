@@ -1,3 +1,6 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/messages/message-markdown.tsx
+// Source: https: github.com/mckaywrigley/chatbot-ui/blob/main/components/messages/message-markdown-memoized.tsx
+
 import React, { FC, memo } from "react"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"

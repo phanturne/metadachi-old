@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/messages/message.tsx
+
 import * as React from "react"
 import { useContext } from "react"
 import { MetadachiContext } from "@/app/lib/context"

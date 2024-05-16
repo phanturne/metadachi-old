@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/%5Blocale%5D/setup/page.tsx
+
 "use client"
 
 import { MetadachiContext } from "@/app/lib/context"

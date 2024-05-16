@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/hooks/use-copy-to-clipboard.tsx
+
 import { useState } from "react"
 
 export interface useCopyToClipboardProps {

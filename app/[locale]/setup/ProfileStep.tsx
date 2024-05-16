@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/setup/profile-step.tsx
+
 import { FC } from "react"
 import {
   DisplayNameInput,

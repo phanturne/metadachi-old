@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/profile-settings.tsx
+
 "use client"
 
 import { MetadachiContext } from "@/app/lib/context"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/build-prompt.ts
+
 import { Tables } from "@/supabase/types"
 import { ChatPayload, MessageImage } from "@/app/lib/types"
 import { encode } from "gpt-tokenizer"

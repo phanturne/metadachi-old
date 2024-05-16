@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/models/model-item.tsx
+
 import { MODEL_NAME_MAX } from "@/app/lib/db/limits"
 import { Tables, TablesUpdate } from "@/supabase/types"
 import React, { FC, useState } from "react"

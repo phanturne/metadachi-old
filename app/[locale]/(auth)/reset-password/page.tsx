@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/%5Blocale%5D/login/password/page.tsx
+
 "use client"
 
 import { useRouter } from "next/navigation"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/workspace-switcher.tsx
+
 "use client"
 
 import { MetadachiContext } from "@/app/lib/context"

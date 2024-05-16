@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/lib/consume-stream.ts
+
 export async function consumeReadableStream(
   stream: ReadableStream<Uint8Array>,
   callback: (chunk: string) => void,

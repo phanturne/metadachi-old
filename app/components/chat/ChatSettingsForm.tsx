@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/ui/chat-settings-form.tsx
+
 "use client"
 
 import { ChatSettings } from "@/app/lib/types"

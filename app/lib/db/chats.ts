@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/db
+
 import { supabase } from "../supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
 

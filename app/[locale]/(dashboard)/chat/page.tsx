@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-ui.tsx
+
 "use client"
 
 import { useSearchParams } from "next/navigation"

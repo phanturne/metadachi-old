@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/utility/announcements.tsx
+
 // import { Button } from "@/app/components/ui/button"
 // import {
 //   Popover,

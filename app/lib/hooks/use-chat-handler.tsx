@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/chat/chat-hooks/use-chat-handler.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { updateChat } from "@/app/lib/db/chats"
 import { deleteMessagesIncludingAndAfter } from "@/app/lib/db/messages"

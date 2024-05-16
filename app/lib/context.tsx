@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/context/context.tsx
+
 import { Tables } from "@/supabase/types"
 import {
   ChatFile,

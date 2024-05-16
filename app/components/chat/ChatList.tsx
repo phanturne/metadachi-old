@@ -1,3 +1,4 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/sidebar-data-list.tsx
 import * as React from "react"
 import { FC, useContext, useState } from "react"
 import { ContentType, LLM } from "@/app/lib/types"

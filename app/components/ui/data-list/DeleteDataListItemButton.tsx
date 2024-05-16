@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/items/all/sidebar-delete-item.tsx
+
 import { MetadachiContext } from "@/app/lib/context"
 import { deleteAssistant } from "@/app/lib/db/assistants"
 import { deleteChat } from "@/app/lib/db/chats"

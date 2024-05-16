@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/sidebar-create-buttons.tsx
+
 import { useChatHandler } from "@/app/lib/hooks/use-chat-handler"
 import { MetadachiContext } from "@/app/lib/context"
 import { createFolder } from "@/app/lib/db/folders"

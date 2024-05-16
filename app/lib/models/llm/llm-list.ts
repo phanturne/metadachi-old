@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/lib/models
+
 import { LLM } from "@/app/lib/types"
 import { ANTHROPIC_LLM_LIST } from "./anthropic-llm-list"
 import { GOOGLE_LLM_LIST } from "./google-llm-list"

@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/sidebar/sidebar-data-list.tsx
+
 import { Tables } from "@/supabase/types"
 import * as React from "react"
 import { FC, useContext, useRef, useState } from "react"
