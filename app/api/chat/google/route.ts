@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/api/chat/google/route.ts
+
 import {
   checkApiKey,
   getServerProfile

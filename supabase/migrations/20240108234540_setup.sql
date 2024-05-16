@@ -1,3 +1,5 @@
+-- Source: https://github.com/mckaywrigley/chatbot-ui/tree/main/supabase/migrations
+
 -- Enable HTTP extension
 create extension http with schema extensions;
 

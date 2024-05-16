@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/workspace/workspace-settings.tsx
+
 "use client"
 import React, { useContext, useEffect, useState } from "react"
 import { MetadachiContext } from "@/app/lib/context"

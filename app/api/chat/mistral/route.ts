@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/api/chat/mistral/route.ts
+
 import { CHAT_SETTING_LIMITS } from "@/app/lib/utils/chat-setting-limits"
 import {
   checkApiKey,

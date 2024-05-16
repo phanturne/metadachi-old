@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/components/setup/api-step.tsx#L39
+
 import { FC } from "react"
 import { StepContainer } from "@/app/components/ui/StepContainer"
 import { ApiInputs } from "@/app/components/input/ApiInputs"

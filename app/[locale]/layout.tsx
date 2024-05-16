@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/%5Blocale%5D/layout.tsx
+
 import { Toaster } from "@/app/components/utility/Toaster"
 import { GlobalStateProvider } from "@/app/lib/providers/GlobalStateProvider"
 import { Providers } from "@/app/lib/providers/Providers"

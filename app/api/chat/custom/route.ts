@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/api/chat/custom/route.ts
+
 import { Database } from "@/supabase/types"
 import { ChatSettings } from "@/app/lib/types"
 import { createClient } from "@supabase/supabase-js"

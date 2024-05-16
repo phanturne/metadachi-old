@@ -1,3 +1,5 @@
+// Source: https://github.com/mckaywrigley/chatbot-ui/blob/main/app/%5Blocale%5D/%5Bworkspaceid%5D/layout.tsx
+
 "use client"
 
 import RootNavbar from "@/app/components/ui/RootNavbar"
