@@ -72,7 +72,7 @@ View [Detailed GitHub Roadmap](https://github.com/users/phanturne/projects/2/)
 | NextUI      | Beautiful, fast and modern React UI Library                                                                          |
 | Aceternity UI | Beautiful Tailwind CSS and Framer Motion Components, built with Next.js and TypeScript.                              |
 
-## Deploy Your Own
+## Deployment Guide
 <details>
 
 <summary>Hosted Quickstart (Vercel + Supabase)</summary>
@@ -335,6 +335,18 @@ git merge upstream/main
 ```sh
 git push origin main
 ```
+
+</details>
+
+<details>
+
+<summary>Configure Social Login (OAuth)</summary>
+
+Supabase offers the ability to integrate social login functionality using OAuth providers such as Google, GitHub, Facebook, and more. To activate this feature, please refer to the [Supabase Social Login Guide](https://supabase.com/docs/guides/auth/social-login). 
+
+The key files to modify in order to implement this feature are `app/components/auth/LoginForm.tsx` and `app/components/auth/SignupForm.tsx`.
+
+We are working on simplifying this process to enhance your experience. Thanks for hanging in there with us!
 
 </details>
 
