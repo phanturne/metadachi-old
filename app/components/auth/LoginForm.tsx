@@ -1,7 +1,7 @@
 // Source: https://github.com/mckaywrigley/chatbot-ui/blob/d60e1f3ee9d2caf8c9aab659791b841690183b2d/app/%5Blocale%5D/login/page.tsx#L145
 
 import React, { FormEvent, useState } from "react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { supabase } from "@/app/lib/supabase/browser-client"
 import {
   AuthFormType,
@@ -12,6 +12,7 @@ import { Routes } from "@/app/lib/constants"
 import { toast } from "sonner"
 import { Button, Checkbox, Divider, Input, Link } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
+import { Provider } from "@supabase/supabase-js"
 
 export function LoginForm({
   setAuthFormType
@@ -22,6 +23,17 @@ export function LoginForm({
   const hasError = error != ""
   const router = useRouter()
   const { closeAuthModal } = useAuthModal()
+
+  async function handleOauthLogin(provider: Provider) {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {}
+    })
+
+    if (data.url) {
+      redirect(data.url) // use the redirect API for your server framework
+    }
+  }
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -101,23 +113,59 @@ export function LoginForm({
         <p className="shrink-0 text-tiny text-default-500">OR</p>
         <Divider className="flex-1" />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex grow gap-2">
+        {/*<Button*/}
+        {/*  isIconOnly*/}
+        {/*  variant="bordered"*/}
+        {/*  onClick={() => handleOauthLogin("google")}*/}
+        {/*  className="grow"*/}
+        {/*>*/}
+        {/*  <Icon icon="logos:google-icon" className="text-xl" />*/}
+        {/*</Button>*/}
+        {/*<Button*/}
+        {/*  isIconOnly*/}
+        {/*  variant="bordered"*/}
+        {/*  className="grow"*/}
+        {/*  onClick={() => handleOauthLogin("apple")}*/}
+        {/*>*/}
+        {/*  <Icon className="text-xl dark:invert" icon="logos:apple" />*/}
+        {/*</Button>*/}
+        {/*<Button*/}
+        {/*  isIconOnly*/}
+        {/*  variant="bordered"*/}
+        {/*  className="grow"*/}
+        {/*  onClick={() => handleOauthLogin("discord")}*/}
+        {/*>*/}
+        {/*  <Icon className="text-xl" icon="logos:discord-icon" />*/}
+        {/*</Button>*/}
+        {/*<Button*/}
+        {/*  isIconOnly*/}
+        {/*  variant="bordered"*/}
+        {/*  className="grow"*/}
+        {/*  onClick={() => handleOauthLogin("github")}*/}
+        {/*>*/}
+        {/*  <Icon className="text-xl dark:invert" icon="logos:github-icon" />*/}
+        {/*</Button>*/}
         <Button
-          startContent={<Icon icon="flat-color-icons:google" width={24} />}
           variant="bordered"
+          className="grow"
+          onClick={() => handleOauthLogin("discord")}
+          startContent={<Icon className="text-xl" icon="logos:discord-icon" />}
         >
-          Continue with Google
+          Discord
         </Button>
         <Button
-          startContent={
-            <Icon className="text-default-500" icon="fe:github" width={24} />
-          }
           variant="bordered"
+          className="grow"
+          onClick={() => handleOauthLogin("github")}
+          startContent={
+            <Icon className="text-xl dark:invert" icon="logos:github-icon" />
+          }
         >
-          Continue with Github
+          GitHub
         </Button>
       </div>
-      <p className="text-center text-small">
+      <p className="pt-2 text-center text-small">
         New to Metadachi?&nbsp;
         <Link
           href=""
