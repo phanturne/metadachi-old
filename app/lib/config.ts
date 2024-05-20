@@ -27,3 +27,5 @@ export const DEFAULT_CHAT_SETTINGS: ChatSettings = {
 }
 
 export const SHOW_MODEL_COST = true
+
+export const ALLOW_ANONYMOUS_USERS = true

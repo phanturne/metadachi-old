@@ -12,15 +12,15 @@ import {
   NavbarProps
 } from "@nextui-org/react"
 
-import React, { useContext } from "react"
+import React from "react"
 import { cn } from "@/app/lib/utils/utils"
 import Image from "next/image"
 import { Routes } from "@/app/lib/constants"
 import ProfileMenu from "@/app/components/utility/ProfileMenu"
 import { usePathname } from "next/navigation"
-import { MetadachiContext } from "@/app/lib/context"
 import { useAuthModal } from "@/app/lib/providers/AuthContextProvider"
 import BorderMagicButton from "@/app/components/ui/BorderMagicButton"
+import { useSession } from "@/app/lib/hooks/use-session"
 
 const routes = [
   { route: Routes.Chat, label: "Chats" },
@@ -35,7 +35,7 @@ export default function Component(props: NavbarProps) {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
-  const { profile } = useContext(MetadachiContext)
+  const { isAnonymous } = useSession()
   const { openAuthModal } = useAuthModal()
 
   function isActiveRoute(route: string) {
@@ -94,8 +94,7 @@ export default function Component(props: NavbarProps) {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {/* TODO: Display LoginButton + DotMenu if user is logged in and ProfileMenu otherwise*/}
-          {!profile && (
+          {isAnonymous && (
             <BorderMagicButton onClick={openAuthModal} text="Get Started" />
           )}
         </NavbarItem>

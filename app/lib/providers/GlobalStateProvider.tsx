@@ -29,6 +29,7 @@ import { AssistantImage } from "@/app/lib/types"
 import { VALID_ENV_KEYS } from "../types/valid-keys"
 import { useRouter } from "next/navigation"
 import { FC, useEffect, useState } from "react"
+import { ALLOW_ANONYMOUS_USERS } from "@/app/lib/config"
 
 interface GlobalStateProps {
   children: React.ReactNode
@@ -155,7 +156,17 @@ export const GlobalStateProvider: FC<GlobalStateProps> = ({ children }) => {
   }, [])
 
   const fetchStartingData = async () => {
-    const session = (await supabase.auth.getSession()).data.session
+    let session = (await supabase.auth.getSession()).data.session
+
+    // Create an anonymous account for the user
+    if (!session && ALLOW_ANONYMOUS_USERS) {
+      const { data, error } = await supabase.auth.signInAnonymously()
+      if (error) {
+        console.error("Error creating a guest account:", error)
+      } else if (data) {
+        session = data.session
+      }
+    }
 
     if (session) {
       const user = session.user
@@ -163,7 +174,7 @@ export const GlobalStateProvider: FC<GlobalStateProps> = ({ children }) => {
       const profile = await getProfileByUserId(user.id)
       setProfile(profile)
 
-      if (!profile.has_onboarded) {
+      if (!profile.has_onboarded && !user.is_anonymous) {
         return router.push("/setup")
       }
 

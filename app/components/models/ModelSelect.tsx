@@ -1,4 +1,4 @@
-import { LLM, LLMID } from "@/app/lib/types"
+import { DEFAULT_CHAT_SETTINGS, LLM, LLMID } from "@/app/lib/types"
 import React, { FC, useState } from "react"
 import { ModelIcon } from "./ModelIcon"
 import {
@@ -81,7 +81,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       labelPlacement={labelPlacement}
       size={size}
       placeholder="Select a model"
-      defaultSelectedKey={selectedModel?.modelId}
+      defaultSelectedKey={selectedModel?.modelId ?? DEFAULT_CHAT_SETTINGS.model}
       defaultItems={filteredModels}
       value={selectedModel?.modelId}
       onSelectionChange={id => onSelectModel?.(id as LLMID)}

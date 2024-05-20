@@ -2,10 +2,9 @@
 
 "use client"
 
-import { MetadachiContext } from "@/app/lib/context"
 import { PROFILE_CONTEXT_MAX } from "@/app/lib/db/limits"
 import { exportLocalStorageAsJSON } from "@/app/lib/utils/export-old-data"
-import React, { FC, useContext } from "react"
+import React, { FC } from "react"
 import { AvatarImageInput } from "@/app/components/input/ImageInput"
 import {
   DisplayNameInput,
@@ -13,6 +12,7 @@ import {
 } from "@/app/components/input/ProfileInputs"
 import { Button, Card, CardBody, Textarea, Tooltip } from "@nextui-org/react"
 import { Icon } from "@iconify-icon/react"
+import { useSession } from "@/app/lib/hooks/use-session"
 
 interface ProfileSettingsProps {
   profileImageSrc: string
@@ -43,7 +43,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({
   onUsernameChange,
   onDisplayNameChange
 }) => {
-  const {} = useContext(MetadachiContext)
+  const { isAnonymous } = useSession()
 
   return (
     <div className="flex flex-col gap-4">
@@ -60,7 +60,9 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({
 
             <div>
               <p className="text-sm font-medium text-default-600">
-                {displayName}
+                {(displayName && displayName.trim() !== ""
+                  ? displayName
+                  : username) + (isAnonymous ? " (Guest)" : "")}
               </p>
               <p className="text-xs text-default-400">{username}</p>
               {/*<p className="mt-1 text-xs text-default-400">kate.moore@acme.com</p>*/}

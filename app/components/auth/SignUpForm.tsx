@@ -12,8 +12,8 @@ import { PasswordInput } from "@/app/components/input"
 import { get } from "@vercel/edge-config"
 import { EMAIL_VERIFICATION, ROOT_URL } from "@/app/lib/config"
 import { Button, Divider, Input, Link } from "@nextui-org/react"
-import { Icon } from "@iconify-icon/react"
 import { toast } from "sonner"
+import OAuthButtons from "@/app/components/auth/OAuthButtons"
 
 export function SignUpForm({
   setAuthFormType
@@ -129,22 +129,7 @@ export function SignUpForm({
         <p className="shrink-0 text-tiny text-default-500">OR</p>
         <Divider className="flex-1" />
       </div>
-      <div className="flex flex-col gap-2">
-        <Button
-          startContent={<Icon icon="flat-color-icons:google" width={24} />}
-          variant="bordered"
-        >
-          Continue with Google
-        </Button>
-        <Button
-          startContent={
-            <Icon className="text-default-500" icon="fe:github" width={24} />
-          }
-          variant="bordered"
-        >
-          Continue with Github
-        </Button>
-      </div>
+      <OAuthButtons />
       <p className="text-center text-small">
         Already have an account?&nbsp;
         <Link

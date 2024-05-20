@@ -20,6 +20,7 @@ import {
 import { User } from "@nextui-org/user"
 import { Icon } from "@iconify-icon/react"
 import { WorkspaceSwitcher } from "@/app/components/workspace/WorkspaceSwitcher"
+import { useSession } from "@/app/lib/hooks/use-session"
 
 export default function ProfileMenu({
   placement = "bottom"
@@ -28,6 +29,7 @@ export default function ProfileMenu({
 }) {
   const router = useRouter()
   const { profile } = useContext(MetadachiContext)
+  const { isAnonymous } = useSession()
   const { openAuthModal } = useAuthModal()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -89,9 +91,9 @@ export default function ProfileMenu({
               className="h-14 gap-2 opacity-100"
             >
               <User
-                name={profile?.display_name}
+                name={`${profile?.display_name && profile.display_name.trim() !== "" ? profile.display_name : profile?.username}${isAnonymous ? " (Guest)" : ""}`}
                 description={
-                  profile?.username ? `@${profile.username}` : "Guest User"
+                  profile?.username ? `@${profile.username}` : "Guest"
                 }
                 classNames={{
                   name: "text-default-600",
@@ -164,13 +166,13 @@ export default function ProfileMenu({
             >
               Feedback
             </DropdownItem>
-            {profile ? (
+            {!isAnonymous ? (
               <DropdownItem key="logout" onClick={handleSignOut}>
                 Log Out
               </DropdownItem>
             ) : (
               <DropdownItem key="login" onClick={openAuthModal}>
-                Log In
+                {`Sign Up / Log In`}
               </DropdownItem>
             )}
           </DropdownSection>

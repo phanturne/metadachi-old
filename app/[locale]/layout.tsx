@@ -88,7 +88,17 @@ export default async function RootLayout({
       }
     }
   )
-  const session = (await supabase.auth.getSession()).data.session
+
+  let session = (await supabase.auth.getSession()).data.session
+  if (!session) {
+    const { data, error } = await supabase.auth.signInAnonymously()
+
+    if (error) {
+      console.error("Error creating a guest account:", error)
+    } else if (data) {
+      session = data.session
+    }
+  }
 
   const { t, resources } = await initTranslations(locale, i18nNamespaces)
 
@@ -102,11 +112,7 @@ export default async function RootLayout({
             resources={resources}
           >
             <Toaster richColors position="bottom-center" duration={3000} />
-            {session ? (
-              <GlobalStateProvider>{children}</GlobalStateProvider>
-            ) : (
-              children
-            )}
+            <GlobalStateProvider>{children}</GlobalStateProvider>
           </TranslationsProvider>
         </Providers>
       </body>
