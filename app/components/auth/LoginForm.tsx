@@ -24,6 +24,7 @@ export function LoginForm({
   const router = useRouter()
   const { closeAuthModal } = useAuthModal()
 
+  // TODO: Link anonymous accounts
   async function handleOauthLogin(provider: Provider) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
