@@ -14,7 +14,7 @@
 [Linux-image]: https://img.shields.io/badge/-Linux-333?logo=ubuntu
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fmetadachi.com&label=Live%20Version)](https://metadachi.com)
-[![Discord](https://img.shields.io/discord/1142672787820007454?logo=discord&label=Discord)](https://t.co/Wwdk6CoGxq)
+[![Discord](https://img.shields.io/discord/1142672787820007454?logo=discord&label=Discord)](https://discord.gg/v3sCX3hhzY)
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/metadachi)](https://twitter.com/metadachi)
 
 

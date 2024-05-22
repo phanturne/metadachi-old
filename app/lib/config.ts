@@ -29,3 +29,12 @@ export const DEFAULT_CHAT_SETTINGS: ChatSettings = {
 export const SHOW_MODEL_COST = true
 
 export const ALLOW_ANONYMOUS_USERS = true
+
+export const SOCIAL_MEDIA = {
+  twitter: "https://twitter.com/metadachi",
+  github: "https://github.com/phanturne/metadachi",
+  githubUser: "phanturne",
+  githubRepo: "metadachi",
+  discord: "https://discord.gg/v3sCX3hhzY",
+  discordServerId: "1142672787820007454"
+}

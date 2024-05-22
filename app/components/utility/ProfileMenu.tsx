@@ -15,12 +15,14 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownTrigger,
+  Link,
   useDisclosure
 } from "@nextui-org/react"
 import { User } from "@nextui-org/user"
 import { Icon } from "@iconify-icon/react"
 import { WorkspaceSwitcher } from "@/app/components/workspace/WorkspaceSwitcher"
 import { useSession } from "@/app/lib/hooks/use-session"
+import { SOCIAL_MEDIA } from "@/app/lib/config"
 
 export default function ProfileMenu({
   placement = "bottom"
@@ -151,7 +153,7 @@ export default function ProfileMenu({
             </DropdownItem>
           </DropdownSection>
 
-          <DropdownSection aria-label="Help & FAQ">
+          <DropdownSection aria-label="Help & FAQ" showDivider>
             <DropdownItem
               key="help_and_faq"
               onClick={() => router.push(Routes.Help)}
@@ -176,6 +178,24 @@ export default function ProfileMenu({
               </DropdownItem>
             )}
           </DropdownSection>
+          {/* TODO: Read values from config*/}
+          <DropdownItem key="social" isReadOnly>
+            <div className="flex gap-2">
+              <Link href={SOCIAL_MEDIA.discord} isExternal>
+                <img
+                  alt="Discord"
+                  src={`https://img.shields.io/discord/${SOCIAL_MEDIA.discordServerId}?logo=discord&logoColor=white`}
+                />
+              </Link>
+
+              <Link href={SOCIAL_MEDIA.github} isExternal>
+                <img
+                  alt="GitHub Repo stars"
+                  src={`https://img.shields.io/github/stars/${SOCIAL_MEDIA.githubUser}/${SOCIAL_MEDIA.githubRepo}`}
+                />
+              </Link>
+            </div>
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
       {/*<SettingsModal isOpen={isOpen} onClose={onClose} />*/}
