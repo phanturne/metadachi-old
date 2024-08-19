@@ -17,10 +17,14 @@
 [![Discord](https://img.shields.io/discord/1142672787820007454?logo=discord&label=Discord)](https://t.co/Wwdk6CoGxq)
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/metadachi)](https://twitter.com/metadachi)
 
-
 Metadachi is built with community collaboration at its core, fostering a space for knowledge sharing, innovation, and joint development. Whether you're an AI enthusiast, developer, or just curious about the potential of intelligent assistants, we welcome you to contribute, learn, and shape the future of AI together. Join the movement and bring the power of AI to your fingertips!
 
-> This project builds on the outstanding work by McKay Wrigley and the contributors of [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui).
+This project builds on the outstanding work by McKay Wrigley and the contributors of [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui).
+
+
+## 📢 Notice: Project Migration
+
+> Development of this project has now migrated to **[Metadachi](https://github.com/phanturne/metadachi)**. All future updates, contributions, and discussions will take place there. Thank you for your continued support!
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2em;">
   <img src="public/images/website-screenshot1.png" alt="Website Screenshot 1" style="width: 98%;"/>
@@ -44,23 +48,6 @@ Get started with our official live version [here](https://metadachi.com) hassle-
 - 🔒 **Privacy Guaranteed**: Maintain complete data privacy by storing data in your own private database
 - 🌐 **Cross Platform**: Sync sessions across Windows, macOS, and the web
 - 🚀 **Easy Self-Hosting**: Deploy effortlessly to Vercel or run locally
-
-## Roadmap
-View [Detailed GitHub Roadmap](https://github.com/users/phanturne/projects/2/)
-
-- [ ] 🤝 Community Features
-- [ ] AI Toolbox
-- [ ] 🎨 Visual Alchemy
-- [ ] Performance Optimizations
-- [ ] Mobile Optimizations
-- [ ] More UI Customization Options
-- [ ] Heart's Symphony (Multiplayer AI Chat Game)
-- [ ] Multi-User & Multi-Assistant Chats
-
-### Stretch Goals
-- [ ] Mobile App (Capacitor)
-- [ ] Desktop App (Tauri)
-- [ ] 🐶 Interactive Desktop Companion
 
 ## Technology Stack
 | Technology  | Description                                                                                                          |
